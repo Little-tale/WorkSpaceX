@@ -12,6 +12,8 @@
 		7B592E892C0E252000E47797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E882C0E252000E47797 /* Assets.xcassets */; };
 		7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */; };
 		7B592E932C0E255F00E47797 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E922C0E255F00E47797 /* .gitignore */; };
+		7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E9A2C0E274D00E47797 /* APIKey.swift */; };
+		7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E9E2C0E27E800E47797 /* ButtonWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		7B592E882C0E252000E47797 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7B592E922C0E255F00E47797 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7B592E9A2C0E274D00E47797 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		7B592E9E2C0E27E800E47797 /* ButtonWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +58,11 @@
 		7B592E832C0E251F00E47797 /* WorkSpaceX */ = {
 			isa = PBXGroup;
 			children = (
+				7B592E962C0E26AA00E47797 /* Secret */,
+				7B592E952C0E266E00E47797 /* Resources */,
+				7B592E942C0E266100E47797 /* Sources */,
 				7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */,
 				7B592E862C0E251F00E47797 /* ContentView.swift */,
-				7B592E882C0E252000E47797 /* Assets.xcassets */,
 				7B592E8A2C0E252000E47797 /* Preview Content */,
 			);
 			path = WorkSpaceX;
@@ -68,6 +74,54 @@
 				7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7B592E942C0E266100E47797 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				7B592E9C2C0E27B300E47797 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		7B592E952C0E266E00E47797 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7B592E992C0E26F200E47797 /* Manager */,
+				7B592E882C0E252000E47797 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7B592E962C0E26AA00E47797 /* Secret */ = {
+			isa = PBXGroup;
+			children = (
+				7B592E9A2C0E274D00E47797 /* APIKey.swift */,
+			);
+			path = Secret;
+			sourceTree = "<group>";
+		};
+		7B592E992C0E26F200E47797 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		7B592E9C2C0E27B300E47797 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7B592E9D2C0E27DF00E47797 /* Wrapper */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7B592E9D2C0E27DF00E47797 /* Wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				7B592E9E2C0E27E800E47797 /* ButtonWrapper.swift */,
+			);
+			path = Wrapper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +196,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B592E872C0E251F00E47797 /* ContentView.swift in Sources */,
+				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
+				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
