@@ -6,41 +6,62 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct OnboardingLoginView: View {
     
+    @Perception.Bindable var store: StoreOf<OnboardingLoginFeature>
     
     var body: some View {
-        VStack (alignment: .center, spacing: 13) {
-            
-            WSXImage.appleLogin
-                .modifier(CommonButtonModifer())
-                .asButton {
+        
+        WithPerceptionTracking {
+            VStack (alignment: .center, spacing: 13) {
+                
+                WSXImage.appleLogin
+                    .modifier(CommonButtonModifer())
+                    .asButton {
+                        
+                    }
+                
+                WSXImage.kakaoLogin
+                    .modifier(CommonButtonModifer())
+                    .asButton {
+                        
+                    }
+                
+                WSXImage.emailLoginButton
+                    .modifier(CommonButtonModifer())
+                    .asButton {
+                        
+                    }
+                HStack {
+                    Text("또는")
                     
+                    Text("새롭게 회원가입 하기")
+                        .foregroundStyle(WSXColor.lightGreen)
+                        .asButton {
+                            store.send(.newSignUpTapped)
+                        }
                 }
-            
-            WSXImage.kakaoLogin
-                .modifier(CommonButtonModifer())
-                .asButton {
-                    
+                .sheet(
+                    item: $store.scope(
+                        state: \.signUp,
+                        action: \.signUpFeature
+                    )) { store in
+                        NavigationStack {
+                            SignUpView(store: store)
+                                .presentationDragIndicator(.visible)
+                                .navigationTitle(
+                                    Text("회원가입")
+                                )
+                                .navigationBarTitleDisplayMode(.inline)
+                        }
                 }
-            
-            WSXImage.emailLoginButton
-                .modifier(CommonButtonModifer())
-                .asButton {
-                    
-                }
-            HStack {
-                Text("또는")
-                Text("새롭게 회원가입 하기")
-                    .foregroundStyle(WSXColor.lightGreen)
+                .font(WSXFont.title2)
             }
-            .font(WSXFont.title2)
         }
+        
     }
     
 }
 
-#Preview {
-    OnboardingLoginView()
-}

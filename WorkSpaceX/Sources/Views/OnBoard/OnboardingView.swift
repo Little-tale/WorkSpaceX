@@ -13,25 +13,24 @@ struct OnboardingView: View {
     @Perception.Bindable var store: StoreOf<OnboardingFeature>
     
     var body: some View {
-        ZStack (alignment: .bottom) {
-            SplashView()
-            Text(Const.SplashView.startText)
-                .modifier(StartButtonModifier())
-                .asButton {
-                    store.send(.startButtonTapped)
-                }
-                .buttonStyle(PlainButtonStyle())
-            
-        }
-        .sheet(item: $store.scope(state: \.onboard, action: \.onboardingLoginFeature)) { store in
-            NavigationStack {
-                OnboardingLoginView()
+        WithPerceptionTracking {
+            ZStack (alignment: .bottom) {
+                SplashView()
+                Text(Const.SplashView.startText)
+                    .modifier(StartButtonModifier())
+                    .asButton {
+                        store.send(.startButtonTapped)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                
             }
-            .presentationDetents([.height(250)])
-            .presentationDragIndicator(.visible)
-            
+            .sheet(item: $store.scope(state: \.onboard, action: \.onboardingLoginFeature)) { store in
+                OnboardingLoginView(store: store)
+                .presentationDetents([.height(250)])
+                .presentationDragIndicator(.visible)
+                
+            }
         }
-        
     }
     
     init() {

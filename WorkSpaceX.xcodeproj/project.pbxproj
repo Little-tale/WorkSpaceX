@@ -18,7 +18,6 @@
 		7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA72C0E28E700E47797 /* WSXFont.swift */; };
 		7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA92C0E294200E47797 /* WSXImage.swift */; };
 		7B592EB32C0E311900E47797 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B592EB22C0E311900E47797 /* ComposableArchitecture */; };
-		7B592EB52C0E31F500E47797 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB42C0E31F500E47797 /* Coordinator.swift */; };
 		7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB72C0EC3EA00E47797 /* RootView.swift */; };
 		7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB92C0EC45C00E47797 /* OnboardingView.swift */; };
 		7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBB2C0EC5C900E47797 /* WSXColor.swift */; };
@@ -27,6 +26,8 @@
 		7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */; };
 		7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */; };
 		7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */; };
+		7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC92C0EE13200E47797 /* SignUpView.swift */; };
+		7B592ECE2C0EE30700E47797 /* SignUpFreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +42,6 @@
 		7B592EA32C0E289C00E47797 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		7B592EA72C0E28E700E47797 /* WSXFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXFont.swift; sourceTree = "<group>"; };
 		7B592EA92C0E294200E47797 /* WSXImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXImage.swift; sourceTree = "<group>"; };
-		7B592EB42C0E31F500E47797 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		7B592EB72C0EC3EA00E47797 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		7B592EB92C0EC45C00E47797 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7B592EBB2C0EC5C900E47797 /* WSXColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXColor.swift; sourceTree = "<group>"; };
@@ -50,6 +50,8 @@
 		7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButtonModifer.swift; sourceTree = "<group>"; };
 		7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginFeature.swift; sourceTree = "<group>"; };
+		7B592EC92C0EE13200E47797 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFreature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +143,6 @@
 				7B592EB62C0EC3D100E47797 /* OnBoard */,
 				7B592EA22C0E288200E47797 /* Splash */,
 				7B592E9D2C0E27DF00E47797 /* Wrapper */,
-				7B592EB42C0E31F500E47797 /* Coordinator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +186,7 @@
 		7B592EB62C0EC3D100E47797 /* OnBoard */ = {
 			isa = PBXGroup;
 			children = (
+				7B592EC82C0EE11B00E47797 /* SignUp */,
 				7B592EB92C0EC45C00E47797 /* OnboardingView.swift */,
 				7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */,
 				7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */,
@@ -200,6 +202,15 @@
 				7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */,
 			);
 			path = Modifer;
+			sourceTree = "<group>";
+		};
+		7B592EC82C0EE11B00E47797 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				7B592EC92C0EE13200E47797 /* SignUpView.swift */,
+				7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,7 +292,6 @@
 			files = (
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
-				7B592EB52C0E31F500E47797 /* Coordinator.swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
@@ -291,7 +301,9 @@
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,
+				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
+				7B592ECE2C0EE30700E47797 /* SignUpFreature.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,
