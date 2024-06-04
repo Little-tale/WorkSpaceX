@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */; };
-		7B592E872C0E251F00E47797 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E862C0E251F00E47797 /* ContentView.swift */; };
 		7B592E892C0E252000E47797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E882C0E252000E47797 /* Assets.xcassets */; };
 		7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */; };
 		7B592E932C0E255F00E47797 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E922C0E255F00E47797 /* .gitignore */; };
@@ -17,12 +16,20 @@
 		7B592EA12C0E283D00E47797 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA02C0E283D00E47797 /* Const.swift */; };
 		7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA32C0E289C00E47797 /* SplashView.swift */; };
 		7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA72C0E28E700E47797 /* WSXFont.swift */; };
+		7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA92C0E294200E47797 /* WSXImage.swift */; };
+		7B592EB32C0E311900E47797 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B592EB22C0E311900E47797 /* ComposableArchitecture */; };
+		7B592EB52C0E31F500E47797 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB42C0E31F500E47797 /* Coordinator.swift */; };
+		7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB72C0EC3EA00E47797 /* RootView.swift */; };
+		7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB92C0EC45C00E47797 /* OnboardingView.swift */; };
+		7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBB2C0EC5C900E47797 /* WSXColor.swift */; };
+		7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */; };
+		7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */; };
+		7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7B592E812C0E251F00E47797 /* WorkSpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkSpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXApp.swift; sourceTree = "<group>"; };
-		7B592E862C0E251F00E47797 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7B592E882C0E252000E47797 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7B592E922C0E255F00E47797 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -31,6 +38,14 @@
 		7B592EA02C0E283D00E47797 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		7B592EA32C0E289C00E47797 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		7B592EA72C0E28E700E47797 /* WSXFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXFont.swift; sourceTree = "<group>"; };
+		7B592EA92C0E294200E47797 /* WSXImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXImage.swift; sourceTree = "<group>"; };
+		7B592EB42C0E31F500E47797 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		7B592EB72C0EC3EA00E47797 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		7B592EB92C0EC45C00E47797 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		7B592EBB2C0EC5C900E47797 /* WSXColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXColor.swift; sourceTree = "<group>"; };
+		7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonModifier.swift; sourceTree = "<group>"; };
+		7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingLoginView .swift"; sourceTree = "<group>"; };
+		7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButtonModifer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B592EB32C0E311900E47797 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +84,6 @@
 				7B592E952C0E266E00E47797 /* Resources */,
 				7B592E942C0E266100E47797 /* Sources */,
 				7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */,
-				7B592E862C0E251F00E47797 /* ContentView.swift */,
 				7B592E8A2C0E252000E47797 /* Preview Content */,
 			);
 			path = WorkSpaceX;
@@ -119,8 +134,10 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B592EB62C0EC3D100E47797 /* OnBoard */,
 				7B592EA22C0E288200E47797 /* Splash */,
 				7B592E9D2C0E27DF00E47797 /* Wrapper */,
+				7B592EB42C0E31F500E47797 /* Coordinator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -137,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				7B592EA32C0E289C00E47797 /* SplashView.swift */,
+				7B592EB72C0EC3EA00E47797 /* RootView.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -144,6 +162,7 @@
 		7B592EA52C0E28B500E47797 /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				7B592EBD2C0EC97100E47797 /* Modifer */,
 				7B592EA62C0E28D200E47797 /* WSX */,
 			);
 			path = Design;
@@ -153,8 +172,28 @@
 			isa = PBXGroup;
 			children = (
 				7B592EA72C0E28E700E47797 /* WSXFont.swift */,
+				7B592EA92C0E294200E47797 /* WSXImage.swift */,
+				7B592EBB2C0EC5C900E47797 /* WSXColor.swift */,
 			);
 			path = WSX;
+			sourceTree = "<group>";
+		};
+		7B592EB62C0EC3D100E47797 /* OnBoard */ = {
+			isa = PBXGroup;
+			children = (
+				7B592EB92C0EC45C00E47797 /* OnboardingView.swift */,
+				7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */,
+			);
+			path = OnBoard;
+			sourceTree = "<group>";
+		};
+		7B592EBD2C0EC97100E47797 /* Modifer */ = {
+			isa = PBXGroup;
+			children = (
+				7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */,
+				7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */,
+			);
+			path = Modifer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +212,9 @@
 			dependencies = (
 			);
 			name = WorkSpaceX;
+			packageProductDependencies = (
+				7B592EB22C0E311900E47797 /* ComposableArchitecture */,
+			);
 			productName = WorkSpaceX;
 			productReference = 7B592E812C0E251F00E47797 /* WorkSpaceX.app */;
 			productType = "com.apple.product-type.application";
@@ -201,6 +243,9 @@
 				Base,
 			);
 			mainGroup = 7B592E782C0E251F00E47797;
+			packageReferences = (
+				7B592EB12C0E311900E47797 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 7B592E822C0E251F00E47797 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -228,12 +273,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B592E872C0E251F00E47797 /* ContentView.swift in Sources */,
+				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
+				7B592EB52C0E31F500E47797 /* Coordinator.swift in Sources */,
+				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
+				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
+				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
+				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,
+				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
+				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,6 +502,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7B592EB12C0E311900E47797 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7B592EB22C0E311900E47797 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B592EB12C0E311900E47797 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B592E792C0E251F00E47797 /* Project object */;
 }
