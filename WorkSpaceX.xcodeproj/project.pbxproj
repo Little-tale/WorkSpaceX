@@ -28,6 +28,9 @@
 		7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */; };
 		7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC92C0EE13200E47797 /* SignUpView.swift */; };
 		7B592ECE2C0EE30700E47797 /* SignUpFreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */; };
+		7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */; };
+		7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED22C0F08F600E47797 /* HeaderTextField.swift */; };
+		7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +55,9 @@
 		7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginFeature.swift; sourceTree = "<group>"; };
 		7B592EC92C0EE13200E47797 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFreature.swift; sourceTree = "<group>"; };
+		7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextFieldViewModifier.swift; sourceTree = "<group>"; };
+		7B592ED22C0F08F600E47797 /* HeaderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTextField.swift; sourceTree = "<group>"; };
+		7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,7 @@
 		7B592E942C0E266100E47797 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7B592ED42C0F1A7800E47797 /* Model */,
 				7B592EA52C0E28B500E47797 /* Design */,
 				7B592E9C2C0E27B300E47797 /* Views */,
 				7B592EA02C0E283D00E47797 /* Const.swift */,
@@ -167,6 +174,7 @@
 		7B592EA52C0E28B500E47797 /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				7B592ED12C0F08EB00E47797 /* TextField */,
 				7B592EBD2C0EC97100E47797 /* Modifer */,
 				7B592EA62C0E28D200E47797 /* WSX */,
 			);
@@ -200,6 +208,7 @@
 			children = (
 				7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */,
 				7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */,
+				7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */,
 			);
 			path = Modifer;
 			sourceTree = "<group>";
@@ -209,6 +218,30 @@
 			children = (
 				7B592EC92C0EE13200E47797 /* SignUpView.swift */,
 				7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		7B592ED12C0F08EB00E47797 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				7B592ED22C0F08F600E47797 /* HeaderTextField.swift */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
+		7B592ED42C0F1A7800E47797 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7B592ED52C0F1A7F00E47797 /* SignUp */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7B592ED52C0F1A7F00E47797 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -295,14 +328,17 @@
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
+				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
 				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
+				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
+				7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFreature.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,

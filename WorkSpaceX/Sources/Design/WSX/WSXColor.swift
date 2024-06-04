@@ -25,4 +25,6 @@ extension WSXColor {
     
     static let gray = Color(ColorResource.gray)
     
+    
+    static let lightGray = Color(ColorResource.onlyLightGrey)
 }

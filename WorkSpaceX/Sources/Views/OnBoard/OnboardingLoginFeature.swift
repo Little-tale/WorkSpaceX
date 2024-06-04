@@ -42,6 +42,7 @@ struct OnboardingLoginFeature {
                 
             case .newSignUpTapped:
                 state.signUp = SignUpFreature.State()
+                
                 return .none
                 
             case let .signUpFeature(childReducer):
