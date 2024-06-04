@@ -9,8 +9,9 @@ import SwiftUI
 
 struct OnboardingLoginView: View {
     
+    
     var body: some View {
-        VStack (spacing: 13) {
+        VStack (alignment: .center, spacing: 13) {
             
             WSXImage.appleLogin
                 .modifier(CommonButtonModifer())
@@ -29,9 +30,14 @@ struct OnboardingLoginView: View {
                 .asButton {
                     
                 }
+            HStack {
+                Text("또는")
+                Text("새롭게 회원가입 하기")
+                    .foregroundStyle(WSXColor.lightGreen)
+            }
+            .font(WSXFont.title2)
         }
     }
-    
     
 }
 

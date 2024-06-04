@@ -15,23 +15,19 @@ struct SplashView: View {
     
     var body: some View {
         
-        NavigationStack {
+        
+        VStack (alignment: .center) {
+            Text(Const.SplashView.bennerTitel)
+                .multilineTextAlignment(.center)
+                .font(WSXFont.title0)
+                .padding(.top, 40)
             
-            VStack (alignment: .center) {
-                Text(Const.SplashView.bennerTitel)
-                    .multilineTextAlignment(.center)
-                    .font(WSXFont.title0)
-                    .padding(.top, 40)
-                    
-                WSXImage.splashImage
-                    .aspectRatio(0.9, contentMode: .fit)
-                    .padding(.horizontal, 60)
-                    .padding(.top, 60)
-                Spacer()
-            }
-            
+            WSXImage.splashImage
+                .aspectRatio(0.9, contentMode: .fit)
+                .padding(.horizontal, 60)
+                .padding(.top, 60)
+            Spacer()
         }
-        .navigationBarTitleDisplayMode(.inline)
     }
     
 }

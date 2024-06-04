@@ -25,6 +25,8 @@
 		7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */; };
 		7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */; };
 		7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */; };
+		7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */; };
+		7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonModifier.swift; sourceTree = "<group>"; };
 		7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingLoginView .swift"; sourceTree = "<group>"; };
 		7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButtonModifer.swift; sourceTree = "<group>"; };
+		7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
+		7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +187,8 @@
 			children = (
 				7B592EB92C0EC45C00E47797 /* OnboardingView.swift */,
 				7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */,
+				7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */,
+				7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */,
 			);
 			path = OnBoard;
 			sourceTree = "<group>";
@@ -273,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EB52C0E31F500E47797 /* Coordinator.swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
@@ -287,6 +294,7 @@
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
+				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

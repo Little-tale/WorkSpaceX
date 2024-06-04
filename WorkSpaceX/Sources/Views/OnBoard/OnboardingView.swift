@@ -6,20 +6,37 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct OnboardingView: View {
     
-    
+    @Perception.Bindable var store: StoreOf<OnboardingFeature>
     
     var body: some View {
         ZStack (alignment: .bottom) {
             SplashView()
-            Text("시작하기")
+            Text(Const.SplashView.startText)
                 .modifier(StartButtonModifier())
                 .asButton {
-                    print("클릭")
+                    store.send(.startButtonTapped)
                 }
                 .buttonStyle(PlainButtonStyle())
+            
+        }
+        .sheet(item: $store.scope(state: \.onboard, action: \.onboardingLoginFeature)) { store in
+            NavigationStack {
+                OnboardingLoginView()
+            }
+            .presentationDetents([.height(250)])
+            .presentationDragIndicator(.visible)
+            
+        }
+        
+    }
+    
+    init() {
+        store = Store(initialState: OnboardingFeature.State()) {
+            OnboardingFeature()
         }
     }
 }

@@ -13,6 +13,8 @@ extension WSXColor {
     
     static let green = Color(ColorResource.green)
     
+    static let lightGreen = Color(ColorResource.lightGreen)
+    
     static let errorRed = Color(ColorResource.errorRed)
     
     static let inacitve = Color(ColorResource.inactive)
