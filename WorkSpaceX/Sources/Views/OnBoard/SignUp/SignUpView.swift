@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SignUpView: View {
-
+    
     @Perception.Bindable var store: StoreOf<SignUpFeature>
     
     var body: some View {
@@ -20,86 +20,76 @@ struct SignUpView: View {
                     .ignoresSafeArea(edges: .bottom)
                 VStack (spacing: 16) {
                     HStack (alignment: .bottom ,spacing: 15) {
-                        VStack (alignment: .leading) {
-                            Text(Const.SignUpView.email.title)
-                            TextField(
-                                Const.SignUpView.email.placeHolder,
-                                text: $store.user.email.sending(\.emailChanged)
-                                
-                            )
-                            .modifier(DefaultTextFieldViewModifier())
-                        }
+                        
+                        HeaderTextField(
+                            headerTitle: Const.SignUpView.email.title,
+                            ifValidText: nil,
+                            placeHolder: Const.SignUpView.email.placeHolder,
+                            isSecure: false,
+                            binding: $store.user.email.sending(\.emailChanged)
+                        )
                         
                         Text("중복확인")
                             .font(WSXFont.title2)
                             .padding(.all, 10)
                             .frame(width: 70 ,height: 50)
-                            .background(WSXColor.inacitve)
+                            .background(store.duplicateButtonState ? WSXColor.green : WSXColor.inacitve)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .asButton {
                                 
                             }
+                            .disabled(!store.duplicateButtonState)
                             .buttonStyle(PlainButtonStyle())
                             .foregroundStyle(WSXColor.white)
                     }
                     .padding(.horizontal, 30)
                     
-                    VStack (alignment: .leading) {
-                        Text(Const.SignUpView.nickName.title)
-                        TextField(
-                            Const.SignUpView.nickName.placeHolder,
-                            text: $store.user.nickName.sending(\.nicknameChanged)
-                        )
-                        .modifier(DefaultTextFieldViewModifier())
-                    }
+                    HeaderTextField(
+                        headerTitle: Const.SignUpView.nickName.title,
+                        ifValidText: nil,
+                        placeHolder: Const.SignUpView.nickName.placeHolder,
+                        isSecure: false,
+                        binding: $store.user.nickName.sending(\.nicknameChanged)
+                    )
                     .padding(.horizontal, 30)
                     
-                    VStack (alignment: .leading) {
-                        Text(Const.SignUpView.contact.title)
-                        TextField(
-                            Const.SignUpView.contact.placeHolder,
-                            text:
-                                $store.user.contact.sending(\.contactChanged)
-                        )
-                        .modifier(DefaultTextFieldViewModifier())
-                    }
+                    HeaderTextField(
+                        headerTitle: Const.SignUpView.contact.title,
+                        ifValidText: nil,
+                        placeHolder: Const.SignUpView.contact.placeHolder,
+                        isSecure: false,
+                        binding: $store.user.contact.sending(\.contactChanged)
+                    )
                     .padding(.horizontal, 30)
                     
-                    VStack (alignment: .leading) {
-                        Text(Const.SignUpView.password.title)
-                        SecureField(
-                            Const.SignUpView.password.placeHolder,
-                            text: $store.user.password.sending(\.passwordChanged)
-                        )
-                        .modifier(DefaultTextFieldViewModifier())
-                        
-                    }
+                    
+                    HeaderTextField(
+                        headerTitle: Const.SignUpView.password.title,
+                        ifValidText: nil,
+                        placeHolder: Const.SignUpView.password.placeHolder,
+                        isSecure: true,
+                        binding: $store.user.password.sending(\.passwordChanged)
+                    )
                     .padding(.horizontal, 30)
                     
-                    VStack (alignment: .leading) {
-                        Text(Const.SignUpView.passwordCheck.title)
-                        SecureField(
-                            Const.SignUpView.passwordCheck.placeHolder,
-                            text: $store.passwordConfirm.sending(\.passwordConfirmationChanged)
-                        )
-                        .modifier(DefaultTextFieldViewModifier())
-                        
-                    }
+                    HeaderTextField(
+                        headerTitle: Const.SignUpView.passwordCheck.title,
+                        ifValidText: "비밀번호 양식이 맞지 않아요",
+                        placeHolder: Const.SignUpView.passwordCheck.placeHolder,
+                        isSecure: true,
+                        binding: $store.passwordConfirm.sending(\.passwordConfirmationChanged)
+                    )
                     .padding(.horizontal, 30)
                     
                     Spacer()
+                    // store.testButtonState
+                    ifCurrectView(bool: true)
                     
-                    Text("사용 가능한 이메일 입니다.")
-                        .frame(height: 40)
-                        .padding(.horizontal, 60)
-                        .background(.green)
-                    Text("가입하기")
-                        .modifier(CommonButtonModifer())
-                        .background(WSXColor.gray)
-                        .foregroundStyle(WSXColor.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.horizontal, 30)
-                        .padding(.bottom, 20)
+                    regButtonView(bool: store.state.testButtonState)
+                        .asButton {
+                            
+                        }
+                    
                 }
                 .padding(.top, 30)
                 .toolbar {
@@ -115,4 +105,34 @@ struct SignUpView: View {
             }
         }
     }
+    
+    
+    private func regButtonView(bool: Bool) -> some View {
+        Text("가입하기")
+            .modifier(CommonButtonModifer())
+            .background(bool ? WSXColor.green : WSXColor.gray)
+            .foregroundStyle(WSXColor.white)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.horizontal, 30)
+            .padding(.bottom, 20)
+    }
+    
+    private func ifCurrectView(bool: Bool) -> some View {
+        withAnimation {
+            Group {
+                if bool {
+                    Text("사용 가능한 이메일 입니다.")
+                        .padding(.horizontal, 10)
+                        .frame(height: 40)
+                        .foregroundStyle(WSXColor.white)
+                        .font(WSXFont.bodyBold)
+                        .background(WSXColor.green)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                } else {
+                    EmptyView()
+                }
+            }
+        }
+    }
+    
 }

@@ -26,6 +26,10 @@ struct SignUpFeature {
         var passwordValid: textValidation = .isEmpty
         
         var passwordCheck: Bool = false
+        
+        var testButtonState: Bool = false
+        
+        var duplicateButtonState: Bool = false
     }
     
     enum Action {
@@ -36,6 +40,8 @@ struct SignUpFeature {
         case passwordChanged(String)
         case passwordConfirmationChanged(String)
         
+        // 최종 버튼 상태를 반영
+        case lastButtonState
         // iOS 17 버그로 인한
         case iOS17BugNumberChecked(String)
     }
@@ -49,19 +55,27 @@ struct SignUpFeature {
                 return .run { send in
                     await self.dismiss()
                 }
+                
             case let .emailChanged(email):
                 let result = TextValid.TextValidate(email, caseOf: .email)
                 state.emailValid = result
                 state.user.email = email
-                return .none
+                state.duplicateButtonState = result == .match
+                return .run { send in
+                    await send(.lastButtonState)
+                }
+                
             case let .nicknameChanged(name):
                 let result = TextValid.TextValidate(name, caseOf: .nickName)
                 state.nickNameValid = result
                 state.user.nickName = name
                 
-                return .none
+                return .run { send in
+                    await send(.lastButtonState)
+                }
+                
             case let .contactChanged(phones):
-        
+                
                 let result = TextValid.TextValidate(phones, caseOf: .phoneNumber)
                 
                 state.contactValid = result
@@ -70,23 +84,43 @@ struct SignUpFeature {
                 
                 return .run { send in
                     await send(.iOS17BugNumberChecked(phones))
+                    await send(.lastButtonState)
                 }
                 
             case let .passwordChanged(password):
                 state.user.password = password
-                return .none
+                
+                return .run { send in
+                    await send(.lastButtonState)
+                }
+                
             case let .passwordConfirmationChanged(checkPass):
                 
                 state.user.passwordConfirmaion = checkPass
+                let before = state.user.password
+                let ifconfirm = state.user.passwordConfirmaion
                 
-                return .none
+                state.passwordCheck = before == ifconfirm
+                
+                return .run { send in
+                    await send(.lastButtonState)
+                }
                 
             case let .iOS17BugNumberChecked(checkNumber):
                 
                 let clean = checkNumber.filter { $0.isNumber }
                 
                 state.user.contact = formatPhoneNumber(clean)
-        
+                
+                return .run { send in
+                    await send(.lastButtonState)
+                }
+                
+            case .lastButtonState:
+                let result = state.contactValid == .match && state.emailValid == .match && state.nickNameValid == .match && state.passwordValid == .match && state.passwordCheck == true
+                
+                state.testButtonState = result
+                
                 return .none
             }
         }
@@ -94,7 +128,8 @@ struct SignUpFeature {
 }
 
 extension SignUpFeature {
-    func formatPhoneNumber(_ number: String) -> String {
+    
+    private func formatPhoneNumber(_ number: String) -> String {
         var result = ""
         var mask = "XXX-XXX-XXXX"
         if number.count == 11 {
