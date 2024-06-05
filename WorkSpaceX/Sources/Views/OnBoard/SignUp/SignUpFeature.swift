@@ -36,7 +36,8 @@ struct SignUpFeature {
         case passwordChanged(String)
         case passwordConfirmationChanged(String)
         
-        case sideNumberEffect(String)
+        // iOS 17 버그로 인한
+        case iOS17BugNumberChecked(String)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -60,19 +61,17 @@ struct SignUpFeature {
                 
                 return .none
             case let .contactChanged(phones):
-                print("사용자 \(phones)")
-                let clean = phones.filter { $0.isNumber }
-                
+        
                 let result = TextValid.TextValidate(phones, caseOf: .phoneNumber)
-
                 
-//                state.user.contact = phones
-                print("클린 \(clean)")
-                state.user.contact = clean
                 state.contactValid = result
                 
-                return .none
-
+                state.user.contact = phones
+                
+                return .run { send in
+                    await send(.iOS17BugNumberChecked(phones))
+                }
+                
             case let .passwordChanged(password):
                 state.user.password = password
                 return .none
@@ -82,15 +81,12 @@ struct SignUpFeature {
                 
                 return .none
                 
-            case let .sideNumberEffect(text) :
+            case let .iOS17BugNumberChecked(checkNumber):
                 
-               
+                let clean = checkNumber.filter { $0.isNumber }
                 
-                
-//                let result = formatPhoneNumber(clean)
-//                print("SSSS",clean)
-////                state.user.contact = result
-//                state.user.contact = result
+                state.user.contact = formatPhoneNumber(clean)
+        
                 return .none
             }
         }

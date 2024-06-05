@@ -58,7 +58,8 @@ struct SignUpView: View {
                         Text(Const.SignUpView.contact.title)
                         TextField(
                             Const.SignUpView.contact.placeHolder,
-                            text: $store.user.contact.sending(\.contactChanged)
+                            text:
+                                $store.user.contact.sending(\.contactChanged)
                         )
                         .modifier(DefaultTextFieldViewModifier())
                     }
@@ -71,6 +72,7 @@ struct SignUpView: View {
                             text: $store.user.password.sending(\.passwordChanged)
                         )
                         .modifier(DefaultTextFieldViewModifier())
+                        
                     }
                     .padding(.horizontal, 30)
                     
