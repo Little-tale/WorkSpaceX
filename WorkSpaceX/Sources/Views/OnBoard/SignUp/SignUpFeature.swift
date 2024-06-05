@@ -59,14 +59,15 @@ struct SignUpFeature {
                 state.nickNameValid = result
                 state.user.nickName = name
                 return .none
-            case let .contactChanged(phone):
+            case let .contactChanged(phones):
             
-                let result = TextValid.TextValidate(phone, caseOf: .phoneNumber)
+                let result = TextValid.TextValidate(phones, caseOf: .phoneNumber)
                 
                 state.contactValid = result
+                state.user.contact = ""
                 
                 return .run { send in
-                    await send(.sideNumberEffect(phone))
+                    await send(.sideNumberEffect(phones))
                 }
             case let .passwordChanged(password):
                 state.user.password = password
@@ -79,7 +80,7 @@ struct SignUpFeature {
                 
                 let clean = text.filter { $0.isNumber }
                 
-                print(clean)
+                print( state.contactValid)
                 let result = formatPhoneNumber(clean)
                 print("SSSS",clean)
 //                state.user.contact = result
