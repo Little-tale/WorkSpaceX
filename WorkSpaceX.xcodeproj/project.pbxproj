@@ -27,7 +27,7 @@
 		7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */; };
 		7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */; };
 		7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC92C0EE13200E47797 /* SignUpView.swift */; };
-		7B592ECE2C0EE30700E47797 /* SignUpFreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */; };
+		7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECD2C0EE30700E47797 /* SignUpFeature.swift */; };
 		7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */; };
 		7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED22C0F08F600E47797 /* HeaderTextField.swift */; };
 		7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */; };
@@ -56,7 +56,7 @@
 		7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginFeature.swift; sourceTree = "<group>"; };
 		7B592EC92C0EE13200E47797 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFreature.swift; sourceTree = "<group>"; };
+		7B592ECD2C0EE30700E47797 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextFieldViewModifier.swift; sourceTree = "<group>"; };
 		7B592ED22C0F08F600E47797 /* HeaderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTextField.swift; sourceTree = "<group>"; };
 		7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegModel.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				7B592EC92C0EE13200E47797 /* SignUpView.swift */,
-				7B592ECD2C0EE30700E47797 /* SignUpFreature.swift */,
+				7B592ECD2C0EE30700E47797 /* SignUpFeature.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -346,7 +346,7 @@
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */,
-				7B592ECE2C0EE30700E47797 /* SignUpFreature.swift in Sources */,
+				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,

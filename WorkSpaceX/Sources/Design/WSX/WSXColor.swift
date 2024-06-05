@@ -11,7 +11,7 @@ enum WSXColor {}
 
 extension WSXColor {
     
-    static let green = Color(ColorResource.green)
+    static let green = Color(ColorResource.wsxGreen)
     
     static let lightGreen = Color(ColorResource.lightGreen)
     
@@ -19,11 +19,11 @@ extension WSXColor {
     
     static let inacitve = Color(ColorResource.inactive)
     
-    static let black = Color(ColorResource.black)
+    static let black = Color(ColorResource.wsxBlack)
     
-    static let white = Color(ColorResource.white)
+    static let white = Color(ColorResource.wsxWhite)
     
-    static let gray = Color(ColorResource.gray)
+    static let gray = Color(ColorResource.wsxGray)
     
     
     static let lightGray = Color(ColorResource.onlyLightGrey)

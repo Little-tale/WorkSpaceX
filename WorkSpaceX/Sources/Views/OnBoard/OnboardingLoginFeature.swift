@@ -12,7 +12,7 @@ struct OnboardingLoginFeature {
     
     @ObservableState
     struct State: Equatable {
-        @Presents var signUp: SignUpFreature.State?
+        @Presents var signUp: SignUpFeature.State?
         
     }
     
@@ -23,7 +23,7 @@ struct OnboardingLoginFeature {
         case kakaoLoginButtonTapped
         case emailLoginButtonTapped
         case newSignUpTapped
-        case signUpFeature(PresentationAction<SignUpFreature.Action>)
+        case signUpFeature(PresentationAction<SignUpFeature.Action>)
     }
     
     
@@ -41,7 +41,7 @@ struct OnboardingLoginFeature {
                 return .none
                 
             case .newSignUpTapped:
-                state.signUp = SignUpFreature.State()
+                state.signUp = SignUpFeature.State()
                 
                 return .none
                 
@@ -57,7 +57,7 @@ struct OnboardingLoginFeature {
             }
         }
         .ifLet(\.$signUp, action: \.signUpFeature) {
-            SignUpFreature()
+            SignUpFeature()
         }
     }
 }
