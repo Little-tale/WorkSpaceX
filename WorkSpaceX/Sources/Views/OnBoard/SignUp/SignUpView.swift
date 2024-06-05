@@ -18,7 +18,8 @@ struct SignUpView: View {
             ZStack (alignment: .top) {
                 WSXColor.lightGray
                     .ignoresSafeArea(edges: .bottom)
-                VStack (spacing: 16) {
+                VStack (spacing: 14) {
+                    
                     HStack (alignment: .bottom ,spacing: 15) {
                         
                         HeaderTextField(
@@ -83,13 +84,13 @@ struct SignUpView: View {
                     
                     Spacer()
                     // store.testButtonState
-                    ifCurrectView(bool: true)
+                    ifCurrectView(text: nil)
                     
                     regButtonView(bool: store.state.testButtonState)
                         .asButton {
                             
                         }
-                    
+                        .disabled(!store.testButtonState)
                 }
                 .padding(.top, 30)
                 .toolbar {
@@ -117,11 +118,13 @@ struct SignUpView: View {
             .padding(.bottom, 20)
     }
     
-    private func ifCurrectView(bool: Bool) -> some View {
+    private func ifCurrectView(text: String?) -> some View {
+        // 각 버튼별로 로직이 다름을 생각해야함.
+        // 이친구는 Text를 받아야 할것 같음
         withAnimation {
             Group {
-                if bool {
-                    Text("사용 가능한 이메일 입니다.")
+                if let text {
+                    Text(text)
                         .padding(.horizontal, 10)
                         .frame(height: 40)
                         .foregroundStyle(WSXColor.white)

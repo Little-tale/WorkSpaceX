@@ -76,10 +76,6 @@ struct SignUpFeature {
                 
             case let .contactChanged(phones):
                 
-                let result = TextValid.TextValidate(phones, caseOf: .phoneNumber)
-                
-                state.contactValid = result
-                
                 state.user.contact = phones
                 
                 return .run { send in
@@ -88,8 +84,9 @@ struct SignUpFeature {
                 }
                 
             case let .passwordChanged(password):
+                let result = TextValid.TextValidate(password, caseOf: .password)
                 state.user.password = password
-                
+                state.passwordValid = result
                 return .run { send in
                     await send(.lastButtonState)
                 }
@@ -110,6 +107,10 @@ struct SignUpFeature {
                 
                 let clean = checkNumber.filter { $0.isNumber }
                 
+                let result = TextValid.TextValidate(clean, caseOf: .phoneNumber)
+                
+                state.contactValid = result
+                
                 state.user.contact = formatPhoneNumber(clean)
                 
                 return .run { send in
@@ -120,7 +121,11 @@ struct SignUpFeature {
                 let result = state.contactValid == .match && state.emailValid == .match && state.nickNameValid == .match && state.passwordValid == .match && state.passwordCheck == true
                 
                 state.testButtonState = result
-                
+                print("emailValid \(state.emailValid)")
+                print("contactValid \(state.contactValid)")
+                print("nickNameValid \(state.nickNameValid)")
+                print("passwordValid \(state.passwordValid)")
+                print("passwordCheck \(state.passwordCheck)")
                 return .none
             }
         }
