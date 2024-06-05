@@ -33,6 +33,7 @@ enum textValidation: String {
     case minCount
     case match
     case noMatch
+    case alReady
 }
 
 

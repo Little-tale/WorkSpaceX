@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 struct SignUpView: View {
     
@@ -36,7 +37,7 @@ struct SignUpView: View {
                             .background(store.duplicateButtonState ? WSXColor.green : WSXColor.inacitve)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                             .asButton {
-                                
+                                store.send(.duplicateButtonTapped)
                             }
                             .disabled(!store.duplicateButtonState)
                             .buttonStyle(PlainButtonStyle())
@@ -80,13 +81,16 @@ struct SignUpView: View {
                     
                     Spacer()
                     // store.testButtonState
-                    ifCurrectView(text: nil)
+                    // ifCurrectView(text: nil)
                     
                     regButtonView(bool: store.state.testButtonState)
                         .asButton {
                             
                         }
                         .disabled(!store.testButtonState)
+                    
+                   
+                    
                 }
                 .padding(.top, 30)
                 .toolbar {
@@ -99,6 +103,16 @@ struct SignUpView: View {
                             .foregroundStyle(WSXColor.black)
                     }
                 }
+                .popup(item: $store.presentationText.sending(\.returnView)) { item in
+                    BottomToastColorView(text: item, Color: WSXColor.green)
+                    EmptyView()
+                } customize: {
+                    $0.type(.toast)
+                        .position(.bottom)
+                        .closeOnTap(false)
+                        .autohideIn(1)
+                }
+                
             }
         }
     }
@@ -114,6 +128,8 @@ struct SignUpView: View {
             .padding(.bottom, 20)
     }
     
+    
+    // 작동 하지만 라이브러리로도 구현 해보기.
     private func ifCurrectView(text: String?) -> some View {
         // 각 버튼별로 로직이 다름을 생각해야함.
         // 이친구는 Text를 받아야 할것 같음

@@ -32,6 +32,8 @@ struct SignUpFeature {
         var testButtonState: Bool = false
         
         var duplicateButtonState: Bool = false
+        
+        var presentationText: String? = nil
     }
     
     enum Action {
@@ -44,8 +46,15 @@ struct SignUpFeature {
         
         // 최종 버튼 상태를 반영
         case lastButtonState
+        
+        // 중복 확인 버튼을 클릭시
+        case duplicateButtonTapped
+        
         // iOS 17 버그로 인한
         case iOS17BugNumberChecked(String)
+        
+        // toast
+        case returnView(String?)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -124,6 +133,18 @@ struct SignUpFeature {
                 state.user.password.isEmpty ||
                 state.user.passwordConfirmaion.isEmpty
                 state.testButtonState = !result
+                return .none
+            case .duplicateButtonTapped:
+                if case .match = state.emailValid {
+                    
+                    return .none // 통신 해야함.
+                } else {
+                    state.presentationText = "이메일 형식이 올바르지 않습니다."
+                    return .none
+                }
+            
+            case .returnView(let text):
+                state.presentationText = text
                 return .none
             }
             // 버튼 누를시 로 변경
