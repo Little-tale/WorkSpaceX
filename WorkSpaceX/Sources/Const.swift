@@ -16,7 +16,7 @@ enum Const {
     
     enum SignUpView: String, CaseIterable {
         case email = "이메일"
-        case ninkName = "닉네임"
+        case nickName = "닉네임"
         case contact = "연락처"
         case password = "비밀번호"
         case passwordCheck = "비밀번호 확인"
@@ -29,7 +29,7 @@ enum Const {
             return switch self {
              case .email:
                 "이메일을 입력하세요"
-             case .ninkName:
+             case .nickName:
                 "닉네임을 입력하세요"
              case .contact:
                 "연락처를 입력하세요"

@@ -15,7 +15,7 @@ struct SignUpFeature {
         
         var user = UserRegModel()
         
-        var test = ""
+        var passwordConfirm = ""
         
         var emailValid: textValidation = .isEmpty
         
@@ -35,7 +35,6 @@ struct SignUpFeature {
         case contactChanged(String)
         case passwordChanged(String)
         case passwordConfirmationChanged(String)
-        
         
         case sideNumberEffect(String)
     }
@@ -58,33 +57,40 @@ struct SignUpFeature {
                 let result = TextValid.TextValidate(name, caseOf: .nickName)
                 state.nickNameValid = result
                 state.user.nickName = name
+                
                 return .none
             case let .contactChanged(phones):
-            
+                print("사용자 \(phones)")
+                let clean = phones.filter { $0.isNumber }
+                
                 let result = TextValid.TextValidate(phones, caseOf: .phoneNumber)
+
                 
+//                state.user.contact = phones
+                print("클린 \(clean)")
+                state.user.contact = clean
                 state.contactValid = result
-                state.user.contact = ""
                 
-                return .run { send in
-                    await send(.sideNumberEffect(phones))
-                }
+                return .none
+
             case let .passwordChanged(password):
                 state.user.password = password
                 return .none
             case let .passwordConfirmationChanged(checkPass):
+                
                 state.user.passwordConfirmaion = checkPass
+                
                 return .none
                 
             case let .sideNumberEffect(text) :
                 
-                let clean = text.filter { $0.isNumber }
+               
                 
-                print( state.contactValid)
-                let result = formatPhoneNumber(clean)
-                print("SSSS",clean)
+                
+//                let result = formatPhoneNumber(clean)
+//                print("SSSS",clean)
+////                state.user.contact = result
 //                state.user.contact = result
-                state.user.contact = result
                 return .none
             }
         }

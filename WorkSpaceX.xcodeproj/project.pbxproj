@@ -17,7 +17,6 @@
 		7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA32C0E289C00E47797 /* SplashView.swift */; };
 		7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA72C0E28E700E47797 /* WSXFont.swift */; };
 		7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EA92C0E294200E47797 /* WSXImage.swift */; };
-		7B592EB32C0E311900E47797 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B592EB22C0E311900E47797 /* ComposableArchitecture */; };
 		7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB72C0EC3EA00E47797 /* RootView.swift */; };
 		7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EB92C0EC45C00E47797 /* OnboardingView.swift */; };
 		7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBB2C0EC5C900E47797 /* WSXColor.swift */; };
@@ -33,6 +32,7 @@
 		7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */; };
 		7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED82C0F2C7600E47797 /* TextValid.swift */; };
 		7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EDA2C0F2CC100E47797 /* TextValidation.swift */; };
+		7B5AEB012C104CC700D10330 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB002C104CC700D10330 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B592EB32C0E311900E47797 /* ComposableArchitecture in Frameworks */,
+				7B5AEB012C104CC700D10330 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +269,7 @@
 			);
 			name = WorkSpaceX;
 			packageProductDependencies = (
-				7B592EB22C0E311900E47797 /* ComposableArchitecture */,
+				7B5AEB002C104CC700D10330 /* ComposableArchitecture */,
 			);
 			productName = WorkSpaceX;
 			productReference = 7B592E812C0E251F00E47797 /* WorkSpaceX.app */;
@@ -300,7 +300,7 @@
 			);
 			mainGroup = 7B592E782C0E251F00E47797;
 			packageReferences = (
-				7B592EB12C0E311900E47797 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				7B5AEAFF2C104CC700D10330 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 7B592E822C0E251F00E47797 /* Products */;
 			projectDirPath = "";
@@ -568,20 +568,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7B592EB12C0E311900E47797 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		7B5AEAFF2C104CC700D10330 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.10.4;
+				kind = exactVersion;
+				version = 1.9.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7B592EB22C0E311900E47797 /* ComposableArchitecture */ = {
+		7B5AEB002C104CC700D10330 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7B592EB12C0E311900E47797 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 7B5AEAFF2C104CC700D10330 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
