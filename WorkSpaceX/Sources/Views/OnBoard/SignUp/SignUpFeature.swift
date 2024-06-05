@@ -17,6 +17,8 @@ struct SignUpFeature {
         
         var passwordConfirm = ""
         
+        // 요구가 변경되어 추가 유효성 여부 상관없이 값 입력시 버튼 활성화
+        
         var emailValid: textValidation = .isEmpty
         
         var nickNameValid: textValidation = .isEmpty
@@ -60,7 +62,7 @@ struct SignUpFeature {
                 let result = TextValid.TextValidate(email, caseOf: .email)
                 state.emailValid = result
                 state.user.email = email
-                state.duplicateButtonState = result == .match
+                state.duplicateButtonState = !email.isEmpty
                 return .run { send in
                     await send(.lastButtonState)
                 }
@@ -118,16 +120,23 @@ struct SignUpFeature {
                 }
                 
             case .lastButtonState:
-                let result = state.contactValid == .match && state.emailValid == .match && state.nickNameValid == .match && state.passwordValid == .match && state.passwordCheck == true
-                
-                state.testButtonState = result
-                print("emailValid \(state.emailValid)")
-                print("contactValid \(state.contactValid)")
-                print("nickNameValid \(state.nickNameValid)")
-                print("passwordValid \(state.passwordValid)")
-                print("passwordCheck \(state.passwordCheck)")
+                let result = state.user.email.isEmpty ||  state.user.nickName.isEmpty ||
+                state.user.password.isEmpty ||
+                state.user.passwordConfirmaion.isEmpty
+                state.testButtonState = !result
                 return .none
             }
+            // 버튼 누를시 로 변경
+            /*
+             let result = state.contactValid == .match && state.emailValid == .match && state.nickNameValid == .match && state.passwordValid == .match && state.passwordCheck == true
+             
+             state.testButtonState = result
+             print("emailValid \(state.emailValid)")
+             print("contactValid \(state.contactValid)")
+             print("nickNameValid \(state.nickNameValid)")
+             print("passwordValid \(state.passwordValid)")
+             print("passwordCheck \(state.passwordCheck)")
+             */
         }
     }
 }

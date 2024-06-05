@@ -24,7 +24,6 @@ struct SignUpView: View {
                         
                         HeaderTextField(
                             headerTitle: Const.SignUpView.email.title,
-                            ifValidText: nil,
                             placeHolder: Const.SignUpView.email.placeHolder,
                             isSecure: false,
                             binding: $store.user.email.sending(\.emailChanged)
@@ -47,7 +46,7 @@ struct SignUpView: View {
                     
                     HeaderTextField(
                         headerTitle: Const.SignUpView.nickName.title,
-                        ifValidText: nil,
+                       
                         placeHolder: Const.SignUpView.nickName.placeHolder,
                         isSecure: false,
                         binding: $store.user.nickName.sending(\.nicknameChanged)
@@ -56,7 +55,6 @@ struct SignUpView: View {
                     
                     HeaderTextField(
                         headerTitle: Const.SignUpView.contact.title,
-                        ifValidText: nil,
                         placeHolder: Const.SignUpView.contact.placeHolder,
                         isSecure: false,
                         binding: $store.user.contact.sending(\.contactChanged)
@@ -66,7 +64,6 @@ struct SignUpView: View {
                     
                     HeaderTextField(
                         headerTitle: Const.SignUpView.password.title,
-                        ifValidText: nil,
                         placeHolder: Const.SignUpView.password.placeHolder,
                         isSecure: true,
                         binding: $store.user.password.sending(\.passwordChanged)
@@ -75,7 +72,6 @@ struct SignUpView: View {
                     
                     HeaderTextField(
                         headerTitle: Const.SignUpView.passwordCheck.title,
-                        ifValidText: "비밀번호 양식이 맞지 않아요",
                         placeHolder: Const.SignUpView.passwordCheck.placeHolder,
                         isSecure: true,
                         binding: $store.passwordConfirm.sending(\.passwordConfirmationChanged)

@@ -11,7 +11,6 @@ import SwiftUI
 struct HeaderTextField: View {
     
     let headerTitle: String
-    let ifValidText: String?
     let placeHolder: String
     let isSecure: Bool
     
@@ -32,11 +31,7 @@ struct HeaderTextField: View {
                 }
             }
             .modifier(DefaultTextFieldViewModifier())
-            if let ifValidText {
-                Text(ifValidText)
-                    .foregroundStyle(WSXColor.errorRed)
-                    .padding(.leading, 5)
-            }
+            
         }
     }
 }
