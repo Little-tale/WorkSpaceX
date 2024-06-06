@@ -7,10 +7,8 @@
 
 import Foundation
 
-
 enum UserDomainError: DomainErrorType {
     case emailValid(APIErrorResponse)
-    
 }
 
 extension UserDomainError {

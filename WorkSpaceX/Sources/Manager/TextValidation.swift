@@ -50,7 +50,7 @@ enum RegularExpressionCase {
         
         switch self {
         case .email:
-            return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.com"
+            return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+.com$"
         case .password:
             return "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$"
         case .nickName:

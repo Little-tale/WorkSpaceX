@@ -16,8 +16,7 @@ struct UserDomainRepository {
 
 extension UserDomainRepository: DependencyKey {
     
-   
-    
+
     static let liveValue: UserDomainRepository = Self(
         chaeckEmail: { email in
             let result = try await NetworkManger.shared.request(UserDomainRouter.userEmail(UserEmail(email: email)))

@@ -60,6 +60,8 @@ struct SignUpFeature {
         
         // 중복 체크 통신 시작 액션
         case checkEmail
+        // 중복체크 완료 액션
+        case checkEmailSuccess
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -78,6 +80,7 @@ struct SignUpFeature {
                 state.emailValid = result
                 state.user.email = email
                 state.duplicateButtonState = !email.isEmpty
+                state.alReadyEmailCheck = false
                 return .run { send in
                     await send(.lastButtonState)
                 }
@@ -141,9 +144,15 @@ struct SignUpFeature {
                 state.testButtonState = !result
                 return .none
             case .duplicateButtonTapped:
-                if case .match = state.emailValid {
-                    return .run { send in
-                        await send(.checkEmail)
+                if case .match = state.emailValid{
+                    if state.alReadyEmailCheck != false {
+                        return .run { send in
+                            await send(.returnView("이미 중복확인 처리된 이메일 입니다."))
+                        }
+                    } else {
+                        return .run { send in
+                            await send(.checkEmail)
+                        }
                     }
                 } else {
                     state.presentationText = "이메일 형식이 올바르지 않습니다."
@@ -159,16 +168,19 @@ struct SignUpFeature {
                 return .run { send in
                     do {
                         try await reposiory.chaeckEmail(email)
+                        await send(.checkEmailSuccess)
                         await send(.returnView("중복되지 않았어요"))
                     } catch let error as APIError {
                         if case .customError(let errorCase) = error {
-                            
-                            print(errorCase)
+                            print(UserDomainError.emailValid(errorCase).message)
                         }
                     } catch {// 1차 시도 알수없는 에러 즉 Router 구성 잘못됨.
                         await send(.returnView(APIError.Unkonwn))
                     }
                 }
+            case .checkEmailSuccess:
+                state.alReadyEmailCheck = true
+                return .none
             }
             // 버튼 누를시 로 변경
             /*
