@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+typealias HTTPHeaders = [String: String]
+
+extension HTTPHeaders {
+    
+    @discardableResult
+    mutating func addHeaders(_ headers: HTTPHeaders) -> HTTPHeaders {
+        headers.forEach { self[$0.key] = $0.value }
+        return self
+    }
+}

@@ -6,25 +6,19 @@
 //
 
 import Foundation
-import Then
 
 typealias Parameters = [String: Any]
 
 protocol Router {
-
     var method: HTTPMethod { get }
     var baseURL: String { get }
     var path: String { get }
     var defaultHeader: HTTPHeaders { get }
-    var optionalHeaders: HTTPHeaders { get }
+    var optionalHeaders: HTTPHeaders? { get }
     var headers: HTTPHeaders { get }
     var parameters: Parameters? { get }
     var body: Data? { get }
-}
-
-enum EncodingType {
-    case url
-    case json
+    
 }
 
 extension Router {
@@ -36,6 +30,13 @@ extension Router {
     var defaultHeader: HTTPHeaders {
         return [WSXHeader.Key.sesacKey : APIKey.secretKey ]
     }
+    var headers: HTTPHeaders {
+        var combine = defaultHeader
+        if let optionalHeaders {
+            combine.addHeaders(optionalHeaders)
+        }
+         return combine
+    }
     
     func asURLRequest() throws -> URLRequest {
         
@@ -45,34 +46,16 @@ extension Router {
         var urlRequest = URLRequest(url: url)
         
         urlRequest.httpMethod = method.rawValue
-        
         urlRequest.httpBody = body
-        
         urlRequest.allHTTPHeaderFields = headers
-       
-        do {
-            return try Self.encoding(request: &urlRequest, parameter: parameters)
-        } catch {
-            throw error
-        }
+        
+        return try WSXCoder.shared.urlEncoding(request: &urlRequest, parameter: parameters)
+        
     }
     
-    static func encoding(request: inout URLRequest, parameter: Parameters?) throws -> URLRequest {
-        var urlReqeust = request
-        guard let parameter else { return request }
-        
-        guard let url = urlReqeust.url else {
-            throw APIError.httpError("BAD URL")
-        }
-        
-        guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            throw APIError.httpError("Bad URLComponents")
-        }
-        
-        urlComponents.queryItems = parameter.map { URLQueryItem(name: $0.key, value: "\($0.value)")}
-        urlReqeust.url = urlComponents.url
-        
-        return urlReqeust
+    func requestToBody(_ request: DTORequest) -> Data? {
+      return try? WSXCoder.shared.JSONEncode(from: request)
     }
+    
 }
 
