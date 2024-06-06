@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct APIErrorResponse: DTO, Equatable {
+    let errorCode: String
+}

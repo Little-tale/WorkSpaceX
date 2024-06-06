@@ -29,11 +29,9 @@ extension WSXCoder {
     
     func urlEncoding(request: inout URLRequest, parameter: [String : Any]?) throws -> URLRequest {
         
-        var urlReqeust = request
-        
         guard let parameter else { return request }
         
-        guard let url = urlReqeust.url else {
+        guard let url = request.url else {
             throw APIError.httpError("BAD URL")
         }
         
@@ -42,9 +40,9 @@ extension WSXCoder {
         }
         
         urlComponents.queryItems = parameter.map { URLQueryItem(name: $0.key, value: "\($0.value)")}
-        urlReqeust.url = urlComponents.url
+        request.url = urlComponents.url
         
-        return urlReqeust
+        return request
     }
     
     func jsonEncoding(request: inout URLRequest, parameter: Parameters?) throws -> URLRequest {
@@ -59,5 +57,11 @@ extension WSXCoder {
         )
         
         return request
+    }
+}
+
+extension WSXCoder {
+    func jsonDecoding<T:Decodable>(model: T.Type, from data: Data) throws -> T {
+        return try decoder.decode(T.self, from: data)
     }
 }

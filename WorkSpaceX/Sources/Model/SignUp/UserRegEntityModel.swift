@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserRegModel: Entity {
+struct UserRegEntityModel: Entity {
     var email = ""
     var nickName = ""
     var contact = ""

@@ -13,10 +13,18 @@
 		7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE042C10C3750024853C /* DTOProtocol.swift */; };
 		7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE062C10C43B0024853C /* EntityProtocol.swift */; };
 		7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE082C10C50B0024853C /* UserRegMapper.swift */; };
-		7B2EEE0C2C117A840024853C /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE0B2C117A840024853C /* UserDTO.swift */; };
-		7B2EEE0F2C117C670024853C /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE0E2C117C670024853C /* RouterProtocol.swift */; };
+		7B2EEE0C2C117A840024853C /* UserDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE0B2C117A840024853C /* UserDTORequest.swift */; };
 		7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE102C117D010024853C /* HTTPMethod.swift */; };
 		7B2EEE152C11812B0024853C /* WSXHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE142C11812B0024853C /* WSXHeader.swift */; };
+		7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE162C118C660024853C /* HTTPHeaders.swift */; };
+		7B2EEE1E2C1190520024853C /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE1D2C1190520024853C /* CommonError.swift */; };
+		7B2EEE202C1190EE0024853C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE1F2C1190EE0024853C /* APIError.swift */; };
+		7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE212C11913A0024853C /* APIErrorResponse.swift */; };
+		7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE232C1193D60024853C /* RouterProtocol.swift */; };
+		7B2EEE272C1197560024853C /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 7B2EEE262C1197560024853C /* Then */; };
+		7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE282C11A38B0024853C /* WSXCoder.swift */; };
+		7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2A2C11A6120024853C /* UserDomainRouter.swift */; };
+		7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */; };
 		7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */; };
 		7B592E892C0E252000E47797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E882C0E252000E47797 /* Assets.xcassets */; };
 		7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */; };
@@ -39,7 +47,7 @@
 		7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECD2C0EE30700E47797 /* SignUpFeature.swift */; };
 		7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */; };
 		7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED22C0F08F600E47797 /* HeaderTextField.swift */; };
-		7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */; };
+		7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED62C0F1A8F00E47797 /* UserRegEntityModel.swift */; };
 		7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592ED82C0F2C7600E47797 /* TextValid.swift */; };
 		7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EDA2C0F2CC100E47797 /* TextValidation.swift */; };
 		7B5AEB042C10539200D10330 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB032C10539200D10330 /* ComposableArchitecture */; };
@@ -54,10 +62,17 @@
 		7B2EEE042C10C3750024853C /* DTOProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOProtocol.swift; sourceTree = "<group>"; };
 		7B2EEE062C10C43B0024853C /* EntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
 		7B2EEE082C10C50B0024853C /* UserRegMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegMapper.swift; sourceTree = "<group>"; };
-		7B2EEE0B2C117A840024853C /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
-		7B2EEE0E2C117C670024853C /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
+		7B2EEE0B2C117A840024853C /* UserDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTORequest.swift; sourceTree = "<group>"; };
 		7B2EEE102C117D010024853C /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		7B2EEE142C11812B0024853C /* WSXHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXHeader.swift; sourceTree = "<group>"; };
+		7B2EEE162C118C660024853C /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
+		7B2EEE1D2C1190520024853C /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
+		7B2EEE1F2C1190EE0024853C /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		7B2EEE212C11913A0024853C /* APIErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorResponse.swift; sourceTree = "<group>"; };
+		7B2EEE232C1193D60024853C /* RouterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
+		7B2EEE282C11A38B0024853C /* WSXCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXCoder.swift; sourceTree = "<group>"; };
+		7B2EEE2A2C11A6120024853C /* UserDomainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainRouter.swift; sourceTree = "<group>"; };
+		7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmail.swift; sourceTree = "<group>"; };
 		7B592E812C0E251F00E47797 /* WorkSpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkSpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXApp.swift; sourceTree = "<group>"; };
 		7B592E882C0E252000E47797 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,7 +96,7 @@
 		7B592ECD2C0EE30700E47797 /* SignUpFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFeature.swift; sourceTree = "<group>"; };
 		7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextFieldViewModifier.swift; sourceTree = "<group>"; };
 		7B592ED22C0F08F600E47797 /* HeaderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTextField.swift; sourceTree = "<group>"; };
-		7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegModel.swift; sourceTree = "<group>"; };
+		7B592ED62C0F1A8F00E47797 /* UserRegEntityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegEntityModel.swift; sourceTree = "<group>"; };
 		7B592ED82C0F2C7600E47797 /* TextValid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValid.swift; sourceTree = "<group>"; };
 		7B592EDA2C0F2CC100E47797 /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticToastColorView.swift; sourceTree = "<group>"; };
@@ -93,6 +108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B5AEB072C108FCB00D10330 /* PopupView in Frameworks */,
+				7B2EEE272C1197560024853C /* Then in Frameworks */,
 				7B5AEB042C10539200D10330 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,9 +119,9 @@
 		7B2EEE032C10C3680024853C /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE232C1193D60024853C /* RouterProtocol.swift */,
 				7B2EEE042C10C3750024853C /* DTOProtocol.swift */,
 				7B2EEE062C10C43B0024853C /* EntityProtocol.swift */,
-				7B2EEE0E2C117C670024853C /* RouterProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -113,7 +129,7 @@
 		7B2EEE0A2C117A7D0024853C /* DTOModel */ = {
 			isa = PBXGroup;
 			children = (
-				7B2EEE0B2C117A840024853C /* UserDTO.swift */,
+				7B2EEE2C2C11B69B0024853C /* UserDomain */,
 			);
 			path = DTOModel;
 			sourceTree = "<group>";
@@ -122,8 +138,39 @@
 			isa = PBXGroup;
 			children = (
 				7B2EEE102C117D010024853C /* HTTPMethod.swift */,
+				7B2EEE2A2C11A6120024853C /* UserDomainRouter.swift */,
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		7B2EEE192C118D060024853C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE1C2C11903E0024853C /* Error */,
+				7B2EEDFF2C10C2900024853C /* NetworkManger.swift */,
+				7B2EEE0D2C117BC70024853C /* Router */,
+				7B2EEE282C11A38B0024853C /* WSXCoder.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		7B2EEE1C2C11903E0024853C /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE1D2C1190520024853C /* CommonError.swift */,
+				7B2EEE1F2C1190EE0024853C /* APIError.swift */,
+				7B2EEE212C11913A0024853C /* APIErrorResponse.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		7B2EEE2C2C11B69B0024853C /* UserDomain */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE0B2C117A840024853C /* UserDTORequest.swift */,
+				7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */,
+			);
+			path = UserDomain;
 			sourceTree = "<group>";
 		};
 		7B592E782C0E251F00E47797 = {
@@ -197,10 +244,9 @@
 		7B592E992C0E26F200E47797 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				7B2EEE0D2C117BC70024853C /* Router */,
+				7B2EEE192C118D060024853C /* Network */,
 				7B592ED82C0F2C7600E47797 /* TextValid.swift */,
 				7B592EDA2C0F2CC100E47797 /* TextValidation.swift */,
-				7B2EEDFF2C10C2900024853C /* NetworkManger.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -297,6 +343,7 @@
 			children = (
 				7B2EEE0A2C117A7D0024853C /* DTOModel */,
 				7B592ED52C0F1A7F00E47797 /* SignUp */,
+				7B2EEE162C118C660024853C /* HTTPHeaders.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -304,7 +351,7 @@
 		7B592ED52C0F1A7F00E47797 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				7B592ED62C0F1A8F00E47797 /* UserRegModel.swift */,
+				7B592ED62C0F1A8F00E47797 /* UserRegEntityModel.swift */,
 				7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */,
 				7B2EEE082C10C50B0024853C /* UserRegMapper.swift */,
 			);
@@ -338,6 +385,7 @@
 			packageProductDependencies = (
 				7B5AEB032C10539200D10330 /* ComposableArchitecture */,
 				7B5AEB062C108FCB00D10330 /* PopupView */,
+				7B2EEE262C1197560024853C /* Then */,
 			);
 			productName = WorkSpaceX;
 			productReference = 7B592E812C0E251F00E47797 /* WorkSpaceX.app */;
@@ -370,6 +418,7 @@
 			packageReferences = (
 				7B5AEB022C10539200D10330 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				7B5AEB052C108FCB00D10330 /* XCRemoteSwiftPackageReference "PopupView" */,
+				7B2EEE252C1197560024853C /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 7B592E822C0E251F00E47797 /* Products */;
 			projectDirPath = "";
@@ -399,32 +448,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */,
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
-				7B2EEE0C2C117A840024853C /* UserDTO.swift in Sources */,
+				7B2EEE0C2C117A840024853C /* UserDTORequest.swift in Sources */,
 				7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
+				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
 				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
-				7B2EEE0F2C117C670024853C /* RouterProtocol.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
+				7B2EEE1E2C1190520024853C /* CommonError.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
+				7B2EEE202C1190EE0024853C /* APIError.swift in Sources */,
+				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,
 				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
+				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
 				7B2EEE152C11812B0024853C /* WSXHeader.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
-				7B592ED72C0F1A8F00E47797 /* UserRegModel.swift in Sources */,
+				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManger.swift in Sources */,
+				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
+				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
@@ -648,6 +704,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7B2EEE252C1197560024853C /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		7B5AEB022C10539200D10330 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -667,6 +731,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7B2EEE262C1197560024853C /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B2EEE252C1197560024853C /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
 		7B5AEB032C10539200D10330 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B5AEB022C10539200D10330 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
