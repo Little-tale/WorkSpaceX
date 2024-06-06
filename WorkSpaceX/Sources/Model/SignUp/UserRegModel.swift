@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserRegModel: Equatable {
+struct UserRegModel: Entity {
     var email = ""
     var nickName = ""
     var contact = ""

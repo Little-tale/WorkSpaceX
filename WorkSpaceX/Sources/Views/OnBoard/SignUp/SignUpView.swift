@@ -11,7 +11,7 @@ import PopupView
 
 struct SignUpView: View {
     
-    @Perception.Bindable var store: StoreOf<SignUpFeature>
+    @State var store: StoreOf<SignUpFeature>
     
     var body: some View {
         
@@ -62,14 +62,16 @@ struct SignUpView: View {
                     )
                     .padding(.horizontal, 30)
                     
+                    ZStack {
+                        HeaderTextField(
+                            headerTitle: Const.SignUpView.password.title,
+                            placeHolder: Const.SignUpView.password.placeHolder,
+                            isSecure: true,
+                            binding: $store.user.password.sending(\.passwordChanged)
+                        )
+                        .padding(.horizontal, 30)
+                    }
                     
-                    HeaderTextField(
-                        headerTitle: Const.SignUpView.password.title,
-                        placeHolder: Const.SignUpView.password.placeHolder,
-                        isSecure: true,
-                        binding: $store.user.password.sending(\.passwordChanged)
-                    )
-                    .padding(.horizontal, 30)
                     
                     HeaderTextField(
                         headerTitle: Const.SignUpView.passwordCheck.title,
@@ -93,9 +95,7 @@ struct SignUpView: View {
                             
                         }
                         .disabled(!store.testButtonState)
-                    
-                   
-                    
+                
                 }
                 .padding(.top, 30)
                 .toolbar {
@@ -108,15 +108,7 @@ struct SignUpView: View {
                             .foregroundStyle(WSXColor.black)
                     }
                 }
-//                .popup(item: $store.presentationText.sending(\.returnView)) { item in
-//                    BottomToastColorView(text: item, Color: WSXColor.green)
-//                    EmptyView()
-//                } customize: {
-//                    $0.type(.toast)
-//                        .position(.bottom)
-//                        .closeOnTap(false)
-//                        .autohideIn(1)
-//                }
+
                 
             }
         }
@@ -132,8 +124,5 @@ struct SignUpView: View {
             .padding(.horizontal, 30)
             .padding(.bottom, 20)
     }
-    
-    
- 
     
 }
