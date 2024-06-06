@@ -29,7 +29,7 @@ struct SignUpFeature {
         
         var passwordCheck: Bool = false
         
-        var testButtonState: Bool = false
+        var lastButtonState: Bool = false
         
         var duplicateButtonState: Bool = false
         
@@ -62,6 +62,11 @@ struct SignUpFeature {
         case checkEmail
         // 중복체크 완료 액션
         case checkEmailSuccess
+        
+        // 최종 버튼 클릭시
+        case lastButtonTapped
+        
+        // 최종 회원가입 로직 시작
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -112,7 +117,7 @@ struct SignUpFeature {
                 }
                 
             case let .passwordConfirmationChanged(checkPass):
-                
+                print(checkPass)
                 state.user.passwordConfirmaion = checkPass
                 let before = state.user.password
                 let ifconfirm = state.user.passwordConfirmaion
@@ -138,10 +143,15 @@ struct SignUpFeature {
                 }
                 
             case .lastButtonState:
-                let result = state.user.email.isEmpty ||  state.user.nickName.isEmpty ||
-                state.user.password.isEmpty ||
-                state.user.passwordConfirmaion.isEmpty
-                state.testButtonState = !result
+                let result = !state.user.email.isEmpty && !state.user.nickName.isEmpty &&
+                !state.user.password.isEmpty &&
+                !state.user.passwordConfirmaion.isEmpty
+                state.lastButtonState = result
+                print(state.user.email.isEmpty)
+                print(state.user.nickName.isEmpty)
+                print(state.user.password.isEmpty)
+                print(state.user.passwordConfirmaion.isEmpty)
+                
                 return .none
             case .duplicateButtonTapped:
                 if case .match = state.emailValid{
@@ -158,7 +168,7 @@ struct SignUpFeature {
                     state.presentationText = "이메일 형식이 올바르지 않습니다."
                     return .none
                 }
-            
+                
             case .returnView(let text):
                 state.presentationText = text
                 return .none
@@ -172,7 +182,7 @@ struct SignUpFeature {
                         await send(.returnView("중복되지 않았어요"))
                     } catch let error as APIError {
                         if case .customError(let errorCase) = error {
-                            print(UserDomainError.emailValid(errorCase).message)
+                            await send(.returnView(UserDomainError.emailValid(errorCase).message))
                         }
                     } catch {// 1차 시도 알수없는 에러 즉 Router 구성 잘못됨.
                         await send(.returnView(APIError.Unkonwn))
@@ -181,18 +191,45 @@ struct SignUpFeature {
             case .checkEmailSuccess:
                 state.alReadyEmailCheck = true
                 return .none
+                
+            case .lastButtonTapped:
+                /*
+                 우선순위 이메일 > 닉네임 > 전화번호 > 비밀번호 > (네트워크 후 ) -> 이미 가입됬는가? 에러가 발생했는가?
+                 */
+                guard case .match = state.emailValid else {
+                    return .run { send in
+                        await send(.returnView("이메일 형식을 확인해 주세요"))
+                    }
+                }
+                
+                guard state.alReadyEmailCheck else {
+                    return .run { send in
+                       await send(.returnView("이메일 중복 확인을 진행해 주세요"))
+                    }
+                }
+                guard case .match = state.nickNameValid else {
+                    return .run { send in
+                        await send(.returnView("닉네임은 1글자 이상 30글자 이내로 부탁드려요."))
+                    }
+                }
+                guard case .match = state.contactValid else {
+                    return .run { send in
+                        await send(.returnView("잘못된 전화번호 형식입니다."))
+                    }
+                }
+                guard case .match = state.passwordValid else {
+                    return .run { send in
+                        await send(.returnView("비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."))
+                    }
+                }
+                
+                if !state.duplicateButtonState {
+                    return .run { send in
+                        await send(.returnView("작성하신 비밀번호가 일치하지 않습니다. "))
+                    }
+                }
+                return .none
             }
-            // 버튼 누를시 로 변경
-            /*
-             let result = state.contactValid == .match && state.emailValid == .match && state.nickNameValid == .match && state.passwordValid == .match && state.passwordCheck == true
-             
-             state.testButtonState = result
-             print("emailValid \(state.emailValid)")
-             print("contactValid \(state.contactValid)")
-             print("nickNameValid \(state.nickNameValid)")
-             print("passwordValid \(state.passwordValid)")
-             print("passwordCheck \(state.passwordCheck)")
-             */
         }
     }
 }

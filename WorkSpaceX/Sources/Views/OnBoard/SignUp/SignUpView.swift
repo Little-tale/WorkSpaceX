@@ -90,11 +90,11 @@ struct SignUpView: View {
                         duration: 1
                     )
                     
-                    regButtonView(bool: store.state.testButtonState)
+                    regButtonView(bool: store.state.lastButtonState)
                         .asButton {
-                            
+                            store.send(.lastButtonTapped)
                         }
-                        .disabled(!store.testButtonState)
+                        .disabled(!store.lastButtonState)
                 
                 }
                 .padding(.top, 30)
