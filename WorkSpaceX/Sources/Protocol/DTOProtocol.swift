@@ -8,3 +8,4 @@
 import Foundation
 
 protocol DTO: Decodable {}
+protocol DTORequest: Encodable {}

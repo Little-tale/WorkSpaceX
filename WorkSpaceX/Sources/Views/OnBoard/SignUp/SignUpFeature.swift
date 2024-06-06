@@ -13,7 +13,7 @@ struct SignUpFeature {
     @ObservableState
     struct State: Equatable {
         
-        var user = UserRegModel()
+        var user = UserRegEntityModel()
         
         var passwordConfirm = ""
         
