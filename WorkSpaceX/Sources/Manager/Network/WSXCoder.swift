@@ -32,24 +32,25 @@ extension WSXCoder {
         guard let parameter else { return request }
         
         guard let url = request.url else {
+            print("Seconde Bad URL")
             throw APIError.httpError("BAD URL")
         }
         
         guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            print("Bad URLComponents")
             throw APIError.httpError("Bad URLComponents")
         }
         
         urlComponents.queryItems = parameter.map { URLQueryItem(name: $0.key, value: "\($0.value)")}
         request.url = urlComponents.url
-        
+        print("요청",request)
         return request
     }
     
-    func jsonEncoding(request: inout URLRequest, parameter: Parameters?) throws -> URLRequest {
-        guard let parameters = parameter else { return request }
+    func jsonEncoding(request: inout URLRequest, data: Data?) throws -> URLRequest {
+        guard let data else { return request }
         
-        let jsonData = try JSONSerialization.data(withJSONObject: parameters, options: [])
-        request.httpBody = jsonData
+        request.httpBody = data
         
         request.setValue(
             WSXHeader.Value.applicationJson,

@@ -48,4 +48,11 @@ extension UserDomainRouter {
             return requestToBody(userEmail)
         }
     }
+    
+    var encodingType: EncodingType {
+        switch self {
+        case .userEmail:
+            return .json
+        }
+    }
 }

@@ -18,7 +18,11 @@ protocol Router {
     var headers: HTTPHeaders { get }
     var parameters: Parameters? { get }
     var body: Data? { get }
-    
+    var encodingType: EncodingType { get }
+}
+enum EncodingType {
+    case url
+    case json
 }
 
 extension Router {
@@ -35,26 +39,33 @@ extension Router {
         if let optionalHeaders {
             combine.addHeaders(optionalHeaders)
         }
+        print(combine)
          return combine
     }
     
     func asURLRequest() throws -> URLRequest {
         
         guard let url = URL(string: baseURL + path) else {
+            print("HTTP ERROR - BAD URL")
             throw APIError.httpError("HTTP ERROR -> BAD URL")
         }
         var urlRequest = URLRequest(url: url)
         
         urlRequest.httpMethod = method.rawValue
-        urlRequest.httpBody = body
         urlRequest.allHTTPHeaderFields = headers
         
-        return try WSXCoder.shared.urlEncoding(request: &urlRequest, parameter: parameters)
-        
+        switch encodingType {
+        case .url:
+            return try WSXCoder.shared.urlEncoding(request: &urlRequest, parameter: parameters)
+        case .json:
+            return try WSXCoder.shared.jsonEncoding(request: &urlRequest, data: body)
+        }
     }
     
     func requestToBody(_ request: DTORequest) -> Data? {
-      return try? WSXCoder.shared.JSONEncode(from: request)
+        let result = try? WSXCoder.shared.JSONEncode(from: request)
+        print("iF nil is Faile ", result ?? "Not Nil")
+        return result
     }
     
 }

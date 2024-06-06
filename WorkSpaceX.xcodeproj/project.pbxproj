@@ -25,6 +25,9 @@
 		7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE282C11A38B0024853C /* WSXCoder.swift */; };
 		7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2A2C11A6120024853C /* UserDomainRouter.swift */; };
 		7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */; };
+		7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2F2C11D38C0024853C /* UserDomainRepository.swift */; };
+		7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE332C11E8FF0024853C /* UserDomainError.swift */; };
+		7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE352C11EA570024853C /* DomainErrorType.swift */; };
 		7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */; };
 		7B592E892C0E252000E47797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E882C0E252000E47797 /* Assets.xcassets */; };
 		7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */; };
@@ -73,6 +76,10 @@
 		7B2EEE282C11A38B0024853C /* WSXCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXCoder.swift; sourceTree = "<group>"; };
 		7B2EEE2A2C11A6120024853C /* UserDomainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainRouter.swift; sourceTree = "<group>"; };
 		7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmail.swift; sourceTree = "<group>"; };
+		7B2EEE2F2C11D38C0024853C /* UserDomainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainRepository.swift; sourceTree = "<group>"; };
+		7B2EEE312C11E8710024853C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7B2EEE332C11E8FF0024853C /* UserDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainError.swift; sourceTree = "<group>"; };
+		7B2EEE352C11EA570024853C /* DomainErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainErrorType.swift; sourceTree = "<group>"; };
 		7B592E812C0E251F00E47797 /* WorkSpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkSpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXApp.swift; sourceTree = "<group>"; };
 		7B592E882C0E252000E47797 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,6 +129,7 @@
 				7B2EEE232C1193D60024853C /* RouterProtocol.swift */,
 				7B2EEE042C10C3750024853C /* DTOProtocol.swift */,
 				7B2EEE062C10C43B0024853C /* EntityProtocol.swift */,
+				7B2EEE352C11EA570024853C /* DomainErrorType.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -157,6 +165,7 @@
 		7B2EEE1C2C11903E0024853C /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE322C11E8D90024853C /* UserError */,
 				7B2EEE1D2C1190520024853C /* CommonError.swift */,
 				7B2EEE1F2C1190EE0024853C /* APIError.swift */,
 				7B2EEE212C11913A0024853C /* APIErrorResponse.swift */,
@@ -171,6 +180,14 @@
 				7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */,
 			);
 			path = UserDomain;
+			sourceTree = "<group>";
+		};
+		7B2EEE322C11E8D90024853C /* UserError */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE332C11E8FF0024853C /* UserDomainError.swift */,
+			);
+			path = UserError;
 			sourceTree = "<group>";
 		};
 		7B592E782C0E251F00E47797 = {
@@ -193,6 +210,7 @@
 		7B592E832C0E251F00E47797 /* WorkSpaceX */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE312C11E8710024853C /* Info.plist */,
 				7B592E962C0E26AA00E47797 /* Secret */,
 				7B592E952C0E266E00E47797 /* Resources */,
 				7B592E942C0E266100E47797 /* Sources */,
@@ -354,6 +372,7 @@
 				7B592ED62C0F1A8F00E47797 /* UserRegEntityModel.swift */,
 				7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */,
 				7B2EEE082C10C50B0024853C /* UserRegMapper.swift */,
+				7B2EEE2F2C11D38C0024853C /* UserDomainRepository.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -448,14 +467,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */,
 				7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */,
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
+				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
 				7B2EEE0C2C117A840024853C /* UserDTORequest.swift in Sources */,
 				7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */,
+				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
@@ -623,6 +645,7 @@
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WorkSpaceX/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -657,6 +680,7 @@
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WorkSpaceX/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -34,6 +34,8 @@ struct SignUpFeature {
         var duplicateButtonState: Bool = false
         
         var presentationText: String? = nil
+        
+        var alReadyEmailCheck: Bool = false
     }
     
     enum Action {
@@ -55,9 +57,13 @@ struct SignUpFeature {
         
         // toast
         case returnView(String?)
+        
+        // 중복 체크 통신 시작 액션
+        case checkEmail
     }
     
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.userDomainRepository) var reposiory
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -136,8 +142,9 @@ struct SignUpFeature {
                 return .none
             case .duplicateButtonTapped:
                 if case .match = state.emailValid {
-                    
-                    return .none // 통신 해야함.
+                    return .run { send in
+                        await send(.checkEmail)
+                    }
                 } else {
                     state.presentationText = "이메일 형식이 올바르지 않습니다."
                     return .none
@@ -146,6 +153,22 @@ struct SignUpFeature {
             case .returnView(let text):
                 state.presentationText = text
                 return .none
+                
+            case .checkEmail:
+                let email = state.user.email
+                return .run { send in
+                    do {
+                        try await reposiory.chaeckEmail(email)
+                        await send(.returnView("중복되지 않았어요"))
+                    } catch let error as APIError {
+                        if case .customError(let errorCase) = error {
+                            
+                            print(errorCase)
+                        }
+                    } catch {// 1차 시도 알수없는 에러 즉 Router 구성 잘못됨.
+                        await send(.returnView(APIError.Unkonwn))
+                    }
+                }
             }
             // 버튼 누를시 로 변경
             /*

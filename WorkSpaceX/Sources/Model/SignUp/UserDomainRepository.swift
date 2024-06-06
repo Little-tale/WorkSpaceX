@@ -9,15 +9,19 @@ import ComposableArchitecture
 
 
 struct UserDomainRepository {
-    var chaeckEmail: (String) async throws -> Bool
+    let mapper = UserRegMapper()
+   
+    var chaeckEmail: (String) async throws -> ()
 }
 
 extension UserDomainRepository: DependencyKey {
     
+   
+    
     static let liveValue: UserDomainRepository = Self(
         chaeckEmail: { email in
             let result = try await NetworkManger.shared.request(UserDomainRouter.userEmail(UserEmail(email: email)))
-            return true
+            return // 해당한게 Return 성공으로 간주
         }
     )
 }

@@ -10,11 +10,14 @@ import Foundation
 struct UserRegMapper {
     
     
+    
 }
 
 extension UserRegMapper {
     
-    func toDTO() {
-        
+    static func userEmailDTO(email: String) -> UserEmail {
+        return UserEmail(email: email)
     }
+    
+    
 }
