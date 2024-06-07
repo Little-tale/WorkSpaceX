@@ -12,6 +12,10 @@ struct UserDomainRepository {
 
     var chaeckEmail: (String) async throws -> ()
     var requestUserReg: (UserRegEntityModel)  async throws -> (UserEntity)
+    var requestKakaoUser: ((oauthToken: String,
+                           deviceToken: String)
+    ) async throws -> (UserEntity)
+    
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -32,6 +36,20 @@ extension UserDomainRepository: DependencyKey {
             print("accessToken",UserDefaultsManager.accessToken)
             print("refreshToken",UserDefaultsManager.refreshToken)
             return reEntry
+        }, requestKakaoUser: { kakao in
+            let dtoRequest = mapper.kakaoUser(
+                oauthToken: kakao.oauthToken,
+                deviceToken: kakao.deviceToken
+            )
+            let result = try await NetworkManger.shared.requestDto(UserDTO.self, router: UserDomainRouter.kakaoLogin(dtoRequest))
+            let entity = mapper.toEntity(result)
+            
+            UserDefaultsManager.accessToken = result.token.accessToken
+            UserDefaultsManager.accessToken = result.token.refreshToken
+            
+            print("accessToken",UserDefaultsManager.accessToken)
+            print("refreshToken",UserDefaultsManager.refreshToken)
+            return entity
         }
     )
 }

@@ -73,6 +73,8 @@
 		7BEC45AF2C130EB700576ECA /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7BEC45AE2C130EB700576ECA /* KakaoSDKAuth */; };
 		7BEC45B12C130EB700576ECA /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 7BEC45B02C130EB700576ECA /* KakaoSDKCommon */; };
 		7BEC45B32C130EB700576ECA /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 7BEC45B22C130EB700576ECA /* KakaoSDKUser */; };
+		7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */; };
+		7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +141,8 @@
 		7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDTO.swift; sourceTree = "<group>"; };
 		7BEC45A92C12E80F00576ECA /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotNeedInterception.swift; sourceTree = "<group>"; };
+		7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginDTORequest.swift; sourceTree = "<group>"; };
+		7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewSmall.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */,
+				7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */,
+				7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */,
 			);
 			path = AuthDomain;
 			sourceTree = "<group>";
@@ -615,6 +621,8 @@
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
+				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
+				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7B2EEE152C11812B0024853C /* WSXHeader.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,

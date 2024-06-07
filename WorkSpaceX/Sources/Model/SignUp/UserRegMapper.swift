@@ -47,4 +47,12 @@ extension UserRegMapper {
             deviceToken: ""
         )
     }
+    
+    func kakaoUser(oauthToken: String,
+                   deviceToken: String) -> KakaoLoginDTORequest {
+        return KakaoLoginDTORequest(
+            oauthToken: oauthToken,
+            deviceToken: deviceToken
+        )
+    }
 }

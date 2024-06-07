@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 struct OnboardingLoginView: View {
     
@@ -42,6 +43,7 @@ struct OnboardingLoginView: View {
                         .asButton {
                             store.send(.newSignUpTapped)
                         }
+                   
                 }
                 .sheet(
                     item: $store.scope(
@@ -59,6 +61,15 @@ struct OnboardingLoginView: View {
                 }
                 .font(WSXFont.title2)
             }
+            .popup(item: $store.errorPresentation.sending(\.errorMessage)) { item in
+                PopUpViewSmall(text: item)
+            } customize: {
+                $0.type(.toast)
+                    .position(.center)
+                    .closeOnTap(false)
+                    .autohideIn(2)
+            }
+
         }
         
     }
