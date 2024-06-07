@@ -13,6 +13,8 @@ struct SignUpView: View {
     
     @State var store: StoreOf<SignUpFeature>
     
+    @FocusState var focus: SignUpFeature.Field?
+    
     var body: some View {
         
         WithPerceptionTracking {
@@ -28,7 +30,9 @@ struct SignUpView: View {
                             placeHolder: Const.SignUpView.email.placeHolder,
                             isSecure: false,
                             binding: $store.user.email.sending(\.emailChanged)
+                                
                         )
+                        .focused($focus, equals: .email)
                         
                         Text("중복확인")
                             .font(WSXFont.title2)
@@ -51,7 +55,9 @@ struct SignUpView: View {
                         placeHolder: Const.SignUpView.nickName.placeHolder,
                         isSecure: false,
                         binding: $store.user.nickName.sending(\.nicknameChanged)
+                            
                     )
+                    .focused($focus, equals: .contact)
                     .padding(.horizontal, 30)
                     
                     HeaderTextField(
@@ -60,17 +66,19 @@ struct SignUpView: View {
                         isSecure: false,
                         binding: $store.user.contact.sending(\.contactChanged)
                     )
+                    .focused($focus, equals: .contact)
                     .padding(.horizontal, 30)
                     
-                    ZStack {
-                        HeaderTextField(
-                            headerTitle: Const.SignUpView.password.title,
-                            placeHolder: Const.SignUpView.password.placeHolder,
-                            isSecure: true,
-                            binding: $store.user.password.sending(\.passwordChanged)
-                        )
-                        .padding(.horizontal, 30)
-                    }
+                    
+                    HeaderTextField(
+                        headerTitle: Const.SignUpView.password.title,
+                        placeHolder: Const.SignUpView.password.placeHolder,
+                        isSecure: true,
+                        binding: $store.user.password.sending(\.passwordChanged)
+                    )
+                    .focused($focus, equals: .password)
+                    .padding(.horizontal, 30)
+                    
                     
                     
                     HeaderTextField(
@@ -79,6 +87,7 @@ struct SignUpView: View {
                         isSecure: true,
                         binding: $store.passwordConfirm.sending(\.passwordConfirmationChanged)
                     )
+                    .focused($focus, equals: .passwordConfirm)
                     .padding(.horizontal, 30)
                     
                     Spacer()
@@ -108,8 +117,7 @@ struct SignUpView: View {
                             .foregroundStyle(WSXColor.black)
                     }
                 }
-
-                
+                .bind($store.focusField, to: $focus)
             }
         }
     }

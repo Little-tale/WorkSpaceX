@@ -1,5 +1,5 @@
 //
-//  Tokken.swift
+//  AccessTokenDTO.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/7/24.
@@ -7,7 +7,6 @@
 
 import Foundation
 
-struct TokenModel: Entity {
+struct AccessTokenDTO: DTO {
     let accessToken: String
-    let refreshToken: String
 }

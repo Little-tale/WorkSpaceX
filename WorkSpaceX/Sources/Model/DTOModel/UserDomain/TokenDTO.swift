@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct TokenDTO: DTO {
+    let accessToken: String
+    let refreshToken: String
+}
+

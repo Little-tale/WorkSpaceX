@@ -5,4 +5,12 @@
 //  Created by Jae hyung Kim on 6/7/24.
 //
 
-import Foundation
+import SwiftUI
+
+extension View {
+    func goSetting() {
+        if let settingUrl = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingUrl)
+        }
+    }
+}

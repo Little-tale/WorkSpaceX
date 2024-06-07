@@ -17,6 +17,8 @@ struct SignUpFeature {
         
         var passwordConfirm = ""
         
+        var focusField: Field?
+        
         // 요구가 변경되어 추가 유효성 여부 상관없이 값 입력시 버튼 활성화
         
         var emailValid: textValidation = .isEmpty
@@ -36,9 +38,15 @@ struct SignUpFeature {
         var presentationText: String? = nil
         
         var alReadyEmailCheck: Bool = false
+        
+       
+    }
+    enum Field: Hashable, CaseIterable {
+        case email, nickname, contact, password, passwordConfirm
     }
     
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case cancelButtonTapped
         case emailChanged(String)
         case nicknameChanged(String)
@@ -68,12 +76,16 @@ struct SignUpFeature {
         
         // 최종 회원가입 로직 시작
         case userRegEvent(UserRegEntityModel)
+        
+        // focus
+        case focusTextField(Field)
     }
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var reposiory
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .cancelButtonTapped:
@@ -200,33 +212,39 @@ struct SignUpFeature {
                 guard case .match = state.emailValid else {
                     return .run { send in
                         await send(.returnView("이메일 형식을 확인해 주세요"))
+                        await send(.focusTextField(.email))
                     }
                 }
                 
                 guard state.alReadyEmailCheck else {
                     return .run { send in
                        await send(.returnView("이메일 중복 확인을 진행해 주세요"))
+                        await send(.focusTextField(.email))
                     }
                 }
                 guard case .match = state.nickNameValid else {
                     return .run { send in
                         await send(.returnView("닉네임은 1글자 이상 30글자 이내로 부탁드려요."))
+                        await send(.focusTextField(.nickname))
                     }
                 }
                 guard case .match = state.contactValid else {
                     return .run { send in
                         await send(.returnView("잘못된 전화번호 형식입니다."))
+                        await send(.focusTextField(.contact))
                     }
                 }
                 guard case .match = state.passwordValid else {
                     return .run { send in
                         await send(.returnView("비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."))
+                        await send(.focusTextField(.password))
                     }
                 }
                 
-                if !state.duplicateButtonState {
+                if state.user.passwordConfirmaion != state.user.password{
                     return .run { send in
                         await send(.returnView("작성하신 비밀번호가 일치하지 않습니다. "))
+                        await send(.focusTextField(.passwordConfirm))
                     }
                 }
                 let user = state.user
@@ -240,9 +258,15 @@ struct SignUpFeature {
                         let result = try await reposiory.requestUserReg(user)
                         print(result)
                     } catch {
-                        print("ㄸㄱㄱ",error)
+                        print("Errr",error)
                     }
                 }
+            case let .focusTextField(field):
+                state.focusField = field
+                return .none
+                
+            case .binding:
+                return .none
             }
         }
     }

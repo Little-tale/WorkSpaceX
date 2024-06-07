@@ -28,6 +28,14 @@
 		7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2F2C11D38C0024853C /* UserDomainRepository.swift */; };
 		7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE332C11E8FF0024853C /* UserDomainError.swift */; };
 		7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE352C11EA570024853C /* DomainErrorType.swift */; };
+		7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE382C120ECC0024853C /* NotificationService.swift */; };
+		7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE3B2C1210990024853C /* AppDelegate.swift */; };
+		7B2EEE3F2C129F6F0024853C /* ExView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE3E2C129F6F0024853C /* ExView.swift */; };
+		7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE402C12C4640024853C /* UserDTO.swift */; };
+		7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE432C12C4A00024853C /* TokenDTO.swift */; };
+		7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE462C12C6800024853C /* TokkenModel.swift */; };
+		7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE482C12C6F00024853C /* UserEntity.swift */; };
+		7B2EEE4D2C12CE900024853C /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE4C2C12CE900024853C /* UserDefaultsWrapper.swift */; };
 		7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */; };
 		7B592E892C0E252000E47797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E882C0E252000E47797 /* Assets.xcassets */; };
 		7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */; };
@@ -56,6 +64,12 @@
 		7B5AEB042C10539200D10330 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB032C10539200D10330 /* ComposableArchitecture */; };
 		7B5AEB072C108FCB00D10330 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB062C108FCB00D10330 /* PopupView */; };
 		7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */; };
+		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
+		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
+		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
+		7BEC45A72C12E7D300576ECA /* AccessTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */; };
+		7BEC45AA2C12E80F00576ECA /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A92C12E80F00576ECA /* AuthError.swift */; };
+		7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +94,15 @@
 		7B2EEE312C11E8710024853C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7B2EEE332C11E8FF0024853C /* UserDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainError.swift; sourceTree = "<group>"; };
 		7B2EEE352C11EA570024853C /* DomainErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainErrorType.swift; sourceTree = "<group>"; };
+		7B2EEE382C120ECC0024853C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		7B2EEE3A2C120FB20024853C /* WorkSpaceX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorkSpaceX.entitlements; sourceTree = "<group>"; };
+		7B2EEE3B2C1210990024853C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7B2EEE3E2C129F6F0024853C /* ExView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExView.swift; sourceTree = "<group>"; };
+		7B2EEE402C12C4640024853C /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
+		7B2EEE432C12C4A00024853C /* TokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDTO.swift; sourceTree = "<group>"; };
+		7B2EEE462C12C6800024853C /* TokkenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokkenModel.swift; sourceTree = "<group>"; };
+		7B2EEE482C12C6F00024853C /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
+		7B2EEE4C2C12CE900024853C /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 		7B592E812C0E251F00E47797 /* WorkSpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkSpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXApp.swift; sourceTree = "<group>"; };
 		7B592E882C0E252000E47797 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,6 +130,12 @@
 		7B592ED82C0F2C7600E47797 /* TextValid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValid.swift; sourceTree = "<group>"; };
 		7B592EDA2C0F2CC100E47797 /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticToastColorView.swift; sourceTree = "<group>"; };
+		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
+		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDTO.swift; sourceTree = "<group>"; };
+		7BEC45A92C12E80F00576ECA /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotNeedInterception.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +166,7 @@
 		7B2EEE0A2C117A7D0024853C /* DTOModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BEC45A52C12E7C000576ECA /* AuthDomain */,
 				7B2EEE2C2C11B69B0024853C /* UserDomain */,
 			);
 			path = DTOModel;
@@ -147,6 +177,7 @@
 			children = (
 				7B2EEE102C117D010024853C /* HTTPMethod.swift */,
 				7B2EEE2A2C11A6120024853C /* UserDomainRouter.swift */,
+				7BEC45A32C12E53400576ECA /* AuthRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -158,6 +189,7 @@
 				7B2EEDFF2C10C2900024853C /* NetworkManger.swift */,
 				7B2EEE0D2C117BC70024853C /* Router */,
 				7B2EEE282C11A38B0024853C /* WSXCoder.swift */,
+				7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -165,6 +197,7 @@
 		7B2EEE1C2C11903E0024853C /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				7BEC45A82C12E80100576ECA /* AuthError */,
 				7B2EEE322C11E8D90024853C /* UserError */,
 				7B2EEE1D2C1190520024853C /* CommonError.swift */,
 				7B2EEE1F2C1190EE0024853C /* APIError.swift */,
@@ -178,6 +211,8 @@
 			children = (
 				7B2EEE0B2C117A840024853C /* UserDTORequest.swift */,
 				7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */,
+				7B2EEE402C12C4640024853C /* UserDTO.swift */,
+				7B2EEE432C12C4A00024853C /* TokenDTO.swift */,
 			);
 			path = UserDomain;
 			sourceTree = "<group>";
@@ -188,6 +223,48 @@
 				7B2EEE332C11E8FF0024853C /* UserDomainError.swift */,
 			);
 			path = UserError;
+			sourceTree = "<group>";
+		};
+		7B2EEE372C120EBC0024853C /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE382C120ECC0024853C /* NotificationService.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		7B2EEE3D2C129F510024853C /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE3E2C129F6F0024853C /* ExView.swift */,
+			);
+			path = Extention;
+			sourceTree = "<group>";
+		};
+		7B2EEE452C12C6770024853C /* EntityModel */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE4A2C12CB5F0024853C /* UserDomain */,
+			);
+			path = EntityModel;
+			sourceTree = "<group>";
+		};
+		7B2EEE4A2C12CB5F0024853C /* UserDomain */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE462C12C6800024853C /* TokkenModel.swift */,
+				7B2EEE482C12C6F00024853C /* UserEntity.swift */,
+			);
+			path = UserDomain;
+			sourceTree = "<group>";
+		};
+		7B2EEE4B2C12CE7E0024853C /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				7B2EEE4C2C12CE900024853C /* UserDefaultsWrapper.swift */,
+				7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		7B592E782C0E251F00E47797 = {
@@ -210,7 +287,9 @@
 		7B592E832C0E251F00E47797 /* WorkSpaceX */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE3A2C120FB20024853C /* WorkSpaceX.entitlements */,
 				7B2EEE312C11E8710024853C /* Info.plist */,
+				7B2EEE3B2C1210990024853C /* AppDelegate.swift */,
 				7B592E962C0E26AA00E47797 /* Secret */,
 				7B592E952C0E266E00E47797 /* Resources */,
 				7B592E942C0E266100E47797 /* Sources */,
@@ -231,6 +310,7 @@
 		7B592E942C0E266100E47797 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE3D2C129F510024853C /* Extention */,
 				7B592E992C0E26F200E47797 /* Manager */,
 				7B2EEE032C10C3680024853C /* Protocol */,
 				7B592ED42C0F1A7800E47797 /* Model */,
@@ -255,6 +335,7 @@
 				7B592E9A2C0E274D00E47797 /* APIKey.swift */,
 				7B2EEDFD2C10BD0A0024853C /* Memo */,
 				7B2EEE142C11812B0024853C /* WSXHeader.swift */,
+				7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */,
 			);
 			path = Secret;
 			sourceTree = "<group>";
@@ -262,6 +343,8 @@
 		7B592E992C0E26F200E47797 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE4B2C12CE7E0024853C /* UserDefaults */,
+				7B2EEE372C120EBC0024853C /* Notification */,
 				7B2EEE192C118D060024853C /* Network */,
 				7B592ED82C0F2C7600E47797 /* TextValid.swift */,
 				7B592EDA2C0F2CC100E47797 /* TextValidation.swift */,
@@ -359,6 +442,7 @@
 		7B592ED42C0F1A7800E47797 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7B2EEE452C12C6770024853C /* EntityModel */,
 				7B2EEE0A2C117A7D0024853C /* DTOModel */,
 				7B592ED52C0F1A7F00E47797 /* SignUp */,
 				7B2EEE162C118C660024853C /* HTTPHeaders.swift */,
@@ -383,6 +467,22 @@
 				7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */,
 			);
 			path = Toast;
+			sourceTree = "<group>";
+		};
+		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
+			isa = PBXGroup;
+			children = (
+				7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */,
+			);
+			path = AuthDomain;
+			sourceTree = "<group>";
+		};
+		7BEC45A82C12E80100576ECA /* AuthError */ = {
+			isa = PBXGroup;
+			children = (
+				7BEC45A92C12E80F00576ECA /* AuthError.swift */,
+			);
+			path = AuthError;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,6 +567,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
+				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
+				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
 				7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */,
 				7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */,
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
@@ -481,32 +584,43 @@
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
+				7B2EEE4D2C12CE900024853C /* UserDefaultsWrapper.swift in Sources */,
 				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
+				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
+				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,
 				7B2EEE1E2C1190520024853C /* CommonError.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
 				7B2EEE202C1190EE0024853C /* APIError.swift in Sources */,
 				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,
+				7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */,
 				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,
+				7B2EEE3F2C129F6F0024853C /* ExView.swift in Sources */,
+				7BEC45A72C12E7D300576ECA /* AccessTokenDTO.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
 				7B2EEE152C11812B0024853C /* WSXHeader.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
+				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManger.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
+				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
+				7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */,
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
+				7BEC45AA2C12E80F00576ECA /* AuthError.swift in Sources */,
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
+				7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
 				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,
 			);
@@ -639,6 +753,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WorkSpaceX/WorkSpaceX.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkSpaceX/Preview Content\"";
@@ -674,6 +789,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WorkSpaceX/WorkSpaceX.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkSpaceX/Preview Content\"";
