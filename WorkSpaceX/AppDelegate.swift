@@ -7,14 +7,18 @@
 
 import SwiftUI
 import UserNotifications
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
+        KakaoSDK.initSDK(appKey: APIKey.kakaoAPIKey)
+        
         UNUserNotificationCenter.current().delegate = self
         let center = UNUserNotificationCenter.current()
-            
+        
         center.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
             guard let self = self else { return }
             if granted {
@@ -31,6 +35,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        if (AuthApi.isKakaoTalkLoginUrl(url)){
+            return AuthController.handleOpenUrl(url: url)
+        }
+        return false
     }
 }
 

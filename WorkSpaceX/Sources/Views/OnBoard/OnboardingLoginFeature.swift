@@ -6,6 +6,8 @@
 //
 
 import ComposableArchitecture
+import KakaoSDKAuth
+import KakaoSDKUser
 
 @Reducer
 struct OnboardingLoginFeature {
@@ -35,32 +37,46 @@ struct OnboardingLoginFeature {
                 return .none
             case .kakaoLoginButtonTapped:
                 
-                return .none
-            case .emailLoginButtonTapped:
-                
-                return .none
-                
-            case .newSignUpTapped:
-                state.signUp = SignUpFeature.State()
-                
-                return .none
-                
-            case let .signUpFeature(childReducer):
-                
-                if case .dismiss = childReducer {
-                    return .run { send in
-                        await self.dismiss()
+                if(UserApi.isKakaoTalkLoginAvailable()) {
+                    
+                    UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                        print(oauthToken)
+                        print(error)
+                    }
+                } else {
+                    UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                        print(oauthToken)
+                        print(error)
                     }
                 }
                 
                 return .none
+                
+                case .emailLoginButtonTapped:
+                    
+                    return .none
+                    
+                case .newSignUpTapped:
+                    state.signUp = SignUpFeature.State()
+                    
+                    return .none
+                    
+                case let .signUpFeature(childReducer):
+                    
+                    if case .dismiss = childReducer {
+                        return .run { send in
+                            await self.dismiss()
+                        }
+                    }
+                    
+                    return .none
+                }
             }
-        }
-        .ifLet(\.$signUp, action: \.signUpFeature) {
-            SignUpFeature()
+                .ifLet(\.$signUp, action: \.signUpFeature) {
+                    SignUpFeature()
+                }
         }
     }
-}
-
-
-
+    
+    
+    

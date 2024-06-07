@@ -28,6 +28,9 @@ extension UserDomainRepository: DependencyKey {
             let reEntry = mapper.toEntity(result)
             UserDefaultsManager.accessToken = result.token.accessToken
             UserDefaultsManager.accessToken = result.token.refreshToken
+            
+            print("accessToken",UserDefaultsManager.accessToken)
+            print("refreshToken",UserDefaultsManager.refreshToken)
             return reEntry
         }
     )
