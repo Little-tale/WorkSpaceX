@@ -32,4 +32,19 @@ extension NetworkManger {
         return data
     }
     
+    func requestDto<T:DTO, R: Router>(_ model: T.Type, router: R) async throws -> T {
+        let request = try router.asURLRequest()
+        let (data, response) = try await URLSession.shared.data(for: request)
+        print(request)
+        guard let httpResoponse = response as? HTTPURLResponse, (200...299).contains(httpResoponse.statusCode) else {
+            if let errorResopnse = try? WSXCoder.shared.jsonDecoding(model: APIErrorResponse.self, from: data) {
+                print("Error For: \(errorResopnse.errorCode)")
+                throw APIError.customError(errorResopnse)
+            } else {
+                throw APIError.httpError("예상치 못한 에러 : RE TRY PLZ")
+            }
+        }
+        return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
+    }
+    
 }

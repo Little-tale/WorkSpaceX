@@ -67,6 +67,7 @@ struct SignUpFeature {
         case lastButtonTapped
         
         // 최종 회원가입 로직 시작
+        case userRegEvent(UserRegEntityModel)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -228,7 +229,20 @@ struct SignUpFeature {
                         await send(.returnView("작성하신 비밀번호가 일치하지 않습니다. "))
                     }
                 }
-                return .none
+                let user = state.user
+                return .run { send in
+                    await send(.userRegEvent(user))
+                }
+            case let .userRegEvent(user):
+                
+                return .run { send in
+                    do{
+                        let result = try await reposiory.requestUserReg(user)
+                        print(result)
+                    } catch {
+                        print("ㄸㄱㄱ",error)
+                    }
+                }
             }
         }
     }

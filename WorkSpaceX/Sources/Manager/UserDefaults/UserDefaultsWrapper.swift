@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum UserDefaultCase {
-    case none
-    case recentry
-}
-
 @propertyWrapper
 struct UserDefaultsWrapper<T: Codable> {
     let key: String

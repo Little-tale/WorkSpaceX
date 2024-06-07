@@ -9,8 +9,27 @@ import Foundation
 
 struct UserRegMapper {
     
-    
-    
+    func toEntity(_ userDTO: UserDTO) -> UserEntity {
+        
+        let entity = UserEntity(
+            userID: userDTO.userID,
+            email: userDTO.email,
+            nickname: userDTO.nickname,
+            profileImage: userDTO.profileImage,
+            phone: userDTO.phone ?? "" ,
+            provider: userDTO.provider,
+            createdAt: userDTO.createdAt,
+            token: toEntity(userDTO.token)
+        )
+        return entity
+    }
+    func toEntity(_ token: TokenDTO) -> TokenModel {
+        let entity = TokenModel(
+            accessToken: token.accessToken,
+            refreshToken: token.refreshToken
+        )
+        return entity
+    }
 }
 
 extension UserRegMapper {
@@ -19,5 +38,13 @@ extension UserRegMapper {
         return UserEmail(email: email)
     }
     
-    
+    func userRegDTO(user: UserRegEntityModel) -> UserDTORequest {
+        return UserDTORequest(
+            email: user.email,
+            password: user.password,
+            nickname: user.nickName,
+            phone: user.contact,
+            deviceToken: ""
+        )
+    }
 }
