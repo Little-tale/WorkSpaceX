@@ -24,7 +24,6 @@ struct HeaderTextField: View {
             HStack {
                 Text(headerTitle)
                     .foregroundStyle(scopeColor ? WSXColor.errorRed : WSXColor.black)
-               
             }
             Group{
                 if isSecure {

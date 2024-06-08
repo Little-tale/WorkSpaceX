@@ -75,6 +75,7 @@
 		7BEC45B32C130EB700576ECA /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 7BEC45B22C130EB700576ECA /* KakaoSDKUser */; };
 		7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */; };
 		7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */; };
+		7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B92C14264200576ECA /* EmailLoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +144,7 @@
 		7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotNeedInterception.swift; sourceTree = "<group>"; };
 		7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginDTORequest.swift; sourceTree = "<group>"; };
 		7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewSmall.swift; sourceTree = "<group>"; };
+		7BEC45B92C14264200576ECA /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +415,7 @@
 		7B592EB62C0EC3D100E47797 /* OnBoard */ = {
 			isa = PBXGroup;
 			children = (
+				7BEC45B82C14263800576ECA /* EmailLogin */,
 				7B592EC82C0EE11B00E47797 /* SignUp */,
 				7B592EB92C0EC45C00E47797 /* OnboardingView.swift */,
 				7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */,
@@ -495,6 +498,14 @@
 				7BEC45A92C12E80F00576ECA /* AuthError.swift */,
 			);
 			path = AuthError;
+			sourceTree = "<group>";
+		};
+		7BEC45B82C14263800576ECA /* EmailLogin */ = {
+			isa = PBXGroup;
+			children = (
+				7BEC45B92C14264200576ECA /* EmailLoginView.swift */,
+			);
+			path = EmailLogin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -639,6 +650,7 @@
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */,
+				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
 				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,
 			);

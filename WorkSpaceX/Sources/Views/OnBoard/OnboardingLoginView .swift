@@ -60,7 +60,9 @@ struct OnboardingLoginView: View {
                         }
                     }
                     .font(WSXFont.title2)
+                    
             }
+            
             .alert(item: $store.errorPresentation.sending(\.errorMessage)) { _ in
                 Text("에러")
             } actions: { _ in
