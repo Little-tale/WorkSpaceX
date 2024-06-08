@@ -14,7 +14,7 @@ struct UserDomainRepository {
     var requestUserReg: (UserRegEntityModel)  async -> Result<UserEntity, APIError>
     var requestKakaoUser: ((oauthToken: String,
                            deviceToken: String)
-    ) async -> (Result<UserEntity, APIError>)
+    ) async -> (Result<UserEntity, UserDomainError>)
     
 }
 
@@ -64,9 +64,10 @@ extension UserDomainRepository: DependencyKey {
                 print("refreshToken",UserDefaultsManager.refreshToken)
                 return .success(entity)
             } catch let error as APIError {
-                return .failure(error)
+                let mapping = mapper.mapAPIErrorTOKakaoUserDomainError(error)
+                return .failure(mapping)
             } catch {
-                return .failure(.unknownError)
+                return .failure(.commonError(.fail))
             }
         }
     )

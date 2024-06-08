@@ -32,7 +32,9 @@ struct OnboardingLoginFeature {
         case signUpFeature(PresentationAction<SignUpFeature.Action>)
         case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
         case errorMessage(messgage: String?)
-        case loginResult(Result<UserEntity, APIError>)
+    
+        case loginResult(Result<UserEntity, UserDomainError>)
+        case userDomainErrorHandler(UserDomainError)
     }
     
     enum KakaoLoginErrorCase: Error {
@@ -43,7 +45,7 @@ struct OnboardingLoginFeature {
             switch self {
             case .cancel:
                 return ""
-            case .error(let error):
+            case .error(_):
                 return "KAKAO 로그인 실패\n재시도 바랍니다."
             }
         }
@@ -115,18 +117,27 @@ struct OnboardingLoginFeature {
                     case .success(let success):
                         print(success)
                     case .failure(let error):
-                        switch error {
-                        case .httpError(let error):
-                            await send(.errorMessage(messgage: error))
-                        case .commonError(let error):
-                            await send(.errorMessage(messgage: error.message))
-                        case .customError(let error):
-                            await send(.errorMessage(messgage: error.errorCode))
-                        case .unknownError:
-                            await send(.errorMessage(messgage: "알수없음"))
-                        }
+                        await send(.userDomainErrorHandler(error))
                     }
                 }
+            case .userDomainErrorHandler(let error):
+                switch error {
+                case .commonError(let error):
+                    if !error.ifDevelopError {
+                        return .run { send in
+                            await send(.errorMessage(messgage: error.message))
+                        }
+                    }
+                case .kakaoLogin:
+                    if !error.ifDevelopError {
+                        return .run { send in
+                            await send(.errorMessage(messgage: error.message))
+                        }
+                    }
+                default :
+                    break
+                }
+                return .none
             }
             
         }

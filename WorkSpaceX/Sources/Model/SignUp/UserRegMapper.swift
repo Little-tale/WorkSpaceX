@@ -55,4 +55,19 @@ extension UserRegMapper {
             deviceToken: deviceToken
         )
     }
+    
+    
+    func mapAPIErrorTOKakaoUserDomainError(_ error: APIError) -> UserDomainError {
+        switch error {
+        case .httpError:
+            return .commonError(.serverError)
+        case .commonError(let commonError):
+            return .commonError(commonError)
+        case .customError(let error):
+            let mapping = UserDomainError.kakaoLogin(error)
+            return mapping
+        case .unknownError:
+            return .commonError(.fail)
+        }
+    }
 }

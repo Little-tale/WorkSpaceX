@@ -29,7 +29,7 @@ extension UserDomainRouter {
         case .userReg:
             return APIKey.version + "/users/join"
         case .kakaoLogin:
-            return APIKey.version + "users/login/kakao"
+            return APIKey.version + "/users/login/kakao"
         }
     }
     

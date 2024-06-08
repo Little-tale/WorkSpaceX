@@ -8,6 +8,8 @@
 import Foundation
 
 enum AuthError: DomainErrorType{
+   
+    
     case emailValid(APIErrorResponse)
 }
 extension AuthError {
@@ -28,6 +30,18 @@ extension AuthError {
         switch self {
         case .emailValid(let error):
             return error.errorCode
+        }
+    }
+    
+    var ifDevelopError: Bool {
+        switch self {
+        case .emailValid(let errorModel):
+            switch errorModel.errorCode {
+            case "E06":
+                return false
+            default :
+                return true
+            }
         }
     }
 }

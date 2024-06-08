@@ -76,7 +76,7 @@ extension NetworkManger {
     }
     
     private func startIntercept(_ urlRequest: inout URLRequest, retryCount: Int) async throws -> Data {
-        var request = intercept(&urlRequest)
+        let request = intercept(&urlRequest)
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
