@@ -43,7 +43,7 @@ struct OnboardingLoginView: View {
                         .asButton {
                             store.send(.newSignUpTapped)
                         }
-                   
+                    
                 }
                 .sheet(
                     item: $store.scope(
@@ -58,18 +58,15 @@ struct OnboardingLoginView: View {
                                 )
                                 .navigationBarTitleDisplayMode(.inline)
                         }
-                }
-                .font(WSXFont.title2)
+                    }
+                    .font(WSXFont.title2)
             }
-            .popup(item: $store.errorPresentation.sending(\.errorMessage)) { item in
-                PopUpViewSmall(text: item)
-            } customize: {
-                $0.type(.toast)
-                    .position(.center)
-                    .closeOnTap(false)
-                    .autohideIn(2)
+            .alert(item: $store.errorPresentation.sending(\.errorMessage)) { _ in
+                Text("에러")
+            } actions: { _ in
+            } message: { message in
+                Text(message)
             }
-
         }
         
     }
