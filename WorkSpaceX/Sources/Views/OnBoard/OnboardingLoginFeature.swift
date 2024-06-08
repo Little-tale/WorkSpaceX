@@ -21,13 +21,6 @@ struct OnboardingLoginFeature {
         @Presents var emailLogin: EmailLoginFeature.State?
         var errorPresentation: String? = nil
     }
-    /*
-     
-     
-     .ifLet(\.emailLogin, action: \.emailLoginButtonTapped) {
-         EmailLoginFeature()
-     }
-     */
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var repository
@@ -46,6 +39,7 @@ struct OnboardingLoginFeature {
     
         case loginResult(Result<UserEntity, UserDomainError>)
         case userDomainErrorHandler(UserDomainError)
+        case onlyUseParentsUser(UserEntity)
     }
     
     enum KakaoLoginErrorCase: Error {
@@ -90,7 +84,6 @@ struct OnboardingLoginFeature {
                     }
                 case .failure(let error):
                     switch error {
-                        
                     case .cancel:
                         return .none
                         
@@ -129,11 +122,13 @@ struct OnboardingLoginFeature {
             case .errorMessage(messgage: let messgage):
                 state.errorPresentation = messgage
                 return .none
+                
             case .loginResult(let result):
                 
                 return .run { send in
                     switch result {
                     case .success(let success):
+                        
                         print(success)
                     case .failure(let error):
                         await send(.userDomainErrorHandler(error))
@@ -154,12 +149,12 @@ struct OnboardingLoginFeature {
                         }
                     }
                 default :
-                    break
+                    return .none
                 }
+            case .onlyUseParentsUser(let user):
                 return .none
-            
             }
-            
+            return .none
         }
         .ifLet(\.$signUp, action: \.signUpFeature) {
             SignUpFeature()
@@ -179,7 +174,8 @@ extension OnboardingLoginFeature {
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { oauthToken, error in
                     if let error {
-                        let result = checkKakaoError(error: error)
+                        let results = checkKakaoError(error: error)
+                        result(.failure(results))
                     } else if let oauthToken {
                         result(.success(oauthToken.accessToken))
                     } else {
@@ -189,7 +185,8 @@ extension OnboardingLoginFeature {
             } else {
                 UserApi.shared.loginWithKakaoAccount { oauthToken, error in
                     if let error {
-                        let result = checkKakaoError(error: error)
+                        let results = checkKakaoError(error: error)
+                        result(.failure(results))
                     } else if let oauthToken {
                         result(.success(oauthToken.accessToken))
                     } else {
@@ -211,21 +208,3 @@ extension OnboardingLoginFeature {
         return .cancel
     }
 }
-
-/*
- if let error {
- await send(.kakaoLoginSuccess(.failure(error)))
- } else if let oauthToken {
- await send(.kakaoLoginSuccess(.success(oauthToken.accessToken)))
- }
- */
-
-
-
-/*
- case let .kakaoLoadSuccess(kakao):
- return .run { send in
- let result = try await repository.requestKakaoUser((kakao, ""))
- print("Success",result)
- }
- */

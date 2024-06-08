@@ -10,10 +10,8 @@ import ComposableArchitecture
 
 struct EmailLoginView: View {
     
-    @State
-    var text: String = ""
-    
     @State var store: StoreOf<EmailLoginFeature>
+    @FocusState var focus: EmailLoginFeature.Field?
     
     var body: some View {
         WithPerceptionTracking {
@@ -24,31 +22,33 @@ struct EmailLoginView: View {
                         headerTitle: "이메일",
                         placeHolder: "이메일을 입력하세요",
                         isSecure: false,
-                        binding: $text,
+                        binding: $store.email,
                         scopeColor: false
                     )
+                    .focused($focus, equals: .email)
                     HeaderTextField(
                         headerTitle: "비밀번호",
                         placeHolder: "비밀번호를 입력하세요",
-                        isSecure: false,
-                        binding: $text,
+                        isSecure: true,
+                        binding: $store.password,
                         scopeColor: false
                     )
+                    .focused($focus, equals: .password)
                     Spacer()
                 }
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
                 .font(WSXFont.title2)
                 
-                Text("로그인")
-                    .font(WSXFont.title2)
-                    .modifier(CommonButtonModifer())
-                    .background(WSXColor.green)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.horizontal, 30)
-                    .foregroundStyle(WSXColor.white)
+                loginIssueView(text: $store.loginBottomMessge)
+                
+                loginButtonView(buttonState: store.buttonState)
+                    .asButton {
+                        print("버튼")
+                    }
+                    .disabled(!store.buttonState)
             }
-            .navigationTitle("이메일 로그인")
+          
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     WSXImage.xImage
@@ -59,6 +59,26 @@ struct EmailLoginView: View {
                 }
             }
         }
-        
     }
+    func loginButtonView(buttonState: Bool) -> some View {
+        Text("로그인")
+            .font(WSXFont.title2)
+            .modifier(CommonButtonModifer())
+            .background(buttonState ? WSXColor.green : .inactive)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.horizontal, 30)
+            .foregroundStyle(WSXColor.white)
+            .padding(.bottom, 20)
+    }
+    
+    func loginIssueView(text: Binding<String?>) -> some View {
+        Group {
+            if let string = text.wrappedValue {
+                Text(string)
+            } else {
+                EmptyView()
+            }
+        }
+    }
+    
 }

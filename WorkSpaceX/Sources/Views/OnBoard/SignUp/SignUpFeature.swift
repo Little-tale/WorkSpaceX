@@ -80,6 +80,9 @@ struct SignUpFeature {
         
         // focus
         case focusTextField(Field)
+        
+        // login완료를 부모에게 전달
+        case onlyUseParentsUserEntity(UserEntity)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -267,9 +270,7 @@ struct SignUpFeature {
                     let result = await reposiory.requestUserReg(user)
                     switch result {
                     case .success(let success):
-                        
-                        print(success)
-                        
+                        await send(.onlyUseParentsUserEntity(success))
                     case .failure(let fail):
                         switch fail {
                         case .httpError(let error):
@@ -288,9 +289,13 @@ struct SignUpFeature {
             case let .focusTextField(field):
                 state.scopeAndColorChange = field
                 state.focusField = field
+                
                 return .none
                 
             case .binding:
+                return .none
+                
+            case .onlyUseParentsUserEntity(let user):
                 return .none
             }
         }
