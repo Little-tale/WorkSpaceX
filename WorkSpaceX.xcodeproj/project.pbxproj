@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7B2EEDFE2C10BD0A0024853C /* Memo in Resources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFD2C10BD0A0024853C /* Memo */; };
-		7B2EEE002C10C2900024853C /* NetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFF2C10C2900024853C /* NetworkManger.swift */; };
+		7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFF2C10C2900024853C /* NetworkManager.swift */; };
 		7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */; };
 		7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE042C10C3750024853C /* DTOProtocol.swift */; };
 		7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE062C10C43B0024853C /* EntityProtocol.swift */; };
@@ -82,7 +82,7 @@
 
 /* Begin PBXFileReference section */
 		7B2EEDFD2C10BD0A0024853C /* Memo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Memo; sourceTree = "<group>"; };
-		7B2EEDFF2C10C2900024853C /* NetworkManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManger.swift; sourceTree = "<group>"; };
+		7B2EEDFF2C10C2900024853C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDuplicateModel.swift; sourceTree = "<group>"; };
 		7B2EEE042C10C3750024853C /* DTOProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOProtocol.swift; sourceTree = "<group>"; };
 		7B2EEE062C10C43B0024853C /* EntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
@@ -202,7 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				7B2EEE1C2C11903E0024853C /* Error */,
-				7B2EEDFF2C10C2900024853C /* NetworkManger.swift */,
+				7B2EEDFF2C10C2900024853C /* NetworkManager.swift */,
 				7B2EEE0D2C117BC70024853C /* Router */,
 				7B2EEE282C11A38B0024853C /* WSXCoder.swift */,
 				7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */,
@@ -646,7 +646,7 @@
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
-				7B2EEE002C10C2900024853C /* NetworkManger.swift in Sources */,
+				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
