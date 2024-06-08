@@ -77,6 +77,7 @@
 		7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */; };
 		7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B92C14264200576ECA /* EmailLoginView.swift */; };
 		7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */; };
+		7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +148,7 @@
 		7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewSmall.swift; sourceTree = "<group>"; };
 		7BEC45B92C14264200576ECA /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
+		7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +229,7 @@
 				7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */,
 				7B2EEE402C12C4640024853C /* UserDTO.swift */,
 				7B2EEE432C12C4A00024853C /* TokenDTO.swift */,
+				7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */,
 			);
 			path = UserDomain;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
+				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,

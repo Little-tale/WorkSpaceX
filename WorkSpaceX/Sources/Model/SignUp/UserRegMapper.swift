@@ -70,4 +70,29 @@ extension UserRegMapper {
             return .commonError(.fail)
         }
     }
+    
+    
+    func requestLoginDTO(email: String, password: String, deviceToken: String?) -> LoginRequestDTO {
+        return LoginRequestDTO(
+            email: email,
+            password: password,
+            deviceToken: deviceToken
+        )
+    }
+    
+    func mappingEmailLoginError(error: APIError) -> UserDomainError {
+        switch error {
+        case .httpError(_):
+            return .commonError(.serverError)
+        case .commonError(let common):
+            
+            return .commonError(common)
+        case .customError(let error):
+            let mapping = UserDomainError.emailLoginError(error)
+            return mapping
+        case .unknownError:
+            return .commonError(.fail)
+        }
+    }
+    
 }

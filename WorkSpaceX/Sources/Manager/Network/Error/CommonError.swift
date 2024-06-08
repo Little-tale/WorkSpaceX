@@ -45,6 +45,10 @@ extension CommonError {
     }
     
     var ifDevelopError: Bool {
-        return true 
+        if case .unknownAcount = self {
+            return false
+        } else {
+            return true
+        }
     }
 }

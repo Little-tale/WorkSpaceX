@@ -27,6 +27,9 @@ struct EmailLoginFeature {
         case dismiss
         case timerStart(String)
         case timerStop
+        case loginButtonTapped
+        case errorHandeler(UserDomainError)
+        case loginSuccess(UserEntity)
     }
     
     enum Field {
@@ -35,7 +38,7 @@ struct EmailLoginFeature {
     }
     
     @Dependency(\.dismiss) var dismiss
-    
+    @Dependency(\.userDomainRepository) var repository
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -67,9 +70,32 @@ struct EmailLoginFeature {
             case .timerStop:
                 state.loginBottomMessge = nil
                 return .none
+            case .loginButtonTapped:
+                let email = state.email
+                let password = state.password
+                return .run { send in
+                   let result = await repository.requestEmailLogin((email,password))
+                    switch result {
+                    case .success(let success):
+                        await send(.loginSuccess(success))
+                    case .failure(let error):
+                        await send(.errorHandeler(error))
+                    }
+                }
+                
             case .binding:
                 return .none
-            
+            case .errorHandeler(let error):
+                let ifMessage = errorHandelForLogin(error: error)
+                if let ifMessage {
+                    return .run { send in
+                        await send(.timerStart(ifMessage))
+                    }
+                }
+                return .none
+            case .loginSuccess(let user): // 상위뷰가 지켜볼것.
+                print("로그인 성공 \(user)")
+                return .none
             }
         }
     }
@@ -89,6 +115,26 @@ extension EmailLoginFeature {
         }
         
         return true
+    }
+    
+    private func errorHandelForLogin(error: UserDomainError) -> String? {
+        switch error {
+        case .commonError(let common):
+            if !common.ifDevelopError {
+                return common.message
+            } else {
+                print("개발자 잘못 \(common.message)")
+            }
+        case .emailLoginError:
+            if !error.ifDevelopError {
+                return error.message
+            } else {
+                print("개발자 잘못 \(error.message)")
+            }
+        default:
+            break
+        }
+        return nil
     }
     
 }

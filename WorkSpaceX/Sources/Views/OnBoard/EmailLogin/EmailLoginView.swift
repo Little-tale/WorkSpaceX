@@ -34,17 +34,18 @@ struct EmailLoginView: View {
                         scopeColor: false
                     )
                     .focused($focus, equals: .password)
+                    
+                    loginIssueView(text: $store.loginBottomMessge)
+                    
                     Spacer()
                 }
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
                 .font(WSXFont.title2)
                 
-                loginIssueView(text: $store.loginBottomMessge)
-                
                 loginButtonView(buttonState: store.buttonState)
                     .asButton {
-                        print("버튼")
+                        store.send(.loginButtonTapped)
                     }
                     .disabled(!store.buttonState)
             }
@@ -72,11 +73,15 @@ struct EmailLoginView: View {
     }
     
     func loginIssueView(text: Binding<String?>) -> some View {
-        Group {
-            if let string = text.wrappedValue {
-                Text(string)
-            } else {
-                EmptyView()
+        withAnimation {
+            Group {
+                if let string = text.wrappedValue {
+                    Text(string)
+                        .font(WSXFont.caption)
+                        .foregroundStyle(WSXColor.errorRed)
+                } else {
+                    EmptyView()
+                }
             }
         }
     }

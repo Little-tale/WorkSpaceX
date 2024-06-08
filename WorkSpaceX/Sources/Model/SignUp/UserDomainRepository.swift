@@ -16,6 +16,7 @@ struct UserDomainRepository {
                            deviceToken: String)
     ) async -> (Result<UserEntity, UserDomainError>)
     
+    var requestEmailLogin: ((email: String, password: String)) async -> Result<UserEntity, UserDomainError>
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -66,6 +67,29 @@ extension UserDomainRepository: DependencyKey {
             } catch let error as APIError {
                 let mapping = mapper.mapAPIErrorTOKakaoUserDomainError(error)
                 return .failure(mapping)
+            } catch {
+                return .failure(.commonError(.fail))
+            }
+        }, requestEmailLogin: { emailLogin in
+            let dto = mapper.requestLoginDTO(
+                email: emailLogin.email,
+                password: emailLogin.password,
+                deviceToken: nil // 애플 처리후 적용
+            )
+            
+            do {
+                let result = try await NetworkManger.shared.requestDto(UserDTO.self, router: UserDomainRouter.emailLogin(dto))
+                let mapping = mapper.toEntity(result)
+                
+                UserDefaultsManager.accessToken = result.token.accessToken
+                UserDefaultsManager.accessToken = result.token.refreshToken
+                
+                return .success(mapping)
+                
+            } catch let error as APIError {
+                let error = mapper.mappingEmailLoginError(error: error)
+                return .failure(error)
+                
             } catch {
                 return .failure(.commonError(.fail))
             }

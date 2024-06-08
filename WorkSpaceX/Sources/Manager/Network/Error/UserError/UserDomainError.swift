@@ -11,6 +11,7 @@ enum UserDomainError: DomainErrorType {
     case commonError(CommonError)
     case emailValid(APIErrorResponse)
     case kakaoLogin(APIErrorResponse)
+    case emailLoginError(APIErrorResponse)
 }
 
 extension UserDomainError {
@@ -36,6 +37,13 @@ extension UserDomainError {
             default :
                 return "알수 없는 에러입니다."
             }
+        case .emailLoginError(let errorModel):
+            switch errorModel.errorCode {
+            case "E03":
+                return "로그인에 실패 하였습니다."
+            default :
+                return "알수 없는 에러입니다."
+            }
         case .commonError(let common):
             return common.message
         }
@@ -46,8 +54,12 @@ extension UserDomainError {
         case .emailValid(let errorModel),
                 .kakaoLogin(let errorModel) :
             return errorModel.errorCode
+            
         case .commonError(let common):
             return common.errorCode
+            
+        case .emailLoginError(let emailLogin):
+            return emailLogin.errorCode
         }
     }
     
@@ -73,8 +85,50 @@ extension UserDomainError {
             default :
                 return true
             }
+        case .emailLoginError(let errorModel):
+            switch errorModel.errorCode {
+            case "E03":
+                return false
+            default :
+                return true
+            }
         case .commonError(let common):
             return common.ifDevelopError
         }
     }
+    
+    var ifThisError: Bool {
+        switch self {
+        case .commonError:
+            return false
+        case .emailValid(let error):
+            switch error.errorCode {
+            case "E11":
+                return true
+            case "E12":
+                return true
+            default :
+                return true
+            }
+        case .kakaoLogin(let error):
+            switch error.errorCode {
+            case "E03":
+                return true
+            case "E11":
+                return true
+            case "E12":
+                return true
+            default :
+                return false
+            }
+        case .emailLoginError(let error):
+            switch error.errorCode {
+            case "E03":
+                return true
+            default :
+                return true
+            }
+        }
+    }
 }
+

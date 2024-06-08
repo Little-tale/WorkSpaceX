@@ -18,4 +18,6 @@ protocol DomainErrorType: Error, Equatable {
     
     /// 계발자 잘못인지 알려줍니다.
     var ifDevelopError: Bool { get }
+    
+    /// 공통 에러와 분리를 원할때 해당 에러인지 확인하고 케이스를 던집니다.
 }

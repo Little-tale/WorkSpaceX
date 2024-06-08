@@ -21,6 +21,8 @@ struct OnboardingFeature {
         
     }
     
+    @Dependency(\.userDomainRepository) var repository
+    
     var body: some ReducerOf<Self> {
 
         
