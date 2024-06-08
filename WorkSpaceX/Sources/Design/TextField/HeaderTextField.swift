@@ -16,11 +16,14 @@ struct HeaderTextField: View {
     
     @Binding
     var binding: String
+
+    var scopeColor: Bool
     
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
                 Text(headerTitle)
+                    .foregroundStyle(scopeColor ? WSXColor.errorRed : WSXColor.black)
                
             }
             Group{

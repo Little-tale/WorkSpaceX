@@ -39,6 +39,7 @@ struct SignUpFeature {
         
         var alReadyEmailCheck: Bool = false
         
+        var scopeAndColorChange: Field?  = nil
        
     }
     enum Field: Hashable, CaseIterable {
@@ -266,7 +267,9 @@ struct SignUpFeature {
                     let result = await reposiory.requestUserReg(user)
                     switch result {
                     case .success(let success):
+                        
                         print(success)
+                        
                     case .failure(let fail):
                         switch fail {
                         case .httpError(let error):
@@ -283,6 +286,7 @@ struct SignUpFeature {
                     }
                 }
             case let .focusTextField(field):
+                state.scopeAndColorChange = field
                 state.focusField = field
                 return .none
                 
