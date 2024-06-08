@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
 import Combine
@@ -29,10 +30,24 @@ struct OnboardingLoginFeature {
         case emailLoginButtonTapped
         case newSignUpTapped
         case signUpFeature(PresentationAction<SignUpFeature.Action>)
-        case kakaoLoginSuccess(Result<String,Error>)
+        case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
         case errorMessage(messgage: String?)
+        case loginResult(Result<UserEntity, APIError>)
     }
     
+    enum KakaoLoginErrorCase: Error {
+        case cancel
+        case error(SdkError)
+        
+        var message: String {
+            switch self {
+            case .cancel:
+                return ""
+            case .error(let error):
+                return "KAKAO 로그인 실패\n재시도 바랍니다."
+            }
+        }
+    }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -51,16 +66,27 @@ struct OnboardingLoginFeature {
                     await send(.kakaoLoginSuccess(result))
                 }
             case .kakaoLoginSuccess(let result):
+               
                 switch result {
-                case .success(let token):
-//                    state.oauthToken = token
-//                    state.errorPresentation = nil
-                    return .none
-                case .failure:
-                    state.errorPresentation = "카카오 로그인 실패\n재시도 해주세요!"
-                }
-                return .none
+                    
+                case .success(let success):
             
+                    return .run { send in
+                        let result = await  repository.requestKakaoUser((success, ""))
+                        await send(.loginResult(result))
+                    }
+                case .failure(let error):
+                    switch error {
+                        
+                    case .cancel:
+                        return .none
+                        
+                    case .error:
+                        return .send(.errorMessage(messgage: error.message))
+                    }
+                }
+                
+                
             case .emailLoginButtonTapped:
                 
                 return .none
@@ -82,6 +108,25 @@ struct OnboardingLoginFeature {
             case .errorMessage(messgage: let messgage):
                 state.errorPresentation = messgage
                 return .none
+            case .loginResult(let result):
+                
+                return .run { send in
+                    switch result {
+                    case .success(let success):
+                        print(success)
+                    case .failure(let error):
+                        switch error {
+                        case .httpError(let error):
+                            await send(.errorMessage(messgage: error))
+                        case .commonError(let error):
+                            await send(.errorMessage(messgage: error.message))
+                        case .customError(let error):
+                            await send(.errorMessage(messgage: error.errorCode))
+                        case .unknownError:
+                            await send(.errorMessage(messgage: "알수없음"))
+                        }
+                    }
+                }
             }
             
         }
@@ -93,30 +138,46 @@ struct OnboardingLoginFeature {
 
 extension OnboardingLoginFeature {
     
-    func requestKakao(result: @escaping (Result<String, Error>) -> Void) {
+    private func requestKakao(
+        result: @escaping (Result<String, KakaoLoginErrorCase>) -> Void
+    ) {
         DispatchQueue.main.async {
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { oauthToken, error in
                     if let error {
-                        result(.failure(error))
+                        let result = checkKakaoError(error: error)
                     } else if let oauthToken {
                         result(.success(oauthToken.accessToken))
+                    } else {
+                        result(.failure(.error(.init(apiFailedMessage: "FAIL KAKAO"))))
                     }
                 }
             } else {
                 UserApi.shared.loginWithKakaoAccount { oauthToken, error in
-                    
                     if let error {
-                        result(.failure(error))
+                        let result = checkKakaoError(error: error)
                     } else if let oauthToken {
                         result(.success(oauthToken.accessToken))
+                    } else {
+                        result(.failure(.error(.init(apiFailedMessage: "FAIL KAKAO"))))
                     }
-                    
                 }
             }
         }
     }
+    
+    private func checkKakaoError(error: Error) -> KakaoLoginErrorCase {
+        
+        guard let error = error as? SdkError else {
+            return .error(.init(apiFailedMessage: "알수 없는 에러"))
+        }
+        if !error.isClientFailed {
+            return .error(error)
+        }
+        return .cancel
+    }
 }
+
 /*
  if let error {
  await send(.kakaoLoginSuccess(.failure(error)))

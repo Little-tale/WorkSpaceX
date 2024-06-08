@@ -189,17 +189,26 @@ struct SignUpFeature {
             case .checkEmail:
                 let email = state.user.email
                 return .run { send in
-                    do {
-                        try await reposiory.chaeckEmail(email)
+                    
+                    let result = await reposiory.chaeckEmail(email)
+                    switch result {
+                    case .success:
                         await send(.checkEmailSuccess)
                         await send(.returnView("중복되지 않았어요"))
-                    } catch let error as APIError {
-                        if case .customError(let errorCase) = error {
-                            await send(.returnView(UserDomainError.emailValid(errorCase).message))
+                    case .failure(let errorCase):
+                        switch errorCase {
+                        case .httpError(let error):
+                            await send(.returnView(error))
+                        case .commonError(let error):
+                            await send(.returnView(error.message))
+                        case .customError(let error):
+                            await send(.returnView(error.errorCode))
+                        case .unknownError:
+                            await send(.returnView("알수없음"))
                         }
-                    } catch {// 1차 시도 알수없는 에러 즉 Router 구성 잘못됨.
-                        await send(.returnView(APIError.Unkonwn))
                     }
+                    
+                    
                 }
             case .checkEmailSuccess:
                 state.alReadyEmailCheck = true
@@ -254,11 +263,23 @@ struct SignUpFeature {
             case let .userRegEvent(user):
                 
                 return .run { send in
-                    do{
-                        let result = try await reposiory.requestUserReg(user)
-                        print(result)
-                    } catch {
-                        print("Errr",error)
+                    let result = await reposiory.requestUserReg(user)
+                    switch result {
+                    case .success(let success):
+                        print(success)
+                    case .failure(let fail):
+                        switch fail {
+                        case .httpError(let error):
+                            await send(.returnView(error))
+                        case .commonError(let error):
+                            await send(.returnView(error.message))
+                            print(error.message)
+                        case .customError(let error):
+                            
+                            print(error.errorCode)
+                        case .unknownError:
+                            print("알수없음")
+                        }
                     }
                 }
             case let .focusTextField(field):

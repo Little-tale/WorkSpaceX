@@ -9,7 +9,9 @@ import Foundation
 
 enum APIError: Error, Equatable {
     case httpError(String)
+    case commonError(CommonError)
     case customError(APIErrorResponse)
+    case unknownError
     
     static let Unkonwn = "알수없는 에러"
     
@@ -17,6 +19,10 @@ enum APIError: Error, Equatable {
         switch (lhs, rhs) {
         case (.customError(let lhsErrorResponse), .customError(let rhsErrorResponse)):
             return lhsErrorResponse == rhsErrorResponse
+        case (.commonError(let lhsCommonError), .commonError(let rhsCommonError)):
+            return lhsCommonError == rhsCommonError
+        case (.httpError(let lhsMessage), .httpError(let rhsMessage)):
+            return lhsMessage == rhsMessage
         default:
             return false
         }

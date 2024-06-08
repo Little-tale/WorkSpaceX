@@ -10,11 +10,11 @@ import ComposableArchitecture
 
 struct UserDomainRepository {
 
-    var chaeckEmail: (String) async throws -> ()
-    var requestUserReg: (UserRegEntityModel)  async throws -> (UserEntity)
+    var chaeckEmail: (String) async -> Result<Void, APIError>
+    var requestUserReg: (UserRegEntityModel)  async -> Result<UserEntity, APIError>
     var requestKakaoUser: ((oauthToken: String,
                            deviceToken: String)
-    ) async throws -> (UserEntity)
+    ) async -> (Result<UserEntity, APIError>)
     
 }
 
@@ -24,32 +24,50 @@ extension UserDomainRepository: DependencyKey {
     
     static let liveValue: UserDomainRepository = Self(
         chaeckEmail: { email in
-            let result = try await NetworkManger.shared.request(UserDomainRouter.userEmail(UserEmail(email: email)))
-            return // 해당한게 Return 성공으로 간주
+            do {
+                let _ = try await NetworkManger.shared.request(UserDomainRouter.userEmail(UserEmail(email: email)))
+                return .success(())
+            } catch let error as APIError {
+                return .failure(error)
+            } catch {
+                return .failure(.unknownError)
+            }
         }, requestUserReg: { userModel in
-            let dto = mapper.userRegDTO(user: userModel)
-            let result = try await NetworkManger.shared.requestDto(UserDTO.self, router: UserDomainRouter.userReg(dto))
-            let reEntry = mapper.toEntity(result)
-            UserDefaultsManager.accessToken = result.token.accessToken
-            UserDefaultsManager.accessToken = result.token.refreshToken
-            
-            print("accessToken",UserDefaultsManager.accessToken)
-            print("refreshToken",UserDefaultsManager.refreshToken)
-            return reEntry
+            do {
+                let dto = mapper.userRegDTO(user: userModel)
+                let result = try await NetworkManger.shared.requestDto(UserDTO.self, router: UserDomainRouter.userReg(dto))
+                let reEntry = mapper.toEntity(result)
+                UserDefaultsManager.accessToken = result.token.accessToken
+                UserDefaultsManager.accessToken = result.token.refreshToken
+                
+                print("accessToken",UserDefaultsManager.accessToken)
+                print("refreshToken",UserDefaultsManager.refreshToken)
+                return .success(reEntry)
+            } catch let error as APIError {
+                return .failure(error)
+            } catch {
+                return .failure(.unknownError)
+            }
         }, requestKakaoUser: { kakao in
-            let dtoRequest = mapper.kakaoUser(
-                oauthToken: kakao.oauthToken,
-                deviceToken: kakao.deviceToken
-            )
-            let result = try await NetworkManger.shared.requestDto(UserDTO.self, router: UserDomainRouter.kakaoLogin(dtoRequest))
-            let entity = mapper.toEntity(result)
-            
-            UserDefaultsManager.accessToken = result.token.accessToken
-            UserDefaultsManager.accessToken = result.token.refreshToken
-            
-            print("accessToken",UserDefaultsManager.accessToken)
-            print("refreshToken",UserDefaultsManager.refreshToken)
-            return entity
+            do {
+                let dtoRequest = mapper.kakaoUser(
+                    oauthToken: kakao.oauthToken,
+                    deviceToken: kakao.deviceToken
+                )
+                let result = try await NetworkManger.shared.requestDto(UserDTO.self, router: UserDomainRouter.kakaoLogin(dtoRequest))
+                let entity = mapper.toEntity(result)
+                
+                UserDefaultsManager.accessToken = result.token.accessToken
+                UserDefaultsManager.accessToken = result.token.refreshToken
+                
+                print("accessToken",UserDefaultsManager.accessToken)
+                print("refreshToken",UserDefaultsManager.refreshToken)
+                return .success(entity)
+            } catch let error as APIError {
+                return .failure(error)
+            } catch {
+                return .failure(.unknownError)
+            }
         }
     )
 }
