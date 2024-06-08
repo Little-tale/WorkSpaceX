@@ -75,7 +75,8 @@ extension NetworkManager {
             return data
         } catch {
             if retryCount > 0 {
-                if let apiError = error as? APIError, apiError == .customError(APIErrorResponse(errorCode: "E05")) {
+                if let apiError = error as? APIError,
+                   case .commonError(CommonError.accessToken) = apiError {
                     try await Task.sleep(nanoseconds: 100_000_000)  // 0.1초 지연
                     try await refreshAccessToken()
                     return try await startIntercept(&urlRequest, retryCount: retryCount - 1)
