@@ -76,6 +76,7 @@
 		7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */; };
 		7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */; };
 		7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B92C14264200576ECA /* EmailLoginView.swift */; };
+		7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,6 +146,7 @@
 		7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginDTORequest.swift; sourceTree = "<group>"; };
 		7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewSmall.swift; sourceTree = "<group>"; };
 		7BEC45B92C14264200576ECA /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
+		7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -504,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				7BEC45B92C14264200576ECA /* EmailLoginView.swift */,
+				7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */,
 			);
 			path = EmailLogin;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
+				7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */,
 				7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */,
 				7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */,
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,

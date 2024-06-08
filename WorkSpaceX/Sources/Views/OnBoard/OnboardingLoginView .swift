@@ -33,7 +33,7 @@ struct OnboardingLoginView: View {
                 WSXImage.emailLoginButton
                     .modifier(CommonButtonModifer())
                     .asButton {
-                        
+                        store.send(.emailLoginButtonTapped)
                     }
                 HStack {
                     Text("또는")
@@ -45,30 +45,43 @@ struct OnboardingLoginView: View {
                         }
                     
                 }
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.signUp,
+                    action: \.signUpFeature
+                )) { store in
+                    NavigationStack {
+                        SignUpView(store: store)
+                            .presentationDragIndicator(.visible)
+                            .navigationTitle(
+                                Text("회원가입")
+                            )
+                            .navigationBarTitleDisplayMode(.inline)
+                    }
+                    .font(WSXFont.title2)
+                }
+                .alert(item: $store.errorPresentation.sending(\.errorMessage)) { _ in
+                    Text("에러")
+                } actions: { _ in
+                } message: { message in
+                    Text(message)
+                }
                 .sheet(
                     item: $store.scope(
-                        state: \.signUp,
-                        action: \.signUpFeature
+                        state: \.emailLogin,
+                        action: \.emailLoginFeature
                     )) { store in
                         NavigationStack {
-                            SignUpView(store: store)
+                           EmailLoginView(store: store)
                                 .presentationDragIndicator(.visible)
                                 .navigationTitle(
-                                    Text("회원가입")
+                                    Text("이메일 로그인")
                                 )
                                 .navigationBarTitleDisplayMode(.inline)
                         }
+                        .font(WSXFont.title2)
                     }
-                    .font(WSXFont.title2)
-                    
-            }
-            
-            .alert(item: $store.errorPresentation.sending(\.errorMessage)) { _ in
-                Text("에러")
-            } actions: { _ in
-            } message: { message in
-                Text(message)
-            }
         }
         
     }

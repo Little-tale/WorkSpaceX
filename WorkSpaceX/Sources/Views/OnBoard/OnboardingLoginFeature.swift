@@ -18,8 +18,16 @@ struct OnboardingLoginFeature {
     @ObservableState
     struct State: Equatable {
         @Presents var signUp: SignUpFeature.State?
+        @Presents var emailLogin: EmailLoginFeature.State?
         var errorPresentation: String? = nil
     }
+    /*
+     
+     
+     .ifLet(\.emailLogin, action: \.emailLoginButtonTapped) {
+         EmailLoginFeature()
+     }
+     */
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var repository
@@ -27,7 +35,10 @@ struct OnboardingLoginFeature {
     enum Action {
         case appleLoginButtonTapped
         case kakaoLoginButtonTapped
+        
         case emailLoginButtonTapped
+        case emailLoginFeature(PresentationAction<EmailLoginFeature.Action>)
+        
         case newSignUpTapped
         case signUpFeature(PresentationAction<SignUpFeature.Action>)
         case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
@@ -90,7 +101,15 @@ struct OnboardingLoginFeature {
                 
                 
             case .emailLoginButtonTapped:
+                state.emailLogin = EmailLoginFeature.State()
+                return .none
                 
+            case let .emailLoginFeature(loginFeature):
+                if case .dismiss = loginFeature {
+                    return .run { send in
+                        await self.dismiss()
+                    }
+                }
                 return .none
                 
             case .newSignUpTapped:
@@ -138,11 +157,15 @@ struct OnboardingLoginFeature {
                     break
                 }
                 return .none
+            
             }
             
         }
         .ifLet(\.$signUp, action: \.signUpFeature) {
             SignUpFeature()
+        }
+        .ifLet(\.$emailLogin, action: \.emailLoginFeature) {
+            EmailLoginFeature()
         }
     }
 }
