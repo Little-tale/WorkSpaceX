@@ -25,6 +25,7 @@ struct OnboardingLoginFeature {
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var repository
     @Dependency(\.appleController) var appleHandler
+    @Dependency(\.appleLoginErrorHandeler) var isUserErrorApple
     
     enum Action {
         case appleLoginButtonTapped
@@ -71,8 +72,10 @@ struct OnboardingLoginFeature {
                     do {
                         let success = try await appleHandler.signIn()
                         await send(.appleLoginSuccess(success))
-                    } catch {
-                        await send(.errorMessage(messgage: "일단 대기"))
+                    } catch (let error) {
+                        // 사용자 취소도 에러로 받아짐.
+                        let message = isUserErrorApple.isUserError(error)
+                        await send(.errorMessage(messgage: message))
                     }
                 }
             case .kakaoLoginButtonTapped:

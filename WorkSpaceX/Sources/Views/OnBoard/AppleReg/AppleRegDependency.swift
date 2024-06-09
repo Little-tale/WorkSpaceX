@@ -28,13 +28,15 @@ extension AppleRegDependency: DependencyKey {
                     controller.delegate = delegate
                     controller.performRequests()
                     AppleSignInDelegateStore.shared.delegate = delegate
-//                    DispatchQueue.main.async {
-//                        continuation.resume(throwing: NSError(domain: "왜 안될까", code: -1))
-//                    }
+
                 }
             }
         )
     }
+}
+final class AppleSignInDelegateStore {
+    static let shared = AppleSignInDelegateStore()
+    var delegate: AppleSignInDelegate?
 }
 
 extension DependencyValues {
@@ -43,50 +45,3 @@ extension DependencyValues {
         set { self[AppleRegDependency.self] = newValue}
     }
 }
-
-final class AppleSignInDelegateStore {
-    static let shared = AppleSignInDelegateStore()
-    var delegate: AppleSignInDelegate?
-}
-
-final class AppleSignInDelegate: NSObject, ASAuthorizationControllerDelegate {
-    
-    let continuation: CheckedContinuation<ASAuthorization, Error>
-    
-    init(continuation: CheckedContinuation<ASAuthorization, Error>) {
-        self.continuation = continuation
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        continuation.resume(returning: authorization)
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        continuation.resume(throwing: error)
-    }
-}
-
-
-
-/*
- extension AppleRegDependency: DependencyKey {
- static var liveValue: AppleRegDependency {
- let request = ASAuthorizationAppleIDProvider().createRequest()
- request.requestedScopes = [.fullName]
- 
- return Self(
- appleSignInController: ASAuthorizationController(authorizationRequests: [request])
- )
- }
- }
- extension AppleRegDependency: DependencyKey {
- static var liveValue: AppleRegDependency = Self(
- appleSignInController: ASAuthorizationController(
- authorizationRequests: [
- ASAuthorizationAppleIDProvider().createRequest()
- ]
- )
- )
- }
- 
- */
