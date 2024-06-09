@@ -71,10 +71,14 @@ extension UserDomainRepository: DependencyKey {
                 return .failure(.commonError(.fail))
             }
         }, requestEmailLogin: { emailLogin in
+            var tokken: String?
+            if UserDefaultsManager.deviceToken != "" {
+                tokken = UserDefaultsManager.deviceToken
+            }
             let dto = mapper.requestLoginDTO(
                 email: emailLogin.email,
                 password: emailLogin.password,
-                deviceToken: nil // 애플 처리후 적용
+                deviceToken: tokken
             )
             
             do {

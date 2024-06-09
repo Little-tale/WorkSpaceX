@@ -13,17 +13,17 @@ import KakaoSDKAuth
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        
+        print("application Start")
         KakaoSDK.initSDK(appKey: APIKey.kakaoAPIKey)
         
         UNUserNotificationCenter.current().delegate = self
         let center = UNUserNotificationCenter.current()
-        
+   
         center.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
             guard let self = self else { return }
             if granted {
                 DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
+                    UIApplication.shared.registerForRemoteNotifications()
                 }
             } else {
                 print("사용자가 거부하심")
@@ -50,7 +50,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // 디바이스 토큰 수신 성공시
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print("Device Token: \(tokenString)")
+        UserDefaultsManager.deviceToken = tokenString
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
