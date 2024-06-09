@@ -10,7 +10,6 @@ import Foundation
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
-import Combine
 
 @Reducer
 struct OnboardingLoginFeature {
@@ -173,10 +172,12 @@ extension OnboardingLoginFeature {
         DispatchQueue.main.async {
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                    print("에러가 발생하였는가???",error)
                     if let error {
                         let results = checkKakaoError(error: error)
                         result(.failure(results))
                     } else if let oauthToken {
+                        print("카카오톡 성공 \(oauthToken)")
                         result(.success(oauthToken.accessToken))
                     } else {
                         result(.failure(.error(.init(apiFailedMessage: "FAIL KAKAO"))))
@@ -184,10 +185,12 @@ extension OnboardingLoginFeature {
                 }
             } else {
                 UserApi.shared.loginWithKakaoAccount { oauthToken, error in
+                    print("에러가 발생하였는가??? 여기?",error)
                     if let error {
                         let results = checkKakaoError(error: error)
                         result(.failure(results))
                     } else if let oauthToken {
+                        print("카카오톡 성공 \(oauthToken)")
                         result(.success(oauthToken.accessToken))
                     } else {
                         result(.failure(.error(.init(apiFailedMessage: "FAIL KAKAO"))))
@@ -203,6 +206,7 @@ extension OnboardingLoginFeature {
             return .error(.init(apiFailedMessage: "알수 없는 에러"))
         }
         if !error.isClientFailed {
+            print("카카오 에러 \(error)")
             return .error(error)
         }
         return .cancel
