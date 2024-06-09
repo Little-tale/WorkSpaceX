@@ -46,7 +46,7 @@ extension NetworkManager {
                 if let commonError = CommonError(rawValue: errorResponse.errorCode) {
                     throw APIError.commonError(commonError)
                 } else {
-                    throw APIError.customError(errorResponse)
+                    throw APIError.customError(errorResponse.errorCode)
                 }
             } else {
                 throw APIError.httpError("Unexpected error: Please retry")

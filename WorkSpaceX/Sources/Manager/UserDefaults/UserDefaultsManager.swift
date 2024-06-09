@@ -15,6 +15,7 @@ enum UserDefaultsManager {
         case userID
         case accessToken
         case refreshToken
+        case appleLoginNickName
         
         var value: String {
             return self.rawValue
@@ -33,4 +34,6 @@ enum UserDefaultsManager {
     @UserDefaultsWrapper(key: Key.refreshToken.value, placeValue: "")
     static var refreshToken: String
     
+    @UserDefaultsWrapper(key: Key.appleLoginNickName.value, placeValue: nil)
+    static var appleLoginNickName: String?
 }

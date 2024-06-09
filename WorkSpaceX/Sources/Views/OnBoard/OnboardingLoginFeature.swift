@@ -10,7 +10,7 @@ import Foundation
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
-import AuthenticationServices // APPLE 로그인
+
 
 @Reducer
 struct OnboardingLoginFeature {
@@ -24,7 +24,7 @@ struct OnboardingLoginFeature {
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var repository
-    @Dependency(\.appleController) var appleHandler
+    
     @Dependency(\.appleLoginErrorHandeler) var isUserErrorApple
     
     enum Action {
@@ -42,7 +42,7 @@ struct OnboardingLoginFeature {
         case loginResult(Result<UserEntity, UserDomainError>)
         case userDomainErrorHandler(UserDomainError)
         case onlyUseParentsUser(UserEntity)
-        case appleLoginSuccess(ASAuthorization)
+        
     }
     
     enum KakaoLoginErrorCase: Error {
@@ -70,12 +70,21 @@ struct OnboardingLoginFeature {
 
                 return .run { send in
                     do {
-                        let success = try await appleHandler.signIn()
-                        await send(.appleLoginSuccess(success))
-                    } catch (let error) {
+                        let success = try await repository.appleLoginRequest()
+                        await send(.onlyUseParentsUser(success))
+                    } catch (let error as UserDomainError ) {
+                        print("error -> \(error.message)")
+                        print("error -> \(error.errorCode)")
+                        
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(messgage: error.message))
+                        }
+                    } catch (let error as AppleLoginError ) {
                         // 사용자 취소도 에러로 받아짐.
-                        let message = isUserErrorApple.isUserError(error)
-                        await send(.errorMessage(messgage: message))
+                        let error = isUserErrorApple.isUserError(error)
+                        await send(.errorMessage(messgage: error.mesage))
+                    } catch {
+                        await send(.errorMessage(messgage: APIError.Unkonwn))
                     }
                 }
             case .kakaoLoginButtonTapped:
@@ -145,7 +154,7 @@ struct OnboardingLoginFeature {
                     switch result {
                     case .success(let success):
                         
-                        print(success)
+                        print("성공",success)
                     case .failure(let error):
                         await send(.userDomainErrorHandler(error))
                     }
@@ -169,8 +178,7 @@ struct OnboardingLoginFeature {
                 }
             case .onlyUseParentsUser(let user):
                 return .none
-            case .appleLoginSuccess(let apple):
-                print("된걸까?",apple)
+          
             }
             return .none
         }

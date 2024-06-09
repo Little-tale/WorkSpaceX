@@ -206,7 +206,7 @@ struct SignUpFeature {
                         case .commonError(let error):
                             await send(.returnView(error.message))
                         case .customError(let error):
-                            await send(.returnView(error.errorCode))
+                            await send(.returnView(error))
                         case .unknownError:
                             await send(.returnView("알수없음"))
                         }
@@ -280,7 +280,7 @@ struct SignUpFeature {
                             print(error.message)
                         case .customError(let error):
                             
-                            print(error.errorCode)
+                            print(error)
                         case .unknownError:
                             print("알수없음")
                         }

@@ -10,7 +10,7 @@ import Foundation
 enum APIError: Error, Equatable {
     case httpError(String)
     case commonError(CommonError)
-    case customError(APIErrorResponse)
+    case customError(String)
     case unknownError
     
     static let Unkonwn = "알수없는 에러"

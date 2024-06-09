@@ -81,6 +81,7 @@
 		7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */; };
 		7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C22C15B01D00576ECA /* AppleSignInDelegate.swift */; };
 		7BEC45C52C15D59C00576ECA /* AppleLoginErrorHandeler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandeler.swift */; };
+		7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +156,7 @@
 		7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRegDependency.swift; sourceTree = "<group>"; };
 		7BEC45C22C15B01D00576ECA /* AppleSignInDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInDelegate.swift; sourceTree = "<group>"; };
 		7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandeler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginErrorHandeler.swift; sourceTree = "<group>"; };
+		7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDTORequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,6 +503,7 @@
 			children = (
 				7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */,
 				7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */,
+				7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */,
 			);
 			path = AuthDomain;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
+				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
 				7BEC45AA2C12E80F00576ECA /* AuthError.swift in Sources */,
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,

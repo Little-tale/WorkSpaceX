@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 struct UserRegMapper {
     
@@ -39,12 +40,18 @@ extension UserRegMapper {
     }
     
     func userRegDTO(user: UserRegEntityModel) -> UserDTORequest {
+        
+        var token: String?
+        if UserDefaultsManager.deviceToken != "" {
+            token = UserDefaultsManager.deviceToken
+        }
+        
         return UserDTORequest(
             email: user.email,
             password: user.password,
             nickname: user.nickName,
             phone: user.contact,
-            deviceToken: ""
+            deviceToken: token
         )
     }
     
@@ -82,8 +89,9 @@ extension UserRegMapper {
     
     func mappingEmailLoginError(error: APIError) -> UserDomainError {
         switch error {
-        case .httpError(_):
-            return .commonError(.serverError)
+        case .httpError(let error):
+            print(error)
+            return .commonError(.fail)
         case .commonError(let common):
             
             return .commonError(common)
@@ -95,4 +103,51 @@ extension UserRegMapper {
         }
     }
     
+    func mappingASAuthorization(info: ASAuthorization) -> AppleLoginDTORequest? {
+        guard let appleInfo = info.credential as? ASAuthorizationAppleIDCredential else  {
+            return nil
+        }
+
+        
+        var name: String = appleInfo.fullName?.givenName ?? "이름 없음"
+        UserDefaultsManager.appleLoginNickName = name
+        
+        var token: String?
+        if UserDefaultsManager.deviceToken != "" {
+            token = UserDefaultsManager.deviceToken
+        }
+        
+        guard let identy = appleInfo.identityToken,
+              let tokenResult = String(data: identy, encoding: .utf8) else {
+            return nil
+        }
+        
+        print("애플 토큰",tokenResult)
+        
+        return AppleLoginDTORequest(
+            idToken: tokenResult,
+            nickname: UserDefaultsManager.appleLoginNickName,
+            deviceToken: token
+        )
+    }
+    
+    func mappingAppleLoginToUserDomainError(apE: APIError) -> UserDomainError { // appleLoginError
+        switch apE {
+        case .httpError(let error):
+            print(error)
+            return .commonError(.fail)
+        case .commonError(let error):
+            if case .unknownAcount = error {
+                return .appleLoginError(error.errorCode)
+            }
+            return .commonError(error)
+            
+        case .customError(let response):
+            let mapping = UserDomainError.appleLoginError(response)
+            return mapping
+            
+        case .unknownError:
+            return .commonError(.fail)
+        }
+    }
 }

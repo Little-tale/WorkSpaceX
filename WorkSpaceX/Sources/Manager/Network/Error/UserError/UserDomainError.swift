@@ -9,16 +9,17 @@ import Foundation
 
 enum UserDomainError: DomainErrorType {
     case commonError(CommonError)
-    case emailValid(APIErrorResponse)
-    case kakaoLogin(APIErrorResponse)
-    case emailLoginError(APIErrorResponse)
+    case emailValid(String)
+    case kakaoLogin(String)
+    case emailLoginError(String)
+    case appleLoginError(String)
 }
 
 extension UserDomainError {
     var message: String {
         switch self {
         case .emailValid(let errorModel):
-            switch errorModel.errorCode {
+            switch errorModel {
             case "E11":
                 return "잘못된 요청을 하고 있습니다."
             case "E12":
@@ -27,7 +28,7 @@ extension UserDomainError {
                 return "응답 하나 알수없음"
             }
         case .kakaoLogin(let errorModel):
-            switch errorModel.errorCode {
+            switch errorModel {
             case "E03":
                 return "로그인에 실패 하였습니다."
             case "E11":
@@ -38,7 +39,7 @@ extension UserDomainError {
                 return "알수 없는 에러입니다."
             }
         case .emailLoginError(let errorModel):
-            switch errorModel.errorCode {
+            switch errorModel {
             case "E03":
                 return "로그인에 실패 하였습니다."
             default :
@@ -46,6 +47,18 @@ extension UserDomainError {
             }
         case .commonError(let common):
             return common.message
+            
+        case .appleLoginError(let errorModel):
+            switch errorModel {
+            case "E03":
+                return "로그인 실패 하였습니다."
+            case "E11":
+                return "잘못된 유저입니다."
+            case "E12":
+                return "이미 이메일로 가입된 유저입니다."
+            default :
+                return "알수없는 에러"
+            }
         }
     }
     
@@ -53,20 +66,23 @@ extension UserDomainError {
         switch self {
         case .emailValid(let errorModel),
                 .kakaoLogin(let errorModel) :
-            return errorModel.errorCode
+            return errorModel
             
         case .commonError(let common):
             return common.errorCode
             
         case .emailLoginError(let emailLogin):
-            return emailLogin.errorCode
+            return emailLogin
+            
+        case .appleLoginError(let error):
+            return error
         }
     }
     
     var ifDevelopError: Bool {
         switch self {
         case .emailValid(let errorModel):
-            switch errorModel.errorCode {
+            switch errorModel {
             case "E11":
                 return true
             case "E12":
@@ -75,7 +91,7 @@ extension UserDomainError {
                 return true
             }
         case .kakaoLogin(let errorModel):
-            switch errorModel.errorCode {
+            switch errorModel {
             case "E03":
                 return true
             case "E11":
@@ -86,12 +102,24 @@ extension UserDomainError {
                 return true
             }
         case .emailLoginError(let errorModel):
-            switch errorModel.errorCode {
+            switch errorModel {
             case "E03":
                 return false
             default :
                 return true
             }
+        case .appleLoginError(let errorModel):
+            switch errorModel {
+            case "E03":
+                return true
+            case "E11":
+                return true
+            case "E12":
+                return false
+            default:
+                return true
+            }
+            
         case .commonError(let common):
             return common.ifDevelopError
         }
@@ -102,7 +130,7 @@ extension UserDomainError {
         case .commonError:
             return false
         case .emailValid(let error):
-            switch error.errorCode {
+            switch error {
             case "E11":
                 return true
             case "E12":
@@ -111,7 +139,7 @@ extension UserDomainError {
                 return true
             }
         case .kakaoLogin(let error):
-            switch error.errorCode {
+            switch error {
             case "E03":
                 return true
             case "E11":
@@ -121,8 +149,12 @@ extension UserDomainError {
             default :
                 return false
             }
+            
+        case .appleLoginError:
+           return true
+            
         case .emailLoginError(let error):
-            switch error.errorCode {
+            switch error {
             case "E03":
                 return true
             default :

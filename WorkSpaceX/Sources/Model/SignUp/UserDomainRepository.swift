@@ -17,6 +17,9 @@ struct UserDomainRepository {
     ) async -> (Result<UserEntity, UserDomainError>)
     
     var requestEmailLogin: ((email: String, password: String)) async -> Result<UserEntity, UserDomainError>
+    
+    var appleLoginRequest: () async throws -> UserEntity
+
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -97,6 +100,31 @@ extension UserDomainRepository: DependencyKey {
             } catch {
                 return .failure(.commonError(.fail))
             }
+        }, appleLoginRequest: {
+            do {
+                let success = try await DependencyValues.live.appleController.signIn()
+                let user = mapper.mappingASAuthorization(info: success)
+                
+                guard let user else {
+                    throw AppleLoginError.error
+                }
+                
+                let result = try await NetworkManager.shared.requestDto(
+                    UserDTO.self,
+                    router: UserDomainRouter.appleLoginRegister(user)
+                )
+                
+                let entity = mapper.toEntity(result)
+                
+                return entity
+            } catch (let error as APIError) {
+                let result = mapper.mappingAppleLoginToUserDomainError(apE: error)
+                throw result
+            } catch {
+                // 사용자 취소도 에러로 받아짐.
+                throw DependencyValues.live.appleLoginErrorHandeler.isUserError(error)
+            }
+            
         }
     )
 }

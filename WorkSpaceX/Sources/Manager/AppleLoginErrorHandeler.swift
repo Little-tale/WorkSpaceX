@@ -8,21 +8,33 @@
 import Foundation
 import ComposableArchitecture
 
-struct AppleLoginErrorHandeler {
-        
-    var isUserError: (Error) -> String
+enum AppleLoginError: Error {
+    case error
+    case userCancel
+   
     
+    var mesage: String {
+        switch self {
+        case .error:
+            "애플 로그인을 취소 하셨습니다."
+        case .userCancel:
+            "로그인에 문제가 발생하였습니다."
+        }
+    }
+}
+
+struct AppleLoginErrorHandeler {
+    var isUserError: (Error) -> AppleLoginError
 }
 
 extension AppleLoginErrorHandeler: DependencyKey {
     static var liveValue: Self = Self(
         isUserError: { error in
             let error = error.localizedDescription
-            
             if error.contains("1001") {
-                return "애플 로그인을 취소 하셨습니다."
+                return .userCancel
             }
-            return "로그인에 문제가 발생하였습니다."
+            return .error
         }
     )
 }
