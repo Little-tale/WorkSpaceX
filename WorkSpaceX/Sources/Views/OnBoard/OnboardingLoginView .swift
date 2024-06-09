@@ -21,7 +21,7 @@ struct OnboardingLoginView: View {
                 WSXImage.appleLogin
                     .modifier(CommonButtonModifer())
                     .asButton {
-                        
+                        store.send(.appleLoginButtonTapped)
                     }
                 
                 WSXImage.kakaoLogin

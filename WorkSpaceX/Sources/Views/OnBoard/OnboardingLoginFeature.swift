@@ -10,6 +10,7 @@ import Foundation
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
+import AuthenticationServices // APPLE 로그인
 
 @Reducer
 struct OnboardingLoginFeature {
@@ -23,6 +24,7 @@ struct OnboardingLoginFeature {
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var repository
+    @Dependency(\.appleController) var appleHandler
     
     enum Action {
         case appleLoginButtonTapped
@@ -39,6 +41,7 @@ struct OnboardingLoginFeature {
         case loginResult(Result<UserEntity, UserDomainError>)
         case userDomainErrorHandler(UserDomainError)
         case onlyUseParentsUser(UserEntity)
+        case appleLoginSuccess(ASAuthorization)
     }
     
     enum KakaoLoginErrorCase: Error {
@@ -54,13 +57,24 @@ struct OnboardingLoginFeature {
             }
         }
     }
+    struct appleLoginInfo {
+        let id: String
+        let name: String
+    }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .appleLoginButtonTapped:
-                
-                return .none
+
+                return .run { send in
+                    do {
+                        let success = try await appleHandler.signIn()
+                        await send(.appleLoginSuccess(success))
+                    } catch {
+                        await send(.errorMessage(messgage: "일단 대기"))
+                    }
+                }
             case .kakaoLoginButtonTapped:
                 
                 return .run { send in
@@ -152,6 +166,8 @@ struct OnboardingLoginFeature {
                 }
             case .onlyUseParentsUser(let user):
                 return .none
+            case .appleLoginSuccess(let apple):
+                print("된걸까?",apple)
             }
             return .none
         }
@@ -212,3 +228,4 @@ extension OnboardingLoginFeature {
         return .cancel
     }
 }
+

@@ -78,6 +78,8 @@
 		7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45B92C14264200576ECA /* EmailLoginView.swift */; };
 		7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */; };
 		7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */; };
+		7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */; };
+		7BEC45C32C15B01D00576ECA /* AppleLoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C22C15B01D00576ECA /* AppleLoginResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,6 +151,8 @@
 		7BEC45B92C14264200576ECA /* EmailLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginView.swift; sourceTree = "<group>"; };
 		7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginFeature.swift; sourceTree = "<group>"; };
 		7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
+		7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRegDependency.swift; sourceTree = "<group>"; };
+		7BEC45C22C15B01D00576ECA /* AppleLoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,6 +424,7 @@
 		7B592EB62C0EC3D100E47797 /* OnBoard */ = {
 			isa = PBXGroup;
 			children = (
+				7BEC45BF2C15A4B900576ECA /* AppleReg */,
 				7BEC45B82C14263800576ECA /* EmailLogin */,
 				7B592EC82C0EE11B00E47797 /* SignUp */,
 				7B592EB92C0EC45C00E47797 /* OnboardingView.swift */,
@@ -512,6 +517,15 @@
 				7BEC45BB2C142E1300576ECA /* EmailLoginFeature.swift */,
 			);
 			path = EmailLogin;
+			sourceTree = "<group>";
+		};
+		7BEC45BF2C15A4B900576ECA /* AppleReg */ = {
+			isa = PBXGroup;
+			children = (
+				7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */,
+				7BEC45C22C15B01D00576ECA /* AppleLoginResult.swift */,
+			);
+			path = AppleReg;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -610,6 +624,7 @@
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
+				7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */,
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
@@ -653,6 +668,7 @@
 				7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */,
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
+				7BEC45C32C15B01D00576ECA /* AppleLoginResult.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7BEC45AA2C12E80F00576ECA /* AuthError.swift in Sources */,
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
