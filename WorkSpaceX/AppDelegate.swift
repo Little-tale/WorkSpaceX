@@ -21,19 +21,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
    
         center.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
             guard let self = self else { return }
-            if granted {
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            } else {
+            if !granted {
                 print("사용자가 거부하심")
-                self.showNotificationAllowedAlert()
+                DispatchQueue.main.async {
+                    self.showNotificationAllowedAlert()
+                }
             }
             if let error = error {
                 print("Authorization error: \(error.localizedDescription)")
             }
         }
-        
+        application.registerForRemoteNotifications()
         return true
     }
     
@@ -50,6 +48,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // 디바이스 토큰 수신 성공시
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        print("디바이스 토큰 받아옴.")
         UserDefaultsManager.deviceToken = tokenString
     }
     

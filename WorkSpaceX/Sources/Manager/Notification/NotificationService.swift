@@ -10,5 +10,4 @@ import UserNotifications
 
 final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     static let shared = NotificationService()
-
 }
