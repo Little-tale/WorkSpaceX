@@ -34,14 +34,21 @@ struct OnboardingFeature {
                 
                 return .none
                 
-            case .onboardingLoginFeature(.presented(.onlyUseParentsUser(let user))):
-                print("LoginFeatureEvents: \(user)")
-                return .none
+            case .onboardingLoginFeature(.presented(.appleLoginFinish(let user))):
                 
+                
+                return .none
+            case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let user))):
+                
+                
+                return .none
             case .onboardingLoginFeature(.presented(.signUpFeature(.presented(.onlyUseParentsUserEntity(let user))))):
                 print("signUpFeatureEvents: \(user)")
                 return .none
                 
+            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess(let user))))):
+                
+                return .none
             default :
                 return .none
             }

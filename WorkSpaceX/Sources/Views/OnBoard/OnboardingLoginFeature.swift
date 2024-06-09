@@ -36,13 +36,17 @@ struct OnboardingLoginFeature {
         
         case newSignUpTapped
         case signUpFeature(PresentationAction<SignUpFeature.Action>)
+        
         case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
         case errorMessage(messgage: String?)
     
-        case loginResult(Result<UserEntity, UserDomainError>)
+        case kakaoLoginResult(Result<UserEntity, UserDomainError>)
         case userDomainErrorHandler(UserDomainError)
-        case onlyUseParentsUser(UserEntity)
         
+        
+        
+        case appleLoginFinish(UserEntity)
+        case kakaoLoginFinish(UserEntity)
     }
     
     enum KakaoLoginErrorCase: Error {
@@ -71,7 +75,7 @@ struct OnboardingLoginFeature {
                 return .run { send in
                     do {
                         let success = try await repository.appleLoginRequest()
-                        await send(.onlyUseParentsUser(success))
+                        await send(.appleLoginFinish(success))
                     } catch (let error as UserDomainError ) {
                         print("error -> \(error.message)")
                         print("error -> \(error.errorCode)")
@@ -88,7 +92,6 @@ struct OnboardingLoginFeature {
                     }
                 }
             case .kakaoLoginButtonTapped:
-                
                 return .run { send in
                     let result = await withCheckedContinuation { contination in
                         requestKakao { result in
@@ -105,7 +108,7 @@ struct OnboardingLoginFeature {
             
                     return .run { send in
                         let result = await  repository.requestKakaoUser((success, ""))
-                        await send(.loginResult(result))
+                        await send(.kakaoLoginResult(result))
                     }
                 case .failure(let error):
                     switch error {
@@ -148,13 +151,13 @@ struct OnboardingLoginFeature {
                 state.errorPresentation = messgage
                 return .none
                 
-            case .loginResult(let result):
+            case .kakaoLoginResult(let result):
                 
                 return .run { send in
                     switch result {
                     case .success(let success):
-                        
                         print("성공",success)
+                        await send(.kakaoLoginFinish(success))
                     case .failure(let error):
                         await send(.userDomainErrorHandler(error))
                     }
@@ -176,9 +179,13 @@ struct OnboardingLoginFeature {
                 default :
                     return .none
                 }
-            case .onlyUseParentsUser(let user):
-                return .none
           
+            case .appleLoginFinish: // 부모에서
+                
+                return .none
+            case .kakaoLoginFinish: // 부모에서
+                
+                return .none
             }
             return .none
         }

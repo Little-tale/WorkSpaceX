@@ -28,7 +28,6 @@ struct OnboardingView: View {
                 OnboardingLoginView(store: store)
                 .presentationDetents([.height(250)])
                 .presentationDragIndicator(.visible)
-                
             }
         }
     }
