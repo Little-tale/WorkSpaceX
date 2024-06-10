@@ -26,7 +26,10 @@ struct WorkSpaceInitalFeature {
         case showImagePicker
         case imagePickerData(Data?)
         case regButtonTapped
+        case dismissButtonTapped
     }
+    
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -60,11 +63,13 @@ struct WorkSpaceInitalFeature {
                 
             case .regButtonTapped:
                 print("눌름")
-                
-                
                 return .none
+            case .dismissButtonTapped:
+                
+                return .run { send in
+                    await self.dismiss()
+                }
             }
-    
         }
         
     }

@@ -96,6 +96,7 @@
 		7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E62C16F2A800576ECA /* WorkSpaceDomainRepository.swift */; };
 		7BEC45E92C16FEDE00576ECA /* RootFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E82C16FEDE00576ECA /* RootFeature.swift */; };
 		7BEC45EB2C1703C100576ECA /* WorkSpaceFirstStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45EA2C1703C100576ECA /* WorkSpaceFirstStartView.swift */; };
+		7BEC45ED2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45EC2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -185,6 +186,7 @@
 		7BEC45E62C16F2A800576ECA /* WorkSpaceDomainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDomainRepository.swift; sourceTree = "<group>"; };
 		7BEC45E82C16FEDE00576ECA /* RootFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFeature.swift; sourceTree = "<group>"; };
 		7BEC45EA2C1703C100576ECA /* WorkSpaceFirstStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceFirstStartView.swift; sourceTree = "<group>"; };
+		7BEC45EC2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceFirstStartFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -575,6 +577,7 @@
 				7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */,
 				7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */,
 				7BEC45EA2C1703C100576ECA /* WorkSpaceFirstStartView.swift */,
+				7BEC45EC2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift */,
 			);
 			path = WorkSpaceInit;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
 				7BEC45DF2C16E60100576ECA /* WorkSpaceDomainError.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
+				7BEC45ED2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift in Sources */,
 				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,

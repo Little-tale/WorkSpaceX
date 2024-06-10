@@ -81,9 +81,19 @@ struct WorkSpaceInitalView: View {
                             })
                 
                 }
-               
+                .navigationTitle("워크스페이스 생성")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        WSXImage.xImage
+                            .asButton {
+                                store.send(.dismissButtonTapped)
+                            }
+                            .foregroundStyle(WSXColor.black)
+                    }
+                }
             }
-            .navigationTitle("워크스페이스 생성")
+            
             
         }
     }
