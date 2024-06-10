@@ -52,6 +52,9 @@ struct RootFeature {
                     state.currentLoginState = .logout
                 }
                 return .none
+            case .sendToOnboardingView(.checkedLogin):
+                
+                return .run { send in await send(.onAppear)}
                 
             case .sendToWorkSpaceStart:
                 

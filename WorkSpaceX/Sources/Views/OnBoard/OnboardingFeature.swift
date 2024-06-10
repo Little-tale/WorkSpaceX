@@ -21,6 +21,7 @@ struct OnboardingFeature {
         case startButtonTapped
         case onboardingLoginFeature(PresentationAction<OnboardingLoginFeature.Action>)
         case testSuccess
+        case checkedLogin
     }
     
     @Dependency(\.userDomainRepository) var repository
@@ -38,13 +39,12 @@ struct OnboardingFeature {
                     await send(.testSuccess)
                 }
                 
-            case .onboardingLoginFeature(.presented(.appleLoginFinish(let user))): // 애플 로그인시
-                
-                 state.loginFalid = "테스트"
+            case .onboardingLoginFeature(.presented(.appleLoginFinish)): // 애플 로그인시
+            
                 return .run { send in
                     await send(.testSuccess)
                 }
-            case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let user))): // 카카오 로그인 시
+            case .onboardingLoginFeature(.presented(.kakaoLoginFinish)): // 카카오 로그인 시
                 
                 return .run { send in
                     await send(.testSuccess)
@@ -65,10 +65,13 @@ struct OnboardingFeature {
                 
             case .testSuccess:
                 if ifLogin() {
-                    
+                    return .run { send in await send(.checkedLogin)}
                 } else {
-                    
+                    state.loginFalid = "로그인중 문제가 발생했습니다 재시도 바랍니다."
                 }
+                return .none
+                
+            case .checkedLogin:
                 return .none
                 
             default :
