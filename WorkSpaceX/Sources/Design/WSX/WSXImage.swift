@@ -21,4 +21,6 @@ extension WSXImage {
     static let xImage: Image = Image(systemName: "xmark").resizable().renderingMode(.template)
     
     static let logoImage: Image = Image(.workSpaceXLogo)
+    
+    static let subCamera: Image = Image(.camera)
 }

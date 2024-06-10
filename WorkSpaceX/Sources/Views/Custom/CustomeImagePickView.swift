@@ -29,7 +29,7 @@ struct CustomeImagePickView: View {
                 WSXImage.logoImage.resizable()
             }
         }
-        .modifier(RoudProfileImageModifier(frame: CGSize(width: 60, height: 60)))
+        
         .alert(item: $store.errorMessage) { text in
             Text("에러")
         } actions: { _ in
