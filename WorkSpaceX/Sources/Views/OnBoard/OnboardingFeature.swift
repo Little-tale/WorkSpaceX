@@ -31,22 +31,21 @@ struct OnboardingFeature {
             case .startButtonTapped:
                 state.onboard = OnboardingLoginFeature.State()
                 // 뭐가 있을거임.
-                
                 return .none
                 
-            case .onboardingLoginFeature(.presented(.appleLoginFinish(let user))):
+            case .onboardingLoginFeature(.presented(.appleLoginFinish(let user))): // 애플 로그인시
                 
                 
                 return .none
-            case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let user))):
+            case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let user))): // 카카오 로그인 시
                 
                 
                 return .none
             case .onboardingLoginFeature(.presented(.signUpFeature(.presented(.onlyUseParentsUserEntity(let user))))):
                 print("signUpFeatureEvents: \(user)")
-                return .none
+                return .none // 가입 후 시
                 
-            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess(let user))))):
+            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess(let user))))): // 이메일 로그인시
                 
                 return .none
             default :
