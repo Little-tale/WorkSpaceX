@@ -25,7 +25,7 @@ struct RootView: View {
                 case .login:
                     
                     Text("아직 없음")
-                    
+                        
                 case .logout:
                     if let store = store.scope(state: \.OnboardingViewState, action: \.sendToOnboardingView) {
                         OnboardingView(store: store)

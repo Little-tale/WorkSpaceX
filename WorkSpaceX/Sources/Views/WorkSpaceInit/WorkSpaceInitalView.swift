@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct WorkSpaceInitalView: View {
-        
+    
     @Perception.Bindable var store: StoreOf<WorkSpaceInitalFeature>
     
     
@@ -21,7 +21,7 @@ struct WorkSpaceInitalView: View {
                     VStack {
                         ZStack (alignment: .bottomTrailing) {
                             CustomeImagePickView(
-                             store: store.scope(state: \.imagePick, action: \.imagePickFeature)
+                                store: store.scope(state: \.imagePick, action: \.imagePickFeature)
                             )
                             .modifier(RoudProfileImageModifier(frame: CGSize(width: 80, height: 80)))
                             .asButton {
@@ -32,7 +32,7 @@ struct WorkSpaceInitalView: View {
                                 .frame(width: 25, height: 25)
                         } // ZStack
                         .padding(.top, 25)
-                    
+                        
                         HeaderTextField(
                             headerTitle: "워크스페이스 이름",
                             placeHolder: "워크스페이스 이름을 입력하세요 (필수)",
@@ -62,24 +62,24 @@ struct WorkSpaceInitalView: View {
                         .background(store.regButtonState ? WSXColor.green : WSXColor.gray)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.horizontal, 20)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, keyboardPadding + 10)
                         .foregroundStyle(WSXColor.white)
                         .asButton {
                             store.send(.regButtonTapped)
                         }
                         .disabled(!store.regButtonState)
-                        
+                    
                 } // ZStack
                 .fullScreenCover(isPresented: $store.showImagePicker) {
                     
-                        CustomImagePicker(
-                            isPresented: $store.showImagePicker,
-                            selectedLimit: 1,
-                            filter: .images,
-                            selectedDataForPNG:  { datas in
-                                store.send(.imagePickerData(datas.first))
-                            })
-                
+                    CustomImagePicker(
+                        isPresented: $store.showImagePicker,
+                        selectedLimit: 1,
+                        filter: .images,
+                        selectedDataForPNG:  { datas in
+                            store.send(.imagePickerData(datas.first))
+                        })
+                    
                 }
                 .navigationTitle("워크스페이스 생성")
                 .navigationBarTitleDisplayMode(.inline)
@@ -93,8 +93,6 @@ struct WorkSpaceInitalView: View {
                     }
                 }
             }
-            
-            
         }
     }
 }
