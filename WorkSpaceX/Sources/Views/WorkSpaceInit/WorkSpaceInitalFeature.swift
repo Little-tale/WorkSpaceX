@@ -25,6 +25,7 @@ struct WorkSpaceInitalFeature {
         case imagePickFeature(CustomImagePickPeature.Action)
         case showImagePicker
         case imagePickerData(Data?)
+        case regButtonTapped
     }
     
     var body: some ReducerOf<Self> {
@@ -55,6 +56,12 @@ struct WorkSpaceInitalFeature {
                 } else {
                     state.imagePick.imageState = .empty
                 }
+                return .none
+                
+            case .regButtonTapped:
+                print("눌름")
+                
+                
                 return .none
             }
     

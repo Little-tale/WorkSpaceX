@@ -9,7 +9,7 @@ import Foundation
 
 
 enum AuthRouter: Router {
-    case refreshToken
+    case refreshToken(token: String)
 }
 
 extension AuthRouter {
@@ -29,7 +29,12 @@ extension AuthRouter {
     }
     
     var optionalHeaders: HTTPHeaders? {
-        return ["RefreshToken" : UserDefaultsManager.refreshToken]
+        switch self {
+            
+        case .refreshToken(token: let token):
+            return ["RefreshToken" : token]
+        }
+        
     }
     
     var parameters: Parameters? {

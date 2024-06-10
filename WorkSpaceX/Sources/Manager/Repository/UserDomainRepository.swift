@@ -43,7 +43,7 @@ extension UserDomainRepository: DependencyKey {
                 let reEntry = mapper.toEntity(result)
                 UserDefaultsManager.accessToken = result.token.accessToken
                 UserDefaultsManager.accessToken = result.token.refreshToken
-                
+                UserDefaultsManager.userName = result.nickname
                 print("accessToken",UserDefaultsManager.accessToken)
                 print("refreshToken",UserDefaultsManager.refreshToken)
                 return .success(reEntry)
@@ -63,6 +63,7 @@ extension UserDomainRepository: DependencyKey {
                 
                 UserDefaultsManager.accessToken = result.token.accessToken
                 UserDefaultsManager.accessToken = result.token.refreshToken
+                UserDefaultsManager.userName = result.nickname
                 
                 print("accessToken",UserDefaultsManager.accessToken)
                 print("refreshToken",UserDefaultsManager.refreshToken)
@@ -88,8 +89,10 @@ extension UserDomainRepository: DependencyKey {
                 let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.emailLogin(dto))
                 let mapping = mapper.toEntity(result)
                 
+                
                 UserDefaultsManager.accessToken = result.token.accessToken
                 UserDefaultsManager.accessToken = result.token.refreshToken
+                UserDefaultsManager.userName = result.nickname
                 
                 return .success(mapping)
                 
@@ -113,6 +116,10 @@ extension UserDomainRepository: DependencyKey {
                     UserDTO.self,
                     router: UserDomainRouter.appleLoginRegister(user)
                 )
+                
+                UserDefaultsManager.userName = result.nickname
+                UserDefaultsManager.refreshToken = result.token.refreshToken
+                UserDefaultsManager.accessToken = result.token.accessToken
                 
                 let entity = mapper.toEntity(result)
                 

@@ -94,11 +94,11 @@ extension NetworkManager {
     }
     
     private func refreshAccessToken() async throws {
-        guard UserDefaultsManager.refreshToken != "" else {
+        guard let represh =  UserDefaultsManager.refreshToken else {
             throw APIError.httpError("RefreshToken Miss")
         }
         
-        let router = AuthRouter.refreshToken
+        let router = AuthRouter.refreshToken(token: represh)
         let request = try router.asURLRequest()
         let data = try await performRequest(request)
         let result = try WSXCoder.shared.jsonDecoding(model: AccessTokenDTO.self, from: data)

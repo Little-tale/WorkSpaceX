@@ -23,4 +23,6 @@ extension WSXImage {
     static let logoImage: Image = Image(.workSpaceXLogo)
     
     static let subCamera: Image = Image(.camera)
+    
+    static let workSpaceStart: Image = Image(.workSpaceInitStart)
 }

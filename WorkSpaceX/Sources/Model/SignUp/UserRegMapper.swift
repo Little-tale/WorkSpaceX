@@ -107,9 +107,9 @@ extension UserRegMapper {
         guard let appleInfo = info.credential as? ASAuthorizationAppleIDCredential else  {
             return nil
         }
-
         
-        var name: String = appleInfo.fullName?.givenName ?? "이름 없음"
+        let name = appleInfo.fullName?.givenName
+        
         UserDefaultsManager.appleLoginNickName = name
         
         var token: String?

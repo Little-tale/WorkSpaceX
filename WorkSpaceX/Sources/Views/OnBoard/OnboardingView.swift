@@ -29,6 +29,13 @@ struct OnboardingView: View {
                 .presentationDetents([.height(250)])
                 .presentationDragIndicator(.visible)
             }
+            .alert(item: $store.loginFalid) { _ in
+                Text("에러")
+            } actions: { _ in
+            } message: { text in
+                Text(text)
+            }
+
         }
     }
     

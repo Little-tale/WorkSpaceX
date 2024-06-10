@@ -12,6 +12,7 @@ struct WorkSpaceInitalView: View {
         
     @Perception.Bindable var store: StoreOf<WorkSpaceInitalFeature>
     
+    
     var body: some View {
         WithPerceptionTracking {
             NavigationStack {
@@ -63,7 +64,10 @@ struct WorkSpaceInitalView: View {
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
                         .foregroundStyle(WSXColor.white)
-                        
+                        .asButton {
+                            store.send(.regButtonTapped)
+                        }
+                        .disabled(!store.regButtonState)
                         
                 } // ZStack
                 .fullScreenCover(isPresented: $store.showImagePicker) {
@@ -71,9 +75,10 @@ struct WorkSpaceInitalView: View {
                         CustomImagePicker(
                             isPresented: $store.showImagePicker,
                             selectedLimit: 1,
-                            filter: .images) { datas in
+                            filter: .images,
+                            selectedDataForPNG:  { datas in
                                 store.send(.imagePickerData(datas.first))
-                            }
+                            })
                 
                 }
                
