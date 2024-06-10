@@ -10,12 +10,7 @@ import PhotosUI
 
 struct CustomImagePicker: UIViewControllerRepresentable {
     
-    @Binding
-    var isPresented: Bool
-    
-    var selectedImages: (([UIImage]) -> Void)?
-    
-    var selelectedDataForPNG: (([Data]) -> Void)?
+    @Binding var isPresented: Bool
     
     /// 선택 가능한 개체 수
     let selectedLimit: Int // 선택 가능 이미지 갯수
@@ -23,6 +18,9 @@ struct CustomImagePicker: UIViewControllerRepresentable {
     /// 미디어 타입 정해주세요
     let filter: PHPickerFilter
     
+    var selectedImages: (([UIImage]) -> Void)?
+    
+    var selectedDataForPNG: (([Data]) -> Void)?
     
     func makeUIViewController(context: Context) -> some UIViewController {
         var config = PHPickerConfiguration()
@@ -51,26 +49,25 @@ struct CustomImagePicker: UIViewControllerRepresentable {
             let dispatchGroup = DispatchGroup()
             
             for result in results {
-                
                 dispatchGroup.enter()
                 
                 result.itemProvider.loadObject(ofClass: UIImage.self) { object, error in
-                    guard let image = object as? UIImage else {
-                        return
-                    }
-
                     DispatchQueue.main.async {
+                        guard let image = object as? UIImage else {
+                            dispatchGroup.leave()
+                            return
+                        }
                         images.append(image)
+                        dispatchGroup.leave()
                     }
-                    dispatchGroup.leave()
                 }
             }
+            
             dispatchGroup.notify(queue: .main) { [unowned self] in
                 parent.selectedImages?(images)
-                parent.selelectedDataForPNG?(images.compactMap({ $0.pngData() }))
+                parent.selectedDataForPNG?(images.compactMap({ $0.pngData() }))
                 parent.isPresented = false
             }
         }
     }
 }
-

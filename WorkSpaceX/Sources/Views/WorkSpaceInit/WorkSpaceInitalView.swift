@@ -20,8 +20,16 @@ struct WorkSpaceInitalView: View {
                      store: store.scope(state: \.imagePick, action: \.imagePickFeature)
                     )
                     .asButton {
-                        
+                        store.send(.showImagePicker)
                     }
+                }
+                .fullScreenCover(isPresented: $store.showImagePicker) {
+                    CustomImagePicker(
+                        isPresented: $store.showImagePicker,
+                        selectedLimit: 1,
+                        filter: .images) { datas in
+                            print(datas)
+                        }
                 }
                
             }
