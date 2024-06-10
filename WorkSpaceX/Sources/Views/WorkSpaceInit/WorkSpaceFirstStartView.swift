@@ -10,9 +10,7 @@ import ComposableArchitecture
 
 struct WorkSpaceFirstStartView: View {
     
-    @Perception.Bindable var store = Store(initialState: WorkSpaceFirstStartFeature.State()) {
-        WorkSpaceFirstStartFeature()
-    }
+    @Perception.Bindable var store: StoreOf<WorkSpaceFirstStartFeature>
     
     
     var body: some View {
@@ -45,6 +43,17 @@ struct WorkSpaceFirstStartView: View {
                             store.send(.startButtonTapped)
                         }
                         .buttonStyle(PlainButtonStyle())
+                        .navigationTitle("시작하기")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                WSXImage.xImage
+                                    .asButton {
+                                        store.send(.cancelButtonTapped)
+                                    }
+                                    .foregroundStyle(WSXColor.black)
+                            }
+                        }
                 }
                 .onAppear {
                     store.send(.onAppear)
@@ -55,11 +64,9 @@ struct WorkSpaceFirstStartView: View {
                 
             }
         }
-        
-        
     }
 }
 
-#Preview {
-    WorkSpaceFirstStartView()
-}
+//#Preview {
+//    WorkSpaceFirstStartView()
+//}

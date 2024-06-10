@@ -12,8 +12,11 @@ import ComposableArchitecture
 @Reducer
 struct RootFeature {
     
+    @ObservableState
     struct State {
         var currentLoginState: loginState = .logout
+        var workWpaceFirstViewState: WorkSpaceFirstStartFeature.State?
+        var OnboardingViewState: OnboardingFeature.State?
     }
     
     enum loginState {
@@ -25,21 +28,50 @@ struct RootFeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onAppear
+        case sendToWorkSpaceStart(WorkSpaceFirstStartFeature.Action)
+        case sendToOnboardingView(OnboardingFeature.Action)
+        
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        
+    
         Reduce {state, action in
             switch action {
             case .onAppear :
-                UserDefaultsManager.accessToken
+                if let _ = UserDefaultsManager.accessToken {
+                    if UserDefaultsManager.isFirstUser {
+                        state.workWpaceFirstViewState = WorkSpaceFirstStartFeature.State()
+                        state.currentLoginState = .firstLogin
+                    } else {
+                        // 여기에 알지?
+                        state.currentLoginState = .login
+                    }
+                } else {
+                    state.OnboardingViewState = OnboardingFeature.State()
+                    state.currentLoginState = .logout
+                }
+                return .none
+                
+            case .sendToWorkSpaceStart:
+                
                 return .none
                 
             case .binding:
+                
+                return .none
+            case .sendToOnboardingView:
+                
                 return .none
             }
         }
+        .ifLet(\.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
+            WorkSpaceFirstStartFeature()
+        }
+        .ifLet(\.OnboardingViewState, action: \.sendToOnboardingView) {
+            OnboardingFeature()
+        }
+    
     }
     
 }

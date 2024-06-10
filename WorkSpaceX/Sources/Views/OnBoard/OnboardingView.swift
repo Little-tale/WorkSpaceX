@@ -38,10 +38,4 @@ struct OnboardingView: View {
 
         }
     }
-    
-    init() {
-        store = Store(initialState: OnboardingFeature.State()) {
-            OnboardingFeature()
-        }
-    }
 }

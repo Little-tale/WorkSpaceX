@@ -8,6 +8,7 @@
 import SwiftUI
 import KakaoSDKCommon
 import KakaoSDKAuth
+import ComposableArchitecture
 
 @main
 struct WorkSpaceXApp: App {
@@ -15,12 +16,16 @@ struct WorkSpaceXApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
-                .onOpenURL { url in
-                    if (AuthApi.isKakaoTalkLoginUrl(url)){
-                        _ = AuthController.handleOpenUrl(url: url)
-                    }
+            
+            RootView(store: Store(
+                initialState: RootFeature.State()) {
+                    RootFeature()
+                })
+            .onOpenURL { url in
+                if (AuthApi.isKakaoTalkLoginUrl(url)){
+                    _ = AuthController.handleOpenUrl(url: url)
                 }
+            }
         }
         
     }
