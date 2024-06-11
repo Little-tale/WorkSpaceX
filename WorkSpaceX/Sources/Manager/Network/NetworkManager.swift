@@ -107,13 +107,17 @@ extension NetworkManager {
     }
     
     private func refreshAccessToken() async throws {
-       
-        UserDefaultsManager.accessToken = nil
-        guard let represh =  UserDefaultsManager.refreshToken else {
+      
+        
+        guard let represh =  UserDefaultsManager.refreshToken,
+            let access = UserDefaultsManager.accessToken else {
             throw APIError.httpError("RefreshToken Miss")
         }
+        
+        UserDefaultsManager.accessToken = nil
+        
         print("리프레시전 : ",represh)
-        let router = AuthRouter.refreshToken(token: represh)
+        let router = AuthRouter.refreshToken(access: access, token: represh )
         let request = try router.asURLRequest()
         print(request)
         print(request.url)

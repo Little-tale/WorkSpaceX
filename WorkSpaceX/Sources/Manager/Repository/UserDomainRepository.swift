@@ -116,9 +116,11 @@ extension UserDomainRepository: DependencyKey {
                     UserDTO.self,
                     router: UserDomainRouter.appleLoginRegister(user)
                 )
-                
+                dump(result)
                 UserDefaultsManager.userName = result.nickname
+                
                 UserDefaultsManager.refreshToken = result.token.refreshToken
+                
                 UserDefaultsManager.accessToken = result.token.accessToken
                 
                 let entity = mapper.toEntity(result)

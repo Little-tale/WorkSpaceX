@@ -9,7 +9,7 @@ import Foundation
 
 
 enum AuthRouter: Router {
-    case refreshToken(token: String)
+    case refreshToken(access: String, token: String)
 }
 
 extension AuthRouter {
@@ -31,8 +31,10 @@ extension AuthRouter {
     var optionalHeaders: HTTPHeaders? {
         switch self {
             
-        case .refreshToken(token: let token):
-            return ["RefreshToken" : token]
+        case let .refreshToken(access, token):
+            return [WSXHeader.Key.authorization : access,
+                    WSXHeader.Key.refresh: token
+            ]
         }
         
     }
