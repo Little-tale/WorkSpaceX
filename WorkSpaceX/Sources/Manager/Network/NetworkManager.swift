@@ -67,12 +67,12 @@ extension NetworkManager {
     private func checkRequestInterceptorURLRequest(urlRequest: inout URLRequest) -> Bool {
         guard let urlString = urlRequest.url?.absoluteString,
               urlString.hasPrefix(APIKey.baseURL) else {
-            print("에러 제외 됩니다.")
+            print("에러 제외 됩니다. 1")
             return false
         }
         print(urlString)
         if NotNeedInterception.allCases.contains(where: { urlString.contains($0.path)}) {
-            print("에러 제외 됩니다.")
+            print("에러 제외 됩니다. 2")
             return false
         }
         return true
@@ -108,7 +108,6 @@ extension NetworkManager {
     
     private func refreshAccessToken() async throws {
       
-        
         guard let represh =  UserDefaultsManager.refreshToken,
             let access = UserDefaultsManager.accessToken else {
             throw APIError.httpError("RefreshToken Miss")

@@ -16,7 +16,7 @@ enum CommonError: String, DomainErrorType {
     case tooManyRequest = "E98"
     case serverError = "E99"
     case fail = "E100"
-    case refreshDead
+    case refreshDead = "E06"
 }
 extension CommonError {
     
@@ -49,6 +49,8 @@ extension CommonError {
     
     var ifDevelopError: Bool {
         if case .unknownAcount = self {
+            return false
+        } else if case .accessToken = self {
             return false
         } else {
             return true

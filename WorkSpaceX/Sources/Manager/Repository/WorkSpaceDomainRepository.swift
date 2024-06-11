@@ -29,6 +29,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 return .success(entity)
                 
             } catch {
+                print(error)
                 let error = workSpaceMapper.regworkSpaceErrorMapper(error: error)
                 return .failure(error)
             }

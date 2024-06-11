@@ -60,6 +60,12 @@ struct RootFeature {
                 
                 return .none
                 
+            case .sendToWorkSpaceStart(\.sendWorkSpaceInit.goRootCheck):
+                
+                return .run { send in
+                    await send(.onAppear)
+                }
+                
             case .binding:
                 
                 return .none

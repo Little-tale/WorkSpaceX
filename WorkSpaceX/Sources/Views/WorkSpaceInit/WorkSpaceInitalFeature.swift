@@ -20,6 +20,9 @@ struct WorkSpaceInitalFeature {
         var regButtonState = false
         var image: Data? = nil
         var errorMessage: String? = nil
+        var successMessage: String? = nil
+        var showPrograssView = false
+        var logOutAlertState: AlertState<Action.Alert>?
     }
     
     enum Action: BindableAction {
@@ -32,6 +35,13 @@ struct WorkSpaceInitalFeature {
         case error(String)
         case regSuccess(WorkSpaceEntity)
         case regFaileHandler(WorkSpaceDomainError)
+        case goRootCheck
+        case showLogoutAlert
+        case alert(PresentationAction<Alert>)
+        @CasePathable
+        enum Alert {
+            case confirmButtonTapped
+        }
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -70,7 +80,7 @@ struct WorkSpaceInitalFeature {
                 return .none
                 
             case .regButtonTapped:
-                
+                state.showPrograssView = true
                 var description: String?
                 
                 var request: NewWorkSpaceRequest
@@ -115,18 +125,48 @@ struct WorkSpaceInitalFeature {
                 return .run { send in
                     await self.dismiss()
                 }
+            case .goRootCheck: // 상위뷰 관찰
+                return .none
                 
             case .error(let errorMessage):
                 state.errorMessage = errorMessage
                 return .none
+                
             case .regSuccess(let model):
                 print("success 이여야!")
                 dump(model)
+                state.showPrograssView = false
+                state.successMessage = "등록 완료 되었습니다."
                 return .none
+                
+            case .showLogoutAlert:
+                state.logOutAlertState = AlertState {
+                    TextState("로그아웃 되었습니다.")
+                } actions: {
+                    ButtonState(role: .destructive, action: .confirmButtonTapped) {
+                        TextState("확인")
+                    }
+                } message: {
+                    TextState("다시 로그인 하시고 이용하여 주세요!")
+                }
+                return .none
+                
+            case .alert(.presented(.confirmButtonTapped)):
+                
+                return .run{ send in
+                    await send(.goRootCheck)
+                }
+                
             case .regFaileHandler(let error):
-                print("에러가 나긴함?",error)
+                state.showPrograssView = false
                 switch error {
+                    
                 case let .commonError(error):
+                    if case .refreshDead = error {
+                        return .run { send in
+                            await send(.showLogoutAlert)
+                        }
+                    }
                     return .run{ send in
                         await send(.error(error.message))
                     }
@@ -138,13 +178,16 @@ struct WorkSpaceInitalFeature {
                     } else {
                         print(error)
                     }
-                
                 default :
                     break
                 }
+                return .none
+                
+            case .alert(.dismiss):
                 return .none
             }
         }
         
     }
 }
+

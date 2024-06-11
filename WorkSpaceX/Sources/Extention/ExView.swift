@@ -20,4 +20,26 @@ extension View {
             .first { $0.isKeyWindow }?.keyboardLayoutGuide.layoutFrame.height ?? 0
         return keyboardFrame
     }
+    
+    func centerOverlay(size: CGSize) -> some View {
+        self
+            .frame(width: size.width, height: size.height)
+            .background(Color.white)
+            .cornerRadius(10)
+            .overlay(
+                self
+                    .frame(width: size.width, height: size.height)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .padding()
+                    .centered()
+            )
+    }
+    func centered() -> some View {
+            GeometryReader { geometry in
+                self
+                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            }
+        }
 }
