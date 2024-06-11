@@ -20,7 +20,7 @@ struct CustomImagePicker: UIViewControllerRepresentable {
     
     var selectedImages: (([UIImage]) -> Void)?
     
-    var selectedDataForPNG: (([Data]) -> Void)?
+    var selectedDataForJPEG: (([Data]) -> Void)?
     
     func makeUIViewController(context: Context) -> some UIViewController {
         var config = PHPickerConfiguration()
@@ -65,7 +65,7 @@ struct CustomImagePicker: UIViewControllerRepresentable {
             
             dispatchGroup.notify(queue: .main) { [unowned self] in
                 parent.selectedImages?(images)
-                parent.selectedDataForPNG?(images.compactMap({ $0.pngData() }))
+                parent.selectedDataForJPEG?(images.compactMap({ $0.imageZipLimit(zipRate: 1) }))
                 parent.isPresented = false
             }
         }

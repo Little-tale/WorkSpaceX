@@ -11,7 +11,7 @@ struct WorkSpaceDTO: DTO {
     let workspace_id: String
     let name: String
     let description: String?
-    let coverImage: String?
+    let coverImage: String
     let owner_id: String
     let createdAt: String
 }

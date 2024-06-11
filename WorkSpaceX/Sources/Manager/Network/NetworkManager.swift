@@ -20,16 +20,20 @@ extension NetworkManager {
     }
     
     func requestDto<T: DTO, R: Router>(_ model: T.Type, router: R) async throws -> T {
+       
         var request = try router.asURLRequest()
         
-        if checkRequestInterceptorURLRequest(urlRequest: &request) {
+        if !checkRequestInterceptorURLRequest(urlRequest: &request) {
             let data = try await performRequest(request)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
         } else {
+            try await refreshAccessToken()
             let data = try await startIntercept(&request, retryCount: 3)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
         }
     }
+    
+   
     
     private func performRequest(_ request: URLRequest) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(for: request)
@@ -43,12 +47,18 @@ extension NetworkManager {
     ) throws {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             if let errorResponse = try? WSXCoder.shared.jsonDecoding(model: APIErrorResponse.self, from: data) {
+                print("네트워크 에러코드 :", errorResponse.errorCode)
                 if let commonError = CommonError(rawValue: errorResponse.errorCode) {
                     throw APIError.commonError(commonError)
-                } else {
+                }
+                if AuthError.refreshDeadCode == errorResponse.errorCode {
+                    throw APIError.commonError(.refreshDead)
+                }
+                else {
                     throw APIError.customError(errorResponse.errorCode)
                 }
             } else {
+                print("에러 : http 관련")
                 throw APIError.httpError("Unexpected error: Please retry")
             }
         }
@@ -57,24 +67,26 @@ extension NetworkManager {
     private func checkRequestInterceptorURLRequest(urlRequest: inout URLRequest) -> Bool {
         guard let urlString = urlRequest.url?.absoluteString,
               urlString.hasPrefix(APIKey.baseURL) else {
+            print("에러 제외 됩니다.")
             return false
         }
-        
+        print(urlString)
         if NotNeedInterception.allCases.contains(where: { urlString.contains($0.path)}) {
+            print("에러 제외 됩니다.")
             return false
         }
-        
         return true
     }
     
     private func startIntercept(_ urlRequest: inout URLRequest, retryCount: Int) async throws -> Data {
         let request = intercept(&urlRequest)
-        
+        print(request.headers)
         do {
             let data = try await performRequest(request)
             return data
         } catch {
             if retryCount > 0 {
+                print("에러 인터셉터 시작.")
                 if let apiError = error as? APIError,
                    case .commonError(CommonError.accessToken) = apiError {
                     try await Task.sleep(nanoseconds: 100_000_000)  // 0.1초 지연
@@ -87,20 +99,28 @@ extension NetworkManager {
     }
     
     private func intercept(_ request: inout URLRequest) -> URLRequest {
-        if UserDefaultsManager.accessToken != "" {
-            request.setValue(UserDefaultsManager.accessToken, forHTTPHeaderField: WSXHeader.Key.authorization)
+        print("에러 intercept \(UserDefaultsManager.accessToken)")
+        if let access = UserDefaultsManager.accessToken  {
+            request.addValue(access, forHTTPHeaderField: WSXHeader.Key.authorization)
         }
         return request
     }
     
     private func refreshAccessToken() async throws {
+       
+        UserDefaultsManager.accessToken = nil
         guard let represh =  UserDefaultsManager.refreshToken else {
             throw APIError.httpError("RefreshToken Miss")
         }
-        
+        print("리프레시전 : ",represh)
         let router = AuthRouter.refreshToken(token: represh)
         let request = try router.asURLRequest()
+        print(request)
+        print(request.url)
+        print(request.httpMethod)
+        print("리프레시 당시 헤더 \(request.headers)")
         let data = try await performRequest(request)
+        print("리프레시 당시 데이터 \(data)")
         let result = try WSXCoder.shared.jsonDecoding(model: AccessTokenDTO.self, from: data)
         
         UserDefaultsManager.accessToken = result.accessToken

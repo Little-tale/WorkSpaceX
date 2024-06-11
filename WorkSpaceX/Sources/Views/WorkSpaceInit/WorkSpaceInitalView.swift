@@ -76,7 +76,7 @@ struct WorkSpaceInitalView: View {
                         isPresented: $store.showImagePicker,
                         selectedLimit: 1,
                         filter: .images,
-                        selectedDataForPNG:  { datas in
+                        selectedDataForJPEG:  { datas in
                             store.send(.imagePickerData(datas.first))
                         })
                     
@@ -97,10 +97,10 @@ struct WorkSpaceInitalView: View {
     }
 }
 
-#Preview {
-    WorkSpaceInitalView(
-        store: Store(initialState: WorkSpaceInitalFeature.State(), reducer: {
-            WorkSpaceInitalFeature()
-        })
-    )
-}
+//#Preview {
+//    WorkSpaceInitalView(
+//        store: Store(initialState: WorkSpaceInitalFeature.State(), reducer: {
+//            WorkSpaceInitalFeature()
+//        })
+//    )
+//}

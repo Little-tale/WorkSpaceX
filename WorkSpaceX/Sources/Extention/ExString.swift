@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+extension String {
+    var toData: Data {
+        return self.data(using: .utf8) ?? Data()
+    }
+}

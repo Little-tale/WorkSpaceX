@@ -57,8 +57,7 @@ struct OnboardingFeature {
                     await send(.testSuccess)
                 }
                 
-            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess(let user))))): // 이메일 로그인시
-                
+            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess)))): // 이메일 로그인시
                 return .run { send in
                     await send(.testSuccess)
                 }

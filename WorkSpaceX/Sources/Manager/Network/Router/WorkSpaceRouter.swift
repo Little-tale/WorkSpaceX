@@ -9,7 +9,7 @@ import Foundation
 
 enum WorkSpaceRouter: Router {
     case meWorkSpace
-    case makeWorkSpace(MakeWorkSpaceDTORequest)
+    case makeWorkSpace(MakeWorkSpaceDTORequest, randomBoundary: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -24,16 +24,20 @@ extension WorkSpaceRouter {
     var path: String {
         switch self {
         case .meWorkSpace:
-            return APIKey.version + "workspaces"
+            return APIKey.version + "/workspaces"
         case .makeWorkSpace:
-            return APIKey.version + "workspaces"
+            return APIKey.version + "/workspaces"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .meWorkSpace, .makeWorkSpace:
+        case .meWorkSpace:
             return nil
+            
+        case .makeWorkSpace(_,let boundary):
+            let multipartFormData = MultipartFormData()
+            return multipartFormData.headers(boundary: boundary)
         }
     }
     
@@ -48,8 +52,8 @@ extension WorkSpaceRouter {
         switch self {
         case .meWorkSpace:
             return nil
-        case let .makeWorkSpace(data):
-            return requestToBody(data)
+        case let .makeWorkSpace(data, boundary):
+            return makeWorkSpaceMultipartData(data, boundary: boundary)
         }
     }
     
@@ -58,8 +62,45 @@ extension WorkSpaceRouter {
         case .meWorkSpace:
             return .url
         case .makeWorkSpace:
-            return .json
+            return .multiPart
         }
     }
     
 }
+extension WorkSpaceRouter {
+    
+    func makeWorkSpaceMultipartData(_ data: MakeWorkSpaceDTORequest, boundary: String) -> Data {
+        
+        let multiPart = MultipartFormData()
+        
+        multiPart.append(
+            data.name.toData,
+            withName: "name",
+            fileName: nil,
+            mimeType: MimeType.text.rawValue,
+            boundary: boundary
+        )
+        
+        if let description = data.description {
+            multiPart.append(
+                description.toData,
+                withName: "description",
+                fileName: nil,
+                mimeType: MimeType.text.rawValue,
+                boundary: boundary
+            )
+        }
+        
+        multiPart.append(
+            data.image,
+            withName: "image",
+            fileName: "WorkSpace_\(UUID()).jpeg",
+            mimeType: MimeType.image.rawValue,
+            boundary: boundary
+        )
+        
+        return multiPart.finalize(boundary: boundary)
+        
+    }
+}
+

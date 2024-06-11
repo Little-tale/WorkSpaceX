@@ -30,6 +30,10 @@ extension WorkSpaceDomainError {
             switch errorCode {
             case "E11":
                 return "잘못된 요청입니다."
+            case "E12":
+                return "워크 스페이스 이름이 중복되었어요 ㅠㅠ"
+            case "E21":
+                return "X 크레딧이 부족해요!"
             default :
                 return "알수없는 에러"
             }
@@ -49,8 +53,20 @@ extension WorkSpaceDomainError {
     
     var ifDevelopError: Bool {
         switch self {
-        case .meWorkSpaceError, .makeWoekSpaceError, .commonError:
+        case .meWorkSpaceError, .commonError:
             return true
+        case .makeWoekSpaceError(let error):
+            switch error {
+            case "E11":
+                return true
+            case "E12":
+                return false
+            case "E21":
+                return false
+            default :
+                return true
+            
+            }
         }
         
     }
@@ -68,7 +84,7 @@ extension WorkSpaceDomainError {
             }
         case let .makeWoekSpaceError(errorCode):
             switch errorCode {
-            case "E11":
+            case "E11", "E12", "E21":
                 return true
             default :
                 return false

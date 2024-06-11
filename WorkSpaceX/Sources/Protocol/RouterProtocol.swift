@@ -23,9 +23,17 @@ protocol Router {
 enum EncodingType {
     case url
     case json
+    case multiPart
+}
+
+enum MimeType: String {
+    case text = "text/plain"
+    case image = "image/jpeg"
 }
 
 extension Router {
+    
+    
    
     var baseURL: String {
         return APIKey.baseURL
@@ -59,6 +67,9 @@ extension Router {
             return try WSXCoder.shared.urlEncoding(request: &urlRequest, parameter: parameters)
         case .json:
             return try WSXCoder.shared.jsonEncoding(request: &urlRequest, data: body)
+        case .multiPart:
+            urlRequest.httpBody = body
+            return urlRequest
         }
     }
     

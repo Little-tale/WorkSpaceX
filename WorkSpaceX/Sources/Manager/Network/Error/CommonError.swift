@@ -16,6 +16,7 @@ enum CommonError: String, DomainErrorType {
     case tooManyRequest = "E98"
     case serverError = "E99"
     case fail = "E100"
+    case refreshDead
 }
 extension CommonError {
     
@@ -37,6 +38,8 @@ extension CommonError {
             "서버 에러가 발생 하였습니다."
         case .fail:
             "알수 없는 에러"
+        case .refreshDead:
+            "리프레시 토큰 다이"
         }
     }
     

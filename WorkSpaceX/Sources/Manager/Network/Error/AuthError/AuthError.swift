@@ -8,15 +8,14 @@
 import Foundation
 
 enum AuthError: DomainErrorType{
-   
-    
-    case emailValid(APIErrorResponse)
+    static let refreshDeadCode = "E06"
+    case refreshDead(APIErrorResponse)
 }
 extension AuthError {
     
     var message: String {
         switch self {
-        case .emailValid(let error):
+        case let .refreshDead(error):
             switch error.errorCode {
             case "E06":
                 return "재로그인이 필요합니다."
@@ -28,14 +27,14 @@ extension AuthError {
     
     var errorCode: String {
         switch self {
-        case .emailValid(let error):
+        case let .refreshDead(error):
             return error.errorCode
         }
     }
     
     var ifDevelopError: Bool {
         switch self {
-        case .emailValid(let errorModel):
+        case let .refreshDead(errorModel):
             switch errorModel.errorCode {
             case "E06":
                 return false

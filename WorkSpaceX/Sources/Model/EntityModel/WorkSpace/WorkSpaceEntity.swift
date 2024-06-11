@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct WorkSpaceEntity: Entity {
+    let workSpaceID: String
+    let name: String
+    let description: String?
+    let coverImage: URL?
+    let ownerID: String
+    let createdAt: String
+}
