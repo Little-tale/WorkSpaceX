@@ -62,9 +62,11 @@ struct RootFeature {
                 print("작동하는가..?")
                 return .run { send in await send(.onAppear) }
                 
-            case .sendToOnboardingView(.checkedLogin):
+            case .sendToWorkSpaceStart(.cancelButtonTapped):
+                return .run { send in await send(.onAppear) }
                 
-                return .run { send in await send(.onAppear)}
+            case .sendToOnboardingView(.checkedLogin):
+                return .run { send in await send(.onAppear) }
                 
             case .sendToWorkSpaceStart:
                 

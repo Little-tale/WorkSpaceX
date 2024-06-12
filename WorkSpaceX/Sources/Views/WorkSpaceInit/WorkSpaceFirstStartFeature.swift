@@ -34,6 +34,7 @@ struct WorkSpaceFirstStartFeature {
                 if let name = UserDefaultsManager.userName {
                     state.introText =  name + "님! 새로운 WorkSpaceX의 워크 스페이스를\n 시작할 준비가 되었어요!"
                 }
+                UserDefaultsManager.isFirstUser = false
                 return .none
             case .startButtonTapped:
                 state.workSpaceIniter = WorkSpaceInitalFeature.State()
