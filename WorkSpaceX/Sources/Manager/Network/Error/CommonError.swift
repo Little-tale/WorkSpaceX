@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CommonError: String, DomainErrorType {
+enum CommonError: String, Error {
     case access = "E01"
     case unknownPath = "E97"
     case accessToken = "E05"
@@ -55,5 +55,9 @@ extension CommonError {
         } else {
             return true
         }
+    }
+    
+    var isAccessTokenError: Bool {
+        return self == CommonError(rawValue: "accessToken")
     }
 }

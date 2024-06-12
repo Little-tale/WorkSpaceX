@@ -27,7 +27,7 @@
 		7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2D2C11B6AC0024853C /* UserEmail.swift */; };
 		7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE2F2C11D38C0024853C /* UserDomainRepository.swift */; };
 		7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE332C11E8FF0024853C /* UserDomainError.swift */; };
-		7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE352C11EA570024853C /* DomainErrorType.swift */; };
+		7B2EEE362C11EA570024853C /* WSXErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE352C11EA570024853C /* WSXErrorType.swift */; };
 		7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE382C120ECC0024853C /* NotificationService.swift */; };
 		7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE3B2C1210990024853C /* AppDelegate.swift */; };
 		7B2EEE3F2C129F6F0024853C /* ExView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE3E2C129F6F0024853C /* ExView.swift */; };
@@ -71,11 +71,18 @@
 		7B8FD6072C19813500948E7C /* WorkSpaceListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */; };
 		7B8FD6092C198D7B00948E7C /* WorkSpaceEmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6082C198D7B00948E7C /* WorkSpaceEmptyListView.swift */; };
 		7B8FD60B2C198D9E00948E7C /* WorkSpaceEmptyListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD60A2C198D9D00948E7C /* WorkSpaceEmptyListFeature.swift */; };
+		7B8FD60D2C19AE6100948E7C /* EmailValidError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD60C2C19AE6000948E7C /* EmailValidError.swift */; };
+		7B8FD60F2C19B33A00948E7C /* AppleLoginAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD60E2C19B33A00948E7C /* AppleLoginAPIError.swift */; };
+		7B8FD6112C19B69100948E7C /* KakaoLoginAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6102C19B69100948E7C /* KakaoLoginAPIError.swift */; };
+		7B8FD6132C19B9C800948E7C /* EmailLoginAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6122C19B9C800948E7C /* EmailLoginAPIError.swift */; };
+		7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6142C19C19300948E7C /* UserRegAPIError.swift */; };
+		7B8FD6172C19CEE600948E7C /* WorkSpaceMeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6162C19CEE500948E7C /* WorkSpaceMeError.swift */; };
+		7B8FD6192C19CF9300948E7C /* MakeWorkSpaceAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6182C19CF9300948E7C /* MakeWorkSpaceAPIError.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
 		7BEC45A72C12E7D300576ECA /* AccessTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */; };
-		7BEC45AA2C12E80F00576ECA /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A92C12E80F00576ECA /* AuthError.swift */; };
+		7BEC45AA2C12E80F00576ECA /* reFreshError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A92C12E80F00576ECA /* reFreshError.swift */; };
 		7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */; };
 		7BEC45AF2C130EB700576ECA /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7BEC45AE2C130EB700576ECA /* KakaoSDKAuth */; };
 		7BEC45B12C130EB700576ECA /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 7BEC45B02C130EB700576ECA /* KakaoSDKCommon */; };
@@ -135,7 +142,7 @@
 		7B2EEE2F2C11D38C0024853C /* UserDomainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainRepository.swift; sourceTree = "<group>"; };
 		7B2EEE312C11E8710024853C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7B2EEE332C11E8FF0024853C /* UserDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDomainError.swift; sourceTree = "<group>"; };
-		7B2EEE352C11EA570024853C /* DomainErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainErrorType.swift; sourceTree = "<group>"; };
+		7B2EEE352C11EA570024853C /* WSXErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXErrorType.swift; sourceTree = "<group>"; };
 		7B2EEE382C120ECC0024853C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		7B2EEE3A2C120FB20024853C /* WorkSpaceX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorkSpaceX.entitlements; sourceTree = "<group>"; };
 		7B2EEE3B2C1210990024853C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,11 +186,18 @@
 		7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListFeature.swift; sourceTree = "<group>"; };
 		7B8FD6082C198D7B00948E7C /* WorkSpaceEmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEmptyListView.swift; sourceTree = "<group>"; };
 		7B8FD60A2C198D9D00948E7C /* WorkSpaceEmptyListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEmptyListFeature.swift; sourceTree = "<group>"; };
+		7B8FD60C2C19AE6000948E7C /* EmailValidError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidError.swift; sourceTree = "<group>"; };
+		7B8FD60E2C19B33A00948E7C /* AppleLoginAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginAPIError.swift; sourceTree = "<group>"; };
+		7B8FD6102C19B69100948E7C /* KakaoLoginAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginAPIError.swift; sourceTree = "<group>"; };
+		7B8FD6122C19B9C800948E7C /* EmailLoginAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginAPIError.swift; sourceTree = "<group>"; };
+		7B8FD6142C19C19300948E7C /* UserRegAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegAPIError.swift; sourceTree = "<group>"; };
+		7B8FD6162C19CEE500948E7C /* WorkSpaceMeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMeError.swift; sourceTree = "<group>"; };
+		7B8FD6182C19CF9300948E7C /* MakeWorkSpaceAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkSpaceAPIError.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDTO.swift; sourceTree = "<group>"; };
-		7BEC45A92C12E80F00576ECA /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		7BEC45A92C12E80F00576ECA /* reFreshError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reFreshError.swift; sourceTree = "<group>"; };
 		7BEC45AB2C12EBAA00576ECA /* NotNeedInterception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotNeedInterception.swift; sourceTree = "<group>"; };
 		7BEC45B42C131B7800576ECA /* KakaoLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginDTORequest.swift; sourceTree = "<group>"; };
 		7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewSmall.swift; sourceTree = "<group>"; };
@@ -242,7 +256,7 @@
 				7B2EEE232C1193D60024853C /* RouterProtocol.swift */,
 				7B2EEE042C10C3750024853C /* DTOProtocol.swift */,
 				7B2EEE062C10C43B0024853C /* EntityProtocol.swift */,
-				7B2EEE352C11EA570024853C /* DomainErrorType.swift */,
+				7B2EEE352C11EA570024853C /* WSXErrorType.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -310,6 +324,11 @@
 			isa = PBXGroup;
 			children = (
 				7B2EEE332C11E8FF0024853C /* UserDomainError.swift */,
+				7B8FD60C2C19AE6000948E7C /* EmailValidError.swift */,
+				7B8FD60E2C19B33A00948E7C /* AppleLoginAPIError.swift */,
+				7B8FD6102C19B69100948E7C /* KakaoLoginAPIError.swift */,
+				7B8FD6122C19B9C800948E7C /* EmailLoginAPIError.swift */,
+				7B8FD6142C19C19300948E7C /* UserRegAPIError.swift */,
 			);
 			path = UserError;
 			sourceTree = "<group>";
@@ -615,7 +634,7 @@
 		7BEC45A82C12E80100576ECA /* AuthError */ = {
 			isa = PBXGroup;
 			children = (
-				7BEC45A92C12E80F00576ECA /* AuthError.swift */,
+				7BEC45A92C12E80F00576ECA /* reFreshError.swift */,
 			);
 			path = AuthError;
 			sourceTree = "<group>";
@@ -673,6 +692,8 @@
 			isa = PBXGroup;
 			children = (
 				7BEC45DE2C16E60100576ECA /* WorkSpaceDomainError.swift */,
+				7B8FD6162C19CEE500948E7C /* WorkSpaceMeError.swift */,
+				7B8FD6182C19CF9300948E7C /* MakeWorkSpaceAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -795,8 +816,9 @@
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
 				7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */,
+				7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */,
 				7BEC45E92C16FEDE00576ECA /* RootFeature.swift in Sources */,
-				7B2EEE362C11EA570024853C /* DomainErrorType.swift in Sources */,
+				7B2EEE362C11EA570024853C /* WSXErrorType.swift in Sources */,
 				7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */,
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
@@ -804,6 +826,7 @@
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
 				7BEC45F72C180F0600576ECA /* WorkSpaceEntity.swift in Sources */,
 				7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */,
+				7B8FD6192C19CF9300948E7C /* MakeWorkSpaceAPIError.swift in Sources */,
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B8FD60B2C198D9E00948E7C /* WorkSpaceEmptyListFeature.swift in Sources */,
@@ -829,6 +852,7 @@
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
 				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,
 				7B2EEE1E2C1190520024853C /* CommonError.swift in Sources */,
+				7B8FD6172C19CEE600948E7C /* WorkSpaceMeError.swift in Sources */,
 				7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,
@@ -845,6 +869,7 @@
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,
+				7B8FD60F2C19B33A00948E7C /* AppleLoginAPIError.swift in Sources */,
 				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
 				7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */,
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
@@ -863,6 +888,7 @@
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
 				7BEC45F32C18074D00576ECA /* NewWorkSpaceRequest.swift in Sources */,
+				7B8FD6132C19B9C800948E7C /* EmailLoginAPIError.swift in Sources */,
 				7BEC45F92C1813FE00576ECA /* ImageMapper.swift in Sources */,
 				7BEC45FF2C18363900576ECA /* ExString.swift in Sources */,
 				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */,
@@ -872,11 +898,13 @@
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */,
 				7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */,
+				7B8FD6112C19B69100948E7C /* KakaoLoginAPIError.swift in Sources */,
+				7B8FD60D2C19AE6100948E7C /* EmailValidError.swift in Sources */,
 				7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7BEC45D12C16AACE00576ECA /* CustomImagePickPeature.swift in Sources */,
 				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
-				7BEC45AA2C12E80F00576ECA /* AuthError.swift in Sources */,
+				7BEC45AA2C12E80F00576ECA /* reFreshError.swift in Sources */,
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B8FD6092C198D7B00948E7C /* WorkSpaceEmptyListView.swift in Sources */,

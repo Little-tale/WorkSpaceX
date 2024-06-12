@@ -27,9 +27,8 @@ struct WorkSpaceXTabFeature {
                 "설정"
             }
         }
-        
-        
     }
+    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     
     @ObservableState
     struct State: Equatable {
@@ -44,6 +43,7 @@ struct WorkSpaceXTabFeature {
         case homeAction(WorkSpaceListFeature.Action)
         case selectedTab(Tab)
         case ifNeedMakeWorkSpace(WorkSpaceEmptyListFeature.Action)
+        case appear
     }
     
     var body: some ReducerOf<Self> {
@@ -62,6 +62,10 @@ struct WorkSpaceXTabFeature {
                 state.currentTab = tab
                 return .none
             case .ifNeedMakeWorkSpace:
+                return .none
+                
+            case .appear:
+                
                 return .none
             }
         }

@@ -9,7 +9,8 @@ import Foundation
 import ComposableArchitecture
 
 struct WorkSpaceDomainRepository {
-    var regWorkSpaceReqeust: (NewWorkSpaceRequest) async -> Result<WorkSpaceEntity, WorkSpaceDomainError>
+    var regWorkSpaceReqeust: (NewWorkSpaceRequest) async throws -> WorkSpaceEntity
+    var findMyWordSpace: () async throws -> [WorkSpaceEntity]
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -19,20 +20,20 @@ extension WorkSpaceDomainRepository: DependencyKey {
     static var liveValue: Self = Self (
         regWorkSpaceReqeust: { model in
             let reqeustDTO = workSpaceMapper.workSpaceReqeustDTO(model: model)
-            do {
-                let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(reqeustDTO, randomBoundary: MultipartFormData.randomBoundary()))
+            
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(reqeustDTO, randomBoundary: MultipartFormData.randomBoundary()), errorType: MakeWorkSpaceAPIError.self)
+            
+            let entity = workSpaceMapper.toWorkSpaceModel(
+                model: result
+            )
+            return entity
+            
+        }, findMyWordSpace: {
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceaListDTO.self, router: WorkSpaceRouter.meWorkSpace, errorType: WorkSpaceMeError.self)
                 
-                let entity = workSpaceMapper.toWorkSpaceModel(
-                    model: result
-                )
+                let mapping = workSpaceMapper.toWorkSpaceListModel(result)
                 
-                return .success(entity)
-                
-            } catch {
-                print(error)
-                let error = workSpaceMapper.regworkSpaceErrorMapper(error: error)
-                return .failure(error)
-            }
+                return mapping
         }
     )
     

@@ -34,7 +34,7 @@ struct WorkSpaceInitalFeature {
         case dismissButtonTapped
         case error(String)
         case regSuccess(WorkSpaceEntity)
-        case regFaileHandler(WorkSpaceDomainError)
+        case regFaileHandler(MakeWorkSpaceAPIError)
         case goRootCheck
         case showLogoutAlert
         case alert(PresentationAction<Alert>)
@@ -113,14 +113,17 @@ struct WorkSpaceInitalFeature {
                 
                 return .run { [request = request] send in
                     print(request)
-                    let result = await repository.regWorkSpaceReqeust(request)
-                    switch result {
-                    case let .success(model):
-                        await send(.regSuccess(model))
-                    case let .failure( error):
+                    let result = try await repository.regWorkSpaceReqeust(request)
+                    
+                    await send(.regSuccess(result))
+                } catch : { error, send in
+                    if let error = error as? MakeWorkSpaceAPIError {
                         await send(.regFaileHandler(error))
+                    } else {
+                        print(error)
                     }
                 }
+                
             case .dismissButtonTapped:
                 
                 return .run { send in
@@ -160,28 +163,21 @@ struct WorkSpaceInitalFeature {
                 
             case .regFaileHandler(let error):
                 state.showPrograssView = false
-                switch error {
-                    
-                case let .commonError(error):
-                    if case .refreshDead = error {
-                        return .run { send in
-                            await send(.showLogoutAlert)
-                        }
+                
+                if error.ifReFreshDead {
+                    return .run { send in
+                        await send(.showLogoutAlert)
                     }
-                    return .run{ send in
-                        await send(.error(error.message))
-                    }
-                case .makeWoekSpaceError:
-                    if !error.ifDevelopError {
+                } else {
+                    if error.ifDevelopError {
+                        print(error)
+                    } else {
                         return .run{ send in
                             await send(.error(error.message))
                         }
-                    } else {
-                        print(error)
                     }
-                default :
-                    break
                 }
+               
                 return .none
                 
             case .alert(.dismiss):
@@ -194,3 +190,27 @@ struct WorkSpaceInitalFeature {
     }
 }
 
+/*
+ switch error {
+     
+ case let .commonError(error):
+     if case .refreshDead = error {
+         return .run { send in
+             await send(.showLogoutAlert)
+         }
+     }
+     return .run{ send in
+         await send(.error(error.message))
+     }
+ case .makeWoekSpaceError:
+     if !error.ifDevelopError {
+         return .run{ send in
+             await send(.error(error.message))
+         }
+     } else {
+         print(error)
+     }
+ default :
+     break
+ }
+ */

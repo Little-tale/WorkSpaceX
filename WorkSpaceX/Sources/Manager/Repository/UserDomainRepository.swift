@@ -10,13 +10,13 @@ import ComposableArchitecture
 
 struct UserDomainRepository {
 
-    var chaeckEmail: (String) async -> Result<Void, APIError>
-    var requestUserReg: (UserRegEntityModel)  async -> Result<UserEntity, APIError>
+    var chaeckEmail: (String) async throws -> Void
+    var requestUserReg: (UserRegEntityModel) async throws -> UserEntity
     var requestKakaoUser: ((oauthToken: String,
                            deviceToken: String)
-    ) async -> (Result<UserEntity, UserDomainError>)
+    ) async throws -> UserEntity
     
-    var requestEmailLogin: ((email: String, password: String)) async -> Result<UserEntity, UserDomainError>
+    var requestEmailLogin: ((email: String, password: String)) async throws -> UserEntity
     
     var appleLoginRequest: () async throws -> UserEntity
 
@@ -28,37 +28,33 @@ extension UserDomainRepository: DependencyKey {
     
     static let liveValue: UserDomainRepository = Self(
         chaeckEmail: { email in
-            do {
-                let _ = try await NetworkManager.shared.request(UserDomainRouter.userEmail(UserEmail(email: email)))
-                return .success(())
-            } catch let error as APIError {
-                return .failure(error)
-            } catch {
-                return .failure(.unknownError)
-            }
+            
+            let model = try await NetworkManager.shared.request(UserDomainRouter.userEmail(UserEmail(email: email)), errorType: EmailValidError.self)
+            
+            return
+            
         }, requestUserReg: { userModel in
-            do {
+     
                 let dto = mapper.userRegDTO(user: userModel)
-                let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.userReg(dto))
+            let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.userReg(dto), errorType: UserRegAPIError.self)
+                
                 let reEntry = mapper.toEntity(result)
                 UserDefaultsManager.accessToken = result.token.accessToken
                 UserDefaultsManager.accessToken = result.token.refreshToken
+                
                 UserDefaultsManager.userName = result.nickname
                 print("accessToken",UserDefaultsManager.accessToken)
                 print("refreshToken",UserDefaultsManager.refreshToken)
-                return .success(reEntry)
-            } catch let error as APIError {
-                return .failure(error)
-            } catch {
-                return .failure(.unknownError)
-            }
+                
+                return reEntry
+           
         }, requestKakaoUser: { kakao in
-            do {
+       
                 let dtoRequest = mapper.kakaoUser(
                     oauthToken: kakao.oauthToken,
                     deviceToken: kakao.deviceToken
                 )
-                let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.kakaoLogin(dtoRequest))
+            let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.kakaoLogin(dtoRequest), errorType: KakaoLoginAPIError.self)
                 let entity = mapper.toEntity(result)
                 
                 UserDefaultsManager.accessToken = result.token.accessToken
@@ -67,13 +63,8 @@ extension UserDomainRepository: DependencyKey {
                 
                 print("accessToken",UserDefaultsManager.accessToken)
                 print("refreshToken",UserDefaultsManager.refreshToken)
-                return .success(entity)
-            } catch let error as APIError {
-                let mapping = mapper.mapAPIErrorTOKakaoUserDomainError(error)
-                return .failure(mapping)
-            } catch {
-                return .failure(.commonError(.fail))
-            }
+                return entity
+        
         }, requestEmailLogin: { emailLogin in
             var tokken: String?
             if UserDefaultsManager.deviceToken != "" {
@@ -85,26 +76,19 @@ extension UserDomainRepository: DependencyKey {
                 deviceToken: tokken
             )
             
-            do {
-                let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.emailLogin(dto))
+          
+            let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.emailLogin(dto), errorType: EmailLoginAPIError.self)
+            
                 let mapping = mapper.toEntity(result)
-                
                 
                 UserDefaultsManager.accessToken = result.token.accessToken
                 UserDefaultsManager.accessToken = result.token.refreshToken
                 UserDefaultsManager.userName = result.nickname
                 
-                return .success(mapping)
+                return mapping
                 
-            } catch let error as APIError {
-                let error = mapper.mappingEmailLoginError(error: error)
-                return .failure(error)
-                
-            } catch {
-                return .failure(.commonError(.fail))
-            }
         }, appleLoginRequest: {
-            do {
+          
                 let success = try await DependencyValues.live.appleController.signIn()
                 let user = mapper.mappingASAuthorization(info: success)
                 
@@ -114,7 +98,8 @@ extension UserDomainRepository: DependencyKey {
                 
                 let result = try await NetworkManager.shared.requestDto(
                     UserDTO.self,
-                    router: UserDomainRouter.appleLoginRegister(user)
+                    router: UserDomainRouter.appleLoginRegister(user),
+                    errorType: AppleLoginAPIError.self
                 )
                 dump(result)
                 UserDefaultsManager.userName = result.nickname
@@ -126,13 +111,7 @@ extension UserDomainRepository: DependencyKey {
                 let entity = mapper.toEntity(result)
                 
                 return entity
-            } catch (let error as APIError) {
-                let result = mapper.mappingAppleLoginToUserDomainError(apE: error)
-                throw result
-            } catch {
-                // 사용자 취소도 에러로 받아짐.
-                throw DependencyValues.live.appleLoginErrorHandeler.isUserError(error)
-            }
+            
             
         }
     )

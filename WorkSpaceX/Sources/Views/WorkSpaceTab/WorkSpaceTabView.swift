@@ -49,6 +49,9 @@ struct WorkSpaceTabView: View {
                     .tint(WSXColor.black)
                 }
             }
+            .onAppear {
+                store.send(.appear)
+            }
            
         }
     }

@@ -194,25 +194,34 @@ struct SignUpFeature {
                 let email = state.user.email
                 return .run { send in
                     
-                    let result = await reposiory.chaeckEmail(email)
-                    switch result {
-                    case .success:
-                        await send(.checkEmailSuccess)
-                        await send(.returnView("중복되지 않았어요"))
-                    case .failure(let errorCase):
-                        switch errorCase {
-                        case .httpError(let error):
-                            await send(.returnView(error))
-                        case .commonError(let error):
+                    let result = try await reposiory.chaeckEmail(email)
+                    
+                    await send(.checkEmailSuccess)
+                    await send(.returnView("중복되지 않았어요"))
+                    
+//                    switch result {
+//                    case .success:
+//                        
+//                    case .failure(let errorCase):
+//                        switch errorCase {
+//                        case .httpError(let error):
+//                            await send(.returnView(error))
+//                        case .commonError(let error):
+//                            await send(.returnView(error.message))
+//                        case .customError(let error):
+//                            await send(.returnView(error))
+//                        case .unknownError:
+//                            await send(.returnView("알수없음"))
+//                        }
+//                    }
+                } catch: { error, send in
+                    if let error = error as? EmailValidError {
+                        if error.ifDevelopError {
+                            await send(.returnView("이메일 검사중 에러가 발생하였습니다!"))
+                        } else {
                             await send(.returnView(error.message))
-                        case .customError(let error):
-                            await send(.returnView(error))
-                        case .unknownError:
-                            await send(.returnView("알수없음"))
                         }
                     }
-                    
-                    
                 }
             case .checkEmailSuccess:
                 state.alReadyEmailCheck = true
@@ -267,22 +276,13 @@ struct SignUpFeature {
             case let .userRegEvent(user):
                 
                 return .run { send in
-                    let result = await reposiory.requestUserReg(user)
-                    switch result {
-                    case .success(let success):
-                        await send(.onlyUseParentsUserEntity(success))
-                    case .failure(let fail):
-                        switch fail {
-                        case .httpError(let error):
-                            await send(.returnView(error))
-                        case .commonError(let error):
+                    let result = try await reposiory.requestUserReg(user)
+                } catch : { error, send in
+                    if let error = error as? UserRegAPIError {
+                        if error.ifDevelopError {
+                            await send(.returnView("유저 등록중 에러가 발생하였습니다."))
+                        } else {
                             await send(.returnView(error.message))
-                            print(error.message)
-                        case .customError(let error):
-                            
-                            print(error)
-                        case .unknownError:
-                            print("알수없음")
                         }
                     }
                 }

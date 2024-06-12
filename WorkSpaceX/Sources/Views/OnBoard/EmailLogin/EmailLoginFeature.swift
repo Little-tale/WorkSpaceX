@@ -28,7 +28,7 @@ struct EmailLoginFeature {
         case timerStart(String)
         case timerStop
         case loginButtonTapped
-        case errorHandeler(UserDomainError)
+        case errorHandeler(EmailLoginAPIError)
         case loginSuccess(UserEntity)
     }
     
@@ -74,23 +74,22 @@ struct EmailLoginFeature {
                 let email = state.email
                 let password = state.password
                 return .run { send in
-                   let result = await repository.requestEmailLogin((email,password))
-                    switch result {
-                    case .success(let success):
-                        await send(.loginSuccess(success))
-                    case .failure(let error):
+                   let result = try await repository.requestEmailLogin((email,password))
+                } catch: { error, send in
+                    if let error = error as? EmailLoginAPIError {
                         await send(.errorHandeler(error))
+                    } else {
+                        await send(.timerStart("로그인중 문제가 발생헀습니다."))
                     }
                 }
                 
             case .binding:
                 return .none
             case .errorHandeler(let error):
-                let ifMessage = errorHandelForLogin(error: error)
-                if let ifMessage {
-                    return .run { send in
-                        await send(.timerStart(ifMessage))
-                    }
+                if error.ifDevelopError {
+                    state.alertMessage = error.message
+                } else {
+                    print(error)
                 }
                 return .none
             case .loginSuccess(let user): // 상위뷰가 지켜볼것.
@@ -117,24 +116,24 @@ extension EmailLoginFeature {
         return true
     }
     
-    private func errorHandelForLogin(error: UserDomainError) -> String? {
-        switch error {
-        case .commonError(let common):
-            if !common.ifDevelopError {
-                return common.message
-            } else {
-                print("개발자 잘못 \(common.message)")
-            }
-        case .emailLoginError:
-            if !error.ifDevelopError {
-                return error.message
-            } else {
-                print("개발자 잘못 \(error.message)")
-            }
-        default:
-            break
-        }
-        return nil
-    }
+//    private func errorHandelForLogin(error: UserDomainError) -> String? {
+//        switch error {
+//        case .commonError(let common):
+//            if !common.ifDevelopError {
+//                return common.message
+//            } else {
+//                print("개발자 잘못 \(common.message)")
+//            }
+//        case .emailLoginError:
+//            if !error.ifDevelopError {
+//                return error.message
+//            } else {
+//                print("개발자 잘못 \(error.message)")
+//            }
+//        default:
+//            break
+//        }
+//        return nil
+//    }
     
 }

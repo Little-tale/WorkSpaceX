@@ -40,8 +40,8 @@ struct OnboardingLoginFeature {
         case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
         case errorMessage(messgage: String?)
     
-        case kakaoLoginResult(Result<UserEntity, UserDomainError>)
-        case userDomainErrorHandler(UserDomainError)
+//        case kakaoLoginResult(Result<UserEntity, UserDomainError>)
+//        case kakaoLoginErrorHandler(KakaoLoginAPIError)
         
         
         
@@ -73,23 +73,17 @@ struct OnboardingLoginFeature {
             case .appleLoginButtonTapped:
 
                 return .run { send in
-                    do {
-                        let success = try await repository.appleLoginRequest()
-                        await send(.appleLoginFinish(success))
-                    } catch (let error as UserDomainError ) {
-                        print("error -> \(error.message)")
-                        print("error -> \(error.errorCode)")
-                        
+                    let success = try await repository.appleLoginRequest()
+                    await send(.appleLoginFinish(success))
+                } catch: { error, send in
+                    if let error = error as? AppleLoginAPIError {
                         if !error.ifDevelopError {
                             await send(.errorMessage(messgage: error.message))
                         }
-                    } catch (let error as AppleLoginError ) {
-                        // 사용자 취소도 에러로 받아짐.
-                        let error = isUserErrorApple.isUserError(error)
-                        await send(.errorMessage(messgage: error.mesage))
-                    } catch {
+                    } else {
                         await send(.errorMessage(messgage: APIError.Unkonwn))
                     }
+            
                 }
             case .kakaoLoginButtonTapped:
                 return .run { send in
@@ -107,14 +101,22 @@ struct OnboardingLoginFeature {
                 case .success(let success):
             
                     return .run { send in
-                        let result = await  repository.requestKakaoUser((success, ""))
-                        await send(.kakaoLoginResult(result))
+                        let result = try await  repository.requestKakaoUser((success, ""))
+                        
+                        await send(.kakaoLoginFinish(result))
+                    } catch: { error, send in
+                        if let error = error as? KakaoLoginAPIError {
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(messgage: error.message))
+                            }
+                        } else {
+                            await send(.errorMessage(messgage: APIError.Unkonwn))
+                        }
                     }
                 case .failure(let error):
                     switch error {
                     case .cancel:
                         return .none
-                        
                     case .error:
                         return .send(.errorMessage(messgage: error.message))
                     }
@@ -150,44 +152,12 @@ struct OnboardingLoginFeature {
             case .errorMessage(messgage: let messgage):
                 state.errorPresentation = messgage
                 return .none
-                
-            case .kakaoLoginResult(let result):
-                
-                return .run { send in
-                    switch result {
-                    case .success(let success):
-                        print("성공",success)
-                        await send(.kakaoLoginFinish(success))
-                    case .failure(let error):
-                        await send(.userDomainErrorHandler(error))
-                    }
-                }
-            case .userDomainErrorHandler(let error):
-                switch error {
-                case .commonError(let error):
-                    if !error.ifDevelopError {
-                        return .run { send in
-                            await send(.errorMessage(messgage: error.message))
-                        }
-                    }
-                case .kakaoLogin:
-                    if !error.ifDevelopError {
-                        return .run { send in
-                            await send(.errorMessage(messgage: error.message))
-                        }
-                    }
-                default :
-                    return .none
-                }
           
             case .appleLoginFinish: // 부모에서
-                
                 return .none
             case .kakaoLoginFinish: // 부모에서
-                
                 return .none
             }
-            return .none
         }
         .ifLet(\.$signUp, action: \.signUpFeature) {
             SignUpFeature()
@@ -247,3 +217,33 @@ extension OnboardingLoginFeature {
     }
 }
 
+//            case .kakaoLoginResult(let result):
+//
+//                return .run { send in
+//                    switch result {
+//                    case .success(let success):
+//                        print("성공",success)
+//                        await send(.kakaoLoginFinish(success))
+//                    case .failure(let error):
+//                        await send(.userDomainErrorHandler(error))
+//                    }
+//                }
+//            case .userDomainErrorHandler(let error):
+//                switch error {
+//                case .commonError(let error):
+//                    if !error.ifDevelopError {
+//                        return .run { send in
+//                            await send(.errorMessage(messgage: error.message))
+//                        }
+//                    }
+/*
+ case .kakaoLogin:
+     if !error.ifDevelopError {
+         return .run { send in
+             await send(.errorMessage(messgage: error.message))
+         }
+     }
+ default :
+     return .none
+ }
+ */

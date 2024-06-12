@@ -64,21 +64,6 @@ extension UserRegMapper {
     }
     
     
-    func mapAPIErrorTOKakaoUserDomainError(_ error: APIError) -> UserDomainError {
-        switch error {
-        case .httpError:
-            return .commonError(.serverError)
-        case .commonError(let commonError):
-            return .commonError(commonError)
-        case .customError(let error):
-            let mapping = UserDomainError.kakaoLogin(error)
-            return mapping
-        case .unknownError:
-            return .commonError(.fail)
-        }
-    }
-    
-    
     func requestLoginDTO(email: String, password: String, deviceToken: String?) -> LoginRequestDTO {
         return LoginRequestDTO(
             email: email,
@@ -87,21 +72,6 @@ extension UserRegMapper {
         )
     }
     
-    func mappingEmailLoginError(error: APIError) -> UserDomainError {
-        switch error {
-        case .httpError(let error):
-            print(error)
-            return .commonError(.fail)
-        case .commonError(let common):
-            
-            return .commonError(common)
-        case .customError(let error):
-            let mapping = UserDomainError.emailLoginError(error)
-            return mapping
-        case .unknownError:
-            return .commonError(.fail)
-        }
-    }
     
     func mappingASAuthorization(info: ASAuthorization) -> AppleLoginDTORequest? {
         guard let appleInfo = info.credential as? ASAuthorizationAppleIDCredential else  {
@@ -131,23 +101,5 @@ extension UserRegMapper {
         )
     }
     
-    func mappingAppleLoginToUserDomainError(apE: APIError) -> UserDomainError { // appleLoginError
-        switch apE {
-        case .httpError(let error):
-            print(error)
-            return .commonError(.fail)
-        case .commonError(let error):
-            if case .unknownAcount = error {
-                return .appleLoginError(error.errorCode)
-            }
-            return .commonError(error)
-            
-        case .customError(let response):
-            let mapping = UserDomainError.appleLoginError(response)
-            return mapping
-            
-        case .unknownError:
-            return .commonError(.fail)
-        }
-    }
+   
 }

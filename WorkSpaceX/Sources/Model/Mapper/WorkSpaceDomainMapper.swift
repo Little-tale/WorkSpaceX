@@ -23,6 +23,10 @@ struct WorkSpaceDomainMapper {
         )
     }
     
+    func toWorkSpaceListModel(_ dtos: WorkSpaceaListDTO ) -> [WorkSpaceEntity] {
+        dtos.workSpaces.map { toWorkSpaceModel(model: $0) }
+    }
+    
 }
 
 extension WorkSpaceDomainMapper {
@@ -40,27 +44,27 @@ extension WorkSpaceDomainMapper {
     
 }
 /// ERROR
-extension WorkSpaceDomainMapper {
-    
-    func regworkSpaceErrorMapper(error: Error) -> WorkSpaceDomainError {
-        guard let error = error as? APIError else {
-            return .commonError(.fail)
-        }
-        switch error {
-        case .httpError(let string):
-            print(string)
-            return .commonError(.fail)
-        case .commonError(let commonError):
-            if  WorkSpaceDomainError.makeWoekSpaceError(commonError.errorCode).thisError {
-                return .makeWoekSpaceError(commonError.errorCode)
-            }
-            
-            return .commonError(commonError)
-        case .customError(let string):
-            return .makeWoekSpaceError(string)
-        case .unknownError:
-            return .commonError(.fail)
-        }
-    }
-    
-}
+//extension WorkSpaceDomainMapper {
+//    
+////    func regworkSpaceErrorMapper(error: Error) -> WorkSpaceDomainError {
+////        guard let error = error as? APIError else {
+////            return .commonError(.fail)
+////        }
+////        switch error {
+////        case .httpError(let string):
+////            print(string)
+////            return .commonError(.fail)
+////        case .commonError(let commonError):
+////            if  WorkSpaceDomainError.makeWoekSpaceError(commonError.errorCode).thisError {
+////                return .makeWoekSpaceError(commonError.errorCode)
+////            }
+////            
+////            return .commonError(commonError)
+////        case .customError(let string):
+////            return .makeWoekSpaceError(string)
+////        case .unknownError:
+////            return .commonError(.fail)
+////        }
+////    }
+//    
+//}
