@@ -17,13 +17,20 @@ struct WorkSpaceXTabFeature {
     @ObservableState
     struct State: Equatable {
         var currentTab = Tab.home
+        var homeState = WorkSpaceListFeature.State()
     }
     
     enum Action {
+        case homeAction(WorkSpaceListFeature.Action)
         case selectedTab(Tab)
     }
     
     var body: some ReducerOf<Self> {
+        
+        Scope(state: \.homeState, action: \.homeAction) {
+            WorkSpaceListFeature()
+        }
+        
         Reduce { state, action in
             switch action {
             case .selectedTab(let tab):

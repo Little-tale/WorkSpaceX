@@ -67,6 +67,8 @@
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
+		7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6032C1980E400948E7C /* WorkSpaceListView.swift */; };
+		7B8FD6072C19813500948E7C /* WorkSpaceListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -171,6 +173,8 @@
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
+		7B8FD6032C1980E400948E7C /* WorkSpaceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListView.swift; sourceTree = "<group>"; };
+		7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListFeature.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -569,6 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				7B8FD6002C19762000948E7C /* TabViews */,
+				7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */,
 				7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */,
 			);
 			path = WorkSpaceTab;
@@ -577,9 +582,18 @@
 		7B8FD6002C19762000948E7C /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
-				7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */,
+				7B8FD6052C19812400948E7C /* WorkSpaceList */,
 			);
 			path = TabViews;
+			sourceTree = "<group>";
+		};
+		7B8FD6052C19812400948E7C /* WorkSpaceList */ = {
+			isa = PBXGroup;
+			children = (
+				7B8FD6032C1980E400948E7C /* WorkSpaceListView.swift */,
+				7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */,
+			);
+			path = WorkSpaceList;
 			sourceTree = "<group>";
 		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
@@ -786,6 +800,7 @@
 				7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */,
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
+				7B8FD6072C19813500948E7C /* WorkSpaceListFeature.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
 				7BEC45DD2C16E2AC00576ECA /* WorkSpaceDTO.swift in Sources */,
 				7B2EEE0C2C117A840024853C /* UserDTORequest.swift in Sources */,
@@ -822,6 +837,7 @@
 				7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
+				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,
 				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
 				7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */,
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,

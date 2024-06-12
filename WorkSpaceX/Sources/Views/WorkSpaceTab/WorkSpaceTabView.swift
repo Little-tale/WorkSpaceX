@@ -17,14 +17,22 @@ struct WorkSpaceTabView: View {
         WithPerceptionTracking {
             TabView(selection: $store.currentTab.sending(\.selectedTab)) {
                 
-                Text("홈뷰").tabItem { Text("Tab Label 1") }.tag(WorkSpaceXTabFeature.Tab.home)
+                WorkSpaceListView(
+                    store: store.scope(state: \.homeState, action: \.homeAction)
+                )
+                .tag(WorkSpaceXTabFeature.Tab.home)
+                .tabItem { Text("Tab Label 1") }
                 
-                Text("DM").tabItem { Text("Tab Label 2") }.tag(WorkSpaceXTabFeature.Tab.dm)
                 
-                Text("search").tabItem { Text("Tab Label 3") }.tag(WorkSpaceXTabFeature.Tab.search)
+                Text("DM").tabItem {
+                    Text("Tab Label 2") }.tag(WorkSpaceXTabFeature.Tab.dm)
                 
-                Text("setting").tabItem { Text("Tab Label 4") }.tag(WorkSpaceXTabFeature.Tab.setting)
-            
+                Text("search").tabItem {
+                    Text("Tab Label 3") }.tag(WorkSpaceXTabFeature.Tab.search)
+                
+                Text("setting").tabItem {
+                    Text("Tab Label 4") }.tag(WorkSpaceXTabFeature.Tab.setting)
+                
             }
         }
     }
