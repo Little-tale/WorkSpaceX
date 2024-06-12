@@ -12,11 +12,17 @@ import ComposableArchitecture
 @Reducer
 struct RootFeature {
     
+    enum CheckFor {
+        case none
+        case ifNeedChecked
+    }
+    
     @ObservableState
     struct State {
         var currentLoginState: loginState = .logout
         var workWpaceFirstViewState: WorkSpaceFirstStartFeature.State?
         var OnboardingViewState: OnboardingFeature.State?
+       
     }
     
     enum loginState {
@@ -35,7 +41,7 @@ struct RootFeature {
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-    
+        
         Reduce {state, action in
             switch action {
             case .onAppear :
@@ -52,6 +58,10 @@ struct RootFeature {
                     state.currentLoginState = .logout
                 }
                 return .none
+            case .sendToWorkSpaceStart(.sendWorkSpaceInit(.presented(.goRootCheck))):
+                print("작동하는가..?")
+                return .run { send in await send(.onAppear) }
+                
             case .sendToOnboardingView(.checkedLogin):
                 
                 return .run { send in await send(.onAppear)}
@@ -59,12 +69,6 @@ struct RootFeature {
             case .sendToWorkSpaceStart:
                 
                 return .none
-                
-            case .sendToWorkSpaceStart(\.sendWorkSpaceInit.goRootCheck):
-                
-                return .run { send in
-                    await send(.onAppear)
-                }
                 
             case .binding:
                 
@@ -84,3 +88,5 @@ struct RootFeature {
     }
     
 }
+
+

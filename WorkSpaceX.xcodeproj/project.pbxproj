@@ -64,6 +64,7 @@
 		7B5AEB042C10539200D10330 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB032C10539200D10330 /* ComposableArchitecture */; };
 		7B5AEB072C108FCB00D10330 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB062C108FCB00D10330 /* PopupView */; };
 		7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */; };
+		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -165,6 +166,7 @@
 		7B592ED82C0F2C7600E47797 /* TextValid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValid.swift; sourceTree = "<group>"; };
 		7B592EDA2C0F2CC100E47797 /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticToastColorView.swift; sourceTree = "<group>"; };
+		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				7BEC45F42C1808F800576ECA /* ExImage.swift */,
 				7BEC45FC2C181FAE00576ECA /* ExData.swift */,
 				7BEC45FE2C18363900576ECA /* ExString.swift */,
+				7B8FD5FB2C19486500948E7C /* ExNotification.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -808,6 +811,7 @@
 				7BEC45ED2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift in Sources */,
 				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
+				7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
 				7BEC45D52C16C7DE00576ECA /* CustomeImagePickView.swift in Sources */,
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,

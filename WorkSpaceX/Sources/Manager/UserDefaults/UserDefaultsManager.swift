@@ -18,6 +18,7 @@ enum UserDefaultsManager {
         case appleLoginNickName
         case isfirstUser
         case userName
+        case ifNeedChecked
         
         var value: String {
             return self.rawValue
@@ -44,4 +45,7 @@ enum UserDefaultsManager {
     
     @UserDefaultsWrapper(key: Key.userName.value, placeValue: nil)
     static var userName: String?
+    
+    @UserDefaultsWrapper(key: Key.ifNeedChecked.value, placeValue: false)
+    static var ifNeedChecked: Bool
 }

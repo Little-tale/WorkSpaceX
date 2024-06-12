@@ -36,6 +36,13 @@ struct RootView: View {
             }
             .onAppear {
                 store.send(.onAppear)
+                NotificationCenter.default.addObserver(
+                    forName: .ifNeedReChack,
+                    object: nil,
+                    queue: .main) { _ in
+                        print("한번씩만...")
+                        store.send(.onAppear)
+                    }
             }
         }
     }

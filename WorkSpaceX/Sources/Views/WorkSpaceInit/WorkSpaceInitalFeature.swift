@@ -81,6 +81,7 @@ struct WorkSpaceInitalFeature {
                 
             case .regButtonTapped:
                 state.showPrograssView = true
+
                 var description: String?
                 
                 var request: NewWorkSpaceRequest
@@ -184,7 +185,9 @@ struct WorkSpaceInitalFeature {
                 return .none
                 
             case .alert(.dismiss):
-                return .none
+                return .run{ send in
+                    await send (.goRootCheck)
+                }
             }
         }
         
