@@ -45,6 +45,7 @@ struct RootFeature {
         Reduce {state, action in
             switch action {
             case .onAppear :
+                UserDefaultsManager.isFirstUser = true
                 if let _ = UserDefaultsManager.accessToken {
                     if UserDefaultsManager.isFirstUser {
                         state.workWpaceFirstViewState = WorkSpaceFirstStartFeature.State()
@@ -60,11 +61,11 @@ struct RootFeature {
                 return .none
             case .sendToWorkSpaceStart(.sendWorkSpaceInit(.presented(.goRootCheck))):
                 print("작동하는가..?")
-                return .run { send in await send(.onAppear) }
                 
+                return .run { send in await send(.onAppear) }
             case .sendToWorkSpaceStart(.cancelButtonTapped):
-                return .run { send in await send(.onAppear) }
                 
+                return .run { send in await send(.onAppear) }
             case .sendToOnboardingView(.checkedLogin):
                 return .run { send in await send(.onAppear) }
                 

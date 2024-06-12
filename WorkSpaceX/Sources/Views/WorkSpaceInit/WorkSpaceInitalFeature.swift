@@ -138,7 +138,7 @@ struct WorkSpaceInitalFeature {
                 dump(model)
                 state.showPrograssView = false
                 state.successMessage = "등록 완료 되었습니다."
-                return .none
+                return .run { send in await send(.goRootCheck) }
                 
             case .showLogoutAlert:
                 state.logOutAlertState = AlertState {

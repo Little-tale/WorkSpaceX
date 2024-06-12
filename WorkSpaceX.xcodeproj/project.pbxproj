@@ -65,6 +65,8 @@
 		7B5AEB072C108FCB00D10330 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5AEB062C108FCB00D10330 /* PopupView */; };
 		7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
+		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
+		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -167,6 +169,8 @@
 		7B592EDA2C0F2CC100E47797 /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticToastColorView.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
+		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
+		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -439,6 +443,7 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B8FD5FD2C19725800948E7C /* WorkSpaceTab */,
 				7BEC45CB2C16A7C300576ECA /* Custom */,
 				7BEC45C82C16A65600576ECA /* WorkSpaceInit */,
 				7B5AEB082C10907300D10330 /* Toast */,
@@ -558,6 +563,23 @@
 				7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */,
 			);
 			path = Toast;
+			sourceTree = "<group>";
+		};
+		7B8FD5FD2C19725800948E7C /* WorkSpaceTab */ = {
+			isa = PBXGroup;
+			children = (
+				7B8FD6002C19762000948E7C /* TabViews */,
+				7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */,
+			);
+			path = WorkSpaceTab;
+			sourceTree = "<group>";
+		};
+		7B8FD6002C19762000948E7C /* TabViews */ = {
+			isa = PBXGroup;
+			children = (
+				7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */,
+			);
+			path = TabViews;
 			sourceTree = "<group>";
 		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
@@ -780,6 +802,7 @@
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
+				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
 				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,
@@ -826,6 +849,7 @@
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */,
 				7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */,
+				7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7BEC45D12C16AACE00576ECA /* CustomImagePickPeature.swift in Sources */,
 				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
