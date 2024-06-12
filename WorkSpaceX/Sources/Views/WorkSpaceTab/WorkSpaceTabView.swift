@@ -15,25 +15,41 @@ struct WorkSpaceTabView: View {
     var body: some View {
         
         WithPerceptionTracking {
-            TabView(selection: $store.currentTab.sending(\.selectedTab)) {
-                
-                WorkSpaceListView(
-                    store: store.scope(state: \.homeState, action: \.homeAction)
-                )
-                .tag(WorkSpaceXTabFeature.Tab.home)
-                .tabItem { Text("Tab Label 1") }
-                
-                
-                Text("DM").tabItem {
-                    Text("Tab Label 2") }.tag(WorkSpaceXTabFeature.Tab.dm)
-                
-                Text("search").tabItem {
-                    Text("Tab Label 3") }.tag(WorkSpaceXTabFeature.Tab.search)
-                
-                Text("setting").tabItem {
-                    Text("Tab Label 4") }.tag(WorkSpaceXTabFeature.Tab.setting)
-                
+            
+            Group {
+                if store.state.ifNoneSpace {
+                    NavigationStack {
+                        WorkSpaceEmptyListView(store: store.scope(state: \.makeSpaceViewState, action: \.ifNeedMakeWorkSpace))
+                    }
+                    
+                } else {
+                    TabView(selection: $store.currentTab.sending(\.selectedTab)) {
+                        WorkSpaceListView(
+                            store: store.scope(state: \.homeState, action: \.homeAction)
+                        )
+                        .tag(WorkSpaceXTabFeature.Tab.home)
+                        .tabItem {
+                            WSXImage.homeImage.renderingMode(.template)
+                            Text(WorkSpaceXTabFeature.Tab.home.title)
+                        }
+                        
+                        Text("DM")
+                            .tabItem {
+                                Text(WorkSpaceXTabFeature.Tab.dm.title) }.tag(WorkSpaceXTabFeature.Tab.dm)
+                        
+                        Text("search")
+                            .tabItem {
+                                Text(WorkSpaceXTabFeature.Tab.search.title) }.tag(WorkSpaceXTabFeature.Tab.search)
+                        
+                        Text("setting")
+                            .tabItem {
+                                Text(WorkSpaceXTabFeature.Tab.setting.title) }.tag(WorkSpaceXTabFeature.Tab.setting)
+                        
+                    }
+                    .tint(WSXColor.black)
+                }
             }
+           
         }
     }
 }

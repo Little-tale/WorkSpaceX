@@ -12,11 +12,11 @@ import ComposableArchitecture
 struct CustomImagePickPeature {
     
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var imageState: ImagePickState = .empty
         var errorMessage: String? = nil
     }
-    enum ImagePickState {
+    enum ImagePickState: Equatable {
         case empty
         case loading
         case success(Data)

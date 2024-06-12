@@ -15,6 +15,10 @@ struct WorkSpaceListFeature {
     struct State: Equatable {
         
     }
+    enum isCurrent {
+        case empty
+        case notEmpty
+    }
     
     enum Action {
         

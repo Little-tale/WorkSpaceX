@@ -27,4 +27,8 @@ extension WSXImage {
     static let workSpaceStart: Image = Image(.workSpaceInitStart)
     
     static let logoUIImage: UIImage = UIImage(resource: .workSpaceXLogo)
+    
+    static let homeImage: Image = Image(.home)
+    
+    static let emptyImage: Image = Image(.empty)
 }

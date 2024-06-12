@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct WorkSpaceInitalFeature {
     
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var imagePick = CustomImagePickPeature.State()
         var showImagePicker = false
         var workSpaceName = ""
