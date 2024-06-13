@@ -22,7 +22,7 @@ struct RootFeature {
         var currentLoginState: loginState = .logout
         var workWpaceFirstViewState: WorkSpaceFirstStartFeature.State?
         var OnboardingViewState: OnboardingFeature.State?
-       
+        var workSpaceTabViewState: WorkSpaceXTabFeature.State?
     }
     
     enum loginState {
@@ -36,7 +36,7 @@ struct RootFeature {
         case onAppear
         case sendToWorkSpaceStart(WorkSpaceFirstStartFeature.Action)
         case sendToOnboardingView(OnboardingFeature.Action)
-        
+        case sendToWorkSpaceTab(WorkSpaceXTabFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
@@ -45,13 +45,13 @@ struct RootFeature {
         Reduce {state, action in
             switch action {
             case .onAppear :
-                UserDefaultsManager.isFirstUser = true
                 if let _ = UserDefaultsManager.accessToken {
                     if UserDefaultsManager.isFirstUser {
                         state.workWpaceFirstViewState = WorkSpaceFirstStartFeature.State()
                         state.currentLoginState = .firstLogin
                     } else {
                         // 여기에 알지?
+                        state.workSpaceTabViewState = WorkSpaceXTabFeature.State()
                         state.currentLoginState = .login
                     }
                 } else {
@@ -63,9 +63,15 @@ struct RootFeature {
                 print("작동하는가..?")
                 
                 return .run { send in await send(.onAppear) }
+                
+            case .sendToWorkSpaceTab(.delegate(.checkRootView)):
+                
+                return .run { send in await send(.onAppear) }
+                
             case .sendToWorkSpaceStart(.cancelButtonTapped):
                 
                 return .run { send in await send(.onAppear) }
+                
             case .sendToOnboardingView(.checkedLogin):
                 return .run { send in await send(.onAppear) }
                 
@@ -79,6 +85,8 @@ struct RootFeature {
             case .sendToOnboardingView:
                 
                 return .none
+            case .sendToWorkSpaceTab:
+                return .none
             }
         }
         .ifLet(\.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
@@ -87,7 +95,9 @@ struct RootFeature {
         .ifLet(\.OnboardingViewState, action: \.sendToOnboardingView) {
             OnboardingFeature()
         }
-    
+        .ifLet(\.workSpaceTabViewState, action: \.sendToWorkSpaceTab) {
+            WorkSpaceXTabFeature()
+        }
     }
     
 }

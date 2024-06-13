@@ -49,10 +49,10 @@ struct WorkSpaceTabView: View {
                     .tint(WSXColor.black)
                 }
             }
+            .alert($store.scope(state: \.alert, action: \.alert))
             .onAppear {
                 store.send(.appear)
             }
-           
         }
     }
 }

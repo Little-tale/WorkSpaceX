@@ -23,9 +23,9 @@ struct RootView: View {
                         ProgressView()
                     }
                 case .login:
-                    
-                    Text("아직 없음")
-                        
+                    IfLetStore(store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab)) { store in
+                        WorkSpaceTabView(store: store)
+                    }
                 case .logout:
                     if let store = store.scope(state: \.OnboardingViewState, action: \.sendToOnboardingView) {
                         OnboardingView(store: store)
