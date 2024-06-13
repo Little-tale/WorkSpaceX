@@ -11,4 +11,9 @@ extension String {
     var toData: Data {
         return self.data(using: .utf8) ?? Data()
     }
+    
+    var toDate: Date? {
+        return DateManager.shared.toDateISO(self)
+    }
+    
 }

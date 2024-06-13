@@ -76,6 +76,9 @@ struct EmailLoginFeature {
                 return .run { send in
                    let result = try await repository.requestEmailLogin((email,password))
                     print("이메일 로그인 성공시 출력")
+                    UserDefaultsManager.accessToken = result.token?.accessToken
+                    UserDefaultsManager.refreshToken = result.token?.refreshToken
+                    print("이메일 \(result)")
                     await send(.loginSuccess(result))
                 } catch: { error, send in
                     if let error = error as? EmailLoginAPIError {
@@ -88,6 +91,7 @@ struct EmailLoginFeature {
                 
             case .binding:
                 return .none
+                
             case .errorHandeler(let error):
                 if !error.ifDevelopError {
                     state.alertMessage = error.message

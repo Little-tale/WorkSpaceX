@@ -31,6 +31,8 @@ struct WorkSpaceXTabFeature {
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.userDomainRepository) var userDominRepo
     
+    @Dependency(\.realmRepository) var realmeRepo
+    
     @ObservableState
     struct State: Equatable {
         var currentTab = Tab.home
@@ -53,6 +55,7 @@ struct WorkSpaceXTabFeature {
             case checkRootView
             case currentSpaces([WorkSpaceEntity])
             case refreshDead
+            case profile(UserEntity)
         }
         case delegate(Delegate)
         
@@ -102,6 +105,7 @@ struct WorkSpaceXTabFeature {
                     await send(.delegate(.currentSpaces(result)))
                     
                     let profile = try await userDominRepo.myProfile()
+                    await send(.delegate(.profile(profile)))
                     
                     print("프로필 조회임~ ",profile)
                     
@@ -133,6 +137,11 @@ struct WorkSpaceXTabFeature {
                 state.alert = .refreshDeadAlert
                 return .none
                 
+            case .delegate(.profile(let model)):
+                
+                realmeRepo.upsertUserModel(response: model)
+                
+                return .none
             case .delegate:
                 
                 return .none

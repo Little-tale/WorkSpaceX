@@ -35,6 +35,9 @@ struct RootView: View {
                 }
             }
             .onAppear {
+                UserDefaultsManager.accessToken = nil
+                UserDefaultsManager.refreshToken = nil
+                UserDefaultsManager.isFirstUser = true
                 store.send(.onAppear)
                 NotificationCenter.default.addObserver(
                     forName: .ifNeedReChack,

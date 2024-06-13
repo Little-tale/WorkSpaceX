@@ -19,7 +19,7 @@ struct UserRegMapper: Mapper {
             profileImage: userDTO.profileImage,
             phone: userDTO.phone ?? "" ,
             provider: userDTO.provider,
-            createdAt: userDTO.createdAt,
+            createdAt: userDTO.createdAt.toDate,
             token: toEntity(userDTO.token)
         )
         return entity
@@ -40,7 +40,7 @@ struct UserRegMapper: Mapper {
             profileImage: profileDTO.profileImage,
             phone: profileDTO.phone ?? "" ,
             provider: profileDTO.provider,
-            createdAt: profileDTO.createdAt,
+            createdAt: profileDTO.createdAt.toDate,
             token: nil
         )
         return entity

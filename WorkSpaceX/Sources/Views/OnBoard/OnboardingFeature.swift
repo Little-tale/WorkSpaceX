@@ -25,6 +25,7 @@ struct OnboardingFeature {
     }
     
     @Dependency(\.userDomainRepository) var repository
+    @Dependency(\.realmRepository) var realmeRepo
     
     var body: some ReducerOf<Self> {
         
@@ -39,13 +40,13 @@ struct OnboardingFeature {
 //                    await send(.testSuccess)
 //                }
                 return .none
-            case .onboardingLoginFeature(.presented(.appleLoginFinish)): // 애플 로그인시
-            
+            case .onboardingLoginFeature(.presented(.appleLoginFinish(let model))): // 애플 로그인시
+                realmeRepo.upsertUserModel(response: model)
                 return .run { send in
                     await send(.testSuccess)
                 }
-            case .onboardingLoginFeature(.presented(.kakaoLoginFinish)): // 카카오 로그인 시
-                
+            case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let model))): // 카카오 로그인 시
+                realmeRepo.upsertUserModel(response: model)
                 return .run { send in
                     await send(.testSuccess)
                 }
@@ -53,14 +54,19 @@ struct OnboardingFeature {
             case .onboardingLoginFeature(.presented(.signUpFeature(.presented(.onlyUseParentsUserEntity(let user))))):
                 print("signUpFeatureEvents: \(user)")
                 
+                realmeRepo.upsertUserModel(response: user)
+                
                 return .run { send in
                     await send(.testSuccess)
                 }
                 
-            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess)))): // 이메일 로그인시
+            case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess(let model))))): // 이메일 로그인시
                 print("이메일 로그인 성공 상위뷰 전달 받음")
+                
+                realmeRepo.upsertUserModel(response: model)
+                
                 return .run { send in
-                    await send(.checkedLogin)
+                    await send(.testSuccess)
                 }
                 
             case .testSuccess:

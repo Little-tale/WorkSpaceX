@@ -12,8 +12,8 @@ struct UserEntity: Entity {
     let email: String
     let nickname: String
     let profileImage: String?
-    let phone: String
+    let phone: String?
     let provider: String?
-    let createdAt: String
+    let createdAt: Date?
     let token: TokenModel?
 }

@@ -33,6 +33,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 
                 let mapping = workSpaceMapper.toWorkSpaceListModel(result)
                 
+                
                 return mapping
         }
     )
