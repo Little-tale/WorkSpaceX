@@ -35,10 +35,10 @@ struct OnboardingFeature {
             case .startButtonTapped:
                 state.onboard = OnboardingLoginFeature.State()
                 // 뭐가 있을거임.
-                return .run { send in
-                    await send(.testSuccess)
-                }
-                
+//                return .run { send in
+//                    await send(.testSuccess)
+//                }
+                return .none
             case .onboardingLoginFeature(.presented(.appleLoginFinish)): // 애플 로그인시
             
                 return .run { send in
@@ -58,8 +58,9 @@ struct OnboardingFeature {
                 }
                 
             case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess)))): // 이메일 로그인시
+                print("이메일 로그인 성공 상위뷰 전달 받음")
                 return .run { send in
-                    await send(.testSuccess)
+                    await send(.checkedLogin)
                 }
                 
             case .testSuccess:
@@ -87,12 +88,12 @@ struct OnboardingFeature {
 extension OnboardingFeature {
     
     private func ifLogin() -> Bool {
-        
-        guard let access = UserDefaultsManager.accessToken,
-              let refresh = UserDefaultsManager.refreshToken else {
+        if UserDefaultsManager.refreshToken == nil {
             return false
         }
-        
+        if UserDefaultsManager.accessToken == nil {
+            return false
+        }
         return true
     }
     

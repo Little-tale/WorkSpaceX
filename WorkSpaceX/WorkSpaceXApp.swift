@@ -26,6 +26,7 @@ struct WorkSpaceXApp: App {
                     _ = AuthController.handleOpenUrl(url: url)
                 }
             }
+            
         }
         
     }

@@ -75,10 +75,13 @@ struct EmailLoginFeature {
                 let password = state.password
                 return .run { send in
                    let result = try await repository.requestEmailLogin((email,password))
+                    print("이메일 로그인 성공시 출력")
+                    await send(.loginSuccess(result))
                 } catch: { error, send in
                     if let error = error as? EmailLoginAPIError {
                         await send(.errorHandeler(error))
                     } else {
+                        print("이메일 로그인 에러",error)
                         await send(.timerStart("로그인중 문제가 발생헀습니다."))
                     }
                 }
@@ -86,14 +89,13 @@ struct EmailLoginFeature {
             case .binding:
                 return .none
             case .errorHandeler(let error):
-                if error.ifDevelopError {
+                if !error.ifDevelopError {
                     state.alertMessage = error.message
                 } else {
                     print(error)
                 }
                 return .none
-            case .loginSuccess(let user): // 상위뷰가 지켜볼것.
-                print("로그인 성공 \(user)")
+            case .loginSuccess: // 상위뷰가 지켜볼것.
                 return .none
             }
         }

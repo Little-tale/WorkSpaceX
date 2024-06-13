@@ -81,6 +81,8 @@
 		7B8FD61D2C1A8EED00948E7C /* MyProfileAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD61C2C1A8EED00948E7C /* MyProfileAPIError.swift */; };
 		7B8FD61F2C1A901500948E7C /* UserProfileDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD61E2C1A901500948E7C /* UserProfileDTO.swift */; };
 		7B8FD6212C1A918100948E7C /* MapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6202C1A918100948E7C /* MapperProtocol.swift */; };
+		7B8FD6232C1AA2CA00948E7C /* ExText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6222C1AA2CA00948E7C /* ExText.swift */; };
+		7B8FD6262C1AA49C00948E7C /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6252C1AA49C00948E7C /* SideMenu.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -199,6 +201,8 @@
 		7B8FD61C2C1A8EED00948E7C /* MyProfileAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileAPIError.swift; sourceTree = "<group>"; };
 		7B8FD61E2C1A901500948E7C /* UserProfileDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDTO.swift; sourceTree = "<group>"; };
 		7B8FD6202C1A918100948E7C /* MapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapperProtocol.swift; sourceTree = "<group>"; };
+		7B8FD6222C1AA2CA00948E7C /* ExText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExText.swift; sourceTree = "<group>"; };
+		7B8FD6252C1AA49C00948E7C /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -358,6 +362,7 @@
 				7BEC45FC2C181FAE00576ECA /* ExData.swift */,
 				7BEC45FE2C18363900576ECA /* ExString.swift */,
 				7B8FD5FB2C19486500948E7C /* ExNotification.swift */,
+				7B8FD6222C1AA2CA00948E7C /* ExText.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B8FD6242C1AA49000948E7C /* SideMenuView */,
 				7B8FD5FD2C19725800948E7C /* WorkSpaceTab */,
 				7BEC45CB2C16A7C300576ECA /* Custom */,
 				7BEC45C82C16A65600576ECA /* WorkSpaceInit */,
@@ -628,6 +634,14 @@
 				7B8FD60A2C198D9D00948E7C /* WorkSpaceEmptyListFeature.swift */,
 			);
 			path = WorkSpaceList;
+			sourceTree = "<group>";
+		};
+		7B8FD6242C1AA49000948E7C /* SideMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				7B8FD6252C1AA49C00948E7C /* SideMenu.swift */,
+			);
+			path = SideMenuView;
 			sourceTree = "<group>";
 		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
@@ -855,6 +869,7 @@
 				7B8FD6212C1A918100948E7C /* MapperProtocol.swift in Sources */,
 				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
+				7B8FD6232C1AA2CA00948E7C /* ExText.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
@@ -877,6 +892,7 @@
 				7BEC45A72C12E7D300576ECA /* AccessTokenDTO.swift in Sources */,
 				7B8FD61F2C1A901500948E7C /* UserProfileDTO.swift in Sources */,
 				7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */,
+				7B8FD6262C1AA49C00948E7C /* SideMenu.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,

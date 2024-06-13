@@ -84,8 +84,12 @@ extension UserDomainRepository: DependencyKey {
                 
                 UserDefaultsManager.accessToken = result.token.accessToken
                 UserDefaultsManager.accessToken = result.token.refreshToken
+            
                 UserDefaultsManager.userName = result.nickname
                 
+            print("이메일 로그인시 토큰 \(result.token)")
+            
+            print("이메일 유저디폴트 입장 \(UserDefaultsManager.accessToken)")
                 return mapping
                 
         }, appleLoginRequest: {
@@ -110,6 +114,7 @@ extension UserDomainRepository: DependencyKey {
                 UserDefaultsManager.accessToken = result.token.accessToken
                 
                 let entity = mapper.toEntity(result)
+                
                 
                 return entity
         }, myProfile: {

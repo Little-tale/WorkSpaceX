@@ -27,4 +27,11 @@ extension WSXColor {
     
     
     static let lightGray = Color(ColorResource.onlyLightGrey)
+    
+    
+    static let titleGradient = LinearGradient(
+        colors: [.red, .blue, .green, .yellow],
+        startPoint: .leading,
+        endPoint: .trailing
+    )
 }

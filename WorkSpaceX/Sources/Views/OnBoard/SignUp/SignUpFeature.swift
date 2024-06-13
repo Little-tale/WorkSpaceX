@@ -277,6 +277,7 @@ struct SignUpFeature {
                 
                 return .run { send in
                     let result = try await reposiory.requestUserReg(user)
+                    await send(.onlyUseParentsUserEntity(result))
                 } catch : { error, send in
                     if let error = error as? UserRegAPIError {
                         if error.ifDevelopError {
@@ -295,7 +296,7 @@ struct SignUpFeature {
             case .binding:
                 return .none
                 
-            case .onlyUseParentsUserEntity(let user):
+            case .onlyUseParentsUserEntity:
                 return .none
             }
         }

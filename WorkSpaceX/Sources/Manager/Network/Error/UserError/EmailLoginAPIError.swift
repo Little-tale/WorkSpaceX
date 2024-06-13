@@ -17,7 +17,7 @@ struct EmailLoginAPIError: WSXErrorType {
     var message: String {
         switch errorCode {
         case "E03":
-            return "로그인에 실패 하였습니다."
+            return "이메일이나, 비밀번호를 다시 확인하여 주세요"
         default :
             return "알수 없는 에러입니다."
         }

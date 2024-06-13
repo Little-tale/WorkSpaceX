@@ -57,8 +57,8 @@ struct WorkSpaceTabView: View {
     }
 }
 
-#Preview {
-    WorkSpaceTabView(store: Store(initialState: { WorkSpaceXTabFeature.State()}(), reducer: {
-        WorkSpaceXTabFeature()
-    }))
-}
+//#Preview {
+//    WorkSpaceTabView(store: Store(initialState: { WorkSpaceXTabFeature.State()}(), reducer: {
+//        WorkSpaceXTabFeature()
+//    }))
+//}

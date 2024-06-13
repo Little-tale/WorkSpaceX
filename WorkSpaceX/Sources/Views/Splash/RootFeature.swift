@@ -73,6 +73,7 @@ struct RootFeature {
                 return .run { send in await send(.onAppear) }
                 
             case .sendToOnboardingView(.checkedLogin):
+                print("엥??????")
                 return .run { send in await send(.onAppear) }
                 
             case .sendToWorkSpaceStart:
