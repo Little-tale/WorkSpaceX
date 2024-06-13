@@ -50,11 +50,7 @@ extension NetworkManager {
             
                 let errorInstance = errorType.makeErrorType(from: errorResponse.errorCode)
                 
-                if errorInstance.ifThisError {
-                    throw errorInstance
-                } else {
-                    throw APIError.customError(errorResponse.errorCode)
-                }
+                throw errorInstance
             } else {
                 print("에러 : http 관련")
                 throw APIError.httpError("Unexpected error: Please retry")

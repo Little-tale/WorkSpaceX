@@ -16,4 +16,15 @@ extension Mapper {
         
         return URL(string: urlString)
     }
+    
+    func mappingToStringURL( with string: String?) -> String? {
+        guard let string else {
+            return nil
+        }
+      
+        let urlString = APIKey.baseURL + APIKey.version + string
+        return urlString
+    }
+    
+    
 }

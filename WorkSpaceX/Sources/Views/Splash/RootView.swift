@@ -14,7 +14,8 @@ struct RootView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            Group {
+            ZStack {
+                
                 switch store.currentLoginState {
                 case .firstLogin:
                     if let store = store.scope(state: \.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
@@ -32,30 +33,32 @@ struct RootView: View {
                     } else {
                         ProgressView()
                     }
+                    
                 }
             }
             .onAppear {
-                UserDefaultsManager.accessToken = nil
-                UserDefaultsManager.refreshToken = nil
-                UserDefaultsManager.isFirstUser = true
-                store.send(.onAppear)
+                print("감시중")
                 NotificationCenter.default.addObserver(
-                    forName: .ifNeedReChack,
+                    forName: .refreshTokenDead,
                     object: nil,
-                    queue: .main) { _ in
-                        print("한번씩만...")
-                        store.send(.onAppear)
+                    queue: .main) {  _ in
+                        store.send(.alert(.presented(.refreshTokkenDead)))
                     }
+                store.send(.onAppear)
+            }
+            .onDisappear {
+                print("감시해제")
+                NotificationCenter.default.removeObserver(self, name: .refreshTokenDead, object: nil)
             }
         }
     }
 }
 /*
  Store(initialState: WorkSpaceFirstStartFeature.State()) {
-     WorkSpaceFirstStartFeature()
+ WorkSpaceFirstStartFeature()
  }
  
  store = Store(initialState: OnboardingFeature.State()) {
-     OnboardingFeature()
+ OnboardingFeature()
  }
  */

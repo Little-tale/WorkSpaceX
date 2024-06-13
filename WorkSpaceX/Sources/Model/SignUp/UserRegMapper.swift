@@ -11,12 +11,12 @@ import AuthenticationServices
 struct UserRegMapper: Mapper {
     
     func toEntity(_ userDTO: UserDTO) -> UserEntity {
-        
+
         let entity = UserEntity(
             userID: userDTO.userID,
             email: userDTO.email,
             nickname: userDTO.nickname,
-            profileImage: userDTO.profileImage,
+            profileImage: mappingToStringURL(with: userDTO.profileImage),
             phone: userDTO.phone ?? "" ,
             provider: userDTO.provider,
             createdAt: userDTO.createdAt.toDate,
@@ -37,7 +37,7 @@ struct UserRegMapper: Mapper {
             userID: profileDTO.userID,
             email: profileDTO.email,
             nickname: profileDTO.nickname,
-            profileImage: profileDTO.profileImage,
+            profileImage: mappingToStringURL(with: profileDTO.profileImage),
             phone: profileDTO.phone ?? "" ,
             provider: profileDTO.provider,
             createdAt: profileDTO.createdAt.toDate,

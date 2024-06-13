@@ -7,10 +7,13 @@
 
 import SwiftUI
 import ComposableArchitecture
+import RealmSwift
 
 struct WorkSpaceEmptyListView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceEmptyListFeature>
+    
+    @ObservedResults(UserRealmModel.self, where: {$0.userID == UserDefaultsManager.userID ?? "" }) var userProfile
     
     var body: some View {
         WithPerceptionTracking {
@@ -57,15 +60,24 @@ struct WorkSpaceEmptyListView: View {
                                 
                             }
                     }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if let userProfile = userProfile.first,
+                           let image = userProfile.profileImage {
+                            
+                            let url = URL(string: image)
+                            DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
+                                .clipShape(Circle())
+                        }
+                        // 여기에 이미지 추가
+                    }
                 }
+                
             }
-            
         }
     }
 }
-
-//#Preview {
-//    WorkSpaceEmptyListView(store: Store(initialState: WorkSpaceEmptyListFeature.State(), reducer: {
-//        WorkSpaceEmptyListFeature()
-//    }))
-//}
+    //#Preview {
+    //    WorkSpaceEmptyListView(store: Store(initialState: WorkSpaceEmptyListFeature.State(), reducer: {
+    //        WorkSpaceEmptyListFeature()
+    //    }))
+    //}

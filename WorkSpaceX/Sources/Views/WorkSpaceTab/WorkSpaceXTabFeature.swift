@@ -41,6 +41,7 @@ struct WorkSpaceXTabFeature {
         var homeState = WorkSpaceListFeature.State()
         var ifNoneSpace = true
         @Presents var alert: AlertState<Action.Alert>?
+        var sideMenuOpen = false
     }
     
     enum Action {
@@ -64,9 +65,11 @@ struct WorkSpaceXTabFeature {
             case refreshTokkenDead
         }
         case alert(PresentationAction<Alert>)
+        case showSideMenu(Bool)
     }
     
     var body: some ReducerOf<Self> {
+    
         
         Scope(state: \.makeSpaceViewState, action: \.ifNeedMakeWorkSpace) {
             WorkSpaceEmptyListFeature()
@@ -97,7 +100,7 @@ struct WorkSpaceXTabFeature {
                 
 
             case .appear:
-    
+                
                 return .run { send in
                     let result = try await workSpaceRepo.findMyWordSpace()
                     print("현재 스페이스 갯수")
@@ -145,6 +148,9 @@ struct WorkSpaceXTabFeature {
             case .delegate:
                 
                 return .none
+            case let .showSideMenu(bool):
+                state.sideMenuOpen = bool
+                return .none
             }
         }
         .ifLet(\.$alert, action: \.alert)
@@ -166,4 +172,18 @@ extension AlertState where Action == WorkSpaceXTabFeature.Action.Alert {
         TextState("로그인 시간이 만료되어 재로그인이 필요합니다 ㅠㅠ")
     }
 
+}
+
+
+extension AlertState where Action == RootFeature.Action.Alert {
+    
+    static let refreshDeadAlert = Self {
+        TextState("재 로그인 필요")
+    } actions: {
+        ButtonState(role: .destructive, action: .refreshTokkenDead) {
+            TextState("확인")
+        }
+    } message: {
+        TextState("로그인 시간이 만료되어 재로그인이 필요합니다 ㅠㅠ")
+    }
 }

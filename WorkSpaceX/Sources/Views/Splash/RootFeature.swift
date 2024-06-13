@@ -23,6 +23,7 @@ struct RootFeature {
         var workWpaceFirstViewState: WorkSpaceFirstStartFeature.State?
         var OnboardingViewState: OnboardingFeature.State?
         var workSpaceTabViewState: WorkSpaceXTabFeature.State?
+        @Presents var alert: AlertState<Action.Alert>?
     }
     
     enum loginState {
@@ -37,6 +38,12 @@ struct RootFeature {
         case sendToWorkSpaceStart(WorkSpaceFirstStartFeature.Action)
         case sendToOnboardingView(OnboardingFeature.Action)
         case sendToWorkSpaceTab(WorkSpaceXTabFeature.Action)
+        
+        @CasePathable
+        enum Alert {
+            case refreshTokkenDead
+        }
+        case alert(PresentationAction<Alert>)
     }
     
     var body: some ReducerOf<Self> {
@@ -45,6 +52,8 @@ struct RootFeature {
         Reduce {state, action in
             switch action {
             case .onAppear :
+                
+                
                 if let _ = UserDefaultsManager.accessToken {
                     if UserDefaultsManager.isFirstUser {
                         state.workWpaceFirstViewState = WorkSpaceFirstStartFeature.State()
@@ -88,6 +97,15 @@ struct RootFeature {
                 return .none
             case .sendToWorkSpaceTab:
                 return .none
+                
+            case .alert(.dismiss):
+                return .none
+                
+            case .alert(.presented(.refreshTokkenDead)):
+                
+                return .run { send in
+                    await send(.onAppear)
+                }
             }
         }
         .ifLet(\.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
@@ -99,8 +117,17 @@ struct RootFeature {
         .ifLet(\.workSpaceTabViewState, action: \.sendToWorkSpaceTab) {
             WorkSpaceXTabFeature()
         }
+        .ifLet(\.$alert, action: \.alert)
     }
     
 }
 
-
+/*
+ NotificationCenter.default.addObserver(
+     forName: .ifNeedReChack,
+     object: nil,
+     queue: .main) { _ in
+         print("한번씩만...")
+         store.send(.onAppear)
+     }
+ */

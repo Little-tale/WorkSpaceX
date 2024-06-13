@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class UserRealmModel: Object {
+class UserRealmModel: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var userID: String // 서버에서 주는 아이덴티 키를 사용해야함.
     @Persisted var email: String
     @Persisted var nickName: String
