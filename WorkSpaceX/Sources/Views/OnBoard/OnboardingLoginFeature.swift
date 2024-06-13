@@ -43,8 +43,6 @@ struct OnboardingLoginFeature {
 //        case kakaoLoginResult(Result<UserEntity, UserDomainError>)
 //        case kakaoLoginErrorHandler(KakaoLoginAPIError)
         
-        
-        
         case appleLoginFinish(UserEntity)
         case kakaoLoginFinish(UserEntity)
     }
@@ -82,6 +80,7 @@ struct OnboardingLoginFeature {
                         }
                     } else {
                         await send(.errorMessage(messgage: APIError.Unkonwn))
+                        print(error)
                     }
             
                 }

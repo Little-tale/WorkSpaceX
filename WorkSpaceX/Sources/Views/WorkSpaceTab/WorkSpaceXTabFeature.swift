@@ -29,6 +29,7 @@ struct WorkSpaceXTabFeature {
         }
     }
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+    @Dependency(\.userDomainRepository) var userDominRepo
     
     @ObservableState
     struct State: Equatable {
@@ -100,6 +101,10 @@ struct WorkSpaceXTabFeature {
                     dump(result)
                     await send(.delegate(.currentSpaces(result)))
                     
+                    let profile = try await userDominRepo.myProfile()
+                    
+                    print("프로필 조회임~ ",profile)
+                    
                 } catch: { error, send in
                     if let error = error as? WorkSpaceMeError {
                         if error.ifReFreshDead {
@@ -111,8 +116,16 @@ struct WorkSpaceXTabFeature {
                         } else {
                             print(error)
                         }
+                    } else if let error = error as? MyProfileAPIError {
+                        if error.ifReFreshDead {
+                            print(error)
+                            await send(.refreshDead)
+                        }
+                        if let error = error.ifCommonError {
+                            print("프로필 조회 에러",error)
+                        }
                     } else {
-                        print(error)
+                        print("별개의 에러",error)
                     }
                 }
                 

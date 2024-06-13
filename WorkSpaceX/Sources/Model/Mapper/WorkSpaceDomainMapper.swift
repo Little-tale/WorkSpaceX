@@ -7,17 +7,15 @@
 
 import Foundation
 
-struct WorkSpaceDomainMapper {
+struct WorkSpaceDomainMapper: Mapper {
    
     func toWorkSpaceModel(model: WorkSpaceDTO) -> WorkSpaceEntity {
-        
-        let urlString = APIKey.baseURL + APIKey.version + model.coverImage
         
         return WorkSpaceEntity(
             workSpaceID: model.workspace_id,
             name: model.name,
             description: model.description,
-            coverImage: URL(string: urlString),
+            coverImage: mappingToURL(with: model.coverImage),
             ownerID: model.owner_id,
             createdAt: model.createdAt
         )

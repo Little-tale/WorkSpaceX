@@ -15,5 +15,5 @@ struct UserEntity: Entity {
     let phone: String
     let provider: String?
     let createdAt: String
-    let token: TokenModel
+    let token: TokenModel?
 }

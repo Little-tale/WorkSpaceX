@@ -14,6 +14,7 @@ enum UserDomainRouter: Router {
     case kakaoLogin(KakaoLoginDTORequest)
     case emailLogin(LoginRequestDTO)
     case appleLoginRegister(AppleLoginDTORequest)
+    case myProfile
 }
 extension UserDomainRouter {
     
@@ -21,6 +22,8 @@ extension UserDomainRouter {
         switch self {
         case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister:
             return .post
+        case .myProfile:
+            return .get
         }
     }
     
@@ -36,19 +39,21 @@ extension UserDomainRouter {
             return APIKey.version + "/users/login"
         case .appleLoginRegister:
             return APIKey.version + "/users/login/apple"
+        case .myProfile:
+            return APIKey.version + "/users/me"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister:
+        case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister, .myProfile:
             return nil
         }
     }
     
     var parameters: Parameters? {
         switch self {
-        case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister:
+        case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister, .myProfile:
             return nil
         }
     }
@@ -70,6 +75,9 @@ extension UserDomainRouter {
         case let .appleLoginRegister(appleLogin):
             print(appleLogin)
             return requestToBody(appleLogin)
+            
+        case .myProfile:
+            return nil
         }
     }
     
@@ -77,6 +85,8 @@ extension UserDomainRouter {
         switch self {
         case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister:
             return .json
+        case .myProfile:
+            return .url
         }
     }
 }

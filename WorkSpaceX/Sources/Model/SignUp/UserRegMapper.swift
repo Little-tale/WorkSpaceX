@@ -8,7 +8,7 @@
 import Foundation
 import AuthenticationServices
 
-struct UserRegMapper {
+struct UserRegMapper: Mapper {
     
     func toEntity(_ userDTO: UserDTO) -> UserEntity {
         
@@ -31,6 +31,21 @@ struct UserRegMapper {
         )
         return entity
     }
+    
+    func toEntityProfile(_ profileDTO: UserProfileDTO) -> UserEntity {
+        let entity = UserEntity(
+            userID: profileDTO.userID,
+            email: profileDTO.email,
+            nickname: profileDTO.nickname,
+            profileImage: profileDTO.profileImage,
+            phone: profileDTO.phone ?? "" ,
+            provider: profileDTO.provider,
+            createdAt: profileDTO.createdAt,
+            token: nil
+        )
+        return entity
+    }
+    
 }
 
 extension UserRegMapper {
