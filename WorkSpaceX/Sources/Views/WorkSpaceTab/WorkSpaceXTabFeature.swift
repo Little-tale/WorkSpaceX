@@ -55,7 +55,6 @@ struct WorkSpaceTabCoordinator {
         
         @Presents var alert: AlertState<Action.Alert>?
         
-        
     }
     
     enum Action: BindableAction {

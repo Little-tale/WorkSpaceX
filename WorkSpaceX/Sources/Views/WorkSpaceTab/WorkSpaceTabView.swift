@@ -29,10 +29,10 @@ struct WorkSpaceTabView: View {
                 } else {
                     TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
                         
-//                        WorkSpaceListCoordinatorView(
-//                            store: store.scope(
-//                                state: \.homeState, action: \.homeTabbar)
-//                        )
+                        WorkSpaceListCoordinatorView(
+                            store: store.scope(
+                                state: \.homeState, action: \.homeTabbar)
+                        )
                         /*
                          WorkSpaceListView(
                              store: store.scope(state: \.homeState, action: \.homeTabbar)

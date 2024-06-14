@@ -11,17 +11,27 @@ import TCACoordinators
 
 struct WorkSpaceListCoordinatorView: View {
     
-    @State var store: StoreOf<WorkSpaceListCordinator>
-    
+    @Perception.Bindable var store: StoreOf<WorkSpaceListCordinator>
+
     var body: some View {
         WithPerceptionTracking {
-            //        TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
-            //            switch screen.case {
-            //            case let .home(store):
-            //                WorkSpaceListView(store: store)
-            //            }
-            //        }
+            TCARouter(store.scope(state: \.identeRoutes, action: \.router)) { screen in
+                
+                switch screen.case {
+                    
+                case let .rootScreen(store):
+                    WorkSpaceListView(store: store)
+                }
+            }
         }
     }
 }
 
+extension WorkSpaceListScreens.State: Identifiable {
+    var id: UUID {
+        switch self {
+        case let .rootScreen(state):
+            return state.id
+        }
+    }
+}

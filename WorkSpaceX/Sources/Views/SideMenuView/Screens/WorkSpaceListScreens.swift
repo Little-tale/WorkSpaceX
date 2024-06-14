@@ -8,7 +8,4 @@
 import Foundation
 import ComposableArchitecture
 
-@Reducer(state: .equatable)
-enum WorkSpaceListScreens {
-    case first(WorkSpaceListFeature)
-}
+

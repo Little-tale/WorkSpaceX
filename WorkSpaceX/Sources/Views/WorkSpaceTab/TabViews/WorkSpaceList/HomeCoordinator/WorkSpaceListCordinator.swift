@@ -9,16 +9,21 @@ import Foundation
 import ComposableArchitecture
 import TCACoordinators
 
+@Reducer(state: .equatable)
+enum WorkSpaceListScreens {
+    case rootScreen(WorkSpaceListFeature)
+}
+
 @Reducer
 struct WorkSpaceListCordinator {
     
     @ObservableState
     struct State: Equatable {
         static let initialState = State(
-            routes: [.root(.first(WorkSpaceListFeature.State()), embedInNavigationView: true)]
+            identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State()), embedInNavigationView: true)]
         )
         
-        var routes: IdentifiedArrayOf<Route<WorkSpaceListScreens.State>>
+        var identeRoutes: IdentifiedArrayOf<Route<WorkSpaceListScreens.State>>
     }
     
     enum Action {
@@ -32,20 +37,12 @@ struct WorkSpaceListCordinator {
             default:
                 break
                 
-               
             }
             return .none
         }
-        .forEachRoute(\.routes, action: \.router)
+        .forEachRoute(\.identeRoutes, action: \.router)
     }
     
 }
 
-extension WorkSpaceListScreens.State: Identifiable {
-    var id: UUID {
-        switch self {
-        case let .first(state):
-            return state.id
-        }
-    }
-}
+

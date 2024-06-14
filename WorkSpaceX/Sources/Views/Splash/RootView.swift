@@ -18,21 +18,20 @@ struct RootView: View {
                 
                 switch store.currentLoginState {
                 case .firstLogin:
-                    if let store = store.scope(state: \.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
+                    
+                    IfLetStore(store.scope(state: \.workWpaceFirstViewState, action: \.sendToWorkSpaceStart)) { store in
                         WorkSpaceFirstStartView(store: store)
-                    } else {
-                        ProgressView()
                     }
                 case .login:
+                    EmptyView()
                     
                     WorkSpaceTabView(store: store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab))
                     
 
                 case .logout:
-                    if let store = store.scope(state: \.OnboardingViewState, action: \.sendToOnboardingView) {
+                    
+                    IfLetStore(store.scope(state: \.OnboardingViewState, action: \.sendToOnboardingView)) { store in
                         OnboardingView(store: store)
-                    } else {
-                        ProgressView()
                     }
                 }
             }
@@ -84,3 +83,17 @@ struct RootView: View {
 //                        WorkSpaceTabCoordinator()
 //                    }))
 //                    EmptyView()
+
+/*
+ if let store = store.scope(state: \.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
+     WorkSpaceFirstStartView(store: store)
+ } else {
+     ProgressView()
+ }
+ 
+ if let store = store.scope(state: \.OnboardingViewState, action: \.sendToOnboardingView) {
+     OnboardingView(store: store)
+ } else {
+     ProgressView()
+ }
+ */
