@@ -12,8 +12,8 @@ import ComposableArchitecture
 struct WorkSpaceListFeature {
     
     @ObservableState
-    struct State: Equatable {
-        
+    struct State: Equatable, Identifiable {
+        var id = UUID()
     }
     enum isCurrent {
         case empty

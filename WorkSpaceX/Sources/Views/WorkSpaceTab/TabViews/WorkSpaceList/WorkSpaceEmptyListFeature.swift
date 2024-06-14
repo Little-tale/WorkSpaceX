@@ -22,6 +22,7 @@ struct WorkSpaceEmptyListFeature {
         case startButtonTapped
         case sendWorkSpaceInit(PresentationAction<WorkSpaceInitalFeature.Action>)
         case regSuccess
+        case openSideMenu
     }
     
     var body: some ReducerOf<Self> {
@@ -40,6 +41,9 @@ struct WorkSpaceEmptyListFeature {
                 }
                 
             case .sendWorkSpaceInit:
+                return .none
+                
+            case .openSideMenu:
                 return .none
                 
             case .regSuccess:

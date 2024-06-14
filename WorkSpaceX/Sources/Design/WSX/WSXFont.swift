@@ -11,6 +11,8 @@ enum WSXFont {}
 
 extension WSXFont {
     
+    static let bigTitle3: Font = .system(size: 26, weight: .bold, design: .default)
+    
     static let title0: Font = .system(size: 24, weight: .bold, design: .default)
     
     static let title1: Font = .system(size: 22, weight: .bold, design: .default)

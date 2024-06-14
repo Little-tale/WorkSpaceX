@@ -24,16 +24,16 @@ struct RootView: View {
                         ProgressView()
                     }
                 case .login:
-                    IfLetStore(store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab)) { store in
-                        WorkSpaceTabView(store: store)
-                    }
+                    
+                    WorkSpaceTabView(store: store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab))
+                    
+
                 case .logout:
                     if let store = store.scope(state: \.OnboardingViewState, action: \.sendToOnboardingView) {
                         OnboardingView(store: store)
                     } else {
                         ProgressView()
                     }
-                    
                 }
             }
             .onAppear {
@@ -62,3 +62,25 @@ struct RootView: View {
  OnboardingFeature()
  }
  */
+//                    IfLetStore(store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab)) { store in
+//                        WorkSpaceListCoordinatorView(store: store)
+//                    }
+//                    EmptyView()
+//                    WorkSpaceListCoordinatorView(store: store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab))
+//                    WorkSpaceListCoordinatorView(store: Store(initialState: .initialState, reducer: {
+//                        WorkSpaceTabCoordinator()
+//                    }))
+
+
+
+//                    WorkSpaceTabView(
+//                        store: Store(
+//                            initialState: .initialState,
+//                            reducer: {
+//                                WorkSpaceTabCoordinator()
+//                            }
+//                        ))
+//                    WorkSpaceTabView(store: Store(initialState: WorkSpaceTabCoordinator.State(), reducer: {
+//                        WorkSpaceTabCoordinator()
+//                    }))
+//                    EmptyView()

@@ -47,7 +47,9 @@ extension NetworkManager {
                 
                 print("네트워크 에러코드 :", errorResponse.errorCode)
                 let errorCode = errorResponse.errorCode
-            
+                if errorCode == CommonError.refreshDead.rawValue {
+                    RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                }
                 let errorInstance = errorType.makeErrorType(from: errorResponse.errorCode)
                 
                 throw errorInstance

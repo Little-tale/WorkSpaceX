@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct WorkSpaceListView: View {
     
-    @Perception.Bindable var store: StoreOf<WorkSpaceListFeature>
+   // @Perception.Bindable var store: StoreOf<WorkSpaceListFeature>
     
     var body: some View {
         WithPerceptionTracking {
@@ -21,8 +21,8 @@ struct WorkSpaceListView: View {
 }
 
 
-#Preview {
-    WorkSpaceListView(store: Store(initialState: WorkSpaceListFeature.State(), reducer: {
-        WorkSpaceListFeature()
-    }))
-}
+//#Preview {
+//    WorkSpaceListView(store: Store(initialState: WorkSpaceListFeature.State(), reducer: {
+//        WorkSpaceListFeature()
+//    }))
+//}

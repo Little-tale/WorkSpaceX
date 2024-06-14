@@ -71,7 +71,7 @@ struct RealmRepository: RealmRepositoryType {
 
 
 extension RealmRepository {
-    
+    /// 유저 프로필 정보를 생성하거나 덮어씌웁니다.
     func upsertUserModel(response: UserEntity) {
         print("유저 정보 저장중.....")
         do {
@@ -91,6 +91,31 @@ extension RealmRepository {
             return
         }
     }
+   
+    
+    /// 워크스페이스를 등록하거나 덮어 씌웁니다.
+    func upsertWorkSpace(response: WorkSpaceEntity) {
+        print("워크 스페이스 저장중 ....")
+        do {
+            try realm?.write{
+                realm?.create(WorkSpaceRealmModel.self, value: [
+                    "workSpaceID" : response.workSpaceID,
+                    "workSpaceName" : response.name,
+                    "introduce" : response.description as Any,
+                    "coverImage" : response.coverImage?.absoluteString as Any,
+                    "ownerID" : response.ownerID,
+                    "createdAt" : response.createdAt
+                ], update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func upsertWorkSpaces(responses: [WorkSpaceEntity]) {
+        responses.forEach { upsertWorkSpace(response: $0) }
+    }
+    
 }
 
 extension RealmRepository: DependencyKey {

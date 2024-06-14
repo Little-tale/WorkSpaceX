@@ -57,7 +57,7 @@ struct WorkSpaceEmptyListView: View {
                             .font(WSXFont.title1)
                             .foregroundGrdientTo(gradient: WSXColor.titleGradient)
                             .asButton {
-                                
+                                store.send(.openSideMenu)
                             }
                     }
                     ToolbarItem(placement: .topBarTrailing) {

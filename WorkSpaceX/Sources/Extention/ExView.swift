@@ -42,4 +42,13 @@ extension View {
                 .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
         }
     }
+    
+    func sideOverlay() -> some View {
+        
+        GeometryReader { geometry in
+            self
+                .frame(width: geometry.size.width / 2)
+        }
+        
+    }
 }

@@ -20,7 +20,7 @@ struct SideMenuView<RenderView: View> : View {
     var body: some View {
         ZStack(alignment: .leading) {
             if isShowing {
-                WSXColor.white
+                WSXColor.black.opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture {
                         isShowing.toggle()
