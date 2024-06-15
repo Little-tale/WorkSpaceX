@@ -61,7 +61,7 @@ struct WorkSpaceTabView: View {
                     .tint(WSXColor.black)
                     
                 }
-                //                SideMenu()
+                SideMenu()
             }
             .onAppear {
                 print("????? 왜? ")
@@ -73,12 +73,14 @@ struct WorkSpaceTabView: View {
     }
     
     
-    //    private func SideMenu() -> some View {
-    //        SideMenuView(isShowing: $store.sideMenuOpen.sending(\.showSideMenu), direction: .leading) {
-    //            WorkSpaceSideView(store: store.scope(state: \.sidebarState, action: \.sideMenuAction), isShowing: $store.sideMenuOpen.sending(\.showSideMenu))
-    //            .frame(width: UIScreen.main.bounds.width * 0.8)
-    //        }
-    //    }
+    private func SideMenu() -> some View {
+        SideMenuView(isShowing: $store.sideMenuOpen.sending(\.sideMenuMake), direction: .leading) {
+            IfLetStore(store.scope(state: \.sideMenuState, action: \.sideMenuCoordiAction)) { store in
+                SideMenuCoordinatorView(store: store)
+            }
+            .frame(width: UIScreen.main.bounds.width * 0.8)
+        }
+    }
 }
 
 //#Preview {

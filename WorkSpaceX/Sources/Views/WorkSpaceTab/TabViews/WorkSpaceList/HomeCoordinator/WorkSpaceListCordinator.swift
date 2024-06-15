@@ -34,6 +34,7 @@ struct WorkSpaceListCordinator {
         Reduce { state, action in
             switch action {
                 
+                
             default:
                 break
                 

@@ -13,9 +13,6 @@ struct WorkSpaceSideView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceSideFeature>
     
-    @Binding
-    var isShowing: Bool
-    
     @ObservedResults(WorkSpaceRealmModel.self) 
     var workSpaceModel
     
@@ -31,7 +28,7 @@ struct WorkSpaceSideView: View {
                         .padding(.horizontal, 10)
                         .asButton {
                              // 뒤로가기 액션 줄 예정
-                            isShowing.toggle()
+                            store.send(.goBackToRoot)
                         }
                     
                     Text("WorkSpace X")
@@ -45,10 +42,10 @@ struct WorkSpaceSideView: View {
                 Spacer()
             }
             .onAppear {
-    //            store.send(.onAppear(workSpaceModel))
+                store.send(.onAppear(workSpaceModel))
             }
             .onChange(of: workSpaceModel) { newValue in
-    //            store.send(.onAppear(workSpaceModel))
+                store.send(.onAppear(workSpaceModel))
             }
         }
         

@@ -14,12 +14,14 @@ struct WorkSpaceSideFeature {
     
     @ObservableState
     struct State: Equatable {
+        var id = UUID()
         var currentCase: viewCase = .empty
         
     }
     
     enum Action {
         case onAppear(Results<WorkSpaceRealmModel>)
+        case goBackToRoot
     }
     
     enum viewCase {
@@ -35,10 +37,11 @@ struct WorkSpaceSideFeature {
             switch action {
                 
             case let .onAppear(models):
-                
-                return .none
+                print("사이드 매뉴 입장",models)
+            default:
+                break
             }
-            
+            return .none
             
         }
         

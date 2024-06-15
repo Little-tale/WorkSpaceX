@@ -40,15 +40,11 @@ struct WorkSpaceEmptyListFeature {
                     await send(.regSuccess)
                 }
                 
-            case .sendWorkSpaceInit:
-                return .none
-                
-            case .openSideMenu:
-                return .none
-                
-            case .regSuccess:
-                return .none
+            default :
+                break
             }
+            
+            return .none
         }
         .ifLet(\.$worSpaceIniter, action: \.sendWorkSpaceInit) {
             WorkSpaceInitalFeature()

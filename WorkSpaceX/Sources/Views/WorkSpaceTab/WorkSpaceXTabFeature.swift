@@ -48,12 +48,13 @@ struct WorkSpaceTabCoordinator {
         var ifNoneSpace = true
         
         var sideMenuOpen = false
-        //        var sidebarState = WorkSpaceSideFeature.State()
         
         // 만약 워크 스페이스가 없을시
         var makeSpaceViewState = WorkSpaceEmptyListFeature.State()
         
         @Presents var alert: AlertState<Action.Alert>?
+        
+        var sideMenuState: SideMenuCoordinator.State?
         
     }
     
@@ -76,6 +77,10 @@ struct WorkSpaceTabCoordinator {
             case refreshTokkenDead
         }
         case alert(PresentationAction<Alert>)
+        
+        case sideMenuCoordiAction(SideMenuCoordinator.Action)
+        case sideMenuMake(Bool)
+    
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -91,11 +96,6 @@ struct WorkSpaceTabCoordinator {
             WorkSpaceEmptyListFeature()
         }
         
-        //        /// 사이드바 스테이트
-        //        Scope(state: \.sidebarState, action: \.sidebar) {
-        //            WorkSpaceSideFeature()
-        //        }
-        
         //        // 홈 탭바의 스태이트
         Scope(state: \.homeState, action: \.homeTabbar) {
             WorkSpaceListCordinator()
@@ -108,9 +108,17 @@ struct WorkSpaceTabCoordinator {
             case let .tabSelected(tab):
                 state.selectedTab = tab
                 
-            case .ifNeedMakeWorkSpace:
+            case .ifNeedMakeWorkSpace(.openSideMenu):
+                return .run { send in
+                    await send(.sideMenuMake(true))
+                }
                 
-                return .none
+            case let .sideMenuMake(bool):
+                if bool {
+                    state.sideMenuState = .selfInit
+                } else { state.sideMenuState = nil }
+                state.sideMenuOpen = bool
+
                 
             case .onAppear:
                 print("????? 왜? 2")
@@ -142,6 +150,7 @@ struct WorkSpaceTabCoordinator {
                         print("별개의 에러",error)
                     }
                 }
+                
             case let .saveRealmOfProfile(user):
                 realmeRepo.upsertUserModel(response: user)
                 return .none
@@ -155,15 +164,24 @@ struct WorkSpaceTabCoordinator {
                 }
                 return .none
                 
-            case let .showEmptyView( bool):
+            case let .showEmptyView(bool):
                 state.ifNoneSpace = bool
                 return .none
+                
+            case .sideMenuCoordiAction(.backOff):
+                return .run{ send in
+                    await send(.sideMenuMake(false))
+                }
+            
                 
             default:
                 break
             }
             
             return .none
+        }
+        .ifLet(\.sideMenuState, action: \.sideMenuCoordiAction) {
+            SideMenuCoordinator()
         }
         .ifLet(\.$alert, action: \.alert)
     }
