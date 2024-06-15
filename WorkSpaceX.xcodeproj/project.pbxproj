@@ -313,6 +313,13 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		7B26D1E72C1DCDD100BC9912 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7B2EEE032C10C3680024853C /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -697,6 +704,7 @@
 		7B8FD6242C1AA49000948E7C /* SideMenuView */ = {
 			isa = PBXGroup;
 			children = (
+				7B26D1E72C1DCDD100BC9912 /* Views */,
 				7B26D1942C1C51A000BC9912 /* Screens */,
 				7B8FD6252C1AA49C00948E7C /* SideMenuView.swift */,
 				7B8FD64E2C1BEB9900948E7C /* WorkSpaceSideView.swift */,

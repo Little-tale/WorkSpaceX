@@ -12,42 +12,77 @@ import RealmSwift
 struct WorkSpaceSideView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceSideFeature>
-    
+
     @ObservedResults(WorkSpaceRealmModel.self) 
     var workSpaceModel
     
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                HStack {
-                    WSXImage.logoImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.horizontal, 10)
-                        .asButton {
-                             // 뒤로가기 액션 줄 예정
-                            store.send(.goBackToRoot)
-                        }
-                    
-                    Text("WorkSpace X")
-                        .font(WSXFont.bigTitle3)
-                        .foregroundGrdientTo(gradient: WSXColor.titleGradient)
-                    Spacer()
-                }
-                .padding(.top, 60)
-                .padding(.bottom, 10)
-                .background ( WSXColor.lightGray)
+                fakeNavigation()
+                contentView()
+                    .onAppear{                store.send(.onAppear(workSpaceModel))
+                    }
                 Spacer()
             }
-            .onAppear {
-                store.send(.onAppear(workSpaceModel))
-            }
-            .onChange(of: workSpaceModel) { newValue in
-                store.send(.onAppear(workSpaceModel))
-            }
         }
-        
+    }
+}
+
+extension WorkSpaceSideView {
+    
+    @ViewBuilder
+    private func contentView() -> some View {
+        switch store.currentCase {
+        case .loading:
+            ProgressView()
+        case .empty:
+                VStack {
+                    Spacer()
+                    Text("워크스페이스를\n찾을 수 없어요.")
+                        .font(WSXFont.title0)
+                    
+                    Text("관리자에게 초대를 요청하거나,\n다른이메일로 시도하거나\n새로운 워크스페이스를 생성해주세요.")
+                    
+                    Text("워크스페이스 생성")
+                        .font(WSXFont.title2)
+                        .foregroundStyle(WSXColor.white)
+                        .modifier(CommonButtonModifer())
+                        .background(WSXColor.green)
+                        .asButton {
+                            store.send(.sendToMakeWorkSpace)
+                        }
+                        .padding(.horizontal, 20)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    Spacer()
+            }
+        case .over:
+            Text("무언가 있을 예정")
+        }
+    }
+}
+
+// 가짜 네비
+extension WorkSpaceSideView {
+    func fakeNavigation() -> some View {
+        HStack {
+            WSXImage.logoImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 40, height: 40)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal, 10)
+                .asButton {
+                    store.send(.goBackToRoot)
+                }
+            
+            Text("WorkSpace X")
+                .font(WSXFont.bigTitle3)
+                .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+            Spacer()
+        }
+        .padding(.top, 60)
+        .padding(.bottom, 10)
+        .background ( WSXColor.lightGray)
     }
 }

@@ -15,7 +15,6 @@ struct RootView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                
                 switch store.currentLoginState {
                 case .firstLogin:
                     
@@ -49,6 +48,9 @@ struct RootView: View {
                 print("감시해제")
                 NotificationCenter.default.removeObserver(self, name: .refreshTokenDead, object: nil)
             }
+            .alert($store.scope(
+                state: \.alert, action: \.alert)
+            )
         }
     }
 }

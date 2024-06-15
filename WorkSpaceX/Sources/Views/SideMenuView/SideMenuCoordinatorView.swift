@@ -16,14 +16,14 @@ struct SideMenuCoordinatorView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            
+           
             TCARouter(store.scope(state: \.routes, action: \.router)) { screen in
                 switch screen.case {
                 case let .base(store):
                     WorkSpaceSideView(store: store)
                 }
             }
-            
+           
         }
     }
 }

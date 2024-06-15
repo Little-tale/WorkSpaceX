@@ -75,10 +75,10 @@ struct WorkSpaceTabView: View {
     
     private func SideMenu() -> some View {
         SideMenuView(isShowing: $store.sideMenuOpen.sending(\.sideMenuMake), direction: .leading) {
-            IfLetStore(store.scope(state: \.sideMenuState, action: \.sideMenuCoordiAction)) { store in
-                SideMenuCoordinatorView(store: store)
+            IfLetStore(store.scope(state: \.sideMenuState, action: \.sidebar)) { store in
+                WorkSpaceSideView(store: store)
+                    .frame(width: UIScreen.main.bounds.width * 0.8)
             }
-            .frame(width: UIScreen.main.bounds.width * 0.8)
         }
     }
 }
