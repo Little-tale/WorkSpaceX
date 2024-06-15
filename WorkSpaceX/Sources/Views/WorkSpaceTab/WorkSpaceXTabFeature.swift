@@ -32,17 +32,17 @@ struct WorkSpaceTabCoordinator {
     @ObservableState
     struct State: Equatable {
         
-//        static let initalState = State(
-//            selectedTab: .home,
-//            homeState: .initialState
-//        )
+        static let initalState = State(
+            selectedTab: .home,
+            homeState: .initialState
+        )
         
-        var selectedTab: Tab = .home
+        var selectedTab: Tab
         // sidebar State
 
         
         // HOME STATE
-        var homeState: WorkSpaceListCordinator.State = .initialState
+        var homeState: WorkSpaceListCordinator.State
         
         
         var ifNoneSpace = true

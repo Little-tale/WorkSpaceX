@@ -23,10 +23,10 @@ struct RootView: View {
                         WorkSpaceFirstStartView(store: store)
                     }
                 case .login:
-                    EmptyView()
-                    
-                    WorkSpaceTabView(store: store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab))
-                    
+                        
+                    IfLetStore(store.scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab)) { store in
+                        WorkSpaceTabView(store: store)
+                    }
 
                 case .logout:
                     
