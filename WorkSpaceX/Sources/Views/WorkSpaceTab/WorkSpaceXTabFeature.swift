@@ -194,6 +194,8 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                     await send(.workSpaceRegSuccess)
                 }
+            case .workSpaceRegSuccess:
+                return .run { send in await send(.onAppear) }
                 
             default:
                 break

@@ -36,7 +36,7 @@ struct WorkSpaceSideView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical, 10)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 20)
                 
                 Spacer()
             }
@@ -56,19 +56,22 @@ extension WorkSpaceSideView {
                     Spacer()
                     Text("워크스페이스를\n찾을 수 없어요.")
                         .font(WSXFont.title0)
+                        .multilineTextAlignment(.center)
                     
                     Text("관리자에게 초대를 요청하거나,\n다른이메일로 시도하거나\n새로운 워크스페이스를 생성해주세요.")
-                    
+                        .font(WSXFont.body)
+                        .multilineTextAlignment(.center)
+                        .padding(.vertical, 12)
                     Text("워크스페이스 생성")
                         .font(WSXFont.title2)
                         .foregroundStyle(WSXColor.white)
                         .modifier(CommonButtonModifer())
                         .background(WSXColor.green)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                         .asButton {
                             store.send(.sendToMakeWorkSpace)
                         }
                         .padding(.horizontal, 20)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     Spacer()
             }
         case .over:
@@ -84,9 +87,11 @@ extension WorkSpaceSideView {
             WSXImage.plus
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 20, height: 20)
+                .frame(width: 18, height: 18)
                 .padding(.horizontal, 10)
+                .padding(.leading, 8)
             Text("워크 스페이스 추가")
+                .font(WSXFont.body)
             Spacer()
         }
     }
@@ -96,9 +101,11 @@ extension WorkSpaceSideView {
             WSXImage.help
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 20, height: 20)
+                .frame(width: 18, height: 18)
                 .padding(.horizontal, 10)
+                .padding(.leading, 8)
             Text("도움말")
+                .font(WSXFont.body)
             Spacer()
         }
     }
