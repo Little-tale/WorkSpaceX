@@ -51,8 +51,6 @@ struct WorkSpaceSideFeature {
                 } else {
                     state.currentCase = .over
                 }
-            
-                
             default:
                 break
             }

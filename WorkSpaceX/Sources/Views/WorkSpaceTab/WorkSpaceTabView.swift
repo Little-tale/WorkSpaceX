@@ -68,7 +68,9 @@ struct WorkSpaceTabView: View {
                 store.send(.onAppear)
             }
             .alert($store.scope(state: \.alert, action: \.alert))
-            
+            .sheet(item: $store.scope(state: \.makeWorkSpaceState, action: \.sendWorkSpaceMakeAction)) { store in
+                WorkSpaceInitalView(store: store)
+            }
         }
     }
     

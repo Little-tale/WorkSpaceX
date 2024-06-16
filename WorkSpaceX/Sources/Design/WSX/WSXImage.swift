@@ -31,4 +31,8 @@ extension WSXImage {
     static let homeImage: Image = Image(.home)
     
     static let emptyImage: Image = Image(.empty)
+    
+    static let plus: Image = Image(.plus)
+    
+    static let help: Image = Image(.help)
 }

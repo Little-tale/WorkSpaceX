@@ -56,6 +56,9 @@ struct WorkSpaceTabCoordinator {
         
         var sideMenuState: WorkSpaceSideFeature.State?
         
+        // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
+        @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
+        
     }
     
     enum Action: BindableAction {
@@ -81,6 +84,9 @@ struct WorkSpaceTabCoordinator {
         // case sideMenuCoordiAction(SideMenuCoordinator.Action)
         case sideMenuMake(Bool)
         
+        case sendWorkSpaceMakeAction(PresentationAction<WorkSpaceInitalFeature.Action>)
+        case makeWorkSpaceStart
+        case workSpaceRegSuccess
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -173,12 +179,20 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                     await send(.sideMenuMake(false))
                     try await Task.sleep(for: .seconds(0.3))
-                    await send(.ifNeedMakeWorkSpace(.startButtonTapped))
+                    await send(.makeWorkSpaceStart)
                 }
+            case .makeWorkSpaceStart:
+                state.makeWorkSpaceState = WorkSpaceInitalFeature.State()
                
             case .sidebar(.goBackToRoot):
                 return .run{ send in
                     await send(.sideMenuMake(false))
+                }
+                
+            case .sendWorkSpaceMakeAction(.presented(.regSuccess)):
+                
+                return .run { send in
+                    await send(.workSpaceRegSuccess)
                 }
                 
             default:
@@ -186,6 +200,9 @@ struct WorkSpaceTabCoordinator {
             }
             
             return .none
+        }
+        .ifLet(\.$makeWorkSpaceState, action: \.sendWorkSpaceMakeAction) {
+            WorkSpaceInitalFeature()
         }
         .ifLet(\.sideMenuState, action: \.sidebar) {
             WorkSpaceSideFeature()

@@ -23,6 +23,21 @@ struct WorkSpaceSideView: View {
                 contentView()
                     .onAppear{                store.send(.onAppear(workSpaceModel))
                     }
+                workSpaceAddView()
+                    .asButton {
+                        store.send(.sendToMakeWorkSpace)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.vertical, 10)
+                
+                workSpaceHelpView()
+                    .asButton {
+                        
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.vertical, 10)
+                    .padding(.bottom, 10)
+                
                 Spacer()
             }
         }
@@ -60,6 +75,34 @@ extension WorkSpaceSideView {
             Text("무언가 있을 예정")
         }
     }
+}
+
+extension WorkSpaceSideView {
+    
+    func workSpaceAddView() -> some View {
+        HStack {
+            WSXImage.plus
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 20, height: 20)
+                .padding(.horizontal, 10)
+            Text("워크 스페이스 추가")
+            Spacer()
+        }
+    }
+    
+    func workSpaceHelpView() -> some View {
+        HStack {
+            WSXImage.help
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 20, height: 20)
+                .padding(.horizontal, 10)
+            Text("도움말")
+            Spacer()
+        }
+    }
+    
 }
 
 // 가짜 네비
