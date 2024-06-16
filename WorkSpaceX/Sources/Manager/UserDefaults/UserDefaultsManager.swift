@@ -19,6 +19,7 @@ enum UserDefaultsManager {
         case isfirstUser
         case userName
         case ifNeedChecked
+        case workSpaceSelectedID
         
         var value: String {
             return self.rawValue
@@ -48,4 +49,6 @@ enum UserDefaultsManager {
     
     @UserDefaultsWrapper(key: Key.ifNeedChecked.value, placeValue: false)
     static var ifNeedChecked: Bool
+    @UserDefaultsWrapper(key: Key.workSpaceSelectedID.value, placeValue: "")
+    static var workSpaceSelectedID: String 
 }

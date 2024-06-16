@@ -81,42 +81,55 @@ extension WorkSpaceSideView {
                     makeWorkSpaceListView(item)
                 }
             }
+            .listStyle(.plain)
         }
     }
 }
 
 extension WorkSpaceSideView {
     
-  
     private func makeWorkSpaceListView(_ model: WorkSpaceRealmModel) -> some View {
         HStack {
             Group {
                 if let image = model.coverImage,
                    let url = URL(string: image) {
                     DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
-                        
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                 } else {
                     EmptyView()
                 }
             }
             .frame(width: 50, height: 50)
+            .asButton {
+                store.send(.selectedModel(model))
+            }
             
-            VStack {
+            VStack(alignment: .leading) {
                 Text(model.workSpaceName)
+                    .font(WSXFont.title2)
                 Text(DateManager.shared.asDateToString(model.createdAt))
+                    .font(WSXFont.regu1)
+                    .foregroundStyle(WSXColor.black)
             }
             
             Spacer()
-            WSXImage.dots
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 20, height: 20)
-                .asButton {
-                    print(model)
-                }
+            
+            VStack (alignment: .trailing) {
+                WSXImage.dots
+                    .renderingMode(.template)
+                    .foregroundStyle(WSXColor.black)
+                    .padding(.vertical, 15)
+                    .padding(.leading, 10)
+            }
+            .onTapGesture {
+                print("도움말 시트")
+            }
         }
+        .padding(.all, 10)
+        .background(store.currentWorkSpaceID == model.workSpaceID ? WSXColor.green.opacity(0.1) : WSXColor.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-    
+
 }
 
 extension WorkSpaceSideView {

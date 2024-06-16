@@ -46,6 +46,7 @@ struct WorkSpaceInitalFeature {
     
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.workspaceDomainRepository) var repository
+    @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -116,6 +117,8 @@ struct WorkSpaceInitalFeature {
                     let result = try await repository.regWorkSpaceReqeust(request)
                     
                     await send(.regSuccess(result))
+                    await self.dismiss()
+                    
                 } catch : { error, send in
                     if let error = error as? MakeWorkSpaceAPIError {
                         await send(.regFaileHandler(error))
@@ -137,11 +140,13 @@ struct WorkSpaceInitalFeature {
                 return .none
                 
             case .regSuccess(let model):
+                realmRepo.upsertWorkSpace(response: model)
                 print("success 이여야!")
                 dump(model)
                 state.showPrograssView = false
                 state.successMessage = "등록 완료 되었습니다."
-                return .run { send in await send(.goRootCheck) }
+                
+                return .none
                 
             case .showLogoutAlert:
                 state.logOutAlertState = AlertState {

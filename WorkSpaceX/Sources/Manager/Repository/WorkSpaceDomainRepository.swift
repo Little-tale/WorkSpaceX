@@ -23,6 +23,8 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
             let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(reqeustDTO, randomBoundary: MultipartFormData.randomBoundary()), errorType: MakeWorkSpaceAPIError.self)
             
+            UserDefaultsManager.workSpaceSelectedID = result.workspace_id
+            
             let entity = workSpaceMapper.toWorkSpaceModel(
                 model: result
             )

@@ -21,7 +21,7 @@ struct WorkSpaceSideFeature {
         var currentCase: viewCase = .loading
         var currentCount = 0
         var currentModels:[WorkSpaceRealmModel] = []
-        
+        var currentWorkSpaceID: String = "EMPTY"
     }
     
     @Dependency(\.realmRepository) var realmRepo
@@ -32,6 +32,9 @@ struct WorkSpaceSideFeature {
         case checkCount
         case sendToMakeWorkSpace
         case currentModelCatch([WorkSpaceRealmModel])
+        case selectedModel(WorkSpaceRealmModel)
+        
+        case selectedModeltoPresent(WorkSpaceRealmModel)
     }
     
     enum viewCase {
@@ -47,6 +50,7 @@ struct WorkSpaceSideFeature {
             
             switch action {
             case .onAppear:
+                state.currentWorkSpaceID =    UserDefaultsManager.workSpaceSelectedID
                 
                 return .run { send in
                     for await models in  realmRepo.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
@@ -68,6 +72,12 @@ struct WorkSpaceSideFeature {
                 return .run { send in
                     try await Task.sleep(for: .seconds(0.4))
                     await send(.checkCount)
+                }
+                
+            case let .selectedModel(model):
+                UserDefaultsManager.workSpaceSelectedID = model.workSpaceID
+                return .run { send in
+                    await send(.selectedModeltoPresent(model))
                 }
     
             default:

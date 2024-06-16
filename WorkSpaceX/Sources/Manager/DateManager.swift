@@ -30,7 +30,7 @@ final class DateManager {
     func asDateToString(_ date: Date?) -> String {
         guard let date else { return "" }
         
-        dateFormatter.dateFormat = "yy.MM.dd"
+        dateFormatter.dateFormat = "yy. MM. dd"
         
         return dateFormatter.string(from: date)
     }
