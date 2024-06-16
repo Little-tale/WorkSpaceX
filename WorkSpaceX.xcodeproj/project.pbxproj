@@ -14,6 +14,9 @@
 		7B26D1E22C1DB5E300BC9912 /* ExScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */; };
 		7B26D1E42C1DB61200BC9912 /* SideMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E32C1DB61200BC9912 /* SideMenuCoordinator.swift */; };
 		7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E52C1DB7C200BC9912 /* SideMenuCoordinatorView.swift */; };
+		7B26D1EA2C1EF44D00BC9912 /* RealmModelFublishManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E92C1EF44D00BC9912 /* RealmModelFublishManager.swift */; };
+		7B26D1EC2C1F00EC00BC9912 /* EXDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */; };
+		7B26D1EE2C1F04D900BC9912 /* KFImageRequestModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */; };
 		7B2EEDFE2C10BD0A0024853C /* Memo in Resources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFD2C10BD0A0024853C /* Memo */; };
 		7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFF2C10C2900024853C /* NetworkManager.swift */; };
 		7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */; };
@@ -151,6 +154,9 @@
 		7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExScreens.swift; sourceTree = "<group>"; };
 		7B26D1E32C1DB61200BC9912 /* SideMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCoordinator.swift; sourceTree = "<group>"; };
 		7B26D1E52C1DB7C200BC9912 /* SideMenuCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCoordinatorView.swift; sourceTree = "<group>"; };
+		7B26D1E92C1EF44D00BC9912 /* RealmModelFublishManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModelFublishManager.swift; sourceTree = "<group>"; };
+		7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDate.swift; sourceTree = "<group>"; };
+		7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFImageRequestModifier.swift; sourceTree = "<group>"; };
 		7B2EEDFD2C10BD0A0024853C /* Memo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Memo; sourceTree = "<group>"; };
 		7B2EEDFF2C10C2900024853C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDuplicateModel.swift; sourceTree = "<group>"; };
@@ -320,6 +326,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7B26D1E82C1EF36700BC9912 /* RealmModelFublish */ = {
+			isa = PBXGroup;
+			children = (
+				7B26D1E92C1EF44D00BC9912 /* RealmModelFublishManager.swift */,
+			);
+			path = RealmModelFublish;
+			sourceTree = "<group>";
+		};
 		7B2EEE032C10C3680024853C /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +438,7 @@
 				7B8FD5FB2C19486500948E7C /* ExNotification.swift */,
 				7B8FD6222C1AA2CA00948E7C /* ExText.swift */,
 				7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */,
+				7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -531,6 +546,7 @@
 		7B592E992C0E26F200E47797 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				7B26D1E82C1EF36700BC9912 /* RealmModelFublish */,
 				7BEC45E52C16F28300576ECA /* Repository */,
 				7B2EEE4B2C12CE7E0024853C /* UserDefaults */,
 				7B2EEE372C120EBC0024853C /* Notification */,
@@ -540,6 +556,7 @@
 				7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandeler.swift */,
 				7B8FD6422C1AC0C100948E7C /* DateManager.swift */,
 				7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */,
+				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -945,6 +962,7 @@
 				7B8FD6072C19813500948E7C /* WorkSpaceListFeature.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
 				7BEC45DD2C16E2AC00576ECA /* WorkSpaceDTO.swift in Sources */,
+				7B26D1EE2C1F04D900BC9912 /* KFImageRequestModifier.swift in Sources */,
 				7B8FD6482C1AF22D00948E7C /* DownSamplingImageView.swift in Sources */,
 				7B2EEE0C2C117A840024853C /* UserDTORequest.swift in Sources */,
 				7B8FD6532C1BF77A00948E7C /* WorkSpaceRealmModel.swift in Sources */,
@@ -965,6 +983,7 @@
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
+				7B26D1EA2C1EF44D00BC9912 /* RealmModelFublishManager.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
 				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,
@@ -1007,6 +1026,7 @@
 				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
 				7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */,
+				7B26D1EC2C1F00EC00BC9912 /* EXDate.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
 				7BEC45D52C16C7DE00576ECA /* CustomeImagePickView.swift in Sources */,
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,

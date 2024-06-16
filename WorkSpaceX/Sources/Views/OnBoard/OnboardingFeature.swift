@@ -66,12 +66,14 @@ struct OnboardingFeature {
                 realmeRepo.upsertUserModel(response: model)
                 
                 return .run { send in
+                    try await Task.sleep(for: .seconds(0.44))
                     await send(.testSuccess)
                 }
                 
             case .testSuccess:
                 if ifLogin() {
-                    return .run { send in await send(.checkedLogin)}
+                    return .run { send in
+                        await send(.checkedLogin)}
                 } else {
                     state.loginFalid = "로그인중 문제가 발생했습니다 재시도 바랍니다."
                 }

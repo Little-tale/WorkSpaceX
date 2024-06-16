@@ -23,6 +23,7 @@ struct RealmRepository: RealmRepositoryType {
     
     private let realm: Realm?
     
+    
     func fetchAll<M>(type modelType: M.Type) -> Result<RealmSwift.Results<M>, RealmError> where M : Object {
         guard let realm else { return .failure(.cantLoadRealm)}
         
@@ -104,7 +105,7 @@ extension RealmRepository {
                     "introduce" : response.description as Any,
                     "coverImage" : response.coverImage?.absoluteString as Any,
                     "ownerID" : response.ownerID,
-                    "createdAt" : response.createdAt
+                    "createdAt" : response.createdAt.toDate as Any
                 ], update: .modified)
             }
         } catch {
@@ -117,6 +118,50 @@ extension RealmRepository {
     }
     
 }
+
+extension RealmRepository {
+    
+    func observeChanges<M>(
+        
+        for modelType: M.Type,
+        sorted keyPath: String? = nil,
+        ascending: Bool = true
+        
+    ) -> AsyncStream<[M]> where M: Object {
+        
+        return AsyncStream { continuation in
+            guard let realm = try? Realm() else {
+                continuation.finish()
+                return
+            }
+            
+            var results = realm.objects(modelType)
+            
+            if let keyPath = keyPath {
+                results = results.sorted(byKeyPath: keyPath, ascending: ascending)
+            }
+            
+            let token = results.observe(on: .main) { changes in
+                switch changes {
+                case .initial(let results):
+                    continuation.yield(Array(results))
+                    
+                case .update(let results, _, _, _):
+                    continuation.yield(Array(results))
+                    
+                case .error(let error):
+                    print(error)
+                    continuation.yield([])
+                }
+            }
+            
+            continuation.onTermination = { _ in
+                token.invalidate()
+            }
+        }
+    }
+}
+
 
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()

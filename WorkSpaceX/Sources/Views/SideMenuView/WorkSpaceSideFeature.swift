@@ -12,18 +12,26 @@ import RealmSwift
 @Reducer
 struct WorkSpaceSideFeature {
     
+//    @ObservedResults(WorkSpaceRealmModel.self, sortDescriptor: SortDescriptor(keyPath: "createdAt", ascending: true))
+//    var workSpaceModel
+    
     @ObservableState
     struct State: Equatable {
         var id = UUID()
         var currentCase: viewCase = .loading
         var currentCount = 0
+        var currentModels:[WorkSpaceRealmModel] = []
+        
     }
     
+    @Dependency(\.realmRepository) var realmRepo
+    
     enum Action {
-        case onAppear(Results<WorkSpaceRealmModel>)
+        case onAppear
         case goBackToRoot
         case checkCount
         case sendToMakeWorkSpace
+        case currentModelCatch([WorkSpaceRealmModel])
     }
     
     enum viewCase {
@@ -38,19 +46,30 @@ struct WorkSpaceSideFeature {
         Reduce { state, action in
             
             switch action {
-            case let .onAppear(models):
-                state.currentCount = models.count
-                print("사이드 매뉴 입장",models)
+            case .onAppear:
+                
                 return .run { send in
-                    try await Task.sleep(for: .seconds(0.44))
-                    await send(.checkCount)
+                    for await models in  realmRepo.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
+                        await send(.currentModelCatch(models))
+                    }
                 }
+                
             case .checkCount:
                 if state.currentCount == 0 {
                     state.currentCase = .empty
                 } else {
                     state.currentCase = .over
                 }
+                
+            case let .currentModelCatch(models):
+                state.currentCount = models.count
+                state.currentModels = models
+                
+                return .run { send in
+                    try await Task.sleep(for: .seconds(0.4))
+                    await send(.checkCount)
+                }
+    
             default:
                 break
             }
@@ -59,3 +78,15 @@ struct WorkSpaceSideFeature {
         
     }
 }
+/*
+ case let .workSpaceModelsChanged(models):
+     print("사이드 매뉴 입장")
+     state.currentModels = Array(models)
+     if state.currentCount != models.count {
+         state.currentCount = models.count
+         return .run { send in
+             try await Task.sleep(for: .seconds(0.44))
+             await send(.checkCount)
+         }
+     }
+ */

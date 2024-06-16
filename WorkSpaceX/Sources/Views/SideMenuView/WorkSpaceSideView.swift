@@ -8,21 +8,19 @@
 import SwiftUI
 import ComposableArchitecture
 import RealmSwift
+import Kingfisher
 
 struct WorkSpaceSideView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceSideFeature>
 
-    @ObservedResults(WorkSpaceRealmModel.self) 
-    var workSpaceModel
-    
     var body: some View {
         WithPerceptionTracking {
             VStack {
                 fakeNavigation()
+                
                 contentView()
-                    .onAppear{                store.send(.onAppear(workSpaceModel))
-                    }
+                
                 workSpaceAddView()
                     .asButton {
                         store.send(.sendToMakeWorkSpace)
@@ -39,6 +37,9 @@ struct WorkSpaceSideView: View {
                     .padding(.bottom, 20)
                 
                 Spacer()
+            }
+            .onAppear {
+                store.send(.onAppear)
             }
         }
     }
@@ -75,9 +76,47 @@ extension WorkSpaceSideView {
                     Spacer()
             }
         case .over:
-            Text("무언가 있을 예정")
+            List {
+                ForEach(store.currentModels, id: \.workSpaceID) { item in
+                    makeWorkSpaceListView(item)
+                }
+            }
         }
     }
+}
+
+extension WorkSpaceSideView {
+    
+  
+    private func makeWorkSpaceListView(_ model: WorkSpaceRealmModel) -> some View {
+        HStack {
+            Group {
+                if let image = model.coverImage,
+                   let url = URL(string: image) {
+                    DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
+                        
+                } else {
+                    EmptyView()
+                }
+            }
+            .frame(width: 50, height: 50)
+            
+            VStack {
+                Text(model.workSpaceName)
+                Text(DateManager.shared.asDateToString(model.createdAt))
+            }
+            
+            Spacer()
+            WSXImage.dots
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 20, height: 20)
+                .asButton {
+                    print(model)
+                }
+        }
+    }
+    
 }
 
 extension WorkSpaceSideView {

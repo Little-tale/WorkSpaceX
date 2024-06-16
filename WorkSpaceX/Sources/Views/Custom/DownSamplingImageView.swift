@@ -15,12 +15,13 @@ struct DownSamplingImageView: View {
     
     var body: some View {
         KFImage(url)
-            .resizable()
+            .requestModifier(KFImageRequestModifier())
             .setProcessor(
                 DownsamplingImageProcessor(
                     size: size
                 )
             )
             .cacheOriginalImage()
+            .resizable()
     }
 }
