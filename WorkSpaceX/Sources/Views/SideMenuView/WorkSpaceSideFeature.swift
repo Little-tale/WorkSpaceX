@@ -40,6 +40,7 @@ struct WorkSpaceSideFeature {
     
     enum Action {
         case onAppear
+        case subscribe
         case goBackToRoot
         case checkCount
         case sendToMakeWorkSpace
@@ -89,6 +90,15 @@ struct WorkSpaceSideFeature {
             case .onAppear:
                 state.currentWorkSpaceID =    UserDefaultsManager.workSpaceSelectedID
                 
+                return .run { send in
+                    let result = try await workSpaceRepo.findMyWordSpace()
+                    try await realmRepo.upsertWorkSpaces(responses: result)
+                    await send(.subscribe)
+                } catch: { error, send in
+                   print(error)
+                }
+                
+            case .subscribe:
                 return .run { send in
                     for await models in await justReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
                         await send(.currentModelCatch(models))
@@ -192,17 +202,7 @@ struct WorkSpaceSideFeature {
                 print(removeModelID)
                 state.currentWorkSpaceID = ""
                 state.currentModels = []
-//                do {
-//                    try realmRepo.removeForID(removeModelID, type: WorkSpaceRealmModel.self)
-//                    
-//                    return .run { send in
-//                        await send(.successMessage("삭제가 완료되었습니다."))
-//                    }
-//                } catch {
-//                    return .run { send in
-//                        await send(.errorMessage("삭제중 에러가 발생 했습니다."))
-//                    }
-//                }
+
                 return .run { send in
                     
                     try await RealmRepository.mainActorRemove(removeModelID, type: WorkSpaceRealmModel.self)

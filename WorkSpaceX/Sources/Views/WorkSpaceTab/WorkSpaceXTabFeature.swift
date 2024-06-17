@@ -91,8 +91,8 @@ struct WorkSpaceTabCoordinator {
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.userDomainRepository) var userDominRepo
-//    @Dependency(\.realmRepository) var realmeRepo
-    static let realmRepo = RealmRepository()
+    @Dependency(\.realmRepository) var realmeRepo
+//    static let realmRepo = RealmRepository()
     
     var body: some ReducerOf<Self> {
         //        BindingReducer()
@@ -158,17 +158,26 @@ struct WorkSpaceTabCoordinator {
                 }
                 
             case let .saveRealmOfProfile(user):
-                WorkSpaceTabCoordinator.realmRepo.upsertUserModel(response: user)
-                return .none
+                
+                return .run { send in
+                    try await realmeRepo.upsertUserModel(response: user)
+                } catch: { error, _ in
+                    print(error)
+                }
                 
             case let .saveRealmOfWorkSpaces(workSpaces):
-                WorkSpaceTabCoordinator.realmRepo.upsertWorkSpaces(responses: workSpaces)
-                if workSpaces.isEmpty {
-                    return .run { send in
+                return .run { send in
+                    try await realmeRepo.upsertWorkSpaces(responses: workSpaces)
+                    
+                    if workSpaces.isEmpty {
+                       
                         await send(.showEmptyView(true))
+                        
                     }
+                } catch: { error, _ in
+                    print(error)
                 }
-                return .none
+                
                 
             case let .showEmptyView(bool):
                 state.ifNoneSpace = bool

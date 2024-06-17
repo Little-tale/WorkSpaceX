@@ -41,33 +41,39 @@ struct OnboardingFeature {
 //                }
                 return .none
             case .onboardingLoginFeature(.presented(.appleLoginFinish(let model))): // 애플 로그인시
-                realmeRepo.upsertUserModel(response: model)
+                
                 return .run { send in
+                    try await realmeRepo.upsertUserModel(response: model)
                     await send(.testSuccess)
+                } catch: { error , send in
+                   print(error)
                 }
             case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let model))): // 카카오 로그인 시
-                realmeRepo.upsertUserModel(response: model)
                 return .run { send in
+                    try await realmeRepo.upsertUserModel(response: model)
                     await send(.testSuccess)
+                } catch: { error , send in
+                   print(error)
                 }
                 
             case .onboardingLoginFeature(.presented(.signUpFeature(.presented(.onlyUseParentsUserEntity(let user))))):
                 print("signUpFeatureEvents: \(user)")
                 
-                realmeRepo.upsertUserModel(response: user)
-                
                 return .run { send in
+                    try await realmeRepo.upsertUserModel(response: user)
                     await send(.testSuccess)
+                } catch: { error , send in
+                   print(error)
                 }
                 
             case .onboardingLoginFeature(.presented(.emailLoginFeature(.presented(.loginSuccess(let model))))): // 이메일 로그인시
                 print("이메일 로그인 성공 상위뷰 전달 받음")
                 
-                realmeRepo.upsertUserModel(response: model)
-                
                 return .run { send in
-                    try await Task.sleep(for: .seconds(0.44))
+                    try await realmeRepo.upsertUserModel(response: model)
                     await send(.testSuccess)
+                } catch: { error , send in
+                   print(error)
                 }
                 
             case .testSuccess:

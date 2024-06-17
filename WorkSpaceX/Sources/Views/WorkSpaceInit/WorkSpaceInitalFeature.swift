@@ -42,6 +42,8 @@ struct WorkSpaceInitalFeature {
         enum Alert {
             case confirmButtonTapped
         }
+        
+        case realmRegSuccess
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -142,12 +144,13 @@ struct WorkSpaceInitalFeature {
                 return .none
                 
             case .regSuccess(let model):
-                realmRepo.upsertWorkSpace(response: model)
-                print("success 이여야!")
-                dump(model)
-                state.showPrograssView = false
-                state.successMessage = "등록 완료 되었습니다."
                 
+                return .run { send in
+                    try await realmRepo.upsertWorkSpace(response: model)
+                    await send(.realmRegSuccess)
+                } catch: { error, send in
+                    print(error)
+                }
                 return .none
                 
             case .showLogoutAlert:
@@ -185,6 +188,12 @@ struct WorkSpaceInitalFeature {
                     }
                 }
                
+                return .none
+                
+            case .realmRegSuccess:
+                print("success 이여야!")
+                state.showPrograssView = false
+                state.successMessage = "등록 완료 되었습니다."
                 return .none
                 
             case .alert(.dismiss):
