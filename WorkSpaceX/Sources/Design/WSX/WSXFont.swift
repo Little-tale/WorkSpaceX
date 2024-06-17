@@ -17,6 +17,8 @@ extension WSXFont {
     
     static let title1: Font = .system(size: 22, weight: .bold, design: .default)
     
+    static let title15: Font = .system(size: 18, weight: .bold, design: .default)
+    
     static let title2: Font = .system(size: 14, weight: .bold, design: .default)
     
     static let regu1: Font = .system(size: 15, weight: .regular, design: .default)

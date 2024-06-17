@@ -20,6 +20,8 @@ struct WorkSpaceSideFeature {
         var currentModels:[WorkSpaceRealmModel] = []
         var currentWorkSpaceID: String = "EMPTY"
         @Presents var alertSheet: ConfirmationDialogState<Action.actionSheetAction>?
+        
+        var removeAlertBool = false
     }
     
     @Dependency(\.realmRepository) var realmRepo
@@ -45,6 +47,9 @@ struct WorkSpaceSideFeature {
             case workSpaceOwnerChange
             case workSpaceRemove
         }
+        
+        // 삭제 알렛 전달
+        case removeAlertBoolCatch(Bool)
     }
     
     enum viewCase {
@@ -128,6 +133,13 @@ struct WorkSpaceSideFeature {
                         }
                     }
                 }
+            case .alertSheetAction(.presented(.workSpaceRemove)):
+                return .run { send in
+                    await send(.removeAlertBoolCatch(true))
+                }
+                
+            case let .removeAlertBoolCatch(bool):
+                state.removeAlertBool = bool
     
             default:
                 break

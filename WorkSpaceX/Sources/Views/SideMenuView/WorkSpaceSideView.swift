@@ -13,35 +13,56 @@ import Kingfisher
 struct WorkSpaceSideView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceSideFeature>
-
+    
     var body: some View {
         WithPerceptionTracking {
-            VStack {
-                fakeNavigation()
-                
-                contentView()
-                
-                workSpaceAddView()
-                    .asButton {
-                        store.send(.sendToMakeWorkSpace)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.vertical, 10)
-                
-                workSpaceHelpView()
-                    .asButton {
-                        
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.vertical, 10)
-                    .padding(.bottom, 20)
-                
-                Spacer()
+            ZStack {
+                VStack {
+                    fakeNavigation()
+                    
+                    contentView()
+                    
+                    workSpaceAddView()
+                        .asButton {
+                            store.send(.sendToMakeWorkSpace)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.vertical, 10)
+                    
+                    workSpaceHelpView()
+                        .asButton {
+                            
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.vertical, 10)
+                        .padding(.bottom, 20)
+                    
+                    Spacer()
+                }
             }
             .onAppear {
                 store.send(.onAppear)
             }
             .confirmationDialog($store.scope(state: \.alertSheet, action: \.alertSheetAction))
+            .onChange(of: store.removeAlertBool) { newValue in
+                if newValue {
+                    CustomAlertWindow.shared.show {
+                        CustomAlertView(
+                            alertMode: .cancelWith,
+                            isShowing: $store.removeAlertBool.sending(\.removeAlertBoolCatch),
+                            title: "워크스페이스 삭제",
+                            message: "삭제시 채널/멤버/채팅 등의 데이터들이 사라집니다. 삭제 하시겠습니까?",
+                            onCancel: {
+                                
+                            }, onAction: {
+                                
+                            }, actionTitle: "삭제")
+                    }
+                    
+                }
+            }
+            
+            
         }
     }
 }
@@ -54,27 +75,27 @@ extension WorkSpaceSideView {
         case .loading:
             ProgressView()
         case .empty:
-                VStack {
-                    Spacer()
-                    Text("워크스페이스를\n찾을 수 없어요.")
-                        .font(WSXFont.title0)
-                        .multilineTextAlignment(.center)
-                    
-                    Text("관리자에게 초대를 요청하거나,\n다른이메일로 시도하거나\n새로운 워크스페이스를 생성해주세요.")
-                        .font(WSXFont.body)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 12)
-                    Text("워크스페이스 생성")
-                        .font(WSXFont.title2)
-                        .foregroundStyle(WSXColor.white)
-                        .modifier(CommonButtonModifer())
-                        .background(WSXColor.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .asButton {
-                            store.send(.sendToMakeWorkSpace)
-                        }
-                        .padding(.horizontal, 20)
-                    Spacer()
+            VStack {
+                Spacer()
+                Text("워크스페이스를\n찾을 수 없어요.")
+                    .font(WSXFont.title0)
+                    .multilineTextAlignment(.center)
+                
+                Text("관리자에게 초대를 요청하거나,\n다른이메일로 시도하거나\n새로운 워크스페이스를 생성해주세요.")
+                    .font(WSXFont.body)
+                    .multilineTextAlignment(.center)
+                    .padding(.vertical, 12)
+                Text("워크스페이스 생성")
+                    .font(WSXFont.title2)
+                    .foregroundStyle(WSXColor.white)
+                    .modifier(CommonButtonModifer())
+                    .background(WSXColor.green)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .asButton {
+                        store.send(.sendToMakeWorkSpace)
+                    }
+                    .padding(.horizontal, 20)
+                Spacer()
             }
         case .over:
             List {
@@ -132,7 +153,7 @@ extension WorkSpaceSideView {
         .background(store.currentWorkSpaceID == model.workSpaceID ? WSXColor.green.opacity(0.1) : WSXColor.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-
+    
 }
 
 extension WorkSpaceSideView {
