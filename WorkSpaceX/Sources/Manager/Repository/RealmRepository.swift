@@ -25,13 +25,13 @@ struct RealmRepository: RealmRepositoryType {
     
     // private let asnycRealm: Realm?
     
-    nonisolated func fetchAll<M>(type modelType: M.Type) -> Result<RealmSwift.Results<M>, RealmError> where M : Object {
+    func fetchAll<M>(type modelType: M.Type) -> Result<RealmSwift.Results<M>, RealmError> where M : Object {
         guard let realm else { return .failure(.cantLoadRealm)}
         
         return .success(realm.objects(modelType))
     }
     
-    nonisolated func add<M>(_ model: M) -> Result<M, RealmError> where M : Object {
+    func add<M>(_ model: M) -> Result<M, RealmError> where M : Object {
         guard let realm else { return .failure(.cantLoadRealm)}
         do {
             try realm.write {
@@ -45,7 +45,7 @@ struct RealmRepository: RealmRepositoryType {
     }
     
     
-    nonisolated func remove(_ model: RealmSwift.Object) -> Result<Void, RealmError> {
+    func remove(_ model: RealmSwift.Object) -> Result<Void, RealmError> {
         guard let realm else { return .failure(.cantLoadRealm)}
         
         do {
@@ -59,6 +59,15 @@ struct RealmRepository: RealmRepositoryType {
             return .failure(.failRemove)
         }
         
+    }
+    
+    @MainActor
+    func mainActorRemove(_ model: Object) async throws -> Void {
+        let realm = try await Realm(actor: MainActor.shared)
+
+        try realm.write {
+            realm.delete(model)
+        }
     }
      
     init() {

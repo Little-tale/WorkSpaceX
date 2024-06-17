@@ -167,7 +167,7 @@ struct WorkSpaceSideFeature {
                 
             case .requestRemoveModel:
                 if let model = state.currentSheetSelectModel {
-                    return .run {[model = model] send in
+                    return .run { send in
                         try await workSpaceRepo.workSpaceRemove(model.workSpaceID)
                         
                         await send(.confirmRemoveModel(model))
@@ -185,15 +185,14 @@ struct WorkSpaceSideFeature {
                     }
                 }
             case let .confirmRemoveModel(removeModel):
-                
+                print("삭제하러 가기전")
+                print(removeModel)
                 return .run { send in
-                    let result = await realmRepo.remove(removeModel)
-                    switch result {
-                    case .success:
-                        await send(.successMessage("삭제가 완료되었습니다."))
-                    case .failure:
-                        await send(.errorMessage("삭제중 에러가 발생 했습니다."))
-                    }
+                    try await realmRepo.mainActorRemove(removeModel)
+                    
+                    await send(.successMessage("삭제가 완료되었습니다."))
+                } catch: { error, send in
+                    await send(.errorMessage("삭제중 에러가 발생 했습니다."))
                 }
                 
             case let .successMessage(messgage):
