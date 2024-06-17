@@ -95,6 +95,9 @@ struct EmailLoginFeature {
             case .errorHandeler(let error):
                 if !error.ifDevelopError {
                     state.alertMessage = error.message
+                    return .run { send in
+                        await send(.timerStart(error.message))
+                    }
                 } else {
                     print(error)
                 }

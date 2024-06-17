@@ -41,6 +41,7 @@ struct WorkSpaceSideView: View {
             .onAppear {
                 store.send(.onAppear)
             }
+            .confirmationDialog($store.scope(state: \.alertSheet, action: \.alertSheetAction))
         }
     }
 }
@@ -118,11 +119,13 @@ extension WorkSpaceSideView {
                 WSXImage.dots
                     .renderingMode(.template)
                     .foregroundStyle(WSXColor.black)
-                    .padding(.vertical, 15)
-                    .padding(.leading, 10)
+                    .padding(.vertical, 20)
+                    .padding(.leading, 17)
+                    .background(WSXColor.white.opacity(0.2))
             }
             .onTapGesture {
-                print("도움말 시트")
+                print("알렛 시트")
+                store.send(.openAlertSheet(model))
             }
         }
         .padding(.all, 10)

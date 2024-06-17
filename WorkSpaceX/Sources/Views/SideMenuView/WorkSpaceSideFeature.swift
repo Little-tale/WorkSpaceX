@@ -12,9 +12,6 @@ import RealmSwift
 @Reducer
 struct WorkSpaceSideFeature {
     
-//    @ObservedResults(WorkSpaceRealmModel.self, sortDescriptor: SortDescriptor(keyPath: "createdAt", ascending: true))
-//    var workSpaceModel
-    
     @ObservableState
     struct State: Equatable {
         var id = UUID()
@@ -22,6 +19,7 @@ struct WorkSpaceSideFeature {
         var currentCount = 0
         var currentModels:[WorkSpaceRealmModel] = []
         var currentWorkSpaceID: String = "EMPTY"
+        @Presents var alertSheet: ConfirmationDialogState<Action.actionSheetAction>?
     }
     
     @Dependency(\.realmRepository) var realmRepo
@@ -35,6 +33,18 @@ struct WorkSpaceSideFeature {
         case selectedModel(WorkSpaceRealmModel)
         
         case selectedModeltoPresent(WorkSpaceRealmModel)
+        
+        case openAlertSheet(WorkSpaceRealmModel)
+        
+        case alertSheetAction(PresentationAction<actionSheetAction>)
+        
+        @CasePathable
+        enum actionSheetAction {
+            case workSpaceEdit
+            case workSpaceOut
+            case workSpaceOwnerChange
+            case workSpaceRemove
+        }
     }
     
     enum viewCase {
@@ -79,12 +89,52 @@ struct WorkSpaceSideFeature {
                 return .run { send in
                     await send(.selectedModeltoPresent(model))
                 }
+                
+            case let .openAlertSheet(model):
+                
+                state.currentWorkSpaceID = model.workSpaceID
+                
+                state.alertSheet = ConfirmationDialogState {
+                    TextState("워크 스페이스 설정")
+                } actions: {
+                    ButtonState(role: .cancel) {
+                        TextState("취소")
+                    }
+                    
+                    if let userId = UserDefaultsManager.userID,
+                       model.ownerID == userId {
+                        
+                        ButtonState(role: .none, action: .workSpaceEdit) {
+                            TextState("워크스페이스 편집")
+                        }
+                        
+                        ButtonState(action: .workSpaceOut) {
+                            TextState("워크스페이스 나가기")
+                        }
+                        
+                        ButtonState(action: .workSpaceOwnerChange) {
+                            TextState("워크스페이스 관리자 변경")
+                        }
+                        ButtonState(
+                            role:.destructive,
+                            action: .workSpaceRemove
+                        ) {
+                            TextState("워크스페이스 삭제")
+                        }
+                        
+                    } else {
+                        ButtonState(action: .workSpaceOut) {
+                            TextState("워크 스페이스 나가기")
+                        }
+                    }
+                }
     
             default:
                 break
             }
             return .none
         }
+        .ifLet(\.$alertSheet, action: \.alertSheetAction)
         
     }
 }

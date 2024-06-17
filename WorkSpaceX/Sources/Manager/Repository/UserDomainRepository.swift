@@ -47,6 +47,9 @@ extension UserDomainRepository: DependencyKey {
             UserDefaultsManager.accessToken = result.token.refreshToken
             
             UserDefaultsManager.userName = result.nickname
+            
+            UserDefaultsManager.userID = result.userID
+            
             print("accessToken",UserDefaultsManager.accessToken)
             print("refreshToken",UserDefaultsManager.refreshToken)
             
@@ -66,7 +69,9 @@ extension UserDomainRepository: DependencyKey {
             
             UserDefaultsManager.accessToken = result.token.accessToken
             UserDefaultsManager.accessToken = result.token.refreshToken
+            
             UserDefaultsManager.userName = result.nickname
+            UserDefaultsManager.userID = result.userID
             
             print("accessToken",UserDefaultsManager.accessToken)
             print("refreshToken",UserDefaultsManager.refreshToken)
@@ -95,11 +100,12 @@ extension UserDomainRepository: DependencyKey {
             UserDefaultsManager.accessToken = result.token.refreshToken
             
             UserDefaultsManager.userName = result.nickname
-            
+            UserDefaultsManager.userID = result.userID
             print("이메일 로그인시 토큰 \(result.token)")
             
             print("이메일 유저디폴트 입장 \(UserDefaultsManager.accessToken)")
-        
+            
+            
             return mapping
             
         }, appleLoginRequest: {
@@ -119,7 +125,7 @@ extension UserDomainRepository: DependencyKey {
             
             dump(result)
             UserDefaultsManager.userName = result.nickname
-            
+            UserDefaultsManager.userID = result.userID
             UserDefaultsManager.refreshToken = result.token.refreshToken
             
             UserDefaultsManager.accessToken = result.token.accessToken

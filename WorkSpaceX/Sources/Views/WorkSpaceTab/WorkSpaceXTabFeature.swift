@@ -188,6 +188,9 @@ struct WorkSpaceTabCoordinator {
                 return .run{ send in
                     await send(.sideMenuMake(false))
                 }
+            case let .sidebar(.selectedModeltoPresent(model)):
+                state.sideMenuOpen = false
+                return .none
                 
             case .sendWorkSpaceMakeAction(.presented(.regSuccess)):
                 
