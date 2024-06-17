@@ -61,12 +61,28 @@ struct RealmRepository: RealmRepositoryType {
         
     }
     
-    @MainActor
-    func mainActorRemove(_ model: Object) async throws -> Void {
-        let realm = try await Realm(actor: MainActor.shared)
-
+    func removeForID<M: Object>(_ modelId: String, type: M.Type) throws -> Void {
+        guard let realm else {
+            throw RealmError.cantLoadRealm
+        }
+        
+        guard let object = realm.object(ofType: type, forPrimaryKey: modelId) else {
+            throw RealmError.cantFindModel
+        }
+        
         try realm.write {
-            realm.delete(model)
+            realm.delete(object)
+        }
+    }
+    
+    @MainActor
+    static func mainActorRemove<M: Object>(_ modelId: String, type: M.Type) async throws {
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        try await realm.asyncWrite{
+            if let model = realm.object(ofType: type, forPrimaryKey: modelId) {
+                realm.delete(model)
+            }
         }
     }
      

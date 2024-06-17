@@ -11,6 +11,8 @@ import ComposableArchitecture
 
 struct WorkSpaceReader {
     
+    static let shared = WorkSpaceReader()
+    
     @MainActor
     func observeChanges<M: Object>(
         for modelType: M.Type,
@@ -53,18 +55,6 @@ struct WorkSpaceReader {
         }
     }
 }
-
-extension WorkSpaceReader: DependencyKey {
-    static var liveValue: WorkSpaceReader = Self()
-}
-
-extension DependencyValues {
-    var workSpaceReader: WorkSpaceReader {
-        get { self[WorkSpaceReader.self] }
-        set { self[WorkSpaceReader.self] = newValue }
-    }
-}
-
 
 //    var realm: Realm
 //    //    let serialQueue: DispatchQueue

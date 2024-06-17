@@ -35,9 +35,8 @@ struct WorkSpaceSideFeature {
     @Dependency(\.workspaceDomainRepository ) var workSpaceRepo
     
     @Dependency(\.realmRepository ) var realmRepo
-    
-    @Dependency(\.workSpaceReader) var justReader
-    
+
+    private let justReader = WorkSpaceReader.shared
     
     enum Action {
         case onAppear
@@ -65,7 +64,7 @@ struct WorkSpaceSideFeature {
         case removeAlertBoolCatch(Bool)
         case requestRemoveModel
         // 최종 삭제
-        case confirmRemoveModel(WorkSpaceRealmModel)
+        case confirmRemoveModelID(String)
         
         // 에러 알렛
         case errorMessage(String)
@@ -167,11 +166,15 @@ struct WorkSpaceSideFeature {
                 
             case .requestRemoveModel:
                 if let model = state.currentSheetSelectModel {
-                    return .run { send in
-                        try await workSpaceRepo.workSpaceRemove(model.workSpaceID)
+                    
+                    let id = model.workSpaceID
+                    
+                    return .run { [id = id] send in
+                        print( "지우기 시작" )
+                        try await workSpaceRepo.workSpaceRemove(id)
                         
-                        await send(.confirmRemoveModel(model))
-                        
+                        await send(.confirmRemoveModelID(id))
+                           
                     } catch: { error, send in
                         if let error = error as? WorkSpaceRemoveAPIError {
                             if error.ifReFreshDead {
@@ -184,13 +187,29 @@ struct WorkSpaceSideFeature {
                         }
                     }
                 }
-            case let .confirmRemoveModel(removeModel):
+            case let .confirmRemoveModelID(removeModelID):
                 print("삭제하러 가기전")
-                print(removeModel)
+                print(removeModelID)
+                state.currentWorkSpaceID = ""
+                state.currentModels = []
+//                do {
+//                    try realmRepo.removeForID(removeModelID, type: WorkSpaceRealmModel.self)
+//                    
+//                    return .run { send in
+//                        await send(.successMessage("삭제가 완료되었습니다."))
+//                    }
+//                } catch {
+//                    return .run { send in
+//                        await send(.errorMessage("삭제중 에러가 발생 했습니다."))
+//                    }
+//                }
                 return .run { send in
-                    try await realmRepo.mainActorRemove(removeModel)
                     
-                    await send(.successMessage("삭제가 완료되었습니다."))
+                    try await RealmRepository.mainActorRemove(removeModelID, type: WorkSpaceRealmModel.self)
+                    
+                    
+                    await send(.successMessage("삭제 완료되었습니다."))
+                    
                 } catch: { error, send in
                     await send(.errorMessage("삭제중 에러가 발생 했습니다."))
                 }
