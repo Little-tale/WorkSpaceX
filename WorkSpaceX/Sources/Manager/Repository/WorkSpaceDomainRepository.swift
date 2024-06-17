@@ -11,6 +11,9 @@ import ComposableArchitecture
 struct WorkSpaceDomainRepository {
     var regWorkSpaceReqeust: (NewWorkSpaceRequest) async throws -> WorkSpaceEntity
     var findMyWordSpace: () async throws -> [WorkSpaceEntity]
+    
+    var workSpaceRemove: (_ workSpaceID: String) async throws -> Void
+    
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -37,6 +40,9 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 
                 
                 return mapping
+        }, workSpaceRemove: { workSpaceID in
+            let _ = try await NetworkManager.shared.request(WorkSpaceRouter.removeWorkSpace(workSpaceId: workSpaceID), errorType: WorkSpaceRemoveAPIError.self)
+            return
         }
     )
     

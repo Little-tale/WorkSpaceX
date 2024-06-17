@@ -13,6 +13,7 @@ import Kingfisher
 struct WorkSpaceSideView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceSideFeature>
+//    @ObservedResults
     
     var body: some View {
         WithPerceptionTracking {
@@ -43,6 +44,8 @@ struct WorkSpaceSideView: View {
             .onAppear {
                 store.send(.onAppear)
             }
+            .alert("ERROR", isPresented: $store.errorAlertBoll.sending(\.errorAlertBool), actions: {
+            })
             .confirmationDialog($store.scope(state: \.alertSheet, action: \.alertSheetAction))
             .onChange(of: store.removeAlertBool) { newValue in
                 if newValue {
@@ -55,7 +58,7 @@ struct WorkSpaceSideView: View {
                             onCancel: {
                                 
                             }, onAction: {
-                                
+                                store.send(.requestRemoveModel)
                             }, actionTitle: "삭제")
                     }
                     

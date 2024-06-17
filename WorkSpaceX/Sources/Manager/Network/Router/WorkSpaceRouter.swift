@@ -10,6 +10,7 @@ import Foundation
 enum WorkSpaceRouter: Router {
     case meWorkSpace
     case makeWorkSpace(MakeWorkSpaceDTORequest, randomBoundary: String)
+    case removeWorkSpace(workSpaceId: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -18,6 +19,8 @@ extension WorkSpaceRouter {
             return .get
         case .makeWorkSpace:
             return .post
+        case .removeWorkSpace:
+            return .delete
         }
     }
     
@@ -27,12 +30,14 @@ extension WorkSpaceRouter {
             return APIKey.version + "/workspaces"
         case .makeWorkSpace:
             return APIKey.version + "/workspaces"
+        case .removeWorkSpace(workSpaceId: let workSpaceId):
+            return APIKey.version + "/workspaces/\(workSpaceId)"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .meWorkSpace:
+        case .meWorkSpace, .removeWorkSpace:
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -43,14 +48,14 @@ extension WorkSpaceRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .meWorkSpace, .makeWorkSpace:
+        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace:
             return nil
         }
     }
     
     var body: Data? {
         switch self {
-        case .meWorkSpace:
+        case .meWorkSpace, .removeWorkSpace:
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -59,7 +64,7 @@ extension WorkSpaceRouter {
     
     var encodingType: EncodingType {
         switch self {
-        case .meWorkSpace:
+        case .meWorkSpace, .removeWorkSpace:
             return .url
         case .makeWorkSpace:
             return .multiPart

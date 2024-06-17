@@ -48,6 +48,8 @@ struct WorkSpaceInitalFeature {
     @Dependency(\.workspaceDomainRepository) var repository
     @Dependency(\.realmRepository) var realmRepo
     
+//    let realmRepo = RealmRepository()
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
         

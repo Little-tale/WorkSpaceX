@@ -23,14 +23,15 @@ struct RealmRepository: RealmRepositoryType {
     
     private let realm: Realm?
     
+    // private let asnycRealm: Realm?
     
-    func fetchAll<M>(type modelType: M.Type) -> Result<RealmSwift.Results<M>, RealmError> where M : Object {
+    nonisolated func fetchAll<M>(type modelType: M.Type) -> Result<RealmSwift.Results<M>, RealmError> where M : Object {
         guard let realm else { return .failure(.cantLoadRealm)}
         
         return .success(realm.objects(modelType))
     }
     
-    func add<M>(_ model: M) -> Result<M, RealmError> where M : Object {
+    nonisolated func add<M>(_ model: M) -> Result<M, RealmError> where M : Object {
         guard let realm else { return .failure(.cantLoadRealm)}
         do {
             try realm.write {
@@ -43,21 +44,23 @@ struct RealmRepository: RealmRepositoryType {
         }
     }
     
-    func remove(_ model: RealmSwift.Object) -> Result<Void, RealmError> {
+    
+    nonisolated func remove(_ model: RealmSwift.Object) -> Result<Void, RealmError> {
         guard let realm else { return .failure(.cantLoadRealm)}
+        
         do {
             try realm.write {
+                
                 realm.delete(model)
+                
             }
             return .success(())
         } catch {
             return .failure(.failRemove)
         }
+        
     }
-    
-    
-    
-    
+     
     init() {
         do {
             let realms = try Realm()
@@ -121,45 +124,50 @@ extension RealmRepository {
 
 extension RealmRepository {
     
-    func observeChanges<M>(
-        
-        for modelType: M.Type,
-        sorted keyPath: String? = nil,
-        ascending: Bool = true
-        
-    ) -> AsyncStream<[M]> where M: Object {
-        
-        return AsyncStream { continuation in
-            guard let realm = try? Realm() else {
-                continuation.finish()
-                return
-            }
-            
-            var results = realm.objects(modelType)
-            
-            if let keyPath = keyPath {
-                results = results.sorted(byKeyPath: keyPath, ascending: ascending)
-            }
-            
-            let token = results.observe(on: .main) { changes in
-                switch changes {
-                case .initial(let results):
-                    continuation.yield(Array(results))
-                    
-                case .update(let results, _, _, _):
-                    continuation.yield(Array(results))
-                    
-                case .error(let error):
-                    print(error)
-                    continuation.yield([])
-                }
-            }
-            
-            continuation.onTermination = { _ in
-                token.invalidate()
-            }
-        }
-    }
+//    @MainActor
+//    func observeChanges<M>(
+//        
+//        for modelType: M.Type,
+//        sorted keyPath: String? = nil,
+//        ascending: Bool = true
+//        
+//    ) -> AsyncStream<[M]> where M: Object {
+//        
+//        return AsyncStream { continuation in
+//            print(":::::")
+//            guard let realm = try? Realm() else {
+//                continuation.finish()
+//                return
+//            }
+//            
+//            var results = realm.objects(modelType)
+//            
+//            if let keyPath = keyPath {
+//                results = results.sorted(byKeyPath: keyPath, ascending: ascending)
+//            }
+//            
+//            let token = results.observe(on: .main) { changes in
+//                switch changes {
+//                case .initial(let results):
+//                    continuation.yield(Array(results))
+//                    
+//                case .update(let results, _, _, _):
+//                    continuation.yield(Array(results))
+//                    
+//                case .error(let error):
+//                    print(error)
+//                    continuation.yield([])
+//                }
+//            }
+//            
+//            continuation.onTermination = { _ in
+//                token.invalidate()
+//            }
+//        }
+//    }
+    
+
+    
 }
 
 

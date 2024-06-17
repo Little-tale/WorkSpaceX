@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import RealmSwift
+import Combine
 
 @Reducer
 struct WorkSpaceSideFeature {
@@ -22,9 +23,21 @@ struct WorkSpaceSideFeature {
         @Presents var alertSheet: ConfirmationDialogState<Action.actionSheetAction>?
         
         var removeAlertBool = false
+        
+        var currentSheetSelectModel: WorkSpaceRealmModel? = nil
+        
+        var errorAlertBoll = false
+        var successAlertBool = false
+        var alertMessage = ""
     }
     
-    @Dependency(\.realmRepository) var realmRepo
+//    static let realmRepo = RealmRepository()
+    @Dependency(\.workspaceDomainRepository ) var workSpaceRepo
+    
+    @Dependency(\.realmRepository ) var realmRepo
+    
+    @Dependency(\.workSpaceReader) var justReader
+    
     
     enum Action {
         case onAppear
@@ -50,6 +63,16 @@ struct WorkSpaceSideFeature {
         
         // 삭제 알렛 전달
         case removeAlertBoolCatch(Bool)
+        case requestRemoveModel
+        // 최종 삭제
+        case confirmRemoveModel(WorkSpaceRealmModel)
+        
+        // 에러 알렛
+        case errorMessage(String)
+        case errorAlertBool(Bool)
+        // 성공 알렛
+        case successMessage(String)
+        case successAlertBool(Bool)
     }
     
     enum viewCase {
@@ -57,7 +80,7 @@ struct WorkSpaceSideFeature {
         case empty
         case over
     }
-   
+    
     
     var body: some ReducerOf<Self> {
         
@@ -68,7 +91,7 @@ struct WorkSpaceSideFeature {
                 state.currentWorkSpaceID =    UserDefaultsManager.workSpaceSelectedID
                 
                 return .run { send in
-                    for await models in  realmRepo.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
+                    for await models in await justReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
                         await send(.currentModelCatch(models))
                     }
                 }
@@ -99,6 +122,8 @@ struct WorkSpaceSideFeature {
                 
                 state.currentWorkSpaceID = model.workSpaceID
                 
+                state.currentSheetSelectModel = model
+                
                 state.alertSheet = ConfirmationDialogState {
                     TextState("워크 스페이스 설정")
                 } actions: {
@@ -108,7 +133,6 @@ struct WorkSpaceSideFeature {
                     
                     if let userId = UserDefaultsManager.userID,
                        model.ownerID == userId {
-                        
                         ButtonState(role: .none, action: .workSpaceEdit) {
                             TextState("워크스페이스 편집")
                         }
@@ -140,7 +164,52 @@ struct WorkSpaceSideFeature {
                 
             case let .removeAlertBoolCatch(bool):
                 state.removeAlertBool = bool
-    
+                
+            case .requestRemoveModel:
+                if let model = state.currentSheetSelectModel {
+                    return .run {[model = model] send in
+                        try await workSpaceRepo.workSpaceRemove(model.workSpaceID)
+                        
+                        await send(.confirmRemoveModel(model))
+                        
+                    } catch: { error, send in
+                        if let error = error as? WorkSpaceRemoveAPIError {
+                            if error.ifReFreshDead {
+                                RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                            } else if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
+                            } else {
+                                print(error)
+                            }
+                        }
+                    }
+                }
+            case let .confirmRemoveModel(removeModel):
+                
+                return .run { send in
+                    let result = await realmRepo.remove(removeModel)
+                    switch result {
+                    case .success:
+                        await send(.successMessage("삭제가 완료되었습니다."))
+                    case .failure:
+                        await send(.errorMessage("삭제중 에러가 발생 했습니다."))
+                    }
+                }
+                
+            case let .successMessage(messgage):
+                state.alertMessage = messgage
+                state.successAlertBool = true
+                
+            case let .successAlertBool(bool):
+                state.successAlertBool = bool
+                
+            case let .errorMessage(message):
+                state.alertMessage = message
+                state.errorAlertBoll = true
+                
+            case let .errorAlertBool(bool):
+                state.errorAlertBoll = bool
+                
             default:
                 break
             }
@@ -152,13 +221,23 @@ struct WorkSpaceSideFeature {
 }
 /*
  case let .workSpaceModelsChanged(models):
-     print("사이드 매뉴 입장")
-     state.currentModels = Array(models)
-     if state.currentCount != models.count {
-         state.currentCount = models.count
-         return .run { send in
-             try await Task.sleep(for: .seconds(0.44))
-             await send(.checkCount)
-         }
-     }
+ print("사이드 매뉴 입장")
+ state.currentModels = Array(models)
+ if state.currentCount != models.count {
+ state.currentCount = models.count
+ return .run { send in
+ try await Task.sleep(for: .seconds(0.44))
+ await send(.checkCount)
+ }
+ }
+ */
+/*
+ switch result {
+ case .success():
+     state.alertMessage = "삭제 완료 되었습니다."
+     state.successAlertBool = true
+ case .failure:
+     state.alertMessage = "삭제중 에러가 발생 했습니다."
+     state.errorAlertBoll = true
+ }
  */

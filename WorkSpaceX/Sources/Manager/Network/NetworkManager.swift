@@ -14,8 +14,16 @@ struct NetworkManager {
 extension NetworkManager {
     
     func request<T: Router, E: WSXErrorType>(_ router: T, errorType: E.Type) async throws -> Data {
-        let request = try router.asURLRequest()
-        return try await performRequest(request, errorType: errorType)
+        var request = try router.asURLRequest()
+        
+        
+        if !checkRequestInterceptorURLRequest(urlRequest: &request) {
+            return try await performRequest(request, errorType: errorType)
+        } else {
+            try await refreshAccessToken()
+            let data = try await startIntercept(&request, retryCount: 3, errorType: errorType)
+            return data
+        }
     }
     
     func requestDto<T: DTO, R: Router, E: WSXErrorType>(_ model: T.Type, router: R, errorType: E.Type) async throws -> T {
