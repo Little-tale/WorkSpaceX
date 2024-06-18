@@ -151,7 +151,7 @@ struct WorkSpaceInitalFeature {
                 } catch: { error, send in
                     print(error)
                 }
-                return .none
+                
                 
             case .showLogoutAlert:
                 state.logOutAlertState = AlertState {

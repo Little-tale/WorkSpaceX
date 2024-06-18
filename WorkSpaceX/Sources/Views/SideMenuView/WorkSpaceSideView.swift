@@ -47,6 +47,9 @@ struct WorkSpaceSideView: View {
             .alert("ERROR", isPresented: $store.errorAlertBoll.sending(\.errorAlertBool), actions: {
             })
             .confirmationDialog($store.scope(state: \.alertSheet, action: \.alertSheetAction))
+            .sheet(item: $store.scope(state: \.workSpaceEdit, action: \.workSpaceEditAction), content: { store in
+                WorkSpaceEditView(store: store)
+            })
             .onChange(of: store.removeAlertBool) { newValue in
                 if newValue {
                     CustomAlertWindow.shared.show {

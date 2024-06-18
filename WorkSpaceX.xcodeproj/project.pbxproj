@@ -20,6 +20,8 @@
 		7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F12C1FED5400BC9912 /* CustomAlertWindow.swift */; };
 		7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F32C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift */; };
 		7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F52C20200D00BC9912 /* WorkSpaceReader.swift */; };
+		7B26D1F82C2120C500BC9912 /* WorkSpaceEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F72C2120C500BC9912 /* WorkSpaceEditView.swift */; };
+		7B26D1FA2C2120F400BC9912 /* WorkSpaceEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F92C2120F400BC9912 /* WorkSpaceEditFeature.swift */; };
 		7B2EEDFE2C10BD0A0024853C /* Memo in Resources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFD2C10BD0A0024853C /* Memo */; };
 		7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFF2C10C2900024853C /* NetworkManager.swift */; };
 		7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */; };
@@ -163,6 +165,8 @@
 		7B26D1F12C1FED5400BC9912 /* CustomAlertWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertWindow.swift; sourceTree = "<group>"; };
 		7B26D1F32C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRemoveAPIError.swift; sourceTree = "<group>"; };
 		7B26D1F52C20200D00BC9912 /* WorkSpaceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceReader.swift; sourceTree = "<group>"; };
+		7B26D1F72C2120C500BC9912 /* WorkSpaceEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEditView.swift; sourceTree = "<group>"; };
+		7B26D1F92C2120F400BC9912 /* WorkSpaceEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEditFeature.swift; sourceTree = "<group>"; };
 		7B2EEDFD2C10BD0A0024853C /* Memo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Memo; sourceTree = "<group>"; };
 		7B2EEDFF2C10C2900024853C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDuplicateModel.swift; sourceTree = "<group>"; };
@@ -791,6 +795,8 @@
 				7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */,
 				7BEC45EA2C1703C100576ECA /* WorkSpaceFirstStartView.swift */,
 				7BEC45EC2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift */,
+				7B26D1F72C2120C500BC9912 /* WorkSpaceEditView.swift */,
+				7B26D1F92C2120F400BC9912 /* WorkSpaceEditFeature.swift */,
 			);
 			path = WorkSpaceInit;
 			sourceTree = "<group>";
@@ -949,6 +955,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BEC45F02C1802F200576ECA /* WorkSpaceDomainMapper.swift in Sources */,
+				7B26D1F82C2120C500BC9912 /* WorkSpaceEditView.swift in Sources */,
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
@@ -1027,6 +1034,7 @@
 				7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */,
 				7B8FD61D2C1A8EED00948E7C /* MyProfileAPIError.swift in Sources */,
 				7B2EEE152C11812B0024853C /* WSXHeader.swift in Sources */,
+				7B26D1FA2C2120F400BC9912 /* WorkSpaceEditFeature.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,

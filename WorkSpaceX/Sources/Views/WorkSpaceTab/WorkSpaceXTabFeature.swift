@@ -209,7 +209,6 @@ struct WorkSpaceTabCoordinator {
                     print(model)
                     print(model.workSpaceID)
                     print(model.workSpaceName)
-                    
                 }
                 
                 

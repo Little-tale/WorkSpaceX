@@ -29,6 +29,7 @@ struct WorkSpaceSideFeature {
         var errorAlertBoll = false
         var successAlertBool = false
         var alertMessage = ""
+        @Presents var workSpaceEdit: WorkSpaceEditFeature.State? = nil
     }
     
 //    static let realmRepo = RealmRepository()
@@ -53,6 +54,8 @@ struct WorkSpaceSideFeature {
         
         case alertSheetAction(PresentationAction<actionSheetAction>)
         
+        case workSpaceEditAction(PresentationAction<WorkSpaceEditFeature.Action>)
+        
         @CasePathable
         enum actionSheetAction {
             case workSpaceEdit
@@ -60,6 +63,8 @@ struct WorkSpaceSideFeature {
             case workSpaceOwnerChange
             case workSpaceRemove
         }
+        
+        case showWorkSpaceEditSheet(WorkSpaceRealmModel)
         
         // 삭제 알렛 전달
         case removeAlertBoolCatch(Bool)
@@ -197,6 +202,16 @@ struct WorkSpaceSideFeature {
                         }
                     }
                 }
+                
+            case .alertSheetAction(.presented(.workSpaceEdit)):
+                if let model = state.currentSheetSelectModel {
+                    return .send(.showWorkSpaceEditSheet(model))
+                }
+                
+            case let .showWorkSpaceEditSheet(model):
+                state.workSpaceEdit = WorkSpaceEditFeature.State()
+                return .send(.workSpaceEditAction(.presented(.getModel(model))))
+                
             case let .confirmRemoveModelID(removeModelID):
                 print("삭제하러 가기전")
                 print(removeModelID)
@@ -234,7 +249,9 @@ struct WorkSpaceSideFeature {
             return .none
         }
         .ifLet(\.$alertSheet, action: \.alertSheetAction)
-        
+        .ifLet(\.$workSpaceEdit, action: \.workSpaceEditAction) {
+            WorkSpaceEditFeature()
+        }
     }
 }
 /*
