@@ -13,7 +13,7 @@ struct WorkSpaceListFeature {
     
     @ObservableState
     struct State: Equatable, Identifiable {
-        var id = UUID()
+        var id: UUID
     }
     enum isCurrent {
         case empty
@@ -21,7 +21,7 @@ struct WorkSpaceListFeature {
     }
     
     enum Action {
-        
+        case currentWorkSpaceIdCatch(String)
     }
     
     var body: some ReducerOf<Self> {

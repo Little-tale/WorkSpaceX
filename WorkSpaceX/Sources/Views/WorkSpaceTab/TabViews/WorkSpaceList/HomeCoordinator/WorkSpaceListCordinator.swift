@@ -16,11 +16,12 @@ enum WorkSpaceListScreens {
 
 @Reducer
 struct WorkSpaceListCordinator {
-    
     @ObservableState
     struct State: Equatable {
+        
+        static let uuid = UUID()
         static let initialState = State(
-            identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State()), embedInNavigationView: true)]
+            identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State(id: uuid)), embedInNavigationView: true)]
         )
         
         var identeRoutes: IdentifiedArrayOf<Route<WorkSpaceListScreens.State>>
@@ -28,13 +29,17 @@ struct WorkSpaceListCordinator {
     
     enum Action {
         case router(IdentifiedRouterActionOf<WorkSpaceListScreens>)
+        case sendToRootWorkSpaceID(String)
     }
-    
+    //currentWorkSpaceIdCatch
     var body: some ReducerOf<Self> {
+        
         Reduce { state, action in
             switch action {
                 
-                
+            case let .sendToRootWorkSpaceID(id):
+//                state.initialState.
+                return .send(.router(.routeAction(id: WorkSpaceListCordinator.State.uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
             default:
                 break
                 

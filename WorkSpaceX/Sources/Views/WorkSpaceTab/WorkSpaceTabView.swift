@@ -33,12 +33,6 @@ struct WorkSpaceTabView: View {
                             store: store.scope(
                                 state: \.homeState, action: \.homeTabbar)
                         )
-                        /*
-                         WorkSpaceListView(
-                             store: store.scope(state: \.homeState, action: \.homeTabbar)
-                         )
-                         */
-                        EmptyView()
                         .tag(WorkSpaceTabCoordinator.Tab.home)
                         .tabItem {
                             WSXImage.homeImage.renderingMode(.template)

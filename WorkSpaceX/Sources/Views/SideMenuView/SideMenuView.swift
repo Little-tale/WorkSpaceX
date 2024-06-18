@@ -37,3 +37,14 @@ struct SideMenuView<RenderView: View> : View {
         .animation(.easeInOut, value: isShowing)
     }
 }
+
+//#if(DEBUG)
+//@available(iOS 17.0, *)
+//#Preview {
+//    SideMenuView(isShowing: .constant(true), direction: .leading) {
+//        DatePicker("", selection: .constant(Date()))
+//            .datePickerStyle(.graphical)
+//    }
+//}
+//#endif
+

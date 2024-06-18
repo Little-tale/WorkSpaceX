@@ -14,7 +14,9 @@ struct WorkSpaceListView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            Text("home")
+            VStack {
+                Text("home")
+            }
         }
     }
 }

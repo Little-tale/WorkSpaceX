@@ -8,6 +8,9 @@
 import Foundation
 import ComposableArchitecture
 import TCACoordinators
+/*
+ 유저 디폴트도 삭제 되었을때 반영 시켜놓아야 함....
+ */
 
 @Reducer
 struct WorkSpaceTabCoordinator {
@@ -197,12 +200,11 @@ struct WorkSpaceTabCoordinator {
                 // Thread 5: "Realm accessed from incorrect thread."
                 // 해결 방법은 꽤 단순한데.
                 // run 옆에 MainActor를 명시 하는방법이 있음
-                return .run { @MainActor send in
-                    print(model)
-                    print(model.workSpaceID)
-                    print(model.workSpaceName)
-                }
+                let worSpaceId = model.workSpaceID
                 
+                return .run { send in
+                    await send(.homeTabbar(.sendToRootWorkSpaceID(worSpaceId)))
+                }
                 
             case .sendWorkSpaceMakeAction(.presented(.regSuccess)):
                 
@@ -218,7 +220,11 @@ struct WorkSpaceTabCoordinator {
                     let result = try await workSpaceRepo.findMyWordSpace()
                     
                     await send(.saveRealmOfWorkSpaces(result))
-            
+                    
+                    if UserDefaultsManager.workSpaceSelectedID != "" {
+                        await send(.homeTabbar(.sendToRootWorkSpaceID(UserDefaultsManager.workSpaceSelectedID)))
+                    }
+                    
                     for await models in await workSpaceReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
                         await send(.currentModelCatch(models))
                     }
@@ -237,7 +243,7 @@ struct WorkSpaceTabCoordinator {
             case let .currentModelCatch(models):
                 let count = models.count
                 state.currentCount = count
-                state.ifNoneSpace = count <= 0
+                state.ifNoneSpace = !(count <= 0)
                 
             case .sidebar(.successAlertTapped) :
                 if state.currentCount <= 0 {
