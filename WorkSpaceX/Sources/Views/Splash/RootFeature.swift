@@ -44,6 +44,8 @@ struct RootFeature {
             case refreshTokkenDead
         }
         case alert(PresentationAction<Alert>)
+        
+        case showRefreshAlert
     }
     
     var body: some ReducerOf<Self> {
@@ -104,6 +106,9 @@ struct RootFeature {
             case .alert(.dismiss):
                 return .none
                 
+            case .showRefreshAlert:
+                state.alert = AlertState.refreshDeadAlert
+                return .none
             case .alert(.presented(.refreshTokkenDead)):
                 
                 return .run { send in

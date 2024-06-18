@@ -25,8 +25,8 @@ struct OnboardingFeature {
     }
     
     @Dependency(\.userDomainRepository) var repository
-//    @Dependency(\.realmRepository) var realmeRepo
-    let realmeRepo = RealmRepository()
+    @Dependency(\.realmRepository) var realmeRepo
+//    let realmeRepo = RealmRepository()
     var body: some ReducerOf<Self> {
         
         BindingReducer()
