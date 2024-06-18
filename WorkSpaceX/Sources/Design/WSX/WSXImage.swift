@@ -24,7 +24,7 @@ extension WSXImage {
     
     static let subCamera: Image = Image(.camera)
     
-    static let workSpaceStart: Image = Image(.workSpaceInitStart)
+    static let workSpaceStart: Image = Image(.workSpaceinitStart)
     
     static let logoUIImage: UIImage = UIImage(resource: .workSpaceXLogo)
     
