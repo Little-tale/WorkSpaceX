@@ -13,7 +13,7 @@ struct WorkSpaceDomainRepository {
     var findMyWordSpace: () async throws -> [WorkSpaceEntity]
     
     var workSpaceRemove: (_ workSpaceID: String) async throws -> Void
-    
+    var modifySpaceReqeust: (_ model: EditWorkSpaceReqeust,_ id: String) async throws -> WorkSpaceEntity
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -43,6 +43,15 @@ extension WorkSpaceDomainRepository: DependencyKey {
         }, workSpaceRemove: { workSpaceID in
             let _ = try await NetworkManager.shared.request(WorkSpaceRouter.removeWorkSpace(workSpaceId: workSpaceID), errorType: WorkSpaceRemoveAPIError.self)
             return
+        }, modifySpaceReqeust: { model, id in
+            
+            let reqeustMapping = workSpaceMapper.workSpaceReqeustDTO(model: model)
+            
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.modifyWorkSpace(reqeustMapping, randomBoundary: MultipartFormData.randomBoundary(), workSpaceID: id), errorType: WorkSpaceEditAPIError.self)
+            
+            let mapping = workSpaceMapper.toWorkSpaceModel(model: result)
+            
+            return mapping
         }
     )
     

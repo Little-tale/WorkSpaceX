@@ -40,6 +40,15 @@ extension WorkSpaceDomainMapper {
         )
     }
     
+    func workSpaceReqeustDTO(model: EditWorkSpaceReqeust) -> ModifyWorkSpaceDTORequest {
+        
+        return ModifyWorkSpaceDTORequest(
+            name: model.name,
+            description: model.description,
+            image: model.image
+        )
+    }
+    
 }
 /// ERROR
 //extension WorkSpaceDomainMapper {

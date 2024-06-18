@@ -22,6 +22,7 @@
 		7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F52C20200D00BC9912 /* WorkSpaceReader.swift */; };
 		7B26D1F82C2120C500BC9912 /* WorkSpaceEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F72C2120C500BC9912 /* WorkSpaceEditView.swift */; };
 		7B26D1FA2C2120F400BC9912 /* WorkSpaceEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1F92C2120F400BC9912 /* WorkSpaceEditFeature.swift */; };
+		7B26D1FC2C214D1300BC9912 /* WorkSpaceEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1FB2C214D1200BC9912 /* WorkSpaceEditAPIError.swift */; };
 		7B2EEDFE2C10BD0A0024853C /* Memo in Resources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFD2C10BD0A0024853C /* Memo */; };
 		7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEDFF2C10C2900024853C /* NetworkManager.swift */; };
 		7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */; };
@@ -167,6 +168,7 @@
 		7B26D1F52C20200D00BC9912 /* WorkSpaceReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceReader.swift; sourceTree = "<group>"; };
 		7B26D1F72C2120C500BC9912 /* WorkSpaceEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEditView.swift; sourceTree = "<group>"; };
 		7B26D1F92C2120F400BC9912 /* WorkSpaceEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEditFeature.swift; sourceTree = "<group>"; };
+		7B26D1FB2C214D1200BC9912 /* WorkSpaceEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEditAPIError.swift; sourceTree = "<group>"; };
 		7B2EEDFD2C10BD0A0024853C /* Memo */ = {isa = PBXFileReference; lastKnownFileType = text; path = Memo; sourceTree = "<group>"; };
 		7B2EEDFF2C10C2900024853C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7B2EEE012C10C3340024853C /* EmailDuplicateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDuplicateModel.swift; sourceTree = "<group>"; };
@@ -829,6 +831,7 @@
 				7B8FD6162C19CEE500948E7C /* WorkSpaceMeError.swift */,
 				7B8FD6182C19CF9300948E7C /* MakeWorkSpaceAPIError.swift */,
 				7B26D1F32C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift */,
+				7B26D1FB2C214D1200BC9912 /* WorkSpaceEditAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1044,6 +1047,7 @@
 				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
 				7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */,
+				7B26D1FC2C214D1300BC9912 /* WorkSpaceEditAPIError.swift in Sources */,
 				7B26D1EC2C1F00EC00BC9912 /* EXDate.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
 				7BEC45D52C16C7DE00576ECA /* CustomeImagePickView.swift in Sources */,

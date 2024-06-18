@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import RealmSwift
 
 struct WorkSpaceEditView: View {
     
@@ -99,6 +100,16 @@ struct WorkSpaceEditView: View {
                     } message: { message in
                         Text(message)
                     }
+                    .alert(item: $store.successMessage) { _ in
+                        Text("수정 완료")
+                    } actions: { _ in
+                        Text("확인").asButton {
+                            store.send(.alertSuccessTapped)
+                        }
+                    } message: { message in
+                        Text(message)
+                    }
+                    
                     if store.showPrograssView {
                         ProgressView()
                             .centerOverlay(size: CGSize(width: 120, height: 120))

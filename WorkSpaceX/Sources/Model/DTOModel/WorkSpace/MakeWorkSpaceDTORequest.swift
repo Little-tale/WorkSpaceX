@@ -10,6 +10,11 @@ import Foundation
 struct MakeWorkSpaceDTORequest: DTORequest {
     let name: String
     let description: String?
-    /// base64 binary로 변환하여 넣어주시길 바랍니다. XXXXXx 취소
     let image: Data
+}
+
+struct ModifyWorkSpaceDTORequest: DTORequest {
+    let name: String
+    let description: String?
+    let image: Data?
 }
