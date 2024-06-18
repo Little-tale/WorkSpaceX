@@ -46,6 +46,8 @@ struct WorkSpaceEditFeature {
     
     var body: some ReducerOf<Self> {
         
+        BindingReducer()
+        
         Scope(state: \.imagePick, action: \.imagePickFeature) {
             CustomImagePickPeature()
         }
@@ -60,16 +62,34 @@ struct WorkSpaceEditFeature {
                 state.workSpaceName = model.workSpaceName
                 state.workSpaceIntroduce = model.introduce ?? ""
                 
+                state.regButtonState = state.workSpaceName != ""
+                
                 let imageUrl = model.coverImage
                 
                 return .run { send in
                     await send(.imagePickFeature(.ifURLString(imageUrl)))
                 }
                 
+                
             case .dismissButtonTapped:
                 return .run { send in
                     await self.dismiss()
                 }
+            case .showImagePicker:
+                state.showImagePicker = true
+                
+            case let .imagePickerData(data):
+                if let data {
+                    return .run { send in
+                        await send(.imagePickFeature(.success(data)))
+                    }
+                } else {
+                    return .run { send in
+                        await send(.imagePickFeature(.empty))
+                    }
+                }
+            case .binding:
+                state.regButtonState = state.workSpaceName != ""
                 
             default :
                 break
