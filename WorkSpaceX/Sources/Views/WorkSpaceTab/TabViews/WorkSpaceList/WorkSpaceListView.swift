@@ -23,12 +23,20 @@ struct WorkSpaceListView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("No WorkSpace")
-                        .font(WSXFont.title1)
-                        .foregroundGrdientTo(gradient: WSXColor.titleGradient)
-                        .asButton {
-                            store.send(.openSideMenu)
+                    HStack {
+                        if let image = store.workSpaceCoverImage {
+                            DownSamplingImageView(url: image, size: CGSize(width: 40, height: 40))
+                                .frame(width: 40, height: 40)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
                         }
+                        
+                        Text(store.workSpaceName ?? "Loading")
+                            .font(WSXFont.title1)
+                            .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+                            .asButton {
+                                store.send(.openSideMenu)
+                            }
+                    }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     if let userProfile = userProfile.first,

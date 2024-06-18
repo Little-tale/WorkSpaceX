@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import RealmSwift
 
 @Reducer
 struct WorkSpaceListFeature {
@@ -15,6 +16,8 @@ struct WorkSpaceListFeature {
     struct State: Equatable, Identifiable {
         var id: UUID
         var currentWorkSpaceId: String?
+        var workSpaceCoverImage: URL?
+        var workSpaceName: String?
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
@@ -31,8 +34,8 @@ struct WorkSpaceListFeature {
        
         
         case observerStart(String)
-        
         case firstRealm(String)
+        case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
         // 상위뷰 관찰
         case openSideMenu
     }
@@ -51,14 +54,30 @@ struct WorkSpaceListFeature {
                 return .run { @MainActor send in
                     let result = try await realmRepo.findModel(workSpaceId, type: WorkSpaceRealmModel.self)
                     print("찾아오기 성공 \(result)")
+                    if let result {
+                        send(.catchToWorkSpaceRealmModel(result))
+                    }
                 }
+            
                 
             case let .observerStart(workSpaceID):
                 return .run { send in
                     for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
                         print("응답 받음 \(String(describing: currentModel))")
+                        if let currentModel{
+                            await send(.catchToWorkSpaceRealmModel(currentModel))
+                        }
                     }
                 }
+                
+            case let .catchToWorkSpaceRealmModel(model):
+                state.currentWorkSpaceId = model.workSpaceID
+                let ifImage = model.coverImage
+                
+                if let ifImage {
+                    state.workSpaceCoverImage = URL(string: ifImage)
+                }
+                state.workSpaceName = model.workSpaceName
                 
             default :
                 break
