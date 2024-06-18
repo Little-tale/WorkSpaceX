@@ -30,6 +30,12 @@ struct WorkSpaceListCordinator {
     enum Action {
         case router(IdentifiedRouterActionOf<WorkSpaceListScreens>)
         case sendToRootWorkSpaceID(String)
+        
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case openSideMenu
+        }
     }
     //currentWorkSpaceIdCatch
     var body: some ReducerOf<Self> {
@@ -38,8 +44,14 @@ struct WorkSpaceListCordinator {
             switch action {
                 
             case let .sendToRootWorkSpaceID(id):
-//                state.initialState.
                 return .send(.router(.routeAction(id: WorkSpaceListCordinator.State.uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
+                
+            case .router(.routeAction(id: _, action: .rootScreen(.openSideMenu))) :
+                
+                return .run { send in
+                    await send(.delegate(.openSideMenu))
+                }
+                
             default:
                 break
                 

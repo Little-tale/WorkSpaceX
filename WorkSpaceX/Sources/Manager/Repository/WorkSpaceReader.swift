@@ -38,7 +38,7 @@ struct WorkSpaceReader {
                             case .update(let collection, _, _, _):
                                 continuation.yield(Array(collection))
                             case .error(let error):
-                                print("Error observing changes: \(error)")
+                                print(error)
                                 continuation.finish()
                             }
                         }
@@ -48,12 +48,62 @@ struct WorkSpaceReader {
                         token.invalidate()
                     }
                 } catch {
-                    print("Error initializing Realm: \(error)")
+                    print("\(error)")
                     continuation.finish()
                 }
             }
         }
     }
+    
+    @MainActor
+    func observeChangeForPrimery<M: Object> (
+        for modelType: M.Type,
+        primary key: String
+    ) -> AsyncStream<M?> {
+        return AsyncStream { continu in
+            Task {
+                do {
+                    let realm = try await Realm(actor: MainActor.shared)
+                    guard let object = realm.object(ofType: M.self, forPrimaryKey: key) else {
+                        continu.yield(nil)
+                        continu.finish()
+                        return
+                    }
+                    
+                    let token = object.observe { changes in
+                        Task { @MainActor in
+                            switch changes {
+                            case .error:
+                                print("observeChangeForPrimery ERROR")
+                                continu.yield(nil)
+                                continu.finish()
+                                
+                            case let .change(model, _):
+                                
+                                guard let ob = model as? M else {
+                                    continu.yield(nil)
+                                    continu.finish()
+                                    return
+                                }
+                                continu.yield(ob)
+                                
+                            case .deleted:
+                                continu.yield(nil)
+                                continu.finish()
+                            }
+                        }
+                    }
+                    continu.onTermination = { @Sendable _ in
+                        token.invalidate()
+                    }
+                } catch {
+                    print(error)
+                    continu.finish()
+                }
+            }
+        }
+    }
+    
 }
 
 extension WorkSpaceReader: DependencyKey {
@@ -67,76 +117,3 @@ extension DependencyValues {
 }
 
 
-//    var realm: Realm
-//    //    let serialQueue: DispatchQueue
-//
-//    init(){
-//        //        serialQueue = DispatchQueue(label: "workSpace-Queue")
-//        //        do {
-//        //            var realm: Realm!
-//        //            try serialQueue.sync {
-//        //                realm = try Realm(configuration: .defaultConfiguration)
-//        //            }
-//        //            self.realm = realm
-//        //        } catch {
-//        //            print(error)
-//        //            self.realm = try! Realm()
-//        //        }
-//        realm = try! Realm()
-//    }
-
-//    func observeChanges<M: Object>(for modelType: M.Type, sorted keyPath: String? = nil, ascending: Bool = true) -> AsyncStream<[M]> {
-//
-//        return AsyncStream { continuation in
-//
-//            var results: Results<M>
-//            results = realm.objects(modelType)
-//            if let keyPath = keyPath {
-//                results = results.sorted(byKeyPath: keyPath, ascending: ascending)
-//            }
-//
-//            let token = results.observe(on:.main) { changes in
-//                switch changes {
-//                case .initial(let results):
-//                    continuation.yield(Array(results))
-//
-//                case .update(let results, _, _, _):
-//                    continuation.yield(Array(results))
-//
-//                case .error(let error):
-//                    print("Error observing changes: \(error)")
-//                    continuation.finish()
-//                }
-//            }
-//
-//            continuation.onTermination = { @Sendable _ in
-//                token.invalidate()
-//            }
-//
-//        }
-//    }
-
-//    func observeChanges<M: Object>(
-//        for modelType: M.Type,
-//        sorted keyPath: String? = nil,
-//        ascending: Bool = true,
-//        onChanged: @escaping ([M]) -> Void
-//    ) {
-//        do {
-//            var results = realm.objects(modelType)
-//            if let keyPath {
-//                results = results.sorted(byKeyPath: keyPath, ascending: ascending)
-//            }
-//
-//            let token = results.observe(on: .main) { changes in
-//                switch changes {
-//                case .initial(let models):
-//                    onChanged(Array(models))
-//                case .update(let models, _, _, _):
-//                    onChanged(Array(models))
-//                case .error:
-//                    onChanged([])
-//                }
-//            }
-//        }
-//    }

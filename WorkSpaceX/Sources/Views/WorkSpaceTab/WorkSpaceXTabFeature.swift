@@ -132,6 +132,7 @@ struct WorkSpaceTabCoordinator {
                 } else { state.sideMenuState = nil }
                 state.sideMenuOpen = bool
                 
+            
                 
             case .onAppear:
                 print("????? 왜? 2")
@@ -195,11 +196,7 @@ struct WorkSpaceTabCoordinator {
             case let .sidebar(.selectedModeltoPresent(model)):
                 state.sideMenuOpen = false
                 print(model)
-                // - > realmModel 은 다른 쓰레드로 넘기면 무제가 생김
-                // run {} 구문 안은 Swift Concurrency 즉 어떤 쓰레드로 갈지 전혀 모름. 즉 run 구문안에서 렘 모델을 넘겨주거나 무언가를 하게 되는순간 터짐 ex) print(model.id) 터짐.
-                // Thread 5: "Realm accessed from incorrect thread."
-                // 해결 방법은 꽤 단순한데.
-                // run 옆에 MainActor를 명시 하는방법이 있음
+               
                 let worSpaceId = model.workSpaceID
                 
                 return .run { send in
@@ -243,12 +240,17 @@ struct WorkSpaceTabCoordinator {
             case let .currentModelCatch(models):
                 let count = models.count
                 state.currentCount = count
-                state.ifNoneSpace = !(count <= 0)
+                state.ifNoneSpace = count <= 0
                 
             case .sidebar(.successAlertTapped) :
                 if state.currentCount <= 0 {
                     state.sideMenuOpen = false
                 }
+                
+                // HomeTabDelegte
+            case .homeTabbar(.delegate(.openSideMenu)):
+                return .send(.sideMenuMake(true))
+                
             default:
                 break
             }
@@ -280,6 +282,12 @@ extension AlertState where Action == RootFeature.Action.Alert {
 }
 
 /*
+ 
+ // - > realmModel 은 다른 쓰레드로 넘기면 무제가 생김
+ // run {} 구문 안은 Swift Concurrency 즉 어떤 쓰레드로 갈지 전혀 모름. 즉 run 구문안에서 렘 모델을 넘겨주거나 무언가를 하게 되는순간 터짐 ex) print(model.id) 터짐.
+ // Thread 5: "Realm accessed from incorrect thread."
+ // 해결 방법은 꽤 단순한데.
+ // run 옆에 MainActor를 명시 하는방법이 있음
  
  let result = try await workSpaceRepo.findMyWordSpace()
  

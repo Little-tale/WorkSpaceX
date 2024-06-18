@@ -7,15 +7,43 @@
 
 import SwiftUI
 import ComposableArchitecture
+import RealmSwift
 
 struct WorkSpaceListView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceListFeature>
     
+    @ObservedResults(UserRealmModel.self, where: {$0.userID == UserDefaultsManager.userID ?? "" }) var userProfile
+    
+    
     var body: some View {
         WithPerceptionTracking {
             VStack {
                 Text("home")
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("No WorkSpace")
+                        .font(WSXFont.title1)
+                        .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+                        .asButton {
+                            store.send(.openSideMenu)
+                        }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    if let userProfile = userProfile.first,
+                       let image = userProfile.profileImage {
+                        
+                        let url = URL(string: image)
+                        DownSamplingImageView(url: url, size: CGSize(width: 30, height: 30))
+                            .clipShape(Circle())
+                    } else {
+                        WSXImage.profileEmpty1
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(Circle())
+                    }
+                }
             }
         }
     }

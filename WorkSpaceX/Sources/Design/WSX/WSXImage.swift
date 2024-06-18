@@ -37,4 +37,6 @@ extension WSXImage {
     static let help: Image = Image(.help)
     
     static let dots: Image = Image(systemName: "ellipsis")
+    
+    static let profileEmpty1 = Image(.profileEmpty)
 }

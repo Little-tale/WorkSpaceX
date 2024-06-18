@@ -67,6 +67,11 @@ struct WorkSpaceEmptyListView: View {
                             let url = URL(string: image)
                             DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
                                 .clipShape(Circle())
+                        } else {
+                            WSXImage.profileEmpty1
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
                         }
                         // 여기에 이미지 추가
                     }

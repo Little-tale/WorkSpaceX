@@ -35,6 +35,12 @@ struct RealmRepository {
             }
         }
     }
+    @MainActor
+    func findModel<M:Object>(_ modelId: String, type: M.Type) async throws -> M? {
+        let realm = try await Realm(actor: MainActor.shared)
+        let result = realm.object(ofType: M.self, forPrimaryKey: modelId)
+        return result
+    }
 }
 
 
