@@ -46,6 +46,12 @@ struct WorkSpaceSideView: View {
             }
             .alert("ERROR", isPresented: $store.errorAlertBoll.sending(\.errorAlertBool), actions: {
             })
+            .alert("삭제완료", isPresented: $store.successAlertBool.sending(\.successAlertBool), actions: {
+                Text("확인")
+                    .asButton {
+                        store.send(.successAlertTapped)
+                    }
+            })
             .confirmationDialog($store.scope(state: \.alertSheet, action: \.alertSheetAction))
             .sheet(item: $store.scope(state: \.workSpaceEdit, action: \.workSpaceEditAction), content: { store in
                 WorkSpaceEditView(store: store)

@@ -78,6 +78,7 @@ struct WorkSpaceSideFeature {
         // 성공 알렛
         case successMessage(String)
         case successAlertBool(Bool)
+        case successAlertTapped
     }
     
     enum viewCase {

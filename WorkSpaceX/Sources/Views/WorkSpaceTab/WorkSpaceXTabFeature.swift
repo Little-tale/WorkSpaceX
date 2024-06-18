@@ -58,7 +58,7 @@ struct WorkSpaceTabCoordinator {
         
         // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
         @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
-        
+        var currentCount = 0
     }
     
     enum Action: BindableAction {
@@ -87,15 +87,19 @@ struct WorkSpaceTabCoordinator {
         case sendWorkSpaceMakeAction(PresentationAction<WorkSpaceInitalFeature.Action>)
         case makeWorkSpaceStart
         case workSpaceRegSuccess
+        
+        case workSpaceSubscribe
+        case currentModelCatch([WorkSpaceRealmModel])
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.userDomainRepository) var userDominRepo
     @Dependency(\.realmRepository) var realmeRepo
+    @Dependency(\.workSpaceReader) var workSpaceReader
 //    static let realmRepo = RealmRepository()
     
     var body: some ReducerOf<Self> {
-        //        BindingReducer()
+        BindingReducer()
         
         /// 워크 스페이스가 없을시
         Scope(state: \.makeSpaceViewState, action: \.ifNeedMakeWorkSpace) {
@@ -129,25 +133,13 @@ struct WorkSpaceTabCoordinator {
             case .onAppear:
                 print("????? 왜? 2")
                 return .run { send in
-                    let result = try await workSpaceRepo.findMyWordSpace()
-                    
-                    print("현재 스페이스 갯수")
-                    dump(result)
-                    await send(.saveRealmOfWorkSpaces(result))
-                    
+                
                     let profile = try await userDominRepo.myProfile()
                     await send(.saveRealmOfProfile(profile))
                     print("프로필 조회임~ ",profile)
-                    
+                    await send(.workSpaceSubscribe)
                 } catch: { error, send in
-                    if let error = error as? WorkSpaceMeError {
-                        
-                        if error.ifDevelopError {
-                            print(error.message)
-                        } else {
-                            print(error)
-                        }
-                    } else if let error = error as? MyProfileAPIError {
+                   if let error = error as? MyProfileAPIError {
                         
                         if let error = error.ifCommonError {
                             print("프로필 조회 에러",error)
@@ -220,6 +212,37 @@ struct WorkSpaceTabCoordinator {
             case .workSpaceRegSuccess:
                 return .run { send in await send(.onAppear) }
                 
+            
+            case .workSpaceSubscribe:
+                return .run { send in
+                    let result = try await workSpaceRepo.findMyWordSpace()
+                    
+                    await send(.saveRealmOfWorkSpaces(result))
+            
+                    for await models in await workSpaceReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
+                        await send(.currentModelCatch(models))
+                    }
+                } catch : { error, send in
+                    if let error = error as? WorkSpaceMeError {
+                        if !error.ifDevelopError {
+                            print(error)
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
+                
+            case let .currentModelCatch(models):
+                let count = models.count
+                state.currentCount = count
+                state.ifNoneSpace = count <= 0
+                
+            case .sidebar(.successAlertTapped) :
+                if state.currentCount <= 0 {
+                    state.sideMenuOpen = false
+                }
             default:
                 break
             }
@@ -249,3 +272,22 @@ extension AlertState where Action == RootFeature.Action.Alert {
         TextState("로그인 시간이 만료되어 재로그인이 필요합니다 ㅠㅠ")
     }
 }
+
+/*
+ 
+ let result = try await workSpaceRepo.findMyWordSpace()
+ 
+ print("현재 스페이스 갯수")
+ dump(result)
+ await send(.saveRealmOfWorkSpaces(result))
+ 
+ 
+ if let error = error as? WorkSpaceMeError {
+     
+     if error.ifDevelopError {
+         print(error.message)
+     } else {
+         print(error)
+     }
+ } else
+ */
