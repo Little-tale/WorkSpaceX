@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import ComposableArchitecture
+import Kingfisher
 
 struct CustomeImagePickView: View {
     
@@ -28,6 +29,9 @@ struct CustomeImagePickView: View {
                         .resizable()
                 case .failure:
                     WSXImage.logoImage.resizable()
+                    
+                case let .urlImage(url):
+                    DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
                 }
             }
             .alert(item: $store.errorMessage) { text in

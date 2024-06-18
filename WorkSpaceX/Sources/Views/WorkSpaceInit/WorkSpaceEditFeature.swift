@@ -44,5 +44,38 @@ struct WorkSpaceEditFeature {
     @Dependency(\.workspaceDomainRepository) var repository
     @Dependency(\.realmRepository) var realmRepo
     
-    
+    var body: some ReducerOf<Self> {
+        
+        Scope(state: \.imagePick, action: \.imagePickFeature) {
+            CustomImagePickPeature()
+        }
+        
+        Reduce { state, action in
+            
+            switch action {
+                
+            case let .getModel(model):
+                
+                print("받아옴, \(model)")
+                state.workSpaceName = model.workSpaceName
+                state.workSpaceIntroduce = model.introduce ?? ""
+                
+                let imageUrl = model.coverImage
+                
+                return .run { send in
+                    await send(.imagePickFeature(.ifURLString(imageUrl)))
+                }
+                
+            case .dismissButtonTapped:
+                return .run { send in
+                    await self.dismiss()
+                }
+                
+            default :
+                break
+            }
+            return .none
+        }
+        
+    }
 }

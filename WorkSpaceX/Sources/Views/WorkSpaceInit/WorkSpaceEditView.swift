@@ -81,7 +81,7 @@ struct WorkSpaceEditView: View {
                             })
                         
                     }
-                    .navigationTitle("워크스페이스 생성")
+                    .navigationTitle("워크스페이스 편집")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {

@@ -21,6 +21,7 @@ struct CustomImagePickPeature {
         case loading
         case success(Data)
         case failure
+        case urlImage(URL)
     }
     
     enum Action: BindableAction {
@@ -28,6 +29,8 @@ struct CustomImagePickPeature {
         case empty
         case loading
         case success(Data)
+        case ifURL(URL?)
+        case ifURLString(String?)
         case fail
     }
     
@@ -38,19 +41,35 @@ struct CustomImagePickPeature {
             switch action {
             case .empty:
                 state.imageState = .empty
-                return .none
+
             case .loading:
                 state.imageState = .loading
-                return .none
+
             case let .success(data):
                 state.imageState = .success(data)
-                return .none
+    
             case .fail:
                 state.errorMessage = "이미지를 불러오지 못했습니다."
-                return .none
-            case .binding:
-                return .none
+            
+            case let .ifURL(url):
+                if let url {
+                    state.imageState = .urlImage(url)
+                } else {
+                    state.imageState = .empty
+                }
+            case let .ifURLString(urlString):
+                guard let urlString,
+                      let url = URL(string: urlString) else {
+                    print("이미지 URL 받기 실패")
+                    state.imageState = .empty
+                    break
+                }
+                state.imageState = .urlImage(url)
+                
+            default :
+                break
             }
+            return .none
         }
     }
     
