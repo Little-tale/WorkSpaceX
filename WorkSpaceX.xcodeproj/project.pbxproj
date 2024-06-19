@@ -158,6 +158,7 @@
 		7BEC45FB2C18184800576ECA /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FA2C18184800576ECA /* MultipartFormData.swift */; };
 		7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FC2C181FAE00576ECA /* ExData.swift */; };
 		7BEC45FF2C18363900576ECA /* ExString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FE2C18363900576ECA /* ExString.swift */; };
+		7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -306,6 +307,7 @@
 		7BEC45FA2C18184800576ECA /* MultipartFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		7BEC45FC2C181FAE00576ECA /* ExData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExData.swift; sourceTree = "<group>"; };
 		7BEC45FE2C18363900576ECA /* ExString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExString.swift; sourceTree = "<group>"; };
+		7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelsEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -879,12 +881,21 @@
 		7BEC45F12C18072E00576ECA /* WorkSpace */ = {
 			isa = PBXGroup;
 			children = (
+				7BF9D7072C22A2590021D043 /* WorkSpaceListUSE */,
 				7BEC45F22C18074D00576ECA /* NewWorkSpaceRequest.swift */,
 				7BEC45F62C180F0600576ECA /* WorkSpaceEntity.swift */,
 				7B26D21A2C227E7E00BC9912 /* ChanelEntity.swift */,
 				7B26D21C2C227FB500BC9912 /* WorkSpaceMembersEntity.swift */,
 			);
 			path = WorkSpace;
+			sourceTree = "<group>";
+		};
+		7BF9D7072C22A2590021D043 /* WorkSpaceListUSE */ = {
+			isa = PBXGroup;
+			children = (
+				7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */,
+			);
+			path = WorkSpaceListUSE;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -994,6 +1005,7 @@
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
+				7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */,
 				7BEC45F72C180F0600576ECA /* WorkSpaceEntity.swift in Sources */,
 				7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */,
 				7B8FD6192C19CF9300948E7C /* MakeWorkSpaceAPIError.swift in Sources */,

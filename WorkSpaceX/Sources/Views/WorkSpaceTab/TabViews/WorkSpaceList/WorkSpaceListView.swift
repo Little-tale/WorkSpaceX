@@ -15,11 +15,36 @@ struct WorkSpaceListView: View {
     
     @ObservedResults(UserRealmModel.self, where: {$0.userID == UserDefaultsManager.userID ?? "" }) var userProfile
     
+    @State var channelToggle: Bool = false
+    
     
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                Text("home")
+                List {
+                    Section {
+                        if channelToggle {
+                            ForEach(store.chanelSection.items, id: \.channelID ) { item in
+                                channelContents(model: item)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets())
+                            }
+                            channelAddView()
+                                .listRowInsets(EdgeInsets())
+                                .alignmentGuide(.listRowSeparatorLeading) { vd in
+                                    print(vd.width)
+                                    return -vd.width
+                                }
+                        }
+                    } header: {
+                        chanelHeader()
+                    }.background  {
+                        WSXColor.white
+                    }
+                }
+                .listStyle(.plain)
+                
+                
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -54,6 +79,55 @@ struct WorkSpaceListView: View {
                 }
             }
         }
+    }
+    
+    private func chanelHeader() -> some View {
+        HStack {
+            Text(store.chanelSection.name)
+                .font(WSXFont.title15)
+                .foregroundStyle(WSXColor.black)
+            Spacer()
+            Image(systemName: channelToggle ? "chevron.down" : "chevron.right")
+                .asButton {
+                    withAnimation {
+                        channelToggle.toggle()
+                    }
+                }
+        }
+        .frame(height: 30)
+    }
+    
+    private func channelContents(model: WorkSpaceChannelRealmModel) -> some View {
+        HStack {
+            WSXImage.shapThin
+                .resizable()
+                .foregroundStyle(WSXColor.gray)
+                .frame(width: 14, height: 14)
+                .padding(.leading, 10)
+            
+            Text(model.name)
+                .font(WSXFont.title2)
+                .foregroundStyle(WSXColor.black)
+                .padding(.horizontal, 4)
+            
+            Spacer()
+        }
+        .frame(height: 30)
+    }
+    
+    private func channelAddView() -> some View {
+        HStack {
+            WSXImage.plus.renderingMode(.template)
+                .resizable()
+                .foregroundStyle(WSXColor.gray)
+                .frame(width: 14, height: 14)
+            Text("채널 추가")
+                .font(WSXFont.title2)
+                .foregroundStyle(WSXColor.gray)
+            Spacer()
+        }
+        .padding(.leading, 10)
+        .frame(height: 30)
     }
 }
 

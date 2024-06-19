@@ -18,6 +18,8 @@ struct WorkSpaceListFeature {
         var currentWorkSpaceId: String?
         var workSpaceCoverImage: URL?
         var workSpaceName: String?
+        
+        var chanelSection = WorkSpaceChannelsEntity(items: [])
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
@@ -59,19 +61,22 @@ struct WorkSpaceListFeature {
             case let .firstRealm(workSpaceId):
                 return .run { @MainActor send in
                     let result = try await realmRepo.findModel(workSpaceId, type: WorkSpaceRealmModel.self)
+                    
+                    
                     print("찾아오기 성공 \(result)")
                     if let result {
+                        
                         send(.catchToWorkSpaceRealmModel(result))
                     }
                 }
             
                 
             case let .observerStart(workSpaceID):
-                return .run { @MainActor send in
-                    for await currentModel in workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
-                        print("응답 받음 \(String(describing: currentModel))")
+                return .run { send in
+                    for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                        print("응답 받음 ")
                         if let currentModel{
-                            send(.catchToWorkSpaceRealmModel(currentModel))
+                            await send(.catchToWorkSpaceRealmModel(currentModel))
                         }
                     }
                 }
@@ -84,6 +89,8 @@ struct WorkSpaceListFeature {
                     state.workSpaceCoverImage = URL(string: ifImage)
                 }
                 state.workSpaceName = model.workSpaceName
+                
+                state.chanelSection = workSpaceRepo.workSpaceToChannel(model)
                 
             case let .workSpaceChnnelUpdate(workSpaceID):
                 print("워크스페이스 채널 네트워크 요청 시작")

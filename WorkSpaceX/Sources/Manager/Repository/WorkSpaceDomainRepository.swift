@@ -62,6 +62,11 @@ extension WorkSpaceDomainRepository: DependencyKey {
         }
     )
     
+    func workSpaceToChannel(_ workSpace: WorkSpaceRealmModel) -> WorkSpaceChannelsEntity {
+        var channel = WorkSpaceChannelsEntity(items: Array(workSpace.channels))
+        return channel
+    }
+    
 }
 
 extension DependencyValues {

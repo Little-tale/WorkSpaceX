@@ -39,4 +39,8 @@ extension WSXImage {
     static let dots: Image = Image(systemName: "ellipsis")
     
     static let profileEmpty1 = Image(.profileEmpty)
+    
+    static let shapBold = Image(.shapBold).renderingMode(.template)
+    
+    static let shapThin = Image(.shapThin).renderingMode(.template)
 }

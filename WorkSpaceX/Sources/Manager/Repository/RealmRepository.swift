@@ -156,10 +156,11 @@ extension RealmRepository {
         var results: [WorkSpaceChannelRealmModel] = []
         
         for entity in channels {
+            print("업데이트중", entity.name)
             try await realm.asyncWrite {
                 realm.create(WorkSpaceChannelRealmModel.self, value: [
                     "channelID" : entity.channelId,
-                    "workSpaceName" : entity.name,
+                    "name" : entity.name,
                     "introduce" : entity.description as Any,
                     "coverImage" : entity.coverImage as Any,
                     "ownerID" : entity.owner_id,
