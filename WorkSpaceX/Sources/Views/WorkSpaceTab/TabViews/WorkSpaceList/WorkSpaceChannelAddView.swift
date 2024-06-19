@@ -7,6 +7,9 @@
 
 import SwiftUI
 import ComposableArchitecture
+/*
+ 세퍼레이터 회고 
+ */
 
 struct WorkSpaceChannelAddView: View {
     

@@ -90,7 +90,7 @@ extension RealmRepository {
             
             realm.delete(objectsToDelete)
             
-            responses.forEach { models in
+            responses.forEach { @MainActor models in
                 realm.create(WorkSpaceRealmModel.self, value: [
                     "workSpaceID" : models.workSpaceID,
                     "workSpaceName" : models.name,
@@ -179,9 +179,22 @@ extension RealmRepository {
             realm = try await Realm(actor: MainActor.shared)
         }
         
-        print("워크 스페이스 체널 저장중 ....")
+        print("워크 스페이스 체널 저장과 동기화 ....")
         
         var results: [WorkSpaceChannelRealmModel] = []
+        
+        try await realm.asyncWrite { // 서버에 없는것 부터 제거
+            
+            let currentIDs = Set(realm.objects(WorkSpaceChannelRealmModel.self).map{ $0.channelID })
+            
+            let serverIDs = channels.map { $0.channelId }
+            
+            let idsToDelete = currentIDs.subtracting(serverIDs)
+            
+            let objectsToDelete = realm.objects(WorkSpaceChannelRealmModel.self).filter("channelID IN %@", idsToDelete)
+            
+            realm.delete(objectsToDelete)
+        }
         
         for entity in channels {
             let result = try await upserWorkSpaceChannel(channel: entity, ifRealm: realm)
