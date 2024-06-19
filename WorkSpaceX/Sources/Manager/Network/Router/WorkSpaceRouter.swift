@@ -12,11 +12,13 @@ enum WorkSpaceRouter: Router {
     case makeWorkSpace(MakeWorkSpaceDTORequest, randomBoundary: String)
     case removeWorkSpace(workSpaceId: String)
     case modifyWorkSpace(ModifyWorkSpaceDTORequest, randomBoundary: String, workSpaceID: String)
+    
+    case findWorkSpaceChannels(workSpaceID: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
         switch self {
-        case .meWorkSpace:
+        case .meWorkSpace, .findWorkSpaceChannels:
             return .get
         case .makeWorkSpace:
             return .post
@@ -37,12 +39,14 @@ extension WorkSpaceRouter {
             return APIKey.version + "/workspaces/\(workSpaceId)"
         case let .modifyWorkSpace(_, _, id ):
             return APIKey.version + "/workspaces/\(id)"
+        case let .findWorkSpaceChannels(id):
+            return APIKey.version + "/workspaces/\(id)/my-channels"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace:
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels:
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -56,14 +60,14 @@ extension WorkSpaceRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace :
+        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels :
             return nil
         }
     }
     
     var body: Data? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace:
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels:
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -74,7 +78,7 @@ extension WorkSpaceRouter {
     
     var encodingType: EncodingType {
         switch self {
-        case .meWorkSpace, .removeWorkSpace :
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels:
             return .url
         case .makeWorkSpace :
             return .multiPart

@@ -76,6 +76,7 @@ extension RealmRepository {
     @MainActor
     func syncWorkSpaces(with responses: [WorkSpaceEntity]) async throws {
         let realm = try await Realm(actor: MainActor.shared)
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         
         print("동기화 .... ")
         

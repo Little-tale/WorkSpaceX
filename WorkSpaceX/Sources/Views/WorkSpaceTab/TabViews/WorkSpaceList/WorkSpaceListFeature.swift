@@ -36,6 +36,10 @@ struct WorkSpaceListFeature {
         case observerStart(String)
         case firstRealm(String)
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
+        
+        // 워크스페이스 채널 네트워크 요청단
+        case workSpaceChnnelUpdate(workSpaceID: String)
+        
         // 상위뷰 관찰
         case openSideMenu
     }
@@ -43,11 +47,13 @@ struct WorkSpaceListFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+                
             case let .currentWorkSpaceIdCatch(workSpaceId):
                 print("전달 받음",workSpaceId)
                 return .run { send in
                     await send(.firstRealm(workSpaceId))
                     await send(.observerStart(workSpaceId))
+                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceId))
                 }
                 
             case let .firstRealm(workSpaceId):
@@ -78,6 +84,13 @@ struct WorkSpaceListFeature {
                     state.workSpaceCoverImage = URL(string: ifImage)
                 }
                 state.workSpaceName = model.workSpaceName
+                
+            case let .workSpaceChnnelUpdate(workSpaceID):
+                print("워크스페이스 채널 네트워크 요청 시작")
+                return .run { send in
+                   let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
+                    print("채널의 결말",result)
+                }
                 
             default :
                 break

@@ -50,28 +50,23 @@ extension WorkSpaceDomainMapper {
     }
     
 }
-/// ERROR
-//extension WorkSpaceDomainMapper {
-//    
-////    func regworkSpaceErrorMapper(error: Error) -> WorkSpaceDomainError {
-////        guard let error = error as? APIError else {
-////            return .commonError(.fail)
-////        }
-////        switch error {
-////        case .httpError(let string):
-////            print(string)
-////            return .commonError(.fail)
-////        case .commonError(let commonError):
-////            if  WorkSpaceDomainError.makeWoekSpaceError(commonError.errorCode).thisError {
-////                return .makeWoekSpaceError(commonError.errorCode)
-////            }
-////            
-////            return .commonError(commonError)
-////        case .customError(let string):
-////            return .makeWoekSpaceError(string)
-////        case .unknownError:
-////            return .commonError(.fail)
-////        }
-////    }
-//    
-//}
+
+extension WorkSpaceDomainMapper {
+    
+    func workSpaceChanelsDTOToChannel(dto: WorkSpaceChanelsDTO) -> ChanelEntity {
+        
+        return ChanelEntity(
+            channelId: dto.channel_id,
+            name: dto.name,
+            description: dto.description ?? "",
+            coverImage: dto.coverImage,
+            owner_id: dto.owner_id,
+            createdAt: dto.createdAt
+        )
+    }
+    
+    func workSpaceChannelListDTOToChannels(dto: WorkSpaceChannelListDTO) -> [ChanelEntity] {
+        return dto.chanels.map { workSpaceChanelsDTOToChannel(dto: $0) }
+    }
+    
+}

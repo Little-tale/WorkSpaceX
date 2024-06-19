@@ -18,6 +18,7 @@ class WorkSpaceRealmModel: Object, ObjectKeyIdentifiable {
     @Persisted var createdAt: Date?
     
     @Persisted var users: List<UserRealmModel>
+    @Persisted var channels: List<WorkSpaceChannelRealmModel>
     
     convenience
     init(
@@ -39,6 +40,30 @@ class WorkSpaceRealmModel: Object, ObjectKeyIdentifiable {
         self.ownerID = ownerID
         self.createdAt = createdAt
         self.users.append(objectsIn: users)
+    }
+    
+    convenience
+    init(
+        workSpaceID: String,
+        workSpaceName: String,
+        introduce: String? = nil,
+        coverImage: String? = nil,
+        ownerID: String,
+        createdAt: Date? = nil,
+        users: [UserRealmModel],
+        channels: [WorkSpaceChannelRealmModel]
+    ) {
+        
+        self.init()
+        
+        self.workSpaceID = workSpaceID
+        self.workSpaceName = workSpaceName
+        self.introduce = introduce
+        self.coverImage = coverImage
+        self.ownerID = ownerID
+        self.createdAt = createdAt
+        self.users.append(objectsIn: users)
+        self.channels.append(objectsIn: channels)
     }
     
 }

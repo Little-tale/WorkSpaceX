@@ -14,6 +14,8 @@ struct WorkSpaceDomainRepository {
     
     var workSpaceRemove: (_ workSpaceID: String) async throws -> Void
     var modifySpaceReqeust: (_ model: EditWorkSpaceReqeust,_ id: String) async throws -> WorkSpaceEntity
+    
+    var findWorkSpaceChnnel: (_ workSpaceID: String) async throws -> [ChanelEntity]
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -52,6 +54,11 @@ extension WorkSpaceDomainRepository: DependencyKey {
             let mapping = workSpaceMapper.toWorkSpaceModel(model: result)
             
             return mapping
+        }, findWorkSpaceChnnel: { workSpaceID in
+            
+           let result = try await NetworkManager.shared.requestDto(WorkSpaceChannelListDTO.self, router: WorkSpaceRouter.findWorkSpaceChannels(workSpaceID: workSpaceID), errorType: WorkSpaceMyChannelError.self)
+            
+            return workSpaceMapper.workSpaceChannelListDTOToChannels(dto: result)
         }
     )
     
