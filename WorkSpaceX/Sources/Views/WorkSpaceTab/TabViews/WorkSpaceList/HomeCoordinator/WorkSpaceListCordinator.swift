@@ -71,6 +71,8 @@ struct WorkSpaceListCordinator {
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 
                 state.identeRoutes.dismiss()
+            case .router(.routeAction(id: _, action: .channelAdd(.ifNeedSuccessTrigger))) :
+                state.identeRoutes.dismiss()
                 
             default:
                 break
