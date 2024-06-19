@@ -34,13 +34,14 @@ struct WorkSpaceListFeature {
     enum Action {
         case currentWorkSpaceIdCatch(String)
        
-        
         case observerStart(String)
         case firstRealm(String)
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
         
         // 워크스페이스 채널 네트워크 요청단
         case workSpaceChnnelUpdate(workSpaceID: String)
+        // 채널 추가
+        case chnnelAddClicked
         
         // 상위뷰 관찰
         case openSideMenu
@@ -65,7 +66,6 @@ struct WorkSpaceListFeature {
                     
                     print("찾아오기 성공 \(result)")
                     if let result {
-                        
                         send(.catchToWorkSpaceRealmModel(result))
                     }
                 }
@@ -80,6 +80,10 @@ struct WorkSpaceListFeature {
                         }
                     }
                 }
+              
+            case .chnnelAddClicked:
+                
+                break
                 
             case let .catchToWorkSpaceRealmModel(model):
                 state.currentWorkSpaceId = model.workSpaceID
@@ -92,6 +96,8 @@ struct WorkSpaceListFeature {
                 
                 state.chanelSection = workSpaceRepo.workSpaceToChannel(model)
                 
+                
+                // 채널 업데이트
             case let .workSpaceChnnelUpdate(workSpaceID):
                 print("워크스페이스 채널 네트워크 요청 시작")
                 return .run { send in

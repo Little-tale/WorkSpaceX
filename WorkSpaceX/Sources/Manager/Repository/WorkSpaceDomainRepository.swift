@@ -16,6 +16,8 @@ struct WorkSpaceDomainRepository {
     var modifySpaceReqeust: (_ model: EditWorkSpaceReqeust,_ id: String) async throws -> WorkSpaceEntity
     
     var findWorkSpaceChnnel: (_ workSpaceID: String) async throws -> [ChanelEntity]
+    
+    var regWorkSpaceChannel: (NewWorkSpaceRequest, _ workSpaceID: String) async throws -> ChanelEntity
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -59,11 +61,20 @@ extension WorkSpaceDomainRepository: DependencyKey {
            let result = try await NetworkManager.shared.requestDto(WorkSpaceChannelListDTO.self, router: WorkSpaceRouter.findWorkSpaceChannels(workSpaceID: workSpaceID), errorType: WorkSpaceMyChannelError.self)
             
             return workSpaceMapper.workSpaceChannelListDTOToChannels(dto: result)
+        }, regWorkSpaceChannel: { request, workSpaceID in
+            
+            let requestDTO = workSpaceMapper.workSpaceReqeustDTO(model: request)
+            
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelsDTO.self, router: WorkSpaceRouter.createChannel(requestDTO, workSpaceID: workSpaceID, boundary: MultipartFormData.randomBoundary()), errorType: WorkSpaceMakeChannelAPIError.self)
+            
+            let mapping = workSpaceMapper.workSpaceChanelsDTOToChannel(dto: result)
+            
+            return mapping
         }
     )
     
     func workSpaceToChannel(_ workSpace: WorkSpaceRealmModel) -> WorkSpaceChannelsEntity {
-        var channel = WorkSpaceChannelsEntity(items: Array(workSpace.channels))
+        let channel = WorkSpaceChannelsEntity(items: Array(workSpace.channels))
         return channel
     }
     

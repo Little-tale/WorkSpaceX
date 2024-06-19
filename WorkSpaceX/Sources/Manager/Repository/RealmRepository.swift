@@ -140,6 +140,34 @@ extension RealmRepository {
     }
     
     @MainActor
+    func upsertToWorkSpaceChannelAppend(workSpaceID: String, chanel: ChanelEntity) async throws {
+        
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        guard let channelModel = try await upserWorkSpaceChannel(channel: chanel, ifRealm: realm)
+        else {
+            throw RealmError.failAdd
+        }
+        
+        // 기존 워크스페이스 모델 가져오기
+        guard let workSpaceModel = realm.object(ofType: WorkSpaceRealmModel.self, forPrimaryKey: workSpaceID) else {
+            throw RealmError.cantFindModel
+        }
+        
+        try await realm.asyncWrite {
+            var update = Array(workSpaceModel.channels)
+            update.append(channelModel)
+            realm.create(
+                WorkSpaceRealmModel.self,
+                value: [
+                    "workSpaceID" : workSpaceID,
+                    "channels": update
+                ],
+                update: .modified)
+        }
+    }
+    
+    @MainActor
     @discardableResult
     func upserWorkSpaceChannels(channels: [ChanelEntity], ifRealm: Realm? = nil) async throws -> [WorkSpaceChannelRealmModel] {
         
@@ -156,22 +184,41 @@ extension RealmRepository {
         var results: [WorkSpaceChannelRealmModel] = []
         
         for entity in channels {
-            print("업데이트중", entity.name)
-            try await realm.asyncWrite {
-                realm.create(WorkSpaceChannelRealmModel.self, value: [
-                    "channelID" : entity.channelId,
-                    "name" : entity.name,
-                    "introduce" : entity.description as Any,
-                    "coverImage" : entity.coverImage as Any,
-                    "ownerID" : entity.owner_id,
-                    "createdAt" : entity.createdAt.toDate as Any
-                ], update: .modified)
-            }
-            if let addedModel = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: entity.channelId) {
-                results.append(addedModel)
+            let result = try await upserWorkSpaceChannel(channel: entity, ifRealm: realm)
+            
+            if let result {
+                results.append(result)
             }
         }
         return results
+    }
+    
+    @MainActor
+    func upserWorkSpaceChannel(channel: ChanelEntity, ifRealm: Realm? = nil) async throws ->  WorkSpaceChannelRealmModel? {
+        
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(WorkSpaceChannelRealmModel.self, value: [
+                "channelID" : channel.channelId,
+                "name" : channel.name,
+                "introduce" : channel.description as Any,
+                "coverImage" : channel.coverImage as Any,
+                "ownerID" : channel.owner_id,
+                "createdAt" : channel.createdAt.toDate as Any
+            ], update: .modified)
+        }
+        
+        if let model = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channel.channelId) {
+            return model
+        }
+        return nil
     }
 }
 

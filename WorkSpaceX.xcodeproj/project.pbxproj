@@ -159,6 +159,9 @@
 		7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FC2C181FAE00576ECA /* ExData.swift */; };
 		7BEC45FF2C18363900576ECA /* ExString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FE2C18363900576ECA /* ExString.swift */; };
 		7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */; };
+		7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */; };
+		7BF9D70D2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D70C2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift */; };
+		7BF9D7112C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -308,6 +311,9 @@
 		7BEC45FC2C181FAE00576ECA /* ExData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExData.swift; sourceTree = "<group>"; };
 		7BEC45FE2C18363900576ECA /* ExString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExString.swift; sourceTree = "<group>"; };
 		7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelsEntity.swift; sourceTree = "<group>"; };
+		7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelAddView.swift; sourceTree = "<group>"; };
+		7BF9D70C2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelAddFeature.swift; sourceTree = "<group>"; };
+		7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMakeChannelAPIError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -743,6 +749,8 @@
 				7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */,
 				7B8FD6082C198D7B00948E7C /* WorkSpaceEmptyListView.swift */,
 				7B8FD60A2C198D9D00948E7C /* WorkSpaceEmptyListFeature.swift */,
+				7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */,
+				7BF9D70C2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift */,
 			);
 			path = WorkSpaceList;
 			sourceTree = "<group>";
@@ -853,6 +861,7 @@
 				7B26D1F32C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift */,
 				7B26D1FB2C214D1200BC9912 /* WorkSpaceEditAPIError.swift */,
 				7B26D2282C228CDE00BC9912 /* WorkSpaceMyChannelError.swift */,
+				7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1045,6 +1054,7 @@
 				7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,
+				7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */,
 				7B2EEE202C1190EE0024853C /* APIError.swift in Sources */,
 				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,
 				7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */,
@@ -1063,6 +1073,7 @@
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,
 				7B8FD60F2C19B33A00948E7C /* AppleLoginAPIError.swift in Sources */,
+				7BF9D7112C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift in Sources */,
 				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
 				7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */,
 				7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */,
@@ -1121,6 +1132,7 @@
 				7B26D2232C2282E200BC9912 /* WorkSpaceUserRealmModel.swift in Sources */,
 				7BEC45EB2C1703C100576ECA /* WorkSpaceFirstStartView.swift in Sources */,
 				7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */,
+				7BF9D70D2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift in Sources */,
 				7B26D1F02C1FE11D00BC9912 /* CustomAlertView.swift in Sources */,
 				7B8FD63F2C1ABD0B00948E7C /* RealmRepository.swift in Sources */,
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,

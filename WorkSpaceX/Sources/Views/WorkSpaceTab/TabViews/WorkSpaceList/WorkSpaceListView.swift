@@ -36,6 +36,12 @@ struct WorkSpaceListView: View {
                                     return -vd.width
                                 }
                         }
+                        teamMemberAddView()
+                            .listRowInsets(EdgeInsets())
+                            .alignmentGuide(.listRowSeparatorLeading) { vd in
+                                print(vd.width)
+                                return -vd.width
+                            }
                     } header: {
                         chanelHeader()
                     }.background  {
@@ -124,11 +130,35 @@ struct WorkSpaceListView: View {
             Text("채널 추가")
                 .font(WSXFont.title2)
                 .foregroundStyle(WSXColor.gray)
+                .asButton {
+                    store.send(.chnnelAddClicked)
+                }
             Spacer()
         }
         .padding(.leading, 10)
         .frame(height: 30)
     }
+    
+    private func teamMemberAddView() -> some View {
+        HStack {
+            WSXImage.plus
+                .resizable()
+                .foregroundStyle(WSXColor.gray)
+                .frame(width: 14, height: 14)
+                .padding(.leading, 10)
+            
+            Text("팀원 추가")
+                .font(WSXFont.title2)
+                .foregroundStyle(WSXColor.black)
+                .padding(.horizontal, 4)
+                .asButton {
+                    print("팀원 추가 버튼을 눌렀어요")
+                }
+            Spacer()
+        }
+        .frame(height: 30)
+    }
+    
 }
 
 

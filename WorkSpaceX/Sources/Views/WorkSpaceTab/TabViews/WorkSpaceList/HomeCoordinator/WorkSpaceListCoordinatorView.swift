@@ -18,9 +18,11 @@ struct WorkSpaceListCoordinatorView: View {
             TCARouter(store.scope(state: \.identeRoutes, action: \.router)) { screen in
                 
                 switch screen.case {
-                    
                 case let .rootScreen(store):
                     WorkSpaceListView(store: store)
+                    
+                case let .channelAdd(store):
+                    WorkSpaceChannelAddView(store: store)
                 }
             }
         }
@@ -31,6 +33,8 @@ extension WorkSpaceListScreens.State: Identifiable {
     var id: UUID {
         switch self {
         case let .rootScreen(state):
+            return state.id
+        case let .channelAdd(state):
             return state.id
         }
     }

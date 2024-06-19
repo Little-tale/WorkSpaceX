@@ -14,7 +14,7 @@ import Foundation
 struct NewWorkSpaceRequest {
     let name: String
     let description: String?
-    let image: Data
+    let image: Data?
 }
 
 struct EditWorkSpaceReqeust {

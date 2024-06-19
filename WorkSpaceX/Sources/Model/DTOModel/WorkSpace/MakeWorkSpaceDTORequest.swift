@@ -10,7 +10,7 @@ import Foundation
 struct MakeWorkSpaceDTORequest: DTORequest {
     let name: String
     let description: String?
-    let image: Data
+    let image: Data?
 }
 
 struct ModifyWorkSpaceDTORequest: DTORequest {

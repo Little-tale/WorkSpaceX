@@ -12,6 +12,10 @@ import TCACoordinators
 @Reducer(state: .equatable)
 enum WorkSpaceListScreens {
     case rootScreen(WorkSpaceListFeature)
+    
+    
+    // PageSheet
+    case channelAdd(WorkSpaceChannelAddFeature)
 }
 
 @Reducer
@@ -20,11 +24,16 @@ struct WorkSpaceListCordinator {
     struct State: Equatable {
         
         static let uuid = UUID()
+        
+        let sheetID = UUID()
+        
         static let initialState = State(
             identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State(id: uuid)), embedInNavigationView: true)]
         )
         
         var identeRoutes: IdentifiedArrayOf<Route<WorkSpaceListScreens.State>>
+        
+        var currentWorkSpaceId: String?
     }
     
     enum Action {
@@ -44,13 +53,24 @@ struct WorkSpaceListCordinator {
             switch action {
                 
             case let .sendToRootWorkSpaceID(id):
+                state.currentWorkSpaceId = id
                 return .send(.router(.routeAction(id: WorkSpaceListCordinator.State.uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
                 
             case .router(.routeAction(id: _, action: .rootScreen(.openSideMenu))) :
-                
                 return .run { send in
                     await send(.delegate(.openSideMenu))
                 }
+                
+            case .router(.routeAction(id: _, action: .rootScreen(.chnnelAddClicked))) :
+                
+                if let id = state.currentWorkSpaceId {
+                    state.identeRoutes.presentSheet(.channelAdd(WorkSpaceChannelAddFeature.State(id: state.sheetID, workSpaceId: id)), embedInNavigationView: true)
+                }
+                
+                
+            case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
+                
+                state.identeRoutes.dismiss()
                 
             default:
                 break
