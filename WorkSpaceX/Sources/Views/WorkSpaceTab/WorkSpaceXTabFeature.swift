@@ -62,6 +62,7 @@ struct WorkSpaceTabCoordinator {
         // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
         @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
         var currentCount = 0
+        var currentModels: [WorkSpaceRealmModel] = []
     }
     
     enum Action: BindableAction {
@@ -241,10 +242,16 @@ struct WorkSpaceTabCoordinator {
                 let count = models.count
                 state.currentCount = count
                 state.ifNoneSpace = count <= 0
+                state.currentModels = models
                 
             case .sidebar(.successAlertTapped) :
                 if state.currentCount <= 0 {
                     state.sideMenuOpen = false
+                    // 이때 아마 루트뷰에게 알려야함.
+                } else {
+                    if let first = state.currentModels.first {
+                        return .send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
+                    }
                 }
                 
                 // HomeTabDelegte

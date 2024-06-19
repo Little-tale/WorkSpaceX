@@ -29,8 +29,14 @@ struct RealmRepository {
     static func mainActorRemove<M: Object>(_ modelId: String, type: M.Type) async throws {
         let realm = try await Realm(actor: MainActor.shared)
         
+        guard let workspace = realm.object(ofType: WorkSpaceRealmModel.self, forPrimaryKey: modelId) else {
+            throw RealmError.cantFindModel
+        }
+        
         try await realm.asyncWrite{
             if let model = realm.object(ofType: type, forPrimaryKey: modelId) {
+                realm.delete(workspace.users)
+                realm.delete(workspace.channels)
                 realm.delete(model)
             }
         }

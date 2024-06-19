@@ -223,7 +223,6 @@ struct WorkSpaceSideFeature {
                     
                     try await RealmRepository.mainActorRemove(removeModelID, type: WorkSpaceRealmModel.self)
                     
-                    
                     await send(.successMessage("삭제 완료되었습니다."))
                     
                 } catch: { error, send in
