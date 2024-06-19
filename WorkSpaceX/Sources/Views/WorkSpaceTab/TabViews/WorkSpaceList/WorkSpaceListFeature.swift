@@ -67,11 +67,11 @@ struct WorkSpaceListFeature {
             
                 
             case let .observerStart(workSpaceID):
-                return .run { send in
-                    for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                return .run { @MainActor send in
+                    for await currentModel in workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
                         print("응답 받음 \(String(describing: currentModel))")
                         if let currentModel{
-                            await send(.catchToWorkSpaceRealmModel(currentModel))
+                            send(.catchToWorkSpaceRealmModel(currentModel))
                         }
                     }
                 }
@@ -90,6 +90,19 @@ struct WorkSpaceListFeature {
                 return .run { send in
                    let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
                     print("채널의 결말",result)
+                    try await realmRepo.upsertToWorkSpaceChannels(workSpaceId: workSpaceID, channels: result)
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceMyChannelError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            print(error.message) // 알렛 준비
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
                 }
                 
             default :

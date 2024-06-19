@@ -20,11 +20,11 @@ class WorkSpaceChannelRealmModel: Object {
     
     @Persisted var ownerID: String
     
-    @Persisted var createdAt: String
+    @Persisted var createdAt: Date?
     
     
     convenience
-    init(channelID: String, name: String, introduce: String, coverImage: String? = nil, ownerID: String, createdAt: String) {
+    init(channelID: String, name: String, introduce: String, coverImage: String? = nil, ownerID: String, createdAt: Date? = nil) {
         self.init()
         self.channelID = channelID
         self.name = name
