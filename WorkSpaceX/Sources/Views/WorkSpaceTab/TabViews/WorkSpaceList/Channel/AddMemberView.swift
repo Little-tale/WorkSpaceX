@@ -28,12 +28,11 @@ struct AddMemberView: View {
                         .padding(.vertical, 10)
                         .font(WSXFont.title2)
                         
-                        if store.showValidText {
-                            Text("이메일 형식을 확인하여 주세요")
-                                .font(WSXFont.caption)
-                                .foregroundStyle(WSXColor.errorRed)
-                                .padding(.vertical, 4)
-                        }
+                        Text(store.showVaildText)
+                            .font(WSXFont.caption)
+                            .foregroundStyle(WSXColor.errorRed)
+                            .padding(.vertical, 4)
+                        
                         Spacer()
                         
                     }// VStack

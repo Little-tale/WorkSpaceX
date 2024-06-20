@@ -18,11 +18,13 @@ struct AddMemberFeature {
         var currentChannelID: String
         
         var currentEmail = ""
-        var regButtonState = false
+       
         var errorMessage: String? = nil
         var successMessage: String? = nil
         var showPrograssView = false
-        var showValidText = false
+        
+        var regButtonState = false
+        var showVaildText = ""
     }
     
     enum Action: BindableAction {
@@ -51,7 +53,23 @@ struct AddMemberFeature {
             case .binding:
                 let email = state.currentEmail
                 let result = TextValid.TextValidate(email, caseOf: .email)
-                break
+                switch result {
+                case .isEmpty:
+                    state.showVaildText = "이메일을 입력해 주세요"
+                    state.regButtonState = false
+                case .minCount:
+                    state.showVaildText = "이메일을 입력해 주세요"
+                    state.regButtonState = false
+                case .match:
+                    state.showVaildText = ""
+                    state.regButtonState = true
+                case .noMatch:
+                    state.showVaildText = "이메일 형식이 아니에요!"
+                    state.regButtonState = false
+                case .alReady:
+                    state.showVaildText = "이메일을 재확인 해주세요"
+                    state.regButtonState = false
+                }
                 
             default:
                 break
