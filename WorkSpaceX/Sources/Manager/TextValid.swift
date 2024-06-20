@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 struct TextValid {
     
@@ -17,6 +18,19 @@ struct TextValid {
     static func phoneTextValiate(_ text: String) -> String {
         if text.isEmpty { return "" }
         return RegularExpressionCase.phoneNumber.formatterPhoneNumber(text)
+    }
+    
+}
+
+extension TextValid : DependencyKey {
+    static var liveValue: TextValid = Self()
+}
+
+extension DependencyValues {
+    
+    var textValidtor: TextValid {
+        get { self[TextValid.self] }
+        set { self[TextValid.self] = newValue }
     }
     
 }

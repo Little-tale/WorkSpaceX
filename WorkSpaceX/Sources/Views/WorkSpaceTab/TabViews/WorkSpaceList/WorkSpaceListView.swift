@@ -152,7 +152,7 @@ struct WorkSpaceListView: View {
                 .foregroundStyle(WSXColor.black)
                 .padding(.horizontal, 4)
                 .asButton {
-                    print("팀원 추가 버튼을 눌렀어요")
+                    store.send(.addMemberClicked)
                 }
             Spacer()
         }

@@ -162,6 +162,8 @@
 		7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */; };
 		7BF9D70D2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D70C2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift */; };
 		7BF9D7112C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */; };
+		7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7132C23F68A0021D043 /* AddMemberView.swift */; };
+		7BF9D7162C23F7B80021D043 /* AddMemberFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7152C23F7B80021D043 /* AddMemberFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -314,6 +316,8 @@
 		7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelAddView.swift; sourceTree = "<group>"; };
 		7BF9D70C2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelAddFeature.swift; sourceTree = "<group>"; };
 		7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMakeChannelAPIError.swift; sourceTree = "<group>"; };
+		7BF9D7132C23F68A0021D043 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
+		7BF9D7152C23F7B80021D043 /* AddMemberFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -744,6 +748,7 @@
 		7B8FD6052C19812400948E7C /* WorkSpaceList */ = {
 			isa = PBXGroup;
 			children = (
+				7BF9D7122C23F6660021D043 /* Channel */,
 				7B26D18C2C1C132600BC9912 /* HomeCoordinator */,
 				7B8FD6032C1980E400948E7C /* WorkSpaceListView.swift */,
 				7B8FD6062C19813500948E7C /* WorkSpaceListFeature.swift */,
@@ -907,6 +912,15 @@
 			path = WorkSpaceListUSE;
 			sourceTree = "<group>";
 		};
+		7BF9D7122C23F6660021D043 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				7BF9D7132C23F68A0021D043 /* AddMemberView.swift */,
+				7BF9D7152C23F7B80021D043 /* AddMemberFeature.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1044,6 +1058,7 @@
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B8FD6232C1AA2CA00948E7C /* ExText.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
+				7BF9D7162C23F7B80021D043 /* AddMemberFeature.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
@@ -1080,6 +1095,7 @@
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */,
+				7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */,
 				7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */,
 				7B8FD61D2C1A8EED00948E7C /* MyProfileAPIError.swift in Sources */,
 				7B2EEE152C11812B0024853C /* WSXHeader.swift in Sources */,

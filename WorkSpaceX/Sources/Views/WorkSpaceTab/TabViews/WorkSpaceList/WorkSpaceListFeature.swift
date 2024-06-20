@@ -42,6 +42,8 @@ struct WorkSpaceListFeature {
         case workSpaceChnnelUpdate(workSpaceID: String)
         // 채널 추가
         case chnnelAddClicked
+        // 팀원 추가
+        case addMemberClicked
         
         // 상위뷰 관찰
         case openSideMenu
@@ -63,8 +65,8 @@ struct WorkSpaceListFeature {
                 return .run { @MainActor send in
                     let result = try await realmRepo.findModel(workSpaceId, type: WorkSpaceRealmModel.self)
                     
-                    
                     print("찾아오기 성공 \(result)")
+                    
                     if let result {
                         send(.catchToWorkSpaceRealmModel(result))
                     }
@@ -81,10 +83,6 @@ struct WorkSpaceListFeature {
                     }
                     
                 }
-              
-            case .chnnelAddClicked:
-                
-                break
                 
             case let .catchToWorkSpaceRealmModel(model):
                 state.currentWorkSpaceId = model.workSpaceID

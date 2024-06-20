@@ -16,6 +16,7 @@ enum WorkSpaceListScreens {
     
     // PageSheet
     case channelAdd(WorkSpaceChannelAddFeature)
+    case memberAdd(AddMemberFeature)
 }
 
 @Reducer
@@ -67,12 +68,23 @@ struct WorkSpaceListCordinator {
                     state.identeRoutes.presentSheet(.channelAdd(WorkSpaceChannelAddFeature.State(id: state.sheetID, workSpaceId: id)), embedInNavigationView: true)
                 }
                 
-                
+                // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 
                 state.identeRoutes.dismiss()
             case .router(.routeAction(id: _, action: .channelAdd(.ifNeedSuccessTrigger))) :
                 state.identeRoutes.dismiss()
+                
+                // 팀원 추가 클릭
+            case .router(.routeAction(id: _, action: .rootScreen(.addMemberClicked))) :
+                if let id = state.currentWorkSpaceId {
+                    state.identeRoutes.presentSheet(.memberAdd(AddMemberFeature.State( currentChannelID: id)), embedInNavigationView: true)
+                }
+                
+            case .router(.routeAction(id: _, action: .memberAdd(.dismissButtonTapped))):
+                state.identeRoutes.dismiss()
+                
+                break
                 
             default:
                 break
