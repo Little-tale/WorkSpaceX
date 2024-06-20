@@ -63,7 +63,7 @@ struct AddMemberView: View {
                     }
                 }
                 .alert(item: $store.errorMessage) { _ in
-                    Text("에러 발생")
+                    Text("에러")
                 } actions: { _ in
                     Text("확인")
                         .asButton {

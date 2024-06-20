@@ -16,13 +16,14 @@ enum WorkSpaceRouter: Router {
     // 채널
     case findWorkSpaceChannels(workSpaceID: String)
     case createChannel(MakeWorkSpaceDTORequest, workSpaceID: String, boundary: String)
+    case workSpaceAddMember(workSpaceId: String, request: WorkSpaceAddMemberRequestDTO)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
         switch self {
         case .meWorkSpace, .findWorkSpaceChannels:
             return .get
-        case .makeWorkSpace, .createChannel:
+        case .makeWorkSpace, .createChannel, .workSpaceAddMember:
             return .post
         case .removeWorkSpace:
             return .delete
@@ -51,12 +52,15 @@ extension WorkSpaceRouter {
         case let .createChannel(_, id, _):
             print("라우터 시점 :\(id)")
             return APIKey.version + "/workspaces/\(id)/channels"
+            
+        case let .workSpaceAddMember(id,_):
+            return APIKey.version + "/workspaces/\(id)/members"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels:
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceAddMember:
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -74,7 +78,7 @@ extension WorkSpaceRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel :
+        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember :
             return nil
         }
     }
@@ -89,6 +93,9 @@ extension WorkSpaceRouter {
             return makeWorkSpaceMultipartData(data, boundary: boundary)
         case let .createChannel(data, _, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
+            
+        case let .workSpaceAddMember(_, model):
+            return requestToBody(model)
         }
     }
     
@@ -96,12 +103,16 @@ extension WorkSpaceRouter {
         switch self {
         case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels:
             return .url
+            
         case .makeWorkSpace :
             return .multiPart
         case .modifyWorkSpace :
             return .multiPart
         case .createChannel :
             return .multiPart
+            
+        case .workSpaceAddMember:
+            return .json
         }
     }
     

@@ -15,7 +15,7 @@ struct AddMemberFeature {
     struct State: Equatable {
         var id = UUID()
         
-        var currentChannelID: String
+        var currentWorkSpaceID: String
         
         var currentEmail = ""
        
@@ -34,7 +34,7 @@ struct AddMemberFeature {
         
         // 내부용
         case catchTextValid
-        
+        case realmRegStart(WorkSpaceMembersEntity)
         // Alert State
         case errorMessage(String?)
         case successMessage(String?)
@@ -42,6 +42,9 @@ struct AddMemberFeature {
         case dismissButtonTapped
         case alertSuccessTapped
     }
+    
+    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+    @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -70,6 +73,44 @@ struct AddMemberFeature {
                     state.showVaildText = "이메일을 재확인 해주세요"
                     state.regButtonState = false
                 }
+                
+            case .regButtonTapped:
+                
+                let email = state.currentEmail
+                let id = state.currentWorkSpaceID
+                
+                return .run { send in
+                    let result = try await workSpaceRepo.addWorkSpaceMember(id, email)
+                    await send(.realmRegStart(result))
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceAddMemberAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error )
+                    }
+                }
+            case let .realmRegStart(model):
+                let id = state.currentWorkSpaceID
+                return .run { @MainActor send in
+                    try await realmRepo.upsertWorkSpaceInMember(
+                        response: model,
+                        workSpaceID: id
+                    )
+                    send(.successMessage("\(model.nickname)님 을 초대 하였습니다."))
+                } catch : { error, send in
+                    print(error)
+                }
+                
+            case let .errorMessage(string):
+                state.errorMessage = string
+            case let .successMessage(string):
+                state.successMessage = string
                 
             default:
                 break

@@ -70,3 +70,20 @@ extension WorkSpaceDomainMapper {
     }
     
 }
+
+extension WorkSpaceDomainMapper {
+    
+    func toWorkSpaceAddMemberRequestDTO(_ email: String) -> WorkSpaceAddMemberRequestDTO{
+        return WorkSpaceAddMemberRequestDTO(email: email)
+    }
+    
+    func workSpaceAddMemberDTOToEntity(dto: WorkSpaceAddMemberDTO) -> WorkSpaceMembersEntity {
+        
+        return WorkSpaceMembersEntity(
+            userID: dto.user_id,
+            email: dto.email,
+            nickname: dto.nickname,
+            profileImage: dto.profileImage
+        )
+    }
+}

@@ -100,9 +100,10 @@ struct WorkSpaceListFeature {
             case let .workSpaceChnnelUpdate(workSpaceID):
                 print("워크스페이스 채널 네트워크 요청 시작")
                 return .run { send in
-                   let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
+                    let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
                     print("채널의 결말",result)
                     try await realmRepo.upsertToWorkSpaceChannels(workSpaceId: workSpaceID, channels: result)
+                    
                 } catch: { error, send in
                     if let error = error as? WorkSpaceMyChannelError {
                         if error.ifReFreshDead {

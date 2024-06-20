@@ -52,7 +52,8 @@ struct RealmRepository {
 
 extension RealmRepository {
     /// 유저 프로필 정보를 생성하거나 덮어씌웁니다.
-    func upsertUserModel(response: UserEntity) async throws{
+    @discardableResult
+    func upsertUserModel(response: UserEntity) async throws -> UserRealmModel? {
         let realm = try await Realm(actor: MainActor.shared)
         print("유저 정보 저장중.....")
         do {
@@ -67,9 +68,12 @@ extension RealmRepository {
                     "createdAt" : response.createdAt as Any
                 ], update: .modified)
             }
+            let result = realm.object(ofType: UserRealmModel.self, forPrimaryKey: response.userID)
+            
+            return result
         } catch {
             print(error)
-            return
+            return nil
         }
     }
     
@@ -86,16 +90,12 @@ extension RealmRepository {
         
         print("동기화 .... ")
         
+        try await removeForCleantoWorkSpace(
+            serverIDs: responses.map { $0.workSpaceID },
+            ifRealm: realm
+        )
+
         try await realm.asyncWrite {
-            let currentIDs = Set(realm.objects(WorkSpaceRealmModel.self).map{ $0.workSpaceID })
-            let serverIDs = responses.map { $0.workSpaceID }
-            
-            let idsToDelete = currentIDs.subtracting(serverIDs)
-            
-            let objectsToDelete = realm.objects(WorkSpaceRealmModel.self).filter("workSpaceID IN %@", idsToDelete)
-            
-            realm.delete(objectsToDelete)
-            
             responses.forEach { @MainActor models in
                 realm.create(WorkSpaceRealmModel.self, value: [
                     "workSpaceID" : models.workSpaceID,
@@ -108,8 +108,76 @@ extension RealmRepository {
             }
             
         }
-        
     }
+    
+    /// 워크 스페이스 렘에는 존재하나 서버에 없을때 사용합니다.
+    @MainActor
+    func syncWorkSpace(with responses: [WorkSpaceDetailEntity]) async throws {
+        let realm = try await Realm(actor: MainActor.shared)
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        print("동기화 .... ")
+        
+        try await removeForCleantoWorkSpace(
+            serverIDs: responses.map { $0.workSpaceID },
+            ifRealm: realm
+        )
+        
+        
+        for model in responses {
+            var members: [UserRealmModel] = []
+            
+            for member in model.workSpaceMembersEntitys {
+                let result = try await upserWorkMember(response: member, ifRealm: realm)
+                
+                if let result {
+                    members.append(result)
+                }
+            }
+            var channelRealms: [WorkSpaceChannelRealmModel] = []
+            
+            channelRealms = try await upserWorkSpaceChannels(channels: model.chanelEntitys, ifRealm: realm)
+            
+            try await realm.asyncWrite {
+                realm.create(WorkSpaceRealmModel.self, value: [
+                    "workSpaceID" : model.workSpaceID,
+                    "workSpaceName" : model.name,
+                    "introduce" : model.description as Any,
+                    "coverImage" : model.coverImage?.absoluteString as Any,
+                    "ownerID" : model.ownerID,
+                    "createdAt" : model.createdAt.toDate as Any,
+                    "users": members,
+                    "channels": channelRealms
+                ], update: .modified)
+            }
+        }
+    }
+    
+    @MainActor
+    func removeForCleantoWorkSpace(serverIDs: [String], ifRealm: Realm? = nil) async throws {
+        
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        let currentIDs = Set(realm.objects(WorkSpaceRealmModel.self).map{ $0.workSpaceID })
+        
+        let idsToDelete = currentIDs.subtracting(serverIDs)
+        
+        let objectsToDelete = realm.objects(WorkSpaceRealmModel.self).filter("workSpaceID IN %@", idsToDelete)
+        
+        try await realm.asyncWrite {
+            objectsToDelete.forEach { @MainActor model in
+                realm.delete(model.channels)
+            }
+            realm.delete(objectsToDelete)
+        }
+    }
+    
     
     /// 워크스페이스를 등록하거나 덮어 씌웁니다.
     @MainActor
@@ -127,6 +195,50 @@ extension RealmRepository {
             ], update: .modified)
         }
     }
+    
+    @MainActor
+    func upsertWorkSpaceInMember(response: WorkSpaceMembersEntity, workSpaceID: String) async throws {
+        
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        let ifRegOrUpdate = try await upserWorkMember(response: response, ifRealm: realm)
+        
+        guard let ifRegOrUpdate else { throw RealmError.cantFindModel }
+        
+        let result = realm.object(ofType: WorkSpaceRealmModel.self, forPrimaryKey: workSpaceID)
+        
+        guard let result else { throw RealmError.cantFindModel }
+        
+        try await realm.asyncWrite {
+            result.users.append(ifRegOrUpdate)
+        }
+    }
+    
+    @MainActor
+    func upserWorkMember(response: WorkSpaceMembersEntity, ifRealm: Realm? = nil) async throws -> UserRealmModel? {
+        
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        try await realm.asyncWrite {
+            realm.create(
+                UserRealmModel.self,
+                value: [
+                    "userID" : response.userID,
+                    "email" : response.email,
+                    "nickName" : response.nickname,
+                    "profileImage": response.profileImage
+                ], update: .modified)
+        }
+        let result = realm.object(ofType: UserRealmModel.self, forPrimaryKey: response.userID)
+        
+        return result
+    }
+    
     @MainActor
     func upsertToWorkSpaceChannels(workSpaceId: String, channels: [ChanelEntity]) async throws {
         let realm = try await Realm(actor: MainActor.shared)
