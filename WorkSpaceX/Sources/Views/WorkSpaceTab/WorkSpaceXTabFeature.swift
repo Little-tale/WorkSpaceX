@@ -43,6 +43,7 @@ struct WorkSpaceTabCoordinator {
         var selectedTab: Tab
         // sidebar State
         
+        var firstInTrigger = true
         
         // HOME STATE
         var homeState: WorkSpaceListCordinator.State
@@ -89,11 +90,13 @@ struct WorkSpaceTabCoordinator {
         case sideMenuMake(Bool)
         
         case sendWorkSpaceMakeAction(PresentationAction<WorkSpaceInitalFeature.Action>)
-        case makeWorkSpaceStart
-        case workSpaceRegSuccess
+        case makeWorkSpaceStart(Bool)
+        case workSpaceRegSuccess(id: String)
         
         case workSpaceSubscribe
         case currentModelCatch([WorkSpaceRealmModel])
+        
+        case noWorkSpaceTrigger
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -185,10 +188,15 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                     await send(.sideMenuMake(false))
                     try await Task.sleep(for: .seconds(0.3))
-                    await send(.makeWorkSpaceStart)
+                    await send(.makeWorkSpaceStart(true))
                 }
-            case .makeWorkSpaceStart:
-                state.makeWorkSpaceState = WorkSpaceInitalFeature.State()
+            case .makeWorkSpaceStart(let bool):
+                if bool {
+                    state.makeWorkSpaceState = WorkSpaceInitalFeature.State()
+                } else {
+                    state.makeWorkSpaceState = nil
+                }
+                
                
             case .sidebar(.goBackToRoot):
                 return .run{ send in
@@ -204,14 +212,29 @@ struct WorkSpaceTabCoordinator {
                     await send(.homeTabbar(.sendToRootWorkSpaceID(worSpaceId)))
                 }
                 
-            case .sendWorkSpaceMakeAction(.presented(.regSuccess)):
+            case .sidebar(.removeSuccessAlertTapped) :
+                if state.currentCount <= 0 {
+//                    state.sideMenuOpen = false
+                    UserDefaultsManager.workSpaceSelectedID = ""
+                    return .run { send in
+                        await send(.noWorkSpaceTrigger)
+                    }
+                } else if let first = state.currentModels.first {
+                    return .send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
+                    
+                }
+            case .sendWorkSpaceMakeAction(.presented(.realmRegSuccess(let id))):
+                return .run { send in
+                    await send(.workSpaceRegSuccess(id: id))
+                }
+            case .workSpaceRegSuccess(let id):
+                UserDefaultsManager.workSpaceSelectedID = id
                 
                 return .run { send in
-                    await send(.workSpaceRegSuccess)
+                     await send(.homeTabbar(.sendToRootWorkSpaceID(id)))
+                    await send(.onAppear)
                 }
-            case .workSpaceRegSuccess:
-                return .run { send in await send(.onAppear) }
-                
+
             
             case .workSpaceSubscribe:
                 return .run { send in
@@ -245,19 +268,14 @@ struct WorkSpaceTabCoordinator {
             case let .currentModelCatch(models):
                 let count = models.count
                 state.currentCount = count
-                state.ifNoneSpace = count <= 0
-                state.currentModels = models
                 
-            case .sidebar(.successAlertTapped) :
-                if state.currentCount <= 0 {
-                    state.sideMenuOpen = false
-                    // 이때 아마 루트뷰에게 알려야함.
-                } else {
-                    if let first = state.currentModels.first {
-                        return .send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
-                    }
+                if state.firstInTrigger {
+                    state.firstInTrigger = false
+                    state.ifNoneSpace = count <= 0
                 }
                 
+                state.currentModels = models
+            
                 // HomeTabDelegte
             case .homeTabbar(.delegate(.openSideMenu)):
                 return .send(.sideMenuMake(true))
@@ -316,3 +334,5 @@ extension AlertState where Action == RootFeature.Action.Alert {
      }
  } else
  */
+
+//

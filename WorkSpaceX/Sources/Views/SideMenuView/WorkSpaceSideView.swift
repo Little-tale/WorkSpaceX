@@ -49,7 +49,7 @@ struct WorkSpaceSideView: View {
             .alert("삭제완료", isPresented: $store.successAlertBool.sending(\.successAlertBool), actions: {
                 Text("확인")
                     .asButton {
-                        store.send(.successAlertTapped)
+                        store.send(.removeSuccessAlertTapped)
                     }
             })
             .confirmationDialog($store.scope(state: \.alertSheet, action: \.alertSheetAction))

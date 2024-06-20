@@ -43,7 +43,7 @@ struct WorkSpaceInitalFeature {
             case confirmButtonTapped
         }
         
-        case realmRegSuccess
+        case realmRegSuccess(workSpaceID: String)
     }
     
     @Dependency(\.dismiss) var dismiss
@@ -147,7 +147,7 @@ struct WorkSpaceInitalFeature {
                 
                 return .run { send in
                     try await realmRepo.upsertWorkSpace(response: model)
-                    await send(.realmRegSuccess)
+                    await send(.realmRegSuccess(workSpaceID: model.workSpaceID))
                 } catch: { error, send in
                     print(error)
                 }
@@ -189,18 +189,24 @@ struct WorkSpaceInitalFeature {
                 }
                
                 return .none
+//                
+//            case .realmRegSuccess:
+//                print("success 이여야!")
+//                state.showPrograssView = false
+//                state.successMessage = "등록 완료 되었습니다."
+//                return .none
                 
-            case .realmRegSuccess:
-                print("success 이여야!")
-                state.showPrograssView = false
-                state.successMessage = "등록 완료 되었습니다."
-                return .none
+            
                 
             case .alert(.dismiss):
                 return .run{ send in
                     await send (.goRootCheck)
                 }
+                
+            default:
+                break
             }
+            return .none
         }
         
     }

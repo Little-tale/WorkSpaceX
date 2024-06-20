@@ -78,7 +78,7 @@ struct WorkSpaceSideFeature {
         // 성공 알렛
         case successMessage(String)
         case successAlertBool(Bool)
-        case successAlertTapped
+        case removeSuccessAlertTapped
     }
     
     enum viewCase {
@@ -185,7 +185,7 @@ struct WorkSpaceSideFeature {
                     
                     let id = model.workSpaceID
                     
-                    return .run { [id = id] send in
+                    return .run { send in
                         print( "지우기 시작" )
                         try await workSpaceRepo.workSpaceRemove(id)
                         

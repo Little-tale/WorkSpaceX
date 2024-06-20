@@ -86,6 +86,10 @@ struct RootFeature {
                 print("엥??????")
                 return .run { send in await send(.onAppear) }
                 
+            case .sendToWorkSpaceTab(.noWorkSpaceTrigger) :
+                
+                return .run { send in await send(.onAppear) }
+                
             case .sendToWorkSpaceStart:
                 
                 return .none
