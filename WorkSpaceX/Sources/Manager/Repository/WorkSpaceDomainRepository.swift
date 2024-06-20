@@ -74,7 +74,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
     )
     
     func workSpaceToChannel(_ workSpace: WorkSpaceRealmModel) -> WorkSpaceChannelsEntity {
-        let channel = WorkSpaceChannelsEntity(items: Array(workSpace.channels))
+        let channel = WorkSpaceChannelsEntity(items: Array(workSpace.channels.sorted(by: \.createdAt)))
         return channel
     }
     

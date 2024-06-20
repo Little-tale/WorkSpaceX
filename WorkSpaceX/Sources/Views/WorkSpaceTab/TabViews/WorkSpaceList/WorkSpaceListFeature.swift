@@ -79,6 +79,7 @@ struct WorkSpaceListFeature {
                             await send(.catchToWorkSpaceRealmModel(currentModel))
                         }
                     }
+                    
                 }
               
             case .chnnelAddClicked:

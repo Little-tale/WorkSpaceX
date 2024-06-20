@@ -103,7 +103,42 @@ struct WorkSpaceReader {
             }
         }
     }
+}
+
+extension WorkSpaceReader {
     
+    func observeChaeelsForWorkSpace(
+        workSpaceId: String,
+        sort keyPath: String = "createdAt",
+        ascending: Bool = true
+    ) -> AsyncStream<[WorkSpaceChannelRealmModel]> {
+        return AsyncStream { contin in
+            Task {
+                do {
+                    let realm = try await Realm(actor: MainActor.shared)
+                    guard let workSpace = realm.object(ofType: WorkSpaceRealmModel.self, forPrimaryKey: workSpaceId) else {
+                        print("못참음")
+                        contin.finish()
+                        return
+                    }
+                    let channels = workSpace.channels.sorted(byKeyPath: keyPath, ascending: ascending)
+                    
+                    let token = channels.observe { changes in
+                        Task { @MainActor in
+                            switch changes {
+                            case .initial(let collection):
+                                contin.yield(Array(collection))
+                            case .update(let collection, _, _, _):
+                                contin.yield(Array(collection))
+                            case .error(let error):
+                                print(error)
+                                contin.finish()
+                            }
+                        }                    }
+                }
+            }
+        }
+    }
 }
 
 extension WorkSpaceReader: DependencyKey {
