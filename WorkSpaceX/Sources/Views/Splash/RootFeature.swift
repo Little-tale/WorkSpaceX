@@ -78,10 +78,6 @@ struct RootFeature {
                 
                 return .run { send in await send(.onAppear) }
                 
-//            case .sendToWorkSpaceTab(.delegate(.checkRootView)):
-//                
-//                return .run { send in await send(.onAppear) }
-                
             case .sendToWorkSpaceStart(.cancelButtonTapped):
                 
                 return .run { send in await send(.onAppear) }

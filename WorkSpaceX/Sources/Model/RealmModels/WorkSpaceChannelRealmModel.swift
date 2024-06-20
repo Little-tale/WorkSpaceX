@@ -22,6 +22,7 @@ class WorkSpaceChannelRealmModel: Object {
     
     @Persisted var createdAt: Date?
     
+    @Persisted var didNotReadCount: Int
     
     convenience
     init(channelID: String, name: String, introduce: String, coverImage: String? = nil, ownerID: String, createdAt: Date? = nil) {
@@ -32,6 +33,7 @@ class WorkSpaceChannelRealmModel: Object {
         self.coverImage = coverImage
         self.ownerID = ownerID
         self.createdAt = createdAt
+        self.didNotReadCount = 0
     }
 }
 

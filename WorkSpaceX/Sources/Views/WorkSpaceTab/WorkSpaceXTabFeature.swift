@@ -221,6 +221,10 @@ struct WorkSpaceTabCoordinator {
                     
                     if UserDefaultsManager.workSpaceSelectedID != "" {
                         await send(.homeTabbar(.sendToRootWorkSpaceID(UserDefaultsManager.workSpaceSelectedID)))
+                    } else if let first = result.first {
+                        UserDefaultsManager.workSpaceSelectedID
+                        = first.workSpaceID
+                        await send(.homeTabbar(.sendToRootWorkSpaceID(UserDefaultsManager.workSpaceSelectedID)))
                     }
                     
                     for await models in await workSpaceReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
