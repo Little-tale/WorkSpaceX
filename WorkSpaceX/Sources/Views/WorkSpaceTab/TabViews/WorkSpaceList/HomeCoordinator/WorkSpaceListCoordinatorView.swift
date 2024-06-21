@@ -26,6 +26,9 @@ struct WorkSpaceListCoordinatorView: View {
                     
                 case let .memberAdd(store):
                     AddMemberView(store: store)
+                    
+                case let .workSpaceChannelListView(store):
+                    WorkSpaceChannelListView(store: store)
                 }
             }
         }
@@ -40,6 +43,8 @@ extension WorkSpaceListScreens.State: Identifiable {
         case let .channelAdd(state):
             return state.id
         case let .memberAdd(state):
+            return state.id
+        case let .workSpaceChannelListView(state):
             return state.id
         }
     }

@@ -14,6 +14,9 @@ enum WorkSpaceListScreens {
     case rootScreen(WorkSpaceListFeature)
     
     
+    // Middel
+    case workSpaceChannelListView(WorkSpaceChannelListFeature)
+    
     // PageSheet
     case channelAdd(WorkSpaceChannelAddFeature)
     case memberAdd(AddMemberFeature)
@@ -27,6 +30,8 @@ struct WorkSpaceListCordinator {
         static let uuid = UUID()
         
         let sheetID = UUID()
+        
+        let ChannelListID = UUID()
         
         static let initialState = State(
             identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State(id: uuid)), embedInNavigationView: true)]
@@ -68,10 +73,23 @@ struct WorkSpaceListCordinator {
                     state.identeRoutes.presentSheet(.channelAdd(WorkSpaceChannelAddFeature.State(id: state.sheetID, workSpaceId: id)), embedInNavigationView: true)
                 }
                 
+            case .router(.routeAction(id: _, action: .rootScreen(.channelSerching))):
+                let channelId = state.ChannelListID
+                if let id = state.currentWorkSpaceId {
+                    state.identeRoutes.push(.workSpaceChannelListView(WorkSpaceChannelListFeature
+                        .State(
+                            id: channelId,
+                            workSpaceID: id
+                        )))
+                }
+                
+            case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
+                state.identeRoutes.pop()
+                
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
-                
                 state.identeRoutes.dismiss()
+                
             case .router(.routeAction(id: _, action: .channelAdd(.ifNeedSuccessTrigger))) :
                 state.identeRoutes.dismiss()
                 

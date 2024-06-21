@@ -56,6 +56,7 @@ struct WorkSpaceListFeature {
         // 상위뷰 관찰
         case openSideMenu
         case chnnelAddClicked
+        case channelSerching
         
         // 채널 생성과 탐색을 분리를 위함.
         case showAlertSheet
@@ -183,8 +184,10 @@ struct WorkSpaceListFeature {
                     await send(.chnnelAddClicked)
                 }
             case .alertSheet(.presented(.channelSerching)) :
-                
                 state.alert = nil
+                return .run { send in
+                    await send(.channelSerching)
+                }
                 
             case .alertSheet(.dismiss):
                 state.alert = nil

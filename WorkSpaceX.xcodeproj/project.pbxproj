@@ -171,6 +171,8 @@
 		7BF9D7212C242A790021D043 /* WorkSpaceDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7202C242A790021D043 /* WorkSpaceDetailEntity.swift */; };
 		7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */; };
 		7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */; };
+		7BF9D7282C255A480021D043 /* WorkSpaceChannelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7272C255A480021D043 /* WorkSpaceChannelListView.swift */; };
+		7BF9D72A2C255A8B0021D043 /* WorkSpaceChannelListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7292C255A8B0021D043 /* WorkSpaceChannelListFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -332,6 +334,8 @@
 		7BF9D7202C242A790021D043 /* WorkSpaceDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDetailEntity.swift; sourceTree = "<group>"; };
 		7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMembersAPIError.swift; sourceTree = "<group>"; };
 		7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMembersDTO.swift; sourceTree = "<group>"; };
+		7BF9D7272C255A480021D043 /* WorkSpaceChannelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelListView.swift; sourceTree = "<group>"; };
+		7BF9D7292C255A8B0021D043 /* WorkSpaceChannelListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelListFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -755,6 +759,7 @@
 		7B8FD6002C19762000948E7C /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
+				7BF9D7262C255A3B0021D043 /* Channel */,
 				7B8FD6052C19812400948E7C /* WorkSpaceList */,
 			);
 			path = TabViews;
@@ -950,6 +955,15 @@
 			path = Channel;
 			sourceTree = "<group>";
 		};
+		7BF9D7262C255A3B0021D043 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				7BF9D7272C255A480021D043 /* WorkSpaceChannelListView.swift */,
+				7BF9D7292C255A8B0021D043 /* WorkSpaceChannelListFeature.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1049,6 +1063,7 @@
 				7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */,
 				7B8FD63D2C1AB6B000948E7C /* UserRealmModel.swift in Sources */,
 				7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */,
+				7BF9D72A2C255A8B0021D043 /* WorkSpaceChannelListFeature.swift in Sources */,
 				7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */,
 				7BEC45E92C16FEDE00576ECA /* RootFeature.swift in Sources */,
 				7B2EEE362C11EA570024853C /* WSXErrorType.swift in Sources */,
@@ -1059,6 +1074,7 @@
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
+				7BF9D7282C255A480021D043 /* WorkSpaceChannelListView.swift in Sources */,
 				7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */,
 				7BEC45F72C180F0600576ECA /* WorkSpaceEntity.swift in Sources */,
 				7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */,
