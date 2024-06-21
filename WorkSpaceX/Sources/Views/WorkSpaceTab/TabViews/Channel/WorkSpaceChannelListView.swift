@@ -42,6 +42,7 @@ struct WorkSpaceChannelListView: View {
                     }
                 }
                 .navigationBarBackButtonHidden()
+                .toolbar(.hidden, for: .tabBar)
                 CustomAlertView(
                     alertMode: .cancelWith,
                     isShowing: $store.ifNeedChannelAlert.sending(\.channelAlertBool),

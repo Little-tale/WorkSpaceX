@@ -36,6 +36,12 @@ struct WorkSpaceChannelListFeature {
         case channelAlertCancel
         case channelALertConfirm
         case channelAlertBool(Bool)
+        
+        // 코디네이터 관찰 내역
+        case delegate(Delegate)
+        enum Delegate {
+            case lastConfirm(ChanelEntity)
+        }
     }
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
@@ -66,6 +72,16 @@ struct WorkSpaceChannelListFeature {
                 return .run { send in
                     await send(.channelAlertBool(true))
                 }
+            case .channelALertConfirm:
+                if let model = state.selectedModel {
+                    return .run { send in
+                        try await Task.sleep(for: .seconds(0.5))
+                        print("채널 조인으로 보내야함.")
+                        // 채널 채팅 내역 리스트 조회를 하면 참여 유저로 등록됨.
+                         await send(.delegate(.lastConfirm(model)))
+                    }
+                }
+                
             case let .channelAlertBool(bool):
                 state.ifNeedChannelAlert = bool
                 

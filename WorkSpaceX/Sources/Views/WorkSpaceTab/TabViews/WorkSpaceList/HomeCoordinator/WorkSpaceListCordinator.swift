@@ -20,6 +20,7 @@ enum WorkSpaceListScreens {
     // PageSheet
     case channelAdd(WorkSpaceChannelAddFeature)
     case memberAdd(AddMemberFeature)
+    case chattingView(WorkSpaceChannelChattingFeature)
 }
 
 @Reducer
@@ -60,7 +61,9 @@ struct WorkSpaceListCordinator {
                 
             case let .sendToRootWorkSpaceID(id):
                 state.currentWorkSpaceId = id
-                return .send(.router(.routeAction(id: WorkSpaceListCordinator.State.uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
+                return .run { send in
+                   await send(.router(.routeAction(id: WorkSpaceListCordinator.State.uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
+                }
                 
             case .router(.routeAction(id: _, action: .rootScreen(.openSideMenu))) :
                 return .run { send in
@@ -82,13 +85,20 @@ struct WorkSpaceListCordinator {
                             workSpaceID: id
                         )))
                 }
-                
+                // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
                 state.identeRoutes.pop()
-                
+    
+            case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.lastConfirm(let model))))) :
+                print("전달받음 : ",model)
+                if let id = state.currentWorkSpaceId {
+                    state.identeRoutes.push(.chattingView(WorkSpaceChannelChattingFeature.State(channelID: model.channelId, workSpaceID: id)))
+                }
+                                
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 state.identeRoutes.dismiss()
+                
                 
             case .router(.routeAction(id: _, action: .channelAdd(.ifNeedSuccessTrigger))) :
                 state.identeRoutes.dismiss()
