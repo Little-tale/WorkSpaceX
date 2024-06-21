@@ -17,10 +17,12 @@ enum WorkSpaceListScreens {
     // Middel
     case workSpaceChannelListView(WorkSpaceChannelListFeature)
     
+    case chattingView(WorkSpaceChannelChattingFeature)
+    
     // PageSheet
     case channelAdd(WorkSpaceChannelAddFeature)
     case memberAdd(AddMemberFeature)
-    case chattingView(WorkSpaceChannelChattingFeature)
+    
 }
 
 @Reducer
@@ -89,11 +91,14 @@ struct WorkSpaceListCordinator {
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
                 state.identeRoutes.pop()
     
+                // 채팅 넘어감.
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.lastConfirm(let model))))) :
                 print("전달받음 : ",model)
                 if let id = state.currentWorkSpaceId {
                     state.identeRoutes.push(.chattingView(WorkSpaceChannelChattingFeature.State(channelID: model.channelId, workSpaceID: id)))
                 }
+            case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
+                state.identeRoutes.popTo(id: WorkSpaceListCordinator.State.uuid)
                                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):

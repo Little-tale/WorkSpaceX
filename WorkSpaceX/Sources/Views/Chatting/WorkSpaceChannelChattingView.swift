@@ -17,6 +17,14 @@ struct WorkSpaceChannelChattingView: View {
             VStack {
                 Text("채팅뷰 탸다~")
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    WSXImage.xImage
+                        .asButton {
+                            store.send(.popClicked)
+                        }
+                }
+            }
             .navigationBarBackButtonHidden()
             .toolbar(.hidden, for: .tabBar)
         }
