@@ -52,7 +52,6 @@ struct CustomAlertView: View {
                 
                 Spacer()
             }
-            .transition(.move(edge: .bottom))
             .animation(.easeInOut, value: isShowing)
             .zIndex(1)
         }

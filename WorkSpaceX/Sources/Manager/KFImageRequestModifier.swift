@@ -17,7 +17,7 @@ final class KFImageRequestModifier: ImageDownloadRequestModifier {
     let version = APIKey.version
     
     func modified(for request: URLRequest) -> URLRequest? {
-        
+        print(request.url)
         guard let accessTokken = UserDefaultsManager.accessToken else {
             return nil
         }

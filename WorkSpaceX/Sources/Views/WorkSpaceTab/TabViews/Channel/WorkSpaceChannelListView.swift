@@ -15,29 +15,47 @@ struct WorkSpaceChannelListView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack {
-                List {
-                    ForEach(store.channelList, id: \.channelId) { model in
-                        channelView(model: model)
+            ZStack {
+                VStack {
+                    List {
+                        ForEach(store.channelList, id: \.channelId) { model in
+                            channelView(model: model)
+                                .onTapGesture {
+                                    store.send(.selectedModel(model))
+                                }
+                        }
+                    }
+                    .listStyle(.plain)
+                }
+                .onAppear {
+                    store.send(.onAppear)
+                }
+                .navigationTitle("채널 탐색")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        WSXImage.xImage
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .asButton {
+                                store.send(.dismissTapped)
+                            }
                     }
                 }
-                .listStyle(.plain)
+                .navigationBarBackButtonHidden()
+                CustomAlertView(
+                    alertMode: .cancelWith,
+                    isShowing: $store.ifNeedChannelAlert.sending(\.channelAlertBool),
+                    title: "채널 참여",
+                    message: store.chaannelAlertMessage,
+                    onCancel: {
+                        store.send(.channelAlertCancel)
+                    },
+                    onAction: {
+                        store.send(.channelALertConfirm)
+                    },
+                    actionTitle: "확인"
+                )
             }
-            .onAppear {
-                store.send(.onAppear)
-            }
-            .navigationTitle("채널 탐색")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    WSXImage.xImage
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .asButton {
-                            store.send(.dismissTapped)
-                        }
-                }
-            }
-            .navigationBarBackButtonHidden()
         }
     }
 }
@@ -48,6 +66,7 @@ extension WorkSpaceChannelListView {
         HStack {
             if let image = model.coverImage {
                 DownSamplingImageView(url: URL(string: image), size: CGSize(width: 30, height: 30))
+                    .frame(width: 30, height: 30)
             } else {
                 WSXImage.shapBold
                     .resizable()

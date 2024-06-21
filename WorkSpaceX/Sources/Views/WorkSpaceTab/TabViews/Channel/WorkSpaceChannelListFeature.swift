@@ -17,6 +17,11 @@ struct WorkSpaceChannelListFeature {
         var workSpaceID: String
         var errorMessage: String?
         var channelList = [ChanelEntity] ()
+        
+        
+        var ifNeedChannelAlert: Bool = false
+        var chaannelAlertMessage = ""
+        var selectedModel: ChanelEntity?
     }
     
     enum Action {
@@ -26,6 +31,11 @@ struct WorkSpaceChannelListFeature {
         case catchModels([ChanelEntity])
         
         case errorMessage(String?)
+        
+        case selectedModel(ChanelEntity)
+        case channelAlertCancel
+        case channelALertConfirm
+        case channelAlertBool(Bool)
     }
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
@@ -49,6 +59,16 @@ struct WorkSpaceChannelListFeature {
                         } else { print(error) }
                     } else { print(error) }
                 }
+                
+            case let .selectedModel(model):
+                state.selectedModel = model
+                state.chaannelAlertMessage = "[\(model.name)] 채널에 참여 하시겠습니까?"
+                return .run { send in
+                    await send(.channelAlertBool(true))
+                }
+            case let .channelAlertBool(bool):
+                state.ifNeedChannelAlert = bool
+                
             case let .catchModels(models):
                 state.channelList = models
                 
