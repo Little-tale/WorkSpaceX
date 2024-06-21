@@ -169,6 +169,8 @@
 		7BF9D71D2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D71C2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift */; };
 		7BF9D71F2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D71E2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift */; };
 		7BF9D7212C242A790021D043 /* WorkSpaceDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7202C242A790021D043 /* WorkSpaceDetailEntity.swift */; };
+		7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */; };
+		7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -328,6 +330,8 @@
 		7BF9D71C2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceAddMemberDTO.swift; sourceTree = "<group>"; };
 		7BF9D71E2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceAddMemberAPIError.swift; sourceTree = "<group>"; };
 		7BF9D7202C242A790021D043 /* WorkSpaceDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDetailEntity.swift; sourceTree = "<group>"; };
+		7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMembersAPIError.swift; sourceTree = "<group>"; };
+		7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMembersDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -866,6 +870,7 @@
 				7B26D2262C228C3300BC9912 /* WorkSpaceChannelListDTO.swift */,
 				7BF9D7182C2405130021D043 /* WorkSpaceAddMemberRequestDTO.swift */,
 				7BF9D71C2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift */,
+				7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -881,6 +886,7 @@
 				7B26D2282C228CDE00BC9912 /* WorkSpaceMyChannelError.swift */,
 				7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */,
 				7BF9D71E2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift */,
+				7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1040,6 +1046,7 @@
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
+				7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */,
 				7B8FD63D2C1AB6B000948E7C /* UserRealmModel.swift in Sources */,
 				7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */,
 				7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */,
@@ -1120,6 +1127,7 @@
 				7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */,
 				7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */,
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
+				7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */,
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */,
 				7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */,

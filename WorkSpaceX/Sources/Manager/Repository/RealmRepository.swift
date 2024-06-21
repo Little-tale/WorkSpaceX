@@ -215,6 +215,30 @@ extension RealmRepository {
     }
     
     @MainActor
+    func upsertWorkSpaceInMembers(responses: [WorkSpaceMembersEntity], workSpaceID: String) async throws {
+        
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        var users: [UserRealmModel] = []
+        
+        for response in responses {
+            let ifRegOrUpdate = try await upserWorkMember(response: response, ifRealm: realm)
+            guard let ifRegOrUpdate else { throw RealmError.cantFindModel }
+            users.append(ifRegOrUpdate)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(
+                WorkSpaceRealmModel.self,
+                value: [
+                    "workSpaceID" : workSpaceID,
+                    "users": users
+                ],
+                update: .modified)
+        }
+    }
+    
+    @MainActor
     func upserWorkMember(response: WorkSpaceMembersEntity, ifRealm: Realm? = nil) async throws -> UserRealmModel? {
         
         var realm: Realm

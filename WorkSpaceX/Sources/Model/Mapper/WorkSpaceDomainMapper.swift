@@ -86,4 +86,8 @@ extension WorkSpaceDomainMapper {
             profileImage: dto.profileImage
         )
     }
+    
+    func workSpaceMembersDTOToEntity(dtos: [WorkSpaceAddMemberDTO]) -> [WorkSpaceMembersEntity] {
+        return dtos.map { workSpaceAddMemberDTOToEntity(dto: $0)}
+    }
 }

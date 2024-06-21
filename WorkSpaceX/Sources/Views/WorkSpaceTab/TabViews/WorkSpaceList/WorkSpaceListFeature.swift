@@ -20,6 +20,9 @@ struct WorkSpaceListFeature {
         var workSpaceName: String?
         
         var chanelSection = WorkSpaceChannelsEntity(items: [])
+        
+        
+        var alertErrorMessage: String?
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
@@ -38,12 +41,15 @@ struct WorkSpaceListFeature {
         case firstRealm(String)
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
         
+        case workSpaceMembersUpdate(workSpaceID: String)
         // 워크스페이스 채널 네트워크 요청단
         case workSpaceChnnelUpdate(workSpaceID: String)
         // 채널 추가
         case chnnelAddClicked
         // 팀원 추가
         case addMemberClicked
+        // 알렛
+        case alertErrorMessage(String?)
         
         // 상위뷰 관찰
         case openSideMenu
@@ -58,6 +64,7 @@ struct WorkSpaceListFeature {
                 return .run { send in
                     await send(.firstRealm(workSpaceId))
                     await send(.observerStart(workSpaceId))
+                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceId))
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceId))
                 }
                 
@@ -95,6 +102,23 @@ struct WorkSpaceListFeature {
                 
                 state.chanelSection = workSpaceRepo.workSpaceToChannel(model)
                 
+            case let .workSpaceChnnelUpdate(id):
+                return .run { send in
+                    let result = try await workSpaceRepo.workSpaceMemberUpdate(id)
+                    try await realmRepo.upsertWorkSpaceInMembers(responses: result, workSpaceID: id)
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceMembersAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.alertErrorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
                 
                 // 채널 업데이트
             case let .workSpaceChnnelUpdate(workSpaceID):
@@ -109,7 +133,7 @@ struct WorkSpaceListFeature {
                         if error.ifReFreshDead {
                             RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
                         } else if !error.ifDevelopError {
-                            print(error.message) // 알렛 준비
+                            await send(.alertErrorMessage(error.message))
                         } else {
                             print(error)
                         }
