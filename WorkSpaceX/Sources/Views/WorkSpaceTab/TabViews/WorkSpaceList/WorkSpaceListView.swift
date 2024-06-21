@@ -49,9 +49,8 @@ struct WorkSpaceListView: View {
                     }
                 }
                 .listStyle(.plain)
-                
-                
             }
+            .confirmationDialog($store.scope(state: \.alert, action: \.alertSheet))
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack {
@@ -131,7 +130,7 @@ struct WorkSpaceListView: View {
                 .font(WSXFont.title2)
                 .foregroundStyle(WSXColor.gray)
                 .asButton {
-                    store.send(.chnnelAddClicked)
+                    store.send(.showAlertSheet)
                 }
             Spacer()
         }

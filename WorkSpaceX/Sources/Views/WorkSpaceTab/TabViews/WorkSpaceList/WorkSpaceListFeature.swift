@@ -23,6 +23,9 @@ struct WorkSpaceListFeature {
         
         
         var alertErrorMessage: String?
+        
+        @Presents var alert: ConfirmationDialogState<Action.actionSheetAction>?
+        
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
@@ -44,8 +47,7 @@ struct WorkSpaceListFeature {
         case workSpaceMembersUpdate(workSpaceID: String)
         // 워크스페이스 채널 네트워크 요청단
         case workSpaceChnnelUpdate(workSpaceID: String)
-        // 채널 추가
-        case chnnelAddClicked
+        
         // 팀원 추가
         case addMemberClicked
         // 알렛
@@ -53,6 +55,22 @@ struct WorkSpaceListFeature {
         
         // 상위뷰 관찰
         case openSideMenu
+        case chnnelAddClicked
+        
+        // 채널 생성과 탐색을 분리를 위함.
+        case showAlertSheet
+        
+        // AlertSheet
+        case alertSheet(PresentationAction<actionSheetAction>)
+        
+        
+        @CasePathable
+        enum actionSheetAction {
+            // 채널 추가
+            case chnnelAddClicked
+            // 채널 탐색
+            case channelSerching
+        }
     }
     
     var body: some ReducerOf<Self> {
@@ -141,6 +159,36 @@ struct WorkSpaceListFeature {
                         print(error)
                     }
                 }
+                
+            case .showAlertSheet:
+                state.alert = ConfirmationDialogState(title: {
+                    TextState("채널")
+                }, actions: {
+                    ButtonState(role: .cancel) {
+                        TextState("취소")
+                            .bold()
+                            
+                    }
+                    ButtonState(action: .chnnelAddClicked) {
+                        TextState("채널 생성")
+                    }
+                    ButtonState(action: .channelSerching) {
+                        TextState("채널 탐색")
+                    }
+                })
+                
+            case .alertSheet(.presented(.chnnelAddClicked)) :
+                state.alert = nil
+                return .run { send in
+                    await send(.chnnelAddClicked)
+                }
+            case .alertSheet(.presented(.channelSerching)) :
+                
+                state.alert = nil
+                
+            case .alertSheet(.dismiss):
+                state.alert = nil
+             
                 
             default :
                 break
