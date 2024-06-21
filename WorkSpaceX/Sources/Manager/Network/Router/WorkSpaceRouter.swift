@@ -14,6 +14,7 @@ enum WorkSpaceRouter: Router {
     case modifyWorkSpace(ModifyWorkSpaceDTORequest, randomBoundary: String, workSpaceID: String)
     
     // 채널
+    case channelListSearching(workSpaceId: String)
     case findWorkSpaceChannels(workSpaceID: String)
     case createChannel(MakeWorkSpaceDTORequest, workSpaceID: String, boundary: String)
     case workSpaceAddMember(workSpaceId: String, request: WorkSpaceAddMemberRequestDTO)
@@ -23,7 +24,10 @@ enum WorkSpaceRouter: Router {
 extension WorkSpaceRouter {
     var method: HTTPMethod {
         switch self {
-        case .meWorkSpace, .findWorkSpaceChannels,.workSpaceMembersReqeust:
+        case .meWorkSpace,
+                .findWorkSpaceChannels,
+                .workSpaceMembersReqeust,
+                .channelListSearching :
             return .get
         case .makeWorkSpace, .createChannel, .workSpaceAddMember:
             return .post
@@ -60,12 +64,19 @@ extension WorkSpaceRouter {
             
         case let .workSpaceMembersReqeust(id):
             return APIKey.version + "/workspaces/\(id)/members"
+        case let .channelListSearching(id):
+            return APIKey.version + "/workspaces/\(id)/channels"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceAddMember, .workSpaceMembersReqeust:
+        case .meWorkSpace,
+                .removeWorkSpace,
+                .findWorkSpaceChannels,
+                .workSpaceAddMember,
+                .workSpaceMembersReqeust,
+                .channelListSearching :
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -83,14 +94,14 @@ extension WorkSpaceRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersReqeust:
+        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersReqeust, .channelListSearching :
             return nil
         }
     }
     
     var body: Data? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust:
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust, .channelListSearching :
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -106,7 +117,11 @@ extension WorkSpaceRouter {
     
     var encodingType: EncodingType {
         switch self {
-        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust:
+        case .meWorkSpace,
+                .removeWorkSpace,
+                .findWorkSpaceChannels,
+                .workSpaceMembersReqeust,
+                .channelListSearching :
             return .url
             
         case .makeWorkSpace :

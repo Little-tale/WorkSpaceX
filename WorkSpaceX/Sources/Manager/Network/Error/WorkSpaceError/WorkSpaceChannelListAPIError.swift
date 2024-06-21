@@ -1,5 +1,5 @@
 //
-//  WorkSpaceMembersAPIError.swift
+//  WorkSpaceChannelListAPIError.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/21/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WorkSpaceMembersAPIError: WSXErrorType {
+struct WorkSpaceChannelListAPIError: WSXErrorType {
     
     var errorCode: String
     

@@ -18,6 +18,10 @@ struct WorkSpaceChannelListView: View {
             VStack {
                 
             }
+            .onAppear {
+                store.send(.onAppear)
+            }
+            .navigationTitle("채널 탐색")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     WSXImage.xImage

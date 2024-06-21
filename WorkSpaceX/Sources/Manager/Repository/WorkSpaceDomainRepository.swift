@@ -22,6 +22,8 @@ struct WorkSpaceDomainRepository {
     var addWorkSpaceMember: (_ workSpace: String, _ email: String) async throws -> WorkSpaceMembersEntity
     
     var workSpaceMemberUpdate: (_ workSpace: String) async throws -> [WorkSpaceMembersEntity]
+    
+    var workSpaceSearchingToChannel: (_ workSpaceID: String) async throws -> [ChanelEntity]
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -89,6 +91,18 @@ extension WorkSpaceDomainRepository: DependencyKey {
             let members = result.members
             
             let mapping = workSpaceMapper.workSpaceMembersDTOToEntity(dtos: members)
+            
+            return mapping
+        }, workSpaceSearchingToChannel: { workSpaceID in
+            
+           let result = try await NetworkManager.shared.requestDto(
+                WorkSpaceChannelListDTO.self,
+                router: WorkSpaceRouter.channelListSearching(
+                    workSpaceId: workSpaceID
+                ), errorType: WorkSpaceChannelListAPIError.self
+            )
+            
+            let mapping = workSpaceMapper.workSpaceChannelListDTOToChannels(dto: result)
             
             return mapping
         }

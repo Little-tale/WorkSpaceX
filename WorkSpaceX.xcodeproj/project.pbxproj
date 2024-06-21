@@ -173,6 +173,7 @@
 		7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */; };
 		7BF9D7282C255A480021D043 /* WorkSpaceChannelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7272C255A480021D043 /* WorkSpaceChannelListView.swift */; };
 		7BF9D72A2C255A8B0021D043 /* WorkSpaceChannelListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7292C255A8B0021D043 /* WorkSpaceChannelListFeature.swift */; };
+		7BF9D72C2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D72B2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -336,6 +337,7 @@
 		7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceMembersDTO.swift; sourceTree = "<group>"; };
 		7BF9D7272C255A480021D043 /* WorkSpaceChannelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelListView.swift; sourceTree = "<group>"; };
 		7BF9D7292C255A8B0021D043 /* WorkSpaceChannelListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelListFeature.swift; sourceTree = "<group>"; };
+		7BF9D72B2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelListAPIError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -892,6 +894,7 @@
 				7BF9D7102C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift */,
 				7BF9D71E2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift */,
 				7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */,
+				7BF9D72B2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1098,6 +1101,7 @@
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
 				7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */,
 				7BEC45D82C16C9E400576ECA /* RoudProfileImageModifier.swift in Sources */,
+				7BF9D72C2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift in Sources */,
 				7B2EEE4D2C12CE900024853C /* UserDefaultsWrapper.swift in Sources */,
 				7B8FD6212C1A918100948E7C /* MapperProtocol.swift in Sources */,
 				7B26D1962C1C51B800BC9912 /* WorkSpaceListScreens.swift in Sources */,
