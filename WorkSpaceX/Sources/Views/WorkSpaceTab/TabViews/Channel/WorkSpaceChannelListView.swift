@@ -16,7 +16,12 @@ struct WorkSpaceChannelListView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                
+                List {
+                    ForEach(store.channelList, id: \.channelId) { model in
+                        channelView(model: model)
+                    }
+                }
+                .listStyle(.plain)
             }
             .onAppear {
                 store.send(.onAppear)
@@ -36,3 +41,34 @@ struct WorkSpaceChannelListView: View {
         }
     }
 }
+
+extension WorkSpaceChannelListView {
+    
+    private func channelView(model: ChanelEntity) -> some View {
+        HStack {
+            if let image = model.coverImage {
+                DownSamplingImageView(url: URL(string: image), size: CGSize(width: 30, height: 30))
+            } else {
+                WSXImage.shapBold
+                    .resizable()
+                    .frame(width: 25, height: 25)
+            }
+            VStack(alignment: .leading) {
+                Text(model.name)
+                    .font(WSXFont.title1)
+                if model.description != "" {
+                    Text(model.description)
+                        .font(WSXFont.caption)
+                }
+            }
+        }
+    }
+}
+
+//#Preview {
+//    WorkSpaceChannelListView(store: Store(initialState: {
+//        WorkSpaceChannelListFeature.State(id: UUID(), workSpaceID: "e655f5f4-dee7-4703-a9c4-8409e9f11f10")
+//    }(), reducer: {
+//        WorkSpaceChannelListFeature()
+//    }))
+//}

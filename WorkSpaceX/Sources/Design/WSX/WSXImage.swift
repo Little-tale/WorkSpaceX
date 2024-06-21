@@ -40,7 +40,7 @@ extension WSXImage {
     
     static let profileEmpty1 = Image(.profileEmpty)
     
-    static let shapBold = Image(.shapBold).renderingMode(.template)
+    static let shapBold = Image(.hashTagBold).renderingMode(.template)
     
     static let shapThin = Image(.shapThin).renderingMode(.template)
 }

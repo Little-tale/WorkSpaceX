@@ -84,7 +84,7 @@ struct WorkSpaceListFeature {
                     await send(.firstRealm(workSpaceId))
                     await send(.observerStart(workSpaceId))
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceId))
-                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceId))
+                    await send(.workSpaceMembersUpdate(workSpaceID: workSpaceId))
                 }
                 
             case let .firstRealm(workSpaceId):
@@ -121,9 +121,10 @@ struct WorkSpaceListFeature {
                 
                 state.chanelSection = workSpaceRepo.workSpaceToChannel(model)
                 
-            case let .workSpaceChnnelUpdate(id):
+            case let .workSpaceMembersUpdate(id):
                 return .run { send in
                     let result = try await workSpaceRepo.workSpaceMemberUpdate(id)
+                    print("채널: \(result)")
                     try await realmRepo.upsertWorkSpaceInMembers(responses: result, workSpaceID: id)
                 } catch: { error, send in
                     if let error = error as? WorkSpaceMembersAPIError {

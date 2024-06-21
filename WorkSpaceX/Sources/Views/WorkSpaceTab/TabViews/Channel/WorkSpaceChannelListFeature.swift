@@ -50,7 +50,6 @@ struct WorkSpaceChannelListFeature {
                     } else { print(error) }
                 }
             case let .catchModels(models):
-                dump(models)
                 state.channelList = models
                 
             case let .errorMessage(message):
