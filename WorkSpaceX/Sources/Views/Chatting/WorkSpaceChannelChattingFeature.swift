@@ -20,7 +20,30 @@ struct WorkSpaceChannelChattingFeature {
     
     enum Action {
         case popClicked
+        
+        case onAppear
     }
     
+    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+    @Dependency(\.realmRepository) var realmRepo
+    @Dependency(\.workSpaceReader) var reader
+    
+    var body: some ReducerOf<Self> {
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                let channelID = state.channelID
+                let workSpaceID = state.workSpaceID
+                
+                print("네트워크 요청해야함...")
+                
+            default:
+                break
+            }
+            return .none
+        }
+        
+    }
     
 }

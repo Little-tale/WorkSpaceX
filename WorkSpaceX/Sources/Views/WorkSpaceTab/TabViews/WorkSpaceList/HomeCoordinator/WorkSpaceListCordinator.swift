@@ -98,7 +98,7 @@ struct WorkSpaceListCordinator {
                     state.identeRoutes.push(.chattingView(WorkSpaceChannelChattingFeature.State(channelID: model.channelId, workSpaceID: id)))
                 }
             case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
-                state.identeRoutes.popTo(id: WorkSpaceListCordinator.State.uuid)
+                state.identeRoutes.popToRoot()
                                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):

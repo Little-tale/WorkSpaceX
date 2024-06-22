@@ -176,6 +176,7 @@
 		7BF9D72C2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D72B2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift */; };
 		7BF9D72F2C2593600021D043 /* WorkSpaceChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */; };
 		7BF9D7312C2593940021D043 /* WorkSpaceChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */; };
+		7BF9D7332C26883E0021D043 /* ChatRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -342,6 +343,7 @@
 		7BF9D72B2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelListAPIError.swift; sourceTree = "<group>"; };
 		7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelChattingView.swift; sourceTree = "<group>"; };
 		7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelChattingFeature.swift; sourceTree = "<group>"; };
+		7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRealmModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -808,6 +810,7 @@
 				7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */,
 				7B26D2202C2280FB00BC9912 /* WorkSpaceChannelRealmModel.swift */,
 				7B26D2222C2282E200BC9912 /* WorkSpaceUserRealmModel.swift */,
+				7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -1118,6 +1121,7 @@
 				7BF9D72C2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift in Sources */,
 				7B2EEE4D2C12CE900024853C /* UserDefaultsWrapper.swift in Sources */,
 				7B8FD6212C1A918100948E7C /* MapperProtocol.swift in Sources */,
+				7BF9D7332C26883E0021D043 /* ChatRealmModel.swift in Sources */,
 				7B26D1962C1C51B800BC9912 /* WorkSpaceListScreens.swift in Sources */,
 				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,

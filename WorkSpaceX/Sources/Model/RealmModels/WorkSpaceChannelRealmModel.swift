@@ -24,6 +24,8 @@ class WorkSpaceChannelRealmModel: Object {
     
     @Persisted var didNotReadCount: Int
     
+    @Persisted var chatMessages = List<ChatRealmModel>()
+    
     convenience
     init(channelID: String, name: String, introduce: String, coverImage: String? = nil, ownerID: String, createdAt: Date? = nil) {
         self.init()
