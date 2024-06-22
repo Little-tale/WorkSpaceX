@@ -91,3 +91,30 @@ extension WorkSpaceDomainMapper {
         return dtos.map { workSpaceAddMemberDTOToEntity(dto: $0)}
     }
 }
+
+extension WorkSpaceDomainMapper {
+    
+    
+    func workSpaceChatDtoToEntity(dto: WorkSpaceChatDTO) -> WorkSpaceChatEntity {
+        
+        return WorkSpaceChatEntity(
+            channelId: dto.channel_id,
+            channelName: dto.channelName,
+            chatId: dto.chat_id,
+            content: dto.content,
+            createdAt: dto.createdAt,
+            files: dto.files,
+            user: WorkSpaceMemberEntity(
+                userID: dto.user.user_id,
+                email: dto.user.email,
+                nickName: dto.user.nickname,
+                profileImage: dto.user.profileImage
+            )
+        )
+    }
+    
+    func workSpaceChatDtoToEntity(dtos:  [WorkSpaceChatDTO]) -> [WorkSpaceChatEntity] {
+        return dtos.map { workSpaceChatDtoToEntity(dto: $0) }
+    }
+    
+}

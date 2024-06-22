@@ -17,6 +17,9 @@ struct WorkSpaceChannelChattingView: View {
             VStack {
                 Text("채팅뷰 탸다~")
             }
+            .onAppear {
+                store.send(.onAppear)
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     WSXImage.xImage

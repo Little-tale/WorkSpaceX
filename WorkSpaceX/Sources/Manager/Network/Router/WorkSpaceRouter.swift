@@ -20,6 +20,8 @@ enum WorkSpaceRouter: Router {
     case workSpaceAddMember(workSpaceId: String, request: WorkSpaceAddMemberRequestDTO)
     
     case workSpaceMembersReqeust(workSpaceId: String)
+    
+    case workSpaceChatRequest(workSpaceId: String, channelID: String, ifDate: String?)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -29,7 +31,7 @@ extension WorkSpaceRouter {
                 .workSpaceMembersReqeust,
                 .channelListSearching :
             return .get
-        case .makeWorkSpace, .createChannel, .workSpaceAddMember:
+        case .makeWorkSpace, .createChannel, .workSpaceAddMember, .workSpaceChatRequest:
             return .post
         case .removeWorkSpace:
             return .delete
@@ -66,6 +68,9 @@ extension WorkSpaceRouter {
             return APIKey.version + "/workspaces/\(id)/members"
         case let .channelListSearching(id):
             return APIKey.version + "/workspaces/\(id)/channels"
+            
+        case let .workSpaceChatRequest(workSpace, channel, _) :
+            return APIKey.version +  "/workspaces/\(workSpace)/channels/\(channel)/chats"
         }
     }
     
@@ -89,6 +94,9 @@ extension WorkSpaceRouter {
         case let .createChannel(_, _, boundary) :
             let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
+            
+        case .workSpaceChatRequest:
+            return nil
         }
     }
     
@@ -96,12 +104,19 @@ extension WorkSpaceRouter {
         switch self {
         case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersReqeust, .channelListSearching :
             return nil
+            
+        case let .workSpaceChatRequest(_, _, date):
+            if let date {
+                return ["cursor_date": date]
+            } else {
+                return nil
+            }
         }
     }
     
     var body: Data? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust, .channelListSearching :
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust, .channelListSearching, .workSpaceChatRequest:
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -121,7 +136,8 @@ extension WorkSpaceRouter {
                 .removeWorkSpace,
                 .findWorkSpaceChannels,
                 .workSpaceMembersReqeust,
-                .channelListSearching :
+                .channelListSearching,
+                .workSpaceChatRequest :
             return .url
             
         case .makeWorkSpace :

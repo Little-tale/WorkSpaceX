@@ -27,6 +27,13 @@ final class DateManager {
         return isoDateFormatter.date(from: dateString)
     }
     
+    func toDateISO(_ date: Date) -> String {
+        
+        isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        return isoDateFormatter.string(from: date)
+    }
+    
     func asDateToString(_ date: Date?) -> String {
         guard let date else { return "" }
         

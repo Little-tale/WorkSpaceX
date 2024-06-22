@@ -377,6 +377,27 @@ extension RealmRepository {
     }
 }
 
+extension RealmRepository {
+    func findChatsForChannel(channelId: String, ifRealm: Realm? = nil) async throws -> Date?  {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+    
+        let model = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelId)
+        
+        guard let model else { return nil }
+        
+        let first = model.chatMessages.sorted(by: \.createdAt, ascending: false)
+            .first
+        guard let first else { return nil }
+        
+        return first.createdAt
+    }
+}
 
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()

@@ -24,6 +24,8 @@ struct WorkSpaceDomainRepository {
     var workSpaceMemberUpdate: (_ workSpace: String) async throws -> [WorkSpaceMembersEntity]
     
     var workSpaceSearchingToChannel: (_ workSpaceID: String) async throws -> [ChanelEntity]
+    
+    var workSpaceChattingList: (_ workSpaceID: String, _ channelId: String,_ ifDate: Date?) async throws -> [WorkSpaceChatEntity]
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -105,6 +107,15 @@ extension WorkSpaceDomainRepository: DependencyKey {
             let mapping = workSpaceMapper.workSpaceChannelListDTOToChannels(dto: result)
             
             return mapping
+        }, workSpaceChattingList: { workSpaceID, channelID, ifDate in
+            var requestDate : String?
+            if let ifDate {
+                requestDate = DateManager.shared.toDateISO(ifDate)
+            }
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceChatListDTO.self, router: WorkSpaceRouter.workSpaceChatRequest(workSpaceId: workSpaceID, channelID: channelID, ifDate: requestDate), errorType: WorkSpaceChannelListAPIError.self)
+            
+            return workSpaceMapper.workSpaceChatDtoToEntity(dtos: result.workSpaceChats)
+            
         }
     )
     

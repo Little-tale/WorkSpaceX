@@ -177,6 +177,9 @@
 		7BF9D72F2C2593600021D043 /* WorkSpaceChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */; };
 		7BF9D7312C2593940021D043 /* WorkSpaceChannelChattingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */; };
 		7BF9D7332C26883E0021D043 /* ChatRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */; };
+		7BF9D7372C2697DB0021D043 /* WorkSpaceChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */; };
+		7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */; };
+		7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -344,6 +347,9 @@
 		7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelChattingView.swift; sourceTree = "<group>"; };
 		7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelChattingFeature.swift; sourceTree = "<group>"; };
 		7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRealmModel.swift; sourceTree = "<group>"; };
+		7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatDTO.swift; sourceTree = "<group>"; };
+		7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatListDTO.swift; sourceTree = "<group>"; };
+		7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -886,6 +892,8 @@
 				7BF9D7182C2405130021D043 /* WorkSpaceAddMemberRequestDTO.swift */,
 				7BF9D71C2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift */,
 				7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */,
+				7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */,
+				7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -937,6 +945,7 @@
 				7B26D21A2C227E7E00BC9912 /* ChanelEntity.swift */,
 				7B26D21C2C227FB500BC9912 /* WorkSpaceMembersEntity.swift */,
 				7BF9D7202C242A790021D043 /* WorkSpaceDetailEntity.swift */,
+				7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -1139,6 +1148,7 @@
 				7B8FD6172C19CEE600948E7C /* WorkSpaceMeError.swift in Sources */,
 				7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
+				7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */,
 				7BF9D71B2C2406A40021D043 /* WorkSpaceMemberEntity.swift in Sources */,
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,
 				7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */,
@@ -1158,6 +1168,7 @@
 				7B8FD6262C1AA49C00948E7C /* SideMenuView.swift in Sources */,
 				7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
+				7BF9D7372C2697DB0021D043 /* WorkSpaceChatDTO.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,
 				7B8FD60F2C19B33A00948E7C /* AppleLoginAPIError.swift in Sources */,
@@ -1227,6 +1238,7 @@
 				7BF9D70D2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift in Sources */,
 				7B26D1F02C1FE11D00BC9912 /* CustomAlertView.swift in Sources */,
 				7B8FD63F2C1ABD0B00948E7C /* RealmRepository.swift in Sources */,
+				7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */,
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
 				7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
