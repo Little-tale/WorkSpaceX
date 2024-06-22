@@ -43,7 +43,7 @@ extension WSXCoder {
         
         urlComponents.queryItems = parameter.map { URLQueryItem(name: $0.key, value: "\($0.value)")}
         request.url = urlComponents.url
-        print("요청",request)
+        print("인코딩 -> ",request)
         return request
     }
     

@@ -28,7 +28,7 @@ extension NetworkManager {
     
     func requestDto<T: DTO, R: Router, E: WSXErrorType>(_ model: T.Type, router: R, errorType: E.Type) async throws -> T {
         var request = try router.asURLRequest()
-        
+        print("요청중인 URL \(request.url)")
         if !checkRequestInterceptorURLRequest(urlRequest: &request) {
             let data = try await performRequest(request, errorType: errorType)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)

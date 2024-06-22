@@ -112,6 +112,8 @@ extension WorkSpaceDomainRepository: DependencyKey {
             if let ifDate {
                 requestDate = DateManager.shared.toDateISO(ifDate)
             }
+            print("요청중인 \(workSpaceID) channel: \(channelID)")
+            
             let result = try await NetworkManager.shared.requestDto(WorkSpaceChatListDTO.self, router: WorkSpaceRouter.workSpaceChatRequest(workSpaceId: workSpaceID, channelID: channelID, ifDate: requestDate), errorType: WorkSpaceChannelListAPIError.self)
             
             return workSpaceMapper.workSpaceChatDtoToEntity(dtos: result.workSpaceChats)

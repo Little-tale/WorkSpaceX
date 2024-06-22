@@ -13,6 +13,6 @@ struct WorkSpaceChatDTO: DTO {
     let chat_id: String
     let content: String
     let createdAt: String
-    let files: [String]
+    let files: [String]?
     let user: WorkSpaceAddMemberDTO
 }

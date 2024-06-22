@@ -64,8 +64,8 @@ struct WorkSpaceChannelChattingFeature {
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
                             if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
-                            else {
-                                print(error)
+                            else if error.errorCode == "E13" {
+                                print("존재하지 않는 워크 스페이스..?")
                             }
                         } else {
                             print(error)

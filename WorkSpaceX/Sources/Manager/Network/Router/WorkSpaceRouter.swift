@@ -29,9 +29,10 @@ extension WorkSpaceRouter {
         case .meWorkSpace,
                 .findWorkSpaceChannels,
                 .workSpaceMembersReqeust,
-                .channelListSearching :
+                .channelListSearching,
+                .workSpaceChatRequest :
             return .get
-        case .makeWorkSpace, .createChannel, .workSpaceAddMember, .workSpaceChatRequest:
+        case .makeWorkSpace, .createChannel, .workSpaceAddMember:
             return .post
         case .removeWorkSpace:
             return .delete
@@ -70,6 +71,7 @@ extension WorkSpaceRouter {
             return APIKey.version + "/workspaces/\(id)/channels"
             
         case let .workSpaceChatRequest(workSpace, channel, _) :
+            
             return APIKey.version +  "/workspaces/\(workSpace)/channels/\(channel)/chats"
         }
     }
@@ -96,7 +98,9 @@ extension WorkSpaceRouter {
             return multipartFormData.headers(boundary: boundary)
             
         case .workSpaceChatRequest:
-            return nil
+            return  [
+                "accept" : WSXHeader.Value.applicationJson
+            ]
         }
     }
     

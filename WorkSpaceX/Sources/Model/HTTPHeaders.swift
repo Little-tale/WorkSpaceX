@@ -13,6 +13,7 @@ extension HTTPHeaders {
     
     @discardableResult
     mutating func addHeaders(_ headers: HTTPHeaders) -> HTTPHeaders {
+        print("옵션 헤더 \(headers)")
         headers.forEach { self[$0.key] = $0.value }
         return self
     }

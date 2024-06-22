@@ -180,6 +180,7 @@
 		7BF9D7372C2697DB0021D043 /* WorkSpaceChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */; };
 		7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */; };
 		7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */; };
+		7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -350,6 +351,7 @@
 		7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatDTO.swift; sourceTree = "<group>"; };
 		7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatListDTO.swift; sourceTree = "<group>"; };
 		7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatEntity.swift; sourceTree = "<group>"; };
+		7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingReqeustDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -971,6 +973,7 @@
 		7BF9D7172C2404E10021D043 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -1179,6 +1182,7 @@
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
 				7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */,
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
+				7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */,
 				7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */,
 				7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */,
 				7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */,

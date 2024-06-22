@@ -13,6 +13,6 @@ struct WorkSpaceChatEntity: Entity {
     let chatId: String
     let content: String
     let createdAt: String
-    let files: [String]
+    let files: [String]?
     let user: WorkSpaceMemberEntity
 }

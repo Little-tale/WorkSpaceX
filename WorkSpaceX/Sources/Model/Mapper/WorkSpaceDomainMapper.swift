@@ -94,6 +94,13 @@ extension WorkSpaceDomainMapper {
 
 extension WorkSpaceDomainMapper {
     
+    func dateToReqeustChattingDTO(date: Date?) -> ChattingReqeustDTO {
+        var reqeust = ""
+        if let date {
+            reqeust = DateManager.shared.toDateISO(date)
+        }
+        return ChattingReqeustDTO(cursor_date: reqeust)
+    }
     
     func workSpaceChatDtoToEntity(dto: WorkSpaceChatDTO) -> WorkSpaceChatEntity {
         

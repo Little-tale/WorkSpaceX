@@ -47,7 +47,7 @@ extension Router {
         if let optionalHeaders {
             combine.addHeaders(optionalHeaders)
         }
-        print(combine)
+        print("헤더 합침: ",combine)
          return combine
     }
     
