@@ -9,6 +9,13 @@ import SwiftUI
 
 extension Image {
     
+    func sideImage() -> some View {
+        self
+            .resizable()
+            .renderingMode(.template)
+            .frame(width: 24, height: 24)
+            .foregroundStyle(WSXColor.black)
+    }
 }
 
 extension UIImage {

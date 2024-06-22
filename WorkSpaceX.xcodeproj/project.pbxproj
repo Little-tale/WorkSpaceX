@@ -182,6 +182,7 @@
 		7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */; };
 		7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */; };
 		7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73E2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift */; };
+		7BF9D7442C2708F50021D043 /* ShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7432C2708F50021D043 /* ShadowModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -354,6 +355,7 @@
 		7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatEntity.swift; sourceTree = "<group>"; };
 		7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingReqeustDTO.swift; sourceTree = "<group>"; };
 		7BF9D73E2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChanelInfoDTO.swift; sourceTree = "<group>"; };
+		7BF9D7432C2708F50021D043 /* ShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -993,10 +995,19 @@
 		7BF9D72D2C2593410021D043 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
+				7BF9D7402C2703790021D043 /* Modifier */,
 				7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */,
 				7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */,
 			);
 			path = Chatting;
+			sourceTree = "<group>";
+		};
+		7BF9D7402C2703790021D043 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				7BF9D7432C2708F50021D043 /* ShadowModifier.swift */,
+			);
+			path = Modifier;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1130,6 +1141,7 @@
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
+				7BF9D7442C2708F50021D043 /* ShadowModifier.swift in Sources */,
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
 				7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */,
 				7BEC45D82C16C9E400576ECA /* RoudProfileImageModifier.swift in Sources */,

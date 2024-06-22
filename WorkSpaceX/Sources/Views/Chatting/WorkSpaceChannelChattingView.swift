@@ -12,10 +12,16 @@ struct WorkSpaceChannelChattingView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceChannelChattingFeature>
     
+    @State var openKeyboardInfo: Bool = false
+    @State var openImagePicker: Bool = false
+    
+    
     var body: some View {
         WithPerceptionTracking {
             VStack {
                 Text("채팅뷰 탸다~")
+                Spacer()
+                chatTextField()
             }
             .onAppear {
                 store.send(.onAppear)
@@ -50,4 +56,62 @@ struct WorkSpaceChannelChattingView: View {
             .toolbar(.hidden, for: .tabBar)
         }
     }
+}
+
+extension WorkSpaceChannelChattingView {
+    
+    func chatTextField() -> some View {
+        Group {
+            workSpaceToolView()
+            HStack {
+                HStack {
+                    WSXImage.plus
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(WSXColor.black)
+                        .padding(.leading, 8)
+                        .asButton {
+                            openKeyboardInfo.toggle()
+                        }
+                    TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
+                }
+                .frame(height: 50)
+                .background {
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(WSXColor.black.opacity(0.1))
+                }
+                .padding(.horizontal, 8)
+                .padding(.bottom, 4)
+            }
+        }
+    }
+    
+}
+
+
+extension WorkSpaceChannelChattingView {
+    
+    private func workSpaceToolView() -> some View {
+        withAnimation {
+            HStack {
+                HStack(spacing: 10) {
+                    if openKeyboardInfo {
+                        WSXImage.gallary.sideImage()
+                            .asButton {
+                                openImagePicker.toggle()
+                            }
+                            .padding(.leading, 10)
+                    }
+                }
+                .padding(.vertical, 5)
+                Spacer()
+            }
+            .modifier(ShadowModifier())
+            .transition(.scale)
+            .animation(.easeInOut,value: openKeyboardInfo)
+        }
+    }
+    
+    
 }

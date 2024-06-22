@@ -20,6 +20,9 @@ struct WorkSpaceChannelChattingFeature {
         
         var navigationTitle: String
         var navigationMemberCount: String = "0"
+        
+        var userFeildText: String = ""
+        var currentImageDatas: [Data] = []
     }
     
     enum Action {
@@ -35,6 +38,8 @@ struct WorkSpaceChannelChattingFeature {
         case navigationMemberCount(Int)
         
         case onAppear
+        case userFeildText(String)
+        case imageData([Data])
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -116,6 +121,9 @@ struct WorkSpaceChannelChattingFeature {
                 state.navigationMemberCount = String(channel.users.count)
                 
                 break
+                
+            case let .userFeildText(text):
+                state.userFeildText = text
                 
             default:
                 break

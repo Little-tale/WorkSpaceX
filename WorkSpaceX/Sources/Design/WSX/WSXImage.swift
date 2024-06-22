@@ -45,4 +45,6 @@ extension WSXImage {
     static let shapBold = Image(.hashTagBold).renderingMode(.template)
     
     static let shapThin = Image(.shapThin).renderingMode(.template)
+    
+    static let gallary = Image(systemName: "photo.fill")
 }
