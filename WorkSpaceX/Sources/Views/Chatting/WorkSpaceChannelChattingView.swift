@@ -22,10 +22,28 @@ struct WorkSpaceChannelChattingView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    WSXImage.xImage
+                    WSXImage.back
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundStyle(WSXColor.black)
                         .asButton {
                             store.send(.popClicked)
                         }
+                }
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        WSXImage.shapBold
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(WSXColor.black)
+                        
+                        Text(store.navigationTitle)
+                            .font(WSXFont.title1)
+                        
+                        Text(store.navigationMemberCount)
+                            .font(WSXFont.regu1)
+                    }
                 }
             }
             .navigationBarBackButtonHidden()

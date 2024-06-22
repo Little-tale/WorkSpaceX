@@ -17,6 +17,9 @@ struct WorkSpaceChannelChattingFeature {
         let channelID: String
         let workSpaceID: String
         var meId: String?
+        
+        var navigationTitle: String
+        var navigationMemberCount: String = "0"
     }
     
     enum Action {
@@ -24,6 +27,12 @@ struct WorkSpaceChannelChattingFeature {
         
         // 채팅 분기점
         case chatDate(Date?)
+        case channelInfoRequest
+        case networkResult([WorkSpaceChatEntity])
+        case channelResult(ChanelEntity)
+        
+        case navigationTitle(String) // 전뷰에서 받아왔지만 한번더
+        case navigationMemberCount(Int)
         
         case onAppear
     }
@@ -38,13 +47,18 @@ struct WorkSpaceChannelChattingFeature {
             switch action {
             case .onAppear:
                 let channelID = state.channelID
+                
                 let workSpaceID = state.workSpaceID
                 state.meId = UserDefaultsManager.userID
+                
+                
                 // 1. 채팅 데이터가 존재하는지 최소한 한번은 확인해야함.
                 // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
                 // 2. 없다면 커서 데이트를 빈값으로 보내야함.
                 // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
+                // + 렘 멤버 도 꼭 확인
                 return .run { send in
+                
                     let date = try await realmRepo.findChatsForChannel(channelId: channelID)
                     await send(.chatDate(date))
                 }
@@ -61,6 +75,9 @@ struct WorkSpaceChannelChattingFeature {
                     // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
                     return .run { send in
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
+                        print("받기 \(result)")
+                        await send(.networkResult(result))
+                        await send(.channelInfoRequest)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
                             if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
@@ -72,8 +89,25 @@ struct WorkSpaceChannelChattingFeature {
                         }
                     }
                 }
+            case let .networkResult(results):
+                print(results)
                 
-            
+                //채널 정보 조회
+            case .channelInfoRequest:
+                let workSpaceID = state.workSpaceID
+                let channelID = state.channelID
+                return .run { send in
+                    let result = try await workSpaceRepo.channelInfoRequest(workSpaceID, channelID)
+                    await send(.channelResult(result))
+                    // 이때 렘 업뎃
+                    
+                }
+                
+            case let .channelResult(channel):
+                state.navigationMemberCount = String(channel.users.count)
+                
+                break
+                
             default:
                 break
             }

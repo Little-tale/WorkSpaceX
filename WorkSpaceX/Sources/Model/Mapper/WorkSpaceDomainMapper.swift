@@ -69,6 +69,21 @@ extension WorkSpaceDomainMapper {
         return dto.chanels.map { workSpaceChanelsDTOToChannel(dto: $0) }
     }
     
+    func workSpaceChanelInfoDTOToEntity(dto: WorkSpaceChanelInfoDTO) -> ChanelEntity {
+        
+        let users = dto.channelMembers.map { workSpaceAddMemberDTOToEntity(dto: $0) }
+        
+        return ChanelEntity(
+            channelId: dto.channel_id,
+            name: dto.name,
+            description: dto.description ?? "",
+            coverImage: dto.coverImage,
+            owner_id: dto.owner_id,
+            createdAt: dto.createdAt,
+            users: users
+        )
+    }
+    
 }
 
 extension WorkSpaceDomainMapper {

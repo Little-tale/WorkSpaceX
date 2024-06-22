@@ -14,4 +14,5 @@ struct ChanelEntity: Entity {
     let coverImage: String?
     let owner_id: String
     let createdAt: String
+    var users: [WorkSpaceMembersEntity] = []
 }

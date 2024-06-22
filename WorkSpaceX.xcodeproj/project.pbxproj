@@ -181,6 +181,7 @@
 		7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */; };
 		7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */; };
 		7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */; };
+		7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D73E2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -352,6 +353,7 @@
 		7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatListDTO.swift; sourceTree = "<group>"; };
 		7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatEntity.swift; sourceTree = "<group>"; };
 		7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingReqeustDTO.swift; sourceTree = "<group>"; };
+		7BF9D73E2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChanelInfoDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -896,6 +898,7 @@
 				7BF9D7242C2537580021D043 /* WorkSpaceMembersDTO.swift */,
 				7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */,
 				7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */,
+				7BF9D73E2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -1141,6 +1144,7 @@
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7BF9D7162C23F7B80021D043 /* AddMemberFeature.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
+				7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7BF9D71F2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift in Sources */,
