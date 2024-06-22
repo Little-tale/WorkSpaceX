@@ -218,7 +218,7 @@ extension RealmRepository {
     func upsertWorkSpaceInMembers(responses: [WorkSpaceMembersEntity], workSpaceID: String) async throws {
         
         let realm = try await Realm(actor: MainActor.shared)
-        
+        print("렘 : \(Realm.Configuration.defaultConfiguration.fileURL)")
         var users: [UserRealmModel] = []
         
         for response in responses {
@@ -282,7 +282,7 @@ extension RealmRepository {
     }
     
     @MainActor
-    func upsertToWorkSpaceChannelAppend(workSpaceID: String, chanel: ChanelEntity) async throws {
+    func upsertToWorkSpaceChannelAppend(workSpaceID: String, chanel: ChanelEntity, userBool: Bool = false) async throws {
         
         let realm = try await Realm(actor: MainActor.shared)
         
@@ -296,16 +296,81 @@ extension RealmRepository {
             throw RealmError.cantFindModel
         }
         
-        try await realm.asyncWrite {
+        if userBool {
+            let users = try await upsertWorkSpaceUsers(users: chanel.users)
             var update = Array(workSpaceModel.channels)
-            update.append(channelModel)
-            realm.create(
-                WorkSpaceRealmModel.self,
-                value: [
-                    "workSpaceID" : workSpaceID,
-                    "channels": update
-                ],
-                update: .modified)
+            
+            if let index = update.firstIndex(where: { $0.channelID == channelModel.channelID }) {
+                update[index] = channelModel  // 기존 채널 업데이트
+            } else {
+                update.append(channelModel)  // 새로운 채널 추가
+            }
+            
+            try await realm.asyncWrite {
+                realm.create(
+                    WorkSpaceRealmModel.self,
+                    value: [
+                        "workSpaceID" : workSpaceID,
+                        "channels": update,
+                        "users": users
+                    ],
+                    update: .modified)
+                
+            }
+        } else {
+            
+            var update = Array(workSpaceModel.channels)
+            
+            if let index = update.firstIndex(where: { $0.channelID == channelModel.channelID }) {
+                update[index] = channelModel  // 기존 채널 업데이트
+            } else {
+                update.append(channelModel)  // 새로운 채널 추가
+            }
+            
+            try await realm.asyncWrite {
+        
+                realm.create(
+                    WorkSpaceRealmModel.self,
+                    value: [
+                        "workSpaceID" : workSpaceID,
+                        "channels": update
+                    ],
+                    update: .modified)
+            }
+        }
+    }
+    
+    func upsertWorkSpaceUsers(users: [WorkSpaceMembersEntity]) async throws -> [UserRealmModel] {
+        
+        var userRealmModels: [UserRealmModel] = []
+        
+        for user in users {
+            if let userModel = try await upsertMembers(response: user) {
+                userRealmModels.append(userModel)
+            }
+        }
+        return userRealmModels
+    }
+    
+    @discardableResult
+    func upsertMembers(response: WorkSpaceMembersEntity) async throws -> UserRealmModel? {
+        let realm = try await Realm(actor: MainActor.shared)
+        print("유저 정보 저장중.....")
+        do {
+            try await realm.asyncWrite {
+                realm.create(UserRealmModel.self, value: [
+                    "userID" : response.userID,
+                    "email" : response.email,
+                    "nickName" : response.nickname,
+                    "profileImage" : response.profileImage as Any,
+                ], update: .modified)
+            }
+            let result = realm.object(ofType: UserRealmModel.self, forPrimaryKey: response.userID)
+            
+            return result
+        } catch {
+            print(error)
+            return nil
         }
     }
     

@@ -118,7 +118,7 @@ struct WorkSpaceListFeature {
                     state.workSpaceCoverImage = URL(string: ifImage)
                 }
                 state.workSpaceName = model.workSpaceName
-                
+                print("응답 받음 \(model.channels.count)")
                 state.chanelSection = workSpaceRepo.workSpaceToChannel(model)
                 
             case let .workSpaceMembersUpdate(id):

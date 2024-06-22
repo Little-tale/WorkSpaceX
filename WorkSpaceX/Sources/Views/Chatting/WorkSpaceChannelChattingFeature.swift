@@ -16,7 +16,7 @@ struct WorkSpaceChannelChattingFeature {
         let id: UUID = UUID()
         let channelID: String
         let workSpaceID: String
-        var meId: String?
+        let userID : String
         
         var navigationTitle: String
         var navigationMemberCount: String = "0"
@@ -49,8 +49,6 @@ struct WorkSpaceChannelChattingFeature {
                 let channelID = state.channelID
                 
                 let workSpaceID = state.workSpaceID
-                state.meId = UserDefaultsManager.userID
-                
                 
                 // 1. 채팅 데이터가 존재하는지 최소한 한번은 확인해야함.
                 // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
@@ -100,7 +98,18 @@ struct WorkSpaceChannelChattingFeature {
                     let result = try await workSpaceRepo.channelInfoRequest(workSpaceID, channelID)
                     await send(.channelResult(result))
                     // 이때 렘 업뎃
+                    try await  realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: workSpaceID, chanel: result, userBool: true)
                     
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceChannelListAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
                 }
                 
             case let .channelResult(channel):

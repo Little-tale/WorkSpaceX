@@ -94,12 +94,14 @@ struct WorkSpaceListCordinator {
                 // 채팅 넘어감.
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.lastConfirm(let model))))) :
                 print("전달받음 : ",model)
-                if let id = state.currentWorkSpaceId {
+                if let id = state.currentWorkSpaceId,
+                let userID = UserDefaultsManager.userID {
                     state.identeRoutes.push(
                         .chattingView(
                             WorkSpaceChannelChattingFeature.State(
                                 channelID: model.channelId,
                                 workSpaceID: id,
+                                userID: userID,
                                 navigationTitle: model.name
                             )
                         )

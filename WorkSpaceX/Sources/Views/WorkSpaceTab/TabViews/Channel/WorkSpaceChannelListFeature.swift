@@ -20,6 +20,7 @@ struct WorkSpaceChannelListFeature {
         
         
         var ifNeedChannelAlert: Bool = false
+        var onApperTrigger: Bool = false
         var chaannelAlertMessage = ""
         var selectedModel: ChanelEntity?
     }
@@ -86,7 +87,11 @@ struct WorkSpaceChannelListFeature {
                 state.ifNeedChannelAlert = bool
                 
             case let .catchModels(models):
-                state.channelList = models
+                if !state.onApperTrigger {
+                    state.channelList = []
+                    state.channelList = models
+                    state.onApperTrigger = true
+                }
                 
             case let .errorMessage(message):
                 state.errorMessage = message
