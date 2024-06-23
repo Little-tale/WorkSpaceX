@@ -11,6 +11,7 @@
 		7B10A9922C282EBC0035C3C8 /* ChatMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9912C282EBC0035C3C8 /* ChatMode.swift */; };
 		7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9932C2832440035C3C8 /* ChatModeView.swift */; };
 		7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9952C28345A0035C3C8 /* ChatModifier.swift */; };
+		7B10A9982C2851080035C3C8 /* ChatModeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -194,6 +195,7 @@
 		7B10A9912C282EBC0035C3C8 /* ChatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMode.swift; sourceTree = "<group>"; };
 		7B10A9932C2832440035C3C8 /* ChatModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeView.swift; sourceTree = "<group>"; };
 		7B10A9952C28345A0035C3C8 /* ChatModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModifier.swift; sourceTree = "<group>"; };
+		7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeFeature.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -1009,6 +1011,7 @@
 				7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */,
 				7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */,
 				7B10A9932C2832440035C3C8 /* ChatModeView.swift */,
+				7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -1250,6 +1253,7 @@
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7B8FD64D2C1B421200948E7C /* RefreshTokkenDeadReciver.swift in Sources */,
+				7B10A9982C2851080035C3C8 /* ChatModeFeature.swift in Sources */,
 				7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */,
 				7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */,
 				7B8FD6112C19B69100948E7C /* KakaoLoginAPIError.swift in Sources */,

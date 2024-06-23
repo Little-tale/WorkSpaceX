@@ -6,18 +6,19 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct ChatModeView: View {
 
-    let model: ChatModeEntity
+    @Perception.Bindable var store: StoreOf<ChatModeFeature>
     
     var body: some View {
             HStack(alignment: .top) {
-                switch model.isMe {
+                switch store.model.isMe {
                 case .me:
                     HStack(alignment: .bottom) {
                         Spacer()
-                        Text(DateManager.shared.dateToStringToChat(model.date, isMe: true))
+                        Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: true))
                             .font(WSXFont.caption)
                             
                         modelCaseView()
@@ -37,18 +38,21 @@ struct ChatModeView: View {
                             modelCaseView()
                                 .frame(maxWidth: UIScreen.main.bounds.width / 2)
                                 .modifier(ChatModifier(isMe: false))
-                            Text(DateManager.shared.dateToStringToChat(model.date, isMe: false))
+                            Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: false))
                                 .font(WSXFont.caption)
                         }
                     }
                     Spacer()
                 }
             }
+            .onAppear {
+                store.send(.onAppear)
+            }
     }
     
     @ViewBuilder
     private func modelCaseView() -> some View {
-        switch model.chatMode {
+        switch store.model.chatMode {
         case .text:
             textModeView()
         case .File:
@@ -72,35 +76,48 @@ struct ChatModeView: View {
             }
         }
     }
-    
 }
 
 extension ChatModeView {
     private func textModeView() -> some View {
-        Text(model.content)
+        Text(store.model.content)
             .font(WSXFont.title2)
     }
 }
+extension ChatModeView {
+    private func FileModeView() -> some View {
+        VStack {
+            
+        }
+    }
+}
 
-    /*
-     .other(.init(
-         userID: "TestID",
-         email: "이메일",
-         nickName: "라일리",
-         profileImage: nil)
-     )
-     */
 #Preview {
-    ChatModeView(model: .init(
-        chatID: "testID",
-        isMe: .other(.init(
-            userID: "TestID",
-            email: "이메일",
-            nickName: "라일리",
-            profileImage: nil)
+    ChatModeView(store: Store(
+        initialState: ChatModeFeature.State(model: .init(
+            chatID: "asd",
+            isMe: .other(.init(
+                userID: "TestID",
+                email: "이메일",
+                nickName: "라일리",
+                profileImage: nil)
+            ),
+            chatMode: .File,
+            content: "",
+            files: [],
+            date: Date())
         ),
-        chatMode: .text,
-        content: "테스트 안녕하세요!!!! 테스트입니다 테스트, 테스트입니다 테스트, 테스트입니다 테스트, 테스트입니다 테스트, 테스트입니다 테스트",
-        files: [], date: Date())
+        reducer: {
+            ChatModeFeature()
+        })
     )
 }
+
+/*
+ .other(.init(
+     userID: "TestID",
+     email: "이메일",
+     nickName: "라일리",
+     profileImage: nil)
+ )
+ */
