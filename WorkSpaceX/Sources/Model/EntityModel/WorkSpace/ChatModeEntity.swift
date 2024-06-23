@@ -13,7 +13,7 @@ struct ChatModeEntity: Entity {
     
     enum isME: Equatable, Hashable {
         case me
-        case other(String) // 유저 이름
+        case other(WorkSpaceMemberEntity) // 타유저
     }
     
     var isMe: isME
@@ -21,6 +21,7 @@ struct ChatModeEntity: Entity {
     /// iF NIL -> ""
     var content: String
     /// IF NIL -> []
-    var files: [String]
     
+    var files: [String]
+    var date: Date
 }

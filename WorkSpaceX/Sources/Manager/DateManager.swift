@@ -42,4 +42,16 @@ final class DateManager {
         return dateFormatter.string(from: date)
     }
     
+    func dateToStringToChat(_ date: Date, isMe: Bool) -> String {
+        if isMe {
+            dateFormatter.dateFormat = "a hh시 mm분"
+        } else {
+            dateFormatter.dateFormat = "hh시 mm분 a"
+        }
+        
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        
+        return dateFormatter.string(from: date)
+    }
+    
 }
