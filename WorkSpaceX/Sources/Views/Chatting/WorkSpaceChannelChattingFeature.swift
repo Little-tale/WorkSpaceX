@@ -23,6 +23,8 @@ struct WorkSpaceChannelChattingFeature {
         
         var userFeildText: String = ""
         var currentImageDatas: [Data] = []
+        
+        var chatViewModel: [ChatModeEntity] = []
     }
     
     enum Action {

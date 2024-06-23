@@ -126,10 +126,10 @@ extension WorkSpaceDomainMapper {
             content: dto.content,
             createdAt: dto.createdAt,
             files: dto.files,
-            user: WorkSpaceMemberEntity(
+            user: WorkSpaceMembersEntity(
                 userID: dto.user.user_id,
                 email: dto.user.email,
-                nickName: dto.user.nickname,
+                nickname: dto.user.nickname,
                 profileImage: dto.user.profileImage
             )
         )

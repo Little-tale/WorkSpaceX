@@ -15,7 +15,6 @@ struct WorkSpaceChannelChattingView: View {
     @State var openKeyboardInfo: Bool = false
     @State var openImagePicker: Bool = false
     
-    
     var body: some View {
         WithPerceptionTracking {
             VStack {

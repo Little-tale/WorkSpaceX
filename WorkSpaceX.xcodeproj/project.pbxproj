@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B10A9902C282EAF0035C3C8 /* ChatModeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A98F2C282EAF0035C3C8 /* ChatModeEntity.swift */; };
+		7B10A9922C282EBC0035C3C8 /* ChatMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9912C282EBC0035C3C8 /* ChatMode.swift */; };
+		7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9932C2832440035C3C8 /* ChatModeView.swift */; };
+		7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9952C28345A0035C3C8 /* ChatModifier.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -186,6 +190,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B10A98F2C282EAF0035C3C8 /* ChatModeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeEntity.swift; sourceTree = "<group>"; };
+		7B10A9912C282EBC0035C3C8 /* ChatMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMode.swift; sourceTree = "<group>"; };
+		7B10A9932C2832440035C3C8 /* ChatModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeView.swift; sourceTree = "<group>"; };
+		7B10A9952C28345A0035C3C8 /* ChatModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModifier.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -953,6 +961,7 @@
 				7B26D21C2C227FB500BC9912 /* WorkSpaceMembersEntity.swift */,
 				7BF9D7202C242A790021D043 /* WorkSpaceDetailEntity.swift */,
 				7BF9D73A2C269D720021D043 /* WorkSpaceChatEntity.swift */,
+				7B10A98F2C282EAF0035C3C8 /* ChatModeEntity.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -962,6 +971,7 @@
 			children = (
 				7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */,
 				7BF9D71A2C2406A40021D043 /* WorkSpaceMemberEntity.swift */,
+				7B10A9912C282EBC0035C3C8 /* ChatMode.swift */,
 			);
 			path = WorkSpaceListUSE;
 			sourceTree = "<group>";
@@ -998,6 +1008,7 @@
 				7BF9D7402C2703790021D043 /* Modifier */,
 				7BF9D72E2C2593600021D043 /* WorkSpaceChannelChattingView.swift */,
 				7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */,
+				7B10A9932C2832440035C3C8 /* ChatModeView.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -1006,6 +1017,7 @@
 			isa = PBXGroup;
 			children = (
 				7BF9D7432C2708F50021D043 /* ShadowModifier.swift */,
+				7B10A9952C28345A0035C3C8 /* ChatModifier.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -1170,6 +1182,7 @@
 				7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */,
 				7BF9D71B2C2406A40021D043 /* WorkSpaceMemberEntity.swift in Sources */,
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,
+				7B10A9902C282EAF0035C3C8 /* ChatModeEntity.swift in Sources */,
 				7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */,
 				7B2EEE202C1190EE0024853C /* APIError.swift in Sources */,
 				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,
@@ -1183,7 +1196,9 @@
 				7B8FD61F2C1A901500948E7C /* UserProfileDTO.swift in Sources */,
 				7B8FD6432C1AC0C100948E7C /* DateManager.swift in Sources */,
 				7BF9D71D2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift in Sources */,
+				7B10A9922C282EBC0035C3C8 /* ChatMode.swift in Sources */,
 				7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */,
+				7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */,
 				7B8FD6262C1AA49C00948E7C /* SideMenuView.swift in Sources */,
 				7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
@@ -1259,6 +1274,7 @@
 				7B26D1F02C1FE11D00BC9912 /* CustomAlertView.swift in Sources */,
 				7B8FD63F2C1ABD0B00948E7C /* RealmRepository.swift in Sources */,
 				7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */,
+				7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */,
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
 				7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
