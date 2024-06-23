@@ -40,6 +40,9 @@ struct WorkSpaceChannelChattingFeature {
         case onAppear
         case userFeildText(String)
         case imageData([Data])
+        
+        // 전송
+        case sendTapped
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo

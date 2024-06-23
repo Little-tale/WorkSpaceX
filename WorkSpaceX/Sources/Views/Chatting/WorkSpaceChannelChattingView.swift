@@ -63,30 +63,44 @@ extension WorkSpaceChannelChattingView {
     func chatTextField() -> some View {
         Group {
             workSpaceToolView()
-            HStack {
-                HStack {
-                    WSXImage.plus
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(WSXColor.black)
-                        .padding(.leading, 8)
-                        .asButton {
-                            openKeyboardInfo.toggle()
-                        }
-                    TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
-                }
-                .frame(height: 50)
-                .background {
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(WSXColor.black.opacity(0.1))
-                }
-                .padding(.horizontal, 8)
-                .padding(.bottom, 4)
-            }
+            workSpaceTextField()
         }
     }
     
+}
+extension WorkSpaceChannelChattingView {
+    func workSpaceTextField() -> some View {
+        HStack {
+            HStack {
+                WSXImage.plus
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 24, height: 24)
+                    .foregroundStyle(WSXColor.black)
+                    .padding(.leading, 8)
+                    .asButton {
+                        openKeyboardInfo.toggle()
+                    }
+                TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
+                WSXImage.send
+                    .resizable()
+                    .renderingMode(.template)
+                    .aspectRatio(1, contentMode: .fit)
+                    .frame(width: 24, height: 24)
+                    .asButton {
+                        store.send(.sendTapped)
+                    }
+                    .padding(.trailing, 5)
+            }
+            .frame(height: 50)
+            .background {
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(WSXColor.black.opacity(0.1))
+            }
+            .padding(.horizontal, 8)
+            .padding(.bottom, 4)
+        }
+    }
 }
 
 
@@ -96,18 +110,20 @@ extension WorkSpaceChannelChattingView {
         withAnimation {
             HStack {
                 HStack(spacing: 10) {
+                    // 이미지 먼저 후 -> PDF, 등의 파일 처리 
                     if openKeyboardInfo {
-                        WSXImage.gallary.sideImage()
+                        WSXImage.gallary
+                            .sideImage()
                             .asButton {
                                 openImagePicker.toggle()
                             }
                             .padding(.leading, 10)
+                            .padding(.vertical, 5)
                     }
+                    Spacer()
                 }
-                .padding(.vertical, 5)
-                Spacer()
+                .background(WSXColor.white)
             }
-            .modifier(ShadowModifier())
             .transition(.scale)
             .animation(.easeInOut,value: openKeyboardInfo)
         }

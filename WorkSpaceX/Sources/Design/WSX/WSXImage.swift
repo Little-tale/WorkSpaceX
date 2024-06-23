@@ -47,4 +47,6 @@ extension WSXImage {
     static let shapThin = Image(.shapThin).renderingMode(.template)
     
     static let gallary = Image(systemName: "photo.fill")
+    
+    static let send = Image(.sendRegular)
 }
