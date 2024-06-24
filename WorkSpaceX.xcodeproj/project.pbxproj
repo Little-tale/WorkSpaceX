@@ -12,6 +12,7 @@
 		7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9932C2832440035C3C8 /* ChatModeView.swift */; };
 		7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9952C28345A0035C3C8 /* ChatModifier.swift */; };
 		7B10A9982C2851080035C3C8 /* ChatModeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */; };
+		7B10A99A2C2910090035C3C8 /* ExCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9992C2910090035C3C8 /* ExCollection.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -196,6 +197,7 @@
 		7B10A9932C2832440035C3C8 /* ChatModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeView.swift; sourceTree = "<group>"; };
 		7B10A9952C28345A0035C3C8 /* ChatModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModifier.swift; sourceTree = "<group>"; };
 		7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeFeature.swift; sourceTree = "<group>"; };
+		7B10A9992C2910090035C3C8 /* ExCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCollection.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				7B8FD6222C1AA2CA00948E7C /* ExText.swift */,
 				7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */,
 				7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */,
+				7B10A9992C2910090035C3C8 /* ExCollection.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -1145,6 +1148,7 @@
 				7B8FD60B2C198D9E00948E7C /* WorkSpaceEmptyListFeature.swift in Sources */,
 				7B8FD6072C19813500948E7C /* WorkSpaceListFeature.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
+				7B10A99A2C2910090035C3C8 /* ExCollection.swift in Sources */,
 				7BEC45DD2C16E2AC00576ECA /* WorkSpaceDTO.swift in Sources */,
 				7B26D1EE2C1F04D900BC9912 /* KFImageRequestModifier.swift in Sources */,
 				7B8FD6482C1AF22D00948E7C /* DownSamplingImageView.swift in Sources */,

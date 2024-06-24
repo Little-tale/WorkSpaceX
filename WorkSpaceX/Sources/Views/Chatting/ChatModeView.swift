@@ -90,19 +90,30 @@ extension ChatModeView {
     }
 }
 extension ChatModeView {
-    
+    private func fileModeView() -> some View {
+        VStack {
+            ForEach(Array(store.model.files.enumerated()), id: \.element) { index, file in
+                if let fileType = store.fileModeModels[file] {
+                    imageForFileType(fileType, model: file)
+                }
+            }
+        }
+    }
     
     @ViewBuilder
     private func imageForFileType(_ fileType: ChatModeFeature.FileType, model: String) -> some View {
         switch fileType {
         case .unknown:
             Image(systemName: "questionmark")
+                .resizable()
         case .image:
             DownSamplingImageView(url: URL(string: model), size: CGSize(width: 60, height: 60))
         case .PDF:
-             Image(systemName: "doc.richtext")
+            Image(systemName: "doc.richtext")
+                .resizable()
         case .ZIP:
-             Image(systemName: "doc.zipper")
+            Image(systemName: "doc.zipper")
+                .resizable()
         }
     }
     
@@ -112,93 +123,122 @@ extension ChatModeView {
         case .none:
             EmptyView()
         case .one:
-            Text("???")
-                .frame(width: 100, height: 100)
-                .background(WSXColor.errorRed)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+            if let file = store.model.files.first, let fileType = store.fileModeModels[file] {
+                imageForFileType(fileType, model: file)
+                    .frame(width: 100, height: 100)
+                    .background(WSXColor.errorRed)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
         case .two:
             HStack {
-                Text("???")
-                    .frame(width: 80, height: 80)
-                    .background(WSXColor.errorRed)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                Text("???")
-                    .frame(width: 80, height: 80)
-                    .background(WSXColor.errorRed)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                    imageForFileType(fileType1, model: file1)
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                    imageForFileType(fileType2, model: file2)
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
             }
         case .three:
-            VStack (alignment: .center) {
+            VStack(alignment: .center) {
                 HStack {
-                    Text("???")
-                        .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("???")
+                    if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                        imageForFileType(fileType1, model: file1)
+                            .frame(width: 80, height: 80)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                        imageForFileType(fileType2, model: file2)
+                            .frame(width: 80, height: 80)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+                if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
+                    imageForFileType(fileType3, model: file3)
                         .frame(width: 80, height: 80)
                         .background(WSXColor.errorRed)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                Text("???")
-                    .frame(width: 80, height: 80)
-                    .background(WSXColor.errorRed)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            
         case .four:
-            VStack (alignment: .center) {
+            VStack(alignment: .center) {
                 HStack {
-                    Text("???")
-                        .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("???")
-                        .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                        imageForFileType(fileType1, model: file1)
+                            .frame(width: 80, height: 80)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                        imageForFileType(fileType2, model: file2)
+                            .frame(width: 80, height: 80)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
                 HStack {
-                    Text("???")
-                        .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("???")
-                        .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
+                        imageForFileType(fileType3, model: file3)
+                            .frame(width: 80, height: 80)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
+                        imageForFileType(fileType4, model: file4)
+                            .frame(width: 80, height: 80)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
             }
         case .five:
-            VStack (alignment: .center) {
+            VStack(alignment: .center) {
                 HStack {
-                    Text("???")
-                        .frame(width: 60, height: 60)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("???")
-                        .frame(width: 60, height: 60)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("???")
-                        .frame(width: 60, height: 60)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                        imageForFileType(fileType1, model: file1)
+                            .frame(width: 60, height: 60)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                        imageForFileType(fileType2, model: file2)
+                            .frame(width: 60, height: 60)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
+                        imageForFileType(fileType3, model: file3)
+                            .frame(width: 60, height: 60)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
                 HStack {
-                    Text("???")
-                        .frame(width: 80, height: 70)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("???")
-                        .frame(width: 80, height: 70)
-                        .background(WSXColor.errorRed)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
+                        imageForFileType(fileType4, model: file4)
+                            .frame(width: 80, height: 70)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    if let file5 = store.model.files[safe: 4], let fileType5 = store.fileModeModels[file5] {
+                        imageForFileType(fileType5, model: file5)
+                            .frame(width: 80, height: 70)
+                            .background(WSXColor.errorRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
                 }
-                
             }
         }
     }
 }
+
 
 #Preview {
     ChatModeView(store: Store(
@@ -212,7 +252,7 @@ extension ChatModeView {
             ),
             chatMode: .File,
             content: "ㅁㄴㅇㅁㅇㅁㄴㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㅇㄴㅁㄴㅇㅁㄴㅇㄴㅁㅇㅁㅇㅁㄴㄴㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅇ",
-            files: [],
+            files: [".zip",".zip",".zip",".pdf",".pdf"],
             date: Date())
         ),
         reducer: {

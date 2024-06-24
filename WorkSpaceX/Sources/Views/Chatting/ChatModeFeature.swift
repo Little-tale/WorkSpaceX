@@ -11,8 +11,8 @@ import ComposableArchitecture
 @Reducer
 struct ChatModeFeature {
     
-    enum FileCountCase {
-        case none
+    enum FileCountCase: Int {
+        case none = 0
         case one
         case two
         case three
@@ -30,7 +30,7 @@ struct ChatModeFeature {
     @ObservableState
     struct State {
         let model: ChatModeEntity
-        
+        var fileModeModels: [String: FileType] = [:]
     }
     
     enum Action {
@@ -50,7 +50,16 @@ struct ChatModeFeature {
             switch action {
                 
             case .onAppear:
-                break
+                
+                var fileModeModels: [String: FileType] = [:]
+                
+                state.model.files.forEach { file in
+                    let type = fileTypeCase(from: file)
+                    fileModeModels[file] = type
+                }
+                
+                state.fileModeModels = fileModeModels
+                
             case .profileClicked:
                 switch state.model.isMe {
                     
