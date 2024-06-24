@@ -353,8 +353,14 @@ extension RealmRepository {
     }
     
     @discardableResult
-    func upsertMembers(response: WorkSpaceMembersEntity) async throws -> UserRealmModel? {
-        let realm = try await Realm(actor: MainActor.shared)
+    func upsertMembers(response: WorkSpaceMembersEntity, ifRealm: Realm? = nil) async throws -> UserRealmModel? {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
         print("유저 정보 저장중.....")
         do {
             try await realm.asyncWrite {
@@ -451,16 +457,95 @@ extension RealmRepository {
         } else {
             realm = try await Realm(actor: MainActor.shared)
         }
-    
-        let model = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelId)
-        
-        guard let model else { return nil }
+        guard let model = try await findChatsForChannelModel(channelId: channelId, ifRealm: realm) else {
+            return nil
+        }
         
         let first = model.chatMessages.sorted(by: \.createdAt, ascending: false)
             .first
         guard let first else { return nil }
         
         return first.createdAt
+    }
+    
+    func findChatsForChannelModel(channelId: String, ifRealm: Realm? = nil) async throws -> WorkSpaceChannelRealmModel?  {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+    
+        let model = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelId)
+        
+        guard let model else { return nil }
+        
+        return model
+    }
+}
+
+extension RealmRepository {
+    
+    func upsertToChatInChannel(models: [WorkSpaceChatEntity]) async throws {
+        
+        guard let first = models.first else { return }
+        
+        var realm = try await Realm(actor: MainActor.shared)
+        
+        guard let channel = try await findChatsForChannelModel(channelId: first.channelId, ifRealm: realm) else {
+            throw RealmError.cantFindModel
+        }
+        
+        let cancelUpadate = Set(channel.chatMessages.map{ $0.channelID })
+        
+        var chatModels = [ChatRealmModel] ()
+        
+        for chat in models {
+            if cancelUpadate.contains(chat.channelId) {
+                continue
+            }
+            guard let user = try await upsertMembers(response: chat.user, ifRealm: realm) else {
+                throw RealmError.failAdd
+            }
+            let chat = try await upsertChat(chat, user: user, ifRealm: realm)
+            chatModels.append(chat)
+        }
+        
+        try await realm.asyncWrite {
+            // 새 메시지 추가
+            channel.chatMessages.append(objectsIn: chatModels)
+        }
+    }
+}
+
+extension RealmRepository {
+    
+    @discardableResult
+    func upsertChat(_ model: WorkSpaceChatEntity, user: UserRealmModel, ifRealm: Realm? = nil) async throws -> ChatRealmModel {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(ChatRealmModel.self, value: [
+                "chatID": model.chatId,
+                "channelID" : model.channelId,
+                "content" : model.content,
+                "createdAt" : model.createdAt.toDate as Any,
+                "user" : user,
+                "files" : model.files ?? []
+            ], update: .modified)
+        }
+        let model = realm.object(ofType: ChatRealmModel.self, forPrimaryKey: model.chatId)
+        
+        guard let model else { throw RealmError.failAdd }
+        
+        return model
     }
 }
 

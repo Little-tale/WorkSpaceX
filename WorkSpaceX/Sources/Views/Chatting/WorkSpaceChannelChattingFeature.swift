@@ -25,6 +25,8 @@ struct WorkSpaceChannelChattingFeature {
         var currentImageDatas: [Data] = []
         
         var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
+        
+        var scrollTo: String = ""
     }
     
     enum Action {
@@ -33,6 +35,7 @@ struct WorkSpaceChannelChattingFeature {
         // 채팅 분기점
         case chatDate(Date?)
         case channelInfoRequest
+        
         case networkResult([WorkSpaceChatEntity])
         case channelResult(ChanelEntity)
         
@@ -43,11 +46,14 @@ struct WorkSpaceChannelChattingFeature {
         case userFeildText(String)
         case imageData([Data])
         
+        case realmobserberStart
+        
         // 전송
         case sendTapped
         
         // 채팅들 액션
         case chats(IdentifiedActionOf<ChatModeFeature>)
+        case showChats([ChatModeEntity])
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -103,7 +109,11 @@ struct WorkSpaceChannelChattingFeature {
                 }
             case let .networkResult(results):
                 print(results)
-                
+                let channelID = state.channelID
+                // [WorkSpaceChatEntity]
+                return .run { send in
+                    try await realmRepo.upsertToChatInChannel( models: results)
+                }
                 //채널 정보 조회
             case .channelInfoRequest:
                 let workSpaceID = state.workSpaceID

@@ -12,12 +12,12 @@ class ChatRealmModel: Object {
     @Persisted(primaryKey: true) var chatID: String
     @Persisted var channelID: String
     @Persisted var content: String
-    @Persisted var createdAt: Date
+    @Persisted var createdAt: Date?
     @Persisted var user: UserRealmModel?
     @Persisted var files: List<String>
     
     convenience 
-    init(chatID: String, channelID: String, content: String, createdAt: Date, user: UserRealmModel?, files: [String]) {
+    init(chatID: String, channelID: String, content: String, createdAt: Date?, user: UserRealmModel?, files: [String]) {
         self.init()
         self.chatID = chatID
         self.channelID = channelID

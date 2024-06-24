@@ -15,18 +15,28 @@ struct WorkSpaceChannelChattingView: View {
     @State var openKeyboardInfo: Bool = false
     @State var openImagePicker: Bool = false
     
-    @State var scrollProxy: ScrollViewProxy? = nil
-    
     var body: some View {
         WithPerceptionTracking {
+            
             VStack {
                 ScrollViewReader { proxy in
                     ScrollView {
-                        ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
-                            ChatModeView(store: store)
+                        LazyVStack {
+                            ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
+                                ChatModeView(store: store)
+                                    .id(store.model.chatID)
+                            }
+                        }
+                        .rotationEffect(.degrees(180))
+                    }
+                    .rotationEffect(.degrees(180))
+                    .onChange(of: store.scrollTo) { new in
+                        withAnimation {
+                            proxy.scrollTo(new, anchor: .bottom)
                         }
                     }
                 }
+                
                 Spacer()
                 chatTextField()
             }
