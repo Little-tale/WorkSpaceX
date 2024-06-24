@@ -36,6 +36,7 @@ struct WorkSpaceChannelChattingFeature {
     }
     
     enum Action {
+        
         case popClicked
         
         // 채팅 분기점
@@ -65,6 +66,9 @@ struct WorkSpaceChannelChattingFeature {
         case firstInit
         case showChats([ChatModeEntity])
         case appendChat(ChatModeEntity)
+        
+        // ONCHANGED 이슈로 인한
+        case onChangeForScroll(String)
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -245,6 +249,9 @@ struct WorkSpaceChannelChattingFeature {
                 
             case let .errorMessage(message):
                 state.errorMessage = message
+                
+            case let .onChangeForScroll(string):
+                state.scrollTo = string
                 
             default:
                 break

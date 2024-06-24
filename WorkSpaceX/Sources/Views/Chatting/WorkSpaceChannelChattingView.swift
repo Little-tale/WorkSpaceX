@@ -12,8 +12,8 @@ struct WorkSpaceChannelChattingView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceChannelChattingFeature>
     
-    // @State var openKeyboardInfo: Bool = false
-   
+    @State var scrollTo: String = ""
+    
     var body: some View {
         WithPerceptionTracking {
             
@@ -27,13 +27,13 @@ struct WorkSpaceChannelChattingView: View {
                             }
                         }
                         .rotationEffect(.degrees(180))
+                        // 확실히 이것이 문제가 맞음
+                        .onChange(of: scrollTo) { new in
+                            proxy.scrollTo(new)
+                        }
+                        .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
                     }
                     .rotationEffect(.degrees(180))
-//                    .onChange(of: store.scrollTo) { new in
-//                        withAnimation {
-//                            proxy.scrollTo(new, anchor: .bottom)
-//                        }
-//                    }
                 }
                 
                 Spacer()
