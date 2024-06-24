@@ -15,10 +15,18 @@ struct WorkSpaceChannelChattingView: View {
     @State var openKeyboardInfo: Bool = false
     @State var openImagePicker: Bool = false
     
+    @State var scrollProxy: ScrollViewProxy? = nil
+    
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                Text("채팅뷰 탸다~")
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
+                            ChatModeView(store: store)
+                        }
+                    }
+                }
                 Spacer()
                 chatTextField()
             }

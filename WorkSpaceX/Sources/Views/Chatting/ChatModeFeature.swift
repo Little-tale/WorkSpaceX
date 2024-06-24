@@ -28,7 +28,9 @@ struct ChatModeFeature {
     }
     
     @ObservableState
-    struct State {
+    struct State: Equatable, Identifiable {
+        var id = UUID()
+        
         let model: ChatModeEntity
         var fileModeModels: [String: FileType] = [:]
         var chatMode: ChatMode = .loading

@@ -24,7 +24,7 @@ struct WorkSpaceChannelChattingFeature {
         var userFeildText: String = ""
         var currentImageDatas: [Data] = []
         
-        var chatViewModel: [ChatModeEntity] = []
+        var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
     }
     
     enum Action {
@@ -45,6 +45,9 @@ struct WorkSpaceChannelChattingFeature {
         
         // 전송
         case sendTapped
+        
+        // 채팅들 액션
+        case chats(IdentifiedActionOf<ChatModeFeature>)
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -52,6 +55,7 @@ struct WorkSpaceChannelChattingFeature {
     @Dependency(\.workSpaceReader) var reader
     
     var body: some ReducerOf<Self> {
+        
         
         Reduce { state, action in
             switch action {
@@ -134,6 +138,9 @@ struct WorkSpaceChannelChattingFeature {
                 break
             }
             return .none
+        }
+        .forEach(\.chatStates, action: \.chats) {
+            ChatModeFeature()
         }
         
     }
