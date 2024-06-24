@@ -18,12 +18,13 @@ struct ChatModeFeature {
         case three
         case four
         case five
-        
-        enum fileType {
-            case image
-            case PDF
-            case ZIP
-        }
+    }
+    
+    enum FileType {
+        case unknown
+        case image
+        case PDF
+        case ZIP
     }
     
     @ObservableState
@@ -52,8 +53,10 @@ struct ChatModeFeature {
                 break
             case .profileClicked:
                 switch state.model.isMe {
+                    
                 case .me:
                     break
+                    
                 case let .other(member):
                     return .run { send in
                         await send(.delegate(.selectedProfile(member)))
@@ -65,6 +68,21 @@ struct ChatModeFeature {
             }
             
             return .none
+        }
+    }
+}
+
+extension ChatModeFeature {
+    
+    func fileTypeCase(from url: String) -> FileType {
+        if url.lowercased().hasPrefix(".jpeg") || url.lowercased().hasSuffix(".png") {
+            return .image
+        } else if url.lowercased().hasSuffix(".pdf") {
+            return .PDF
+        } else if url.lowercased().hasSuffix(".zip") {
+            return .ZIP
+        } else {
+            return .unknown
         }
     }
     

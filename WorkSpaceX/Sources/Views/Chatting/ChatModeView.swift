@@ -21,9 +21,8 @@ struct ChatModeView: View {
                         Spacer()
                         Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: true))
                             .font(WSXFont.caption)
-                            
+                            .padding(.leading, 15)
                         modelCaseView()
-                            .frame(maxWidth: UIScreen.main.bounds.width / 2)
                             .modifier(ChatModifier(isMe: true))
                             .padding(.trailing, 10)
                             
@@ -37,10 +36,11 @@ struct ChatModeView: View {
                             .font(WSXFont.regu1)
                         HStack(alignment:.bottom) {
                             modelCaseView()
-                                .frame(maxWidth: UIScreen.main.bounds.width / 2)
                                 .modifier(ChatModifier(isMe: false))
+                    
                             Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: false))
                                 .font(WSXFont.caption)
+                                .padding(.trailing, 15)
                         }
                     }
                     Spacer()
@@ -58,7 +58,7 @@ struct ChatModeView: View {
         case .text:
             textModeView()
         case .File:
-            EmptyView()
+            fileCountCaseView(with: .five)
         case .textAndFile:
             EmptyView()
         }
@@ -90,9 +90,112 @@ extension ChatModeView {
     }
 }
 extension ChatModeView {
-    private func FileModeView() -> some View {
-        VStack {
+    
+    
+    @ViewBuilder
+    private func imageForFileType(_ fileType: ChatModeFeature.FileType, model: String) -> some View {
+        switch fileType {
+        case .unknown:
+            Image(systemName: "questionmark")
+        case .image:
+            DownSamplingImageView(url: URL(string: model), size: CGSize(width: 60, height: 60))
+        case .PDF:
+             Image(systemName: "doc.richtext")
+        case .ZIP:
+             Image(systemName: "doc.zipper")
+        }
+    }
+    
+    @ViewBuilder
+    private func fileCountCaseView(with caseOF: ChatModeFeature.FileCountCase) -> some View {
+        switch caseOF {
+        case .none:
+            EmptyView()
+        case .one:
+            Text("???")
+                .frame(width: 100, height: 100)
+                .background(WSXColor.errorRed)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        case .two:
+            HStack {
+                Text("???")
+                    .frame(width: 80, height: 80)
+                    .background(WSXColor.errorRed)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                Text("???")
+                    .frame(width: 80, height: 80)
+                    .background(WSXColor.errorRed)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+        case .three:
+            VStack (alignment: .center) {
+                HStack {
+                    Text("???")
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("???")
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                Text("???")
+                    .frame(width: 80, height: 80)
+                    .background(WSXColor.errorRed)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
             
+        case .four:
+            VStack (alignment: .center) {
+                HStack {
+                    Text("???")
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("???")
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                HStack {
+                    Text("???")
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("???")
+                        .frame(width: 80, height: 80)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+            }
+        case .five:
+            VStack (alignment: .center) {
+                HStack {
+                    Text("???")
+                        .frame(width: 60, height: 60)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("???")
+                        .frame(width: 60, height: 60)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("???")
+                        .frame(width: 60, height: 60)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                HStack {
+                    Text("???")
+                        .frame(width: 80, height: 70)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("???")
+                        .frame(width: 80, height: 70)
+                        .background(WSXColor.errorRed)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                
+            }
         }
     }
 }
@@ -108,7 +211,7 @@ extension ChatModeView {
                 profileImage: nil)
             ),
             chatMode: .File,
-            content: "",
+            content: "ㅁㄴㅇㅁㅇㅁㄴㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㅇㄴㅁㄴㅇㅁㄴㅇㄴㅁㅇㅁㅇㅁㄴㄴㅇㅁㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅇ",
             files: [],
             date: Date())
         ),
