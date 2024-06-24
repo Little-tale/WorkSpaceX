@@ -17,7 +17,6 @@ struct ChatModeEntity: Entity {
     }
     
     var isMe: isME
-    var chatMode: ChatMode
     /// iF NIL -> ""
     var content: String
     /// IF NIL -> []

@@ -8,6 +8,7 @@
 import Foundation
 
 enum ChatMode {
+    case loading
     case text
     case File
     case textAndFile

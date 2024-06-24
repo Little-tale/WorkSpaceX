@@ -31,6 +31,8 @@ struct ChatModeFeature {
     struct State {
         let model: ChatModeEntity
         var fileModeModels: [String: FileType] = [:]
+        var chatMode: ChatMode = .loading
+        var fileCountCase: FileCountCase = .none
     }
     
     enum Action {
@@ -40,8 +42,11 @@ struct ChatModeFeature {
         
         case profileClicked
         
+        case selectedFileURLString(String)
+        
         enum Delegate {
             case selectedProfile(WorkSpaceMemberEntity)
+            case selectedFileURLString(String)
         }
     }
     
@@ -57,8 +62,11 @@ struct ChatModeFeature {
                     let type = fileTypeCase(from: file)
                     fileModeModels[file] = type
                 }
+                state.fileCountCase = .init(rawValue: state.model.files.count) ?? .none
                 
                 state.fileModeModels = fileModeModels
+                
+                state.chatMode = chatModeResult(model: state.model)
                 
             case .profileClicked:
                 switch state.model.isMe {
@@ -70,6 +78,11 @@ struct ChatModeFeature {
                     return .run { send in
                         await send(.delegate(.selectedProfile(member)))
                     }
+                }
+                
+            case let .selectedFileURLString(urlString):
+                return .run { send in
+                    await send(.delegate(.selectedFileURLString(urlString)))
                 }
                 
             default:
@@ -95,4 +108,16 @@ extension ChatModeFeature {
         }
     }
     
+}
+
+extension ChatModeFeature {
+    func chatModeResult(model: ChatModeEntity) -> ChatMode {
+        if model.files.isEmpty {
+            return .text
+        } else if !model.files.isEmpty && model.content != "" {
+            return .textAndFile
+        } else {
+            return .File
+        }
+    }
 }
