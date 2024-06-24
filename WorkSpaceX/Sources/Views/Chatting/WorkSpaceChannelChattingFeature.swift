@@ -14,6 +14,7 @@ struct WorkSpaceChannelChattingFeature {
     @ObservableState
     struct State: Equatable {
         let id: UUID = UUID()
+        
         let channelID: String
         let workSpaceID: String
         let userID : String

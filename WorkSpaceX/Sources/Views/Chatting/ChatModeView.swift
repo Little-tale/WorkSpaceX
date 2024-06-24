@@ -50,60 +50,68 @@ struct ChatModeView: View {
         }
     }
     
-    @ViewBuilder
+
     private func modelCaseView() -> some View {
-        switch store.chatMode {
-        case .text:
-            textModeView()
-                .modifier(ChatModifier(isMe: store.model.isMe == .me))
-        case .File:
-            fileCountCaseView(with: store.fileCountCase)
-                .modifier(ChatModifier(isMe: store.model.isMe == .me))
-        case .textAndFile:
-            VStack(alignment: store.model.isMe == .me ? .trailing : .leading) {
+        WithPerceptionTracking {
+            switch store.chatMode {
+            case .text:
                 textModeView()
                     .modifier(ChatModifier(isMe: store.model.isMe == .me))
+            case .File:
                 fileCountCaseView(with: store.fileCountCase)
-                    .foregroundStyle(WSXColor.black)
                     .modifier(ChatModifier(isMe: store.model.isMe == .me))
+            case .textAndFile:
+                VStack(alignment: store.model.isMe == .me ? .trailing : .leading) {
+                    textModeView()
+                        .modifier(ChatModifier(isMe: store.model.isMe == .me))
+                    fileCountCaseView(with: store.fileCountCase)
+                        .foregroundStyle(WSXColor.black)
+                        .modifier(ChatModifier(isMe: store.model.isMe == .me))
+                }
+                
+            case .loading:
+                ProgressView()
             }
-            
-        case .loading:
-            ProgressView()
         }
     }
     
     private func otherProfileView(model: WorkSpaceMemberEntity) -> some View {
-        HStack {
-            if let image = model.profileImage {
-                DownSamplingImageView(url: URL(string: image), size: CGSize(width: 40, height: 40))
-                    .frame(width: 40 , height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-            } else {
-                WSXImage.profileEmpty1
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+        WithPerceptionTracking {
+            HStack {
+                if let image = model.profileImage {
+                    DownSamplingImageView(url: URL(string: image), size: CGSize(width: 40, height: 40))
+                        .frame(width: 40 , height: 40)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                } else {
+                    WSXImage.profileEmpty1
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
             }
-        }
-        .asButton {
-            store.send(.profileClicked)
+            .asButton {
+                store.send(.profileClicked)
+            }
         }
     }
 }
 
 extension ChatModeView {
     private func textModeView() -> some View {
-        Text(store.model.content)
-            .font(WSXFont.title2)
+        WithPerceptionTracking {
+            Text(store.model.content)
+                .font(WSXFont.title2)
+        }
     }
 }
 extension ChatModeView {
     private func fileModeView() -> some View {
-        VStack {
-            ForEach(Array(store.model.files.enumerated()), id: \.element) { index, file in
-                if let fileType = store.fileModeModels[file] {
-                    imageForFileType(fileType, model: file)
+        WithPerceptionTracking {
+            VStack {
+                ForEach(Array(store.model.files.enumerated()), id: \.element) { index, file in
+                    if let fileType = store.fileModeModels[file] {
+                        imageForFileType(fileType, model: file)
+                    }
                 }
             }
         }
@@ -140,39 +148,20 @@ extension ChatModeView {
     
     @ViewBuilder
     private func fileCountCaseView(with caseOF: ChatModeFeature.FileCountCase) -> some View {
-        switch caseOF {
-        case .none:
-            EmptyView()
-        case .one:
-            if let file = store.model.files.first, let fileType = store.fileModeModels[file] {
-                imageForFileType(fileType, model: file)
-                    .frame(width: 100, height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .asButton {
-                        store.send(.selectedFileURLString(file))
-                    }
-            }
-        case .two:
-            HStack {
-                if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
-                    imageForFileType(fileType1, model: file1)
-                        .frame(width: 80, height: 80)
+        WithPerceptionTracking {
+            switch caseOF {
+            case .none:
+                EmptyView()
+            case .one:
+                if let file = store.model.files.first, let fileType = store.fileModeModels[file] {
+                    imageForFileType(fileType, model: file)
+                        .frame(width: 100, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .asButton {
-                            store.send(.selectedFileURLString(file1))
+                            store.send(.selectedFileURLString(file))
                         }
                 }
-                if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
-                    imageForFileType(fileType2, model: file2)
-                        .frame(width: 80, height: 80)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .asButton {
-                            store.send(.selectedFileURLString(file2))
-                        }
-                }
-            }
-        case .three:
-            VStack(alignment: .center) {
+            case .two:
                 HStack {
                     if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
                         imageForFileType(fileType1, model: file1)
@@ -191,36 +180,26 @@ extension ChatModeView {
                             }
                     }
                 }
-                if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
-                    imageForFileType(fileType3, model: file3)
-                        .frame(width: 80, height: 80)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .asButton {
-                            store.send(.selectedFileURLString(file3))
+            case .three:
+                VStack(alignment: .center) {
+                    HStack {
+                        if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                            imageForFileType(fileType1, model: file1)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file1))
+                                }
                         }
-                }
-            }
-        case .four:
-            VStack(alignment: .center) {
-                HStack {
-                    if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
-                        imageForFileType(fileType1, model: file1)
-                            .frame(width: 80, height: 80)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file1))
-                            }
+                        if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                            imageForFileType(fileType2, model: file2)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file2))
+                                }
+                        }
                     }
-                    if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
-                        imageForFileType(fileType2, model: file2)
-                            .frame(width: 80, height: 80)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file2))
-                            }
-                    }
-                }
-                HStack {
                     if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
                         imageForFileType(fileType3, model: file3)
                             .frame(width: 80, height: 80)
@@ -229,64 +208,96 @@ extension ChatModeView {
                                 store.send(.selectedFileURLString(file3))
                             }
                     }
-                    if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
-                        imageForFileType(fileType4, model: file4)
-                            .frame(width: 80, height: 80)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file4))
-                            }
+                }
+            case .four:
+                VStack(alignment: .center) {
+                    HStack {
+                        if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                            imageForFileType(fileType1, model: file1)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file1))
+                                }
+                        }
+                        if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                            imageForFileType(fileType2, model: file2)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file2))
+                                }
+                        }
+                    }
+                    HStack {
+                        if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
+                            imageForFileType(fileType3, model: file3)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file3))
+                                }
+                        }
+                        if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
+                            imageForFileType(fileType4, model: file4)
+                                .frame(width: 80, height: 80)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file4))
+                                }
+                        }
                     }
                 }
-            }
-        case .five:
-            VStack(alignment: .center) {
-                HStack {
-                    if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
-                        imageForFileType(fileType1, model: file1)
-                            .frame(width: 55, height: 55)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file1))
-                            }
+            case .five:
+                VStack(alignment: .center) {
+                    HStack {
+                        if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
+                            imageForFileType(fileType1, model: file1)
+                                .frame(width: 55, height: 55)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file1))
+                                }
+                        }
+                        if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
+                            imageForFileType(fileType2, model: file2)
+                                .frame(width: 55, height: 55)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file2))
+                                }
+                        }
+                        if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
+                            imageForFileType(fileType3, model: file3)
+                                .frame(width: 55, height: 55)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file3))
+                                }
+                        }
                     }
-                    if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
-                        imageForFileType(fileType2, model: file2)
-                            .frame(width: 55, height: 55)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file2))
-                            }
-                    }
-                    if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
-                        imageForFileType(fileType3, model: file3)
-                            .frame(width: 55, height: 55)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file3))
-                            }
-                    }
-                }
-                HStack {
-                    if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
-                        imageForFileType(fileType4, model: file4)
-                            .frame(width: 90, height: 70)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file4))
-                            }
-                    }
-                    if let file5 = store.model.files[safe: 4], let fileType5 = store.fileModeModels[file5] {
-                        imageForFileType(fileType5, model: file5)
-                            .frame(width: 90, height: 70)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .asButton {
-                                store.send(.selectedFileURLString(file5))
-                            }
+                    HStack {
+                        if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
+                            imageForFileType(fileType4, model: file4)
+                                .frame(width: 90, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file4))
+                                }
+                        }
+                        if let file5 = store.model.files[safe: 4], let fileType5 = store.fileModeModels[file5] {
+                            imageForFileType(fileType5, model: file5)
+                                .frame(width: 90, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .asButton {
+                                    store.send(.selectedFileURLString(file5))
+                                }
+                        }
                     }
                 }
             }
         }
+        
     }
 }
 

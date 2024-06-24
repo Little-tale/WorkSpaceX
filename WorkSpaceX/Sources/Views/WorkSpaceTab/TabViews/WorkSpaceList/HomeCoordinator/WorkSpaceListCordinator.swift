@@ -96,16 +96,15 @@ struct WorkSpaceListCordinator {
                 print("전달받음 : ",model)
                 if let id = state.currentWorkSpaceId,
                 let userID = UserDefaultsManager.userID {
-                    state.identeRoutes.push(
-                        .chattingView(
-                            WorkSpaceChannelChattingFeature.State(
-                                channelID: model.channelId,
-                                workSpaceID: id,
-                                userID: userID,
-                                navigationTitle: model.name
-                            )
-                        )
+                    
+                    let chatState = WorkSpaceChannelChattingFeature.State(
+                        channelID: model.channelId,
+                        workSpaceID: id,
+                        userID: userID,
+                        navigationTitle: model.name
                     )
+                    
+                    state.identeRoutes.push(.chattingView(chatState))
                 }
             case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
                 state.identeRoutes.popToRoot()
