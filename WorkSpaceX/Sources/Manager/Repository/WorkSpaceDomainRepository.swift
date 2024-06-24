@@ -28,6 +28,8 @@ struct WorkSpaceDomainRepository {
     var workSpaceChattingList: (_ workSpaceID: String, _ channelId: String,_ ifDate: Date?) async throws -> [WorkSpaceChatEntity]
     
     var channelInfoRequest: (_ workSpaceID: String, _ channelID: String) async throws -> ChanelEntity
+    
+    var sendChatting: (_ workSpaceID: String, _ ChannelID: String,_ model: ChatMultipart) async throws -> WorkSpaceChatEntity
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -127,6 +129,18 @@ extension WorkSpaceDomainRepository: DependencyKey {
             let mapping = workSpaceMapper.workSpaceChanelInfoDTOToEntity(dto: result)
             
             return mapping
+        }, sendChatting: { workSpaceID, channelID, model in
+            let result = try await NetworkManager.shared.requestDto(
+                WorkSpaceChatDTO.self,
+                router: WorkSpaceRouter.sendChat(
+                    workSpaceID: workSpaceID,
+                    channelID,
+                    model,
+                    boundary: MultipartFormData.randomBoundary()
+                ),
+                errorType: WorkSpaceChatSendAPIError.self
+            )
+            return workSpaceMapper.workSpaceChatDtoToEntity(dto: result)
         }
     )
     

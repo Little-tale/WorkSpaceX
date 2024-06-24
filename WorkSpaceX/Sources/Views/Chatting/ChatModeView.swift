@@ -110,14 +110,14 @@ extension ChatModeView {
     }
     
     @ViewBuilder
-    private func imageForFileType(_ fileType: ChatModeFeature.FileType, model: String) -> some View {
+    private func imageForFileType(_ fileType: FileType, model: String) -> some View {
         switch fileType {
         case .unknown:
             Image(systemName: "questionmark")
                 .resizable()
         case .image:
             DownSamplingImageView(url: URL(string: model), size: CGSize(width: 60, height: 60))
-        case .PDF:
+        case .pdf:
             VStack {
                 Image(systemName: "doc.richtext")
                     .resizable()
@@ -126,7 +126,7 @@ extension ChatModeView {
                 Text(model.removeForURLChannelChats)
             }
             .font(WSXFont.caption)
-        case .ZIP:
+        case .zip:
             VStack {
                 Image(systemName: "doc.zipper")
                     .resizable()

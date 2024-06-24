@@ -24,6 +24,8 @@ enum WorkSpaceRouter: Router {
     case workSpaceChatRequest(workSpaceId: String, channelID: String, ifDate: String?)
     
     case channelInfoReqesut(workSpaceId: String, channelID: String)
+    
+    case sendChat(workSpaceID: String, _ ChannelID: String,_ multi: ChatMultipart, boundary: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -35,7 +37,7 @@ extension WorkSpaceRouter {
                 .workSpaceChatRequest,
                 .channelInfoReqesut :
             return .get
-        case .makeWorkSpace, .createChannel, .workSpaceAddMember:
+        case .makeWorkSpace, .createChannel, .workSpaceAddMember, .sendChat:
             return .post
         case .removeWorkSpace:
             return .delete
@@ -77,8 +79,11 @@ extension WorkSpaceRouter {
             
             return APIKey.version +  "/workspaces/\(workSpace)/channels/\(channel)/chats"
             
-        case let .channelInfoReqesut(workSapce, channel):
-            return APIKey.version + "/workspaces/\(workSapce)/channels/\(channel)"
+        case let .channelInfoReqesut(workSpace, channel):
+            return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)"
+            
+        case let .sendChat(workSpace, channel, _, _):
+            return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)/chats"
         }
     }
     
@@ -108,13 +113,18 @@ extension WorkSpaceRouter {
             return  [
                 "accept" : WSXHeader.Value.applicationJson
             ]
+            
+        case let .sendChat(_,_,_, boundary):
+            let multipartFormData = MultipartFormData()
+            return multipartFormData.headers(boundary: boundary)
         }
     }
     
     var parameters: Parameters? {
         switch self {
         case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersReqeust, .channelListSearching,
-            .channelInfoReqesut :
+                .channelInfoReqesut,
+                .sendChat :
             return nil
             
         case let .workSpaceChatRequest(_, _, date):
@@ -140,6 +150,9 @@ extension WorkSpaceRouter {
         case let .workSpaceAddMember(_, model):
             return requestToBody(model)
             
+            
+        case let .sendChat(_, _, model, boundary):
+            return makeChatMultipartData(model, boundary: boundary)
         }
     }
     
@@ -159,6 +172,9 @@ extension WorkSpaceRouter {
         case .modifyWorkSpace :
             return .multiPart
         case .createChannel :
+            return .multiPart
+            
+        case .sendChat:
             return .multiPart
             
         case .workSpaceAddMember:
@@ -237,6 +253,33 @@ extension WorkSpaceRouter {
             )
         }
         
+        return multiPart.finalize(boundary: boundary)
+    }
+    
+    private func makeChatMultipartData(_ data: ChatMultipart, boundary: String) -> Data {
+        
+        let multiPart = MultipartFormData()
+        
+        if let content = data.content {
+            multiPart.append(
+                content.toData,
+                withName: "content",
+                fileName: nil,
+                mimeType: MimeType.text.rawValue,
+                boundary: boundary
+            )
+        }
+        if let datas = data.files {
+            datas.forEach { file in
+                multiPart.append(
+                    file.data,
+                    withName: "files[]",
+                    fileName: file.fileName,
+                    mimeType: file.fileType.mimeType,
+                    boundary: boundary
+                )
+            }
+        }
         
         return multiPart.finalize(boundary: boundary)
     }

@@ -13,6 +13,9 @@
 		7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9952C28345A0035C3C8 /* ChatModifier.swift */; };
 		7B10A9982C2851080035C3C8 /* ChatModeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */; };
 		7B10A99A2C2910090035C3C8 /* ExCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9992C2910090035C3C8 /* ExCollection.swift */; };
+		7B10A9A02C296B680035C3C8 /* ChatMultipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A99F2C296B680035C3C8 /* ChatMultipart.swift */; };
+		7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9A12C296FD30035C3C8 /* FileType.swift */; };
+		7B10A9A42C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -198,6 +201,9 @@
 		7B10A9952C28345A0035C3C8 /* ChatModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModifier.swift; sourceTree = "<group>"; };
 		7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModeFeature.swift; sourceTree = "<group>"; };
 		7B10A9992C2910090035C3C8 /* ExCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExCollection.swift; sourceTree = "<group>"; };
+		7B10A99F2C296B680035C3C8 /* ChatMultipart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMultipart.swift; sourceTree = "<group>"; };
+		7B10A9A12C296FD30035C3C8 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
+		7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatSendAPIError.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -931,6 +937,7 @@
 				7BF9D71E2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift */,
 				7BF9D7222C2535C90021D043 /* WorkSpaceMembersAPIError.swift */,
 				7BF9D72B2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift */,
+				7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -977,6 +984,7 @@
 				7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */,
 				7BF9D71A2C2406A40021D043 /* WorkSpaceMemberEntity.swift */,
 				7B10A9912C282EBC0035C3C8 /* ChatMode.swift */,
+				7B10A9A12C296FD30035C3C8 /* FileType.swift */,
 			);
 			path = WorkSpaceListUSE;
 			sourceTree = "<group>";
@@ -994,6 +1002,7 @@
 			isa = PBXGroup;
 			children = (
 				7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */,
+				7B10A99F2C296B680035C3C8 /* ChatMultipart.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -1175,6 +1184,7 @@
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7BF9D7162C23F7B80021D043 /* AddMemberFeature.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
+				7B10A9A02C296B680035C3C8 /* ChatMultipart.swift in Sources */,
 				7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
@@ -1205,6 +1215,7 @@
 				7BF9D71D2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift in Sources */,
 				7B10A9922C282EBC0035C3C8 /* ChatMode.swift in Sources */,
 				7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */,
+				7B10A9A42C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift in Sources */,
 				7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */,
 				7B8FD6262C1AA49C00948E7C /* SideMenuView.swift in Sources */,
 				7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */,
@@ -1230,6 +1241,7 @@
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
+				7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */,
 				7BEC45DF2C16E60100576ECA /* WorkSpaceDomainError.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
 				7BF9D7192C2405130021D043 /* WorkSpaceAddMemberRequestDTO.swift in Sources */,

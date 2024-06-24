@@ -20,12 +20,6 @@ struct ChatModeFeature {
         case five
     }
     
-    enum FileType {
-        case unknown
-        case image
-        case PDF
-        case ZIP
-    }
     
     @ObservableState
     struct State: Equatable, Identifiable {
@@ -102,9 +96,9 @@ extension ChatModeFeature {
         if url.lowercased().hasSuffix(".jpeg") || url.lowercased().hasSuffix(".png") {
             return .image
         } else if url.lowercased().hasSuffix(".pdf") {
-            return .PDF
+            return .pdf
         } else if url.lowercased().hasSuffix(".zip") {
-            return .ZIP
+            return .zip
         } else {
             return .unknown
         }

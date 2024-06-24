@@ -22,7 +22,7 @@ struct WorkSpaceChannelChattingFeature {
         var navigationMemberCount: String = "0"
         
         var userFeildText: String = ""
-        var currentImageDatas: [Data] = []
+        var currentDatas: [Data] = []
         
         var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
         
@@ -31,6 +31,7 @@ struct WorkSpaceChannelChattingFeature {
         
         var currentModels: [ChatModeEntity] = []
         
+        var errorMessage: String? = nil
     }
     
     enum Action {
@@ -48,9 +49,12 @@ struct WorkSpaceChannelChattingFeature {
         
         case onAppear
         case userFeildText(String)
-        case imageData([Data])
         
         case realmobserberStart
+        
+        case imageDataPicks([Data])
+        
+        case errorMessage(String?)
         
         // 전송
         case sendTapped
@@ -169,11 +173,40 @@ struct WorkSpaceChannelChattingFeature {
                         send(.showChats(entitys))
                     }
                 }
+            case .sendTapped:
+                let workSpaceID = state.workSpaceID
+                let channelID = state.channelID
+                let content = state.userFeildText
+//                let files = state.currentDatas
+                let multi = ChatMultipart(content: content, files: nil)
+                return .run { send in
+                    let result = try await workSpaceRepo.sendChatting(
+                        workSpaceID,
+                        channelID,
+                        multi
+                    )
+                    print("전송은 성공 : ",result)
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceChatSendAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
                 
             case let .showChats(models):
                 state.currentModels = models
                 let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
                 state.chatStates.append(contentsOf: states)
+                
+            case let .errorMessage(message):
+                state.errorMessage = message
                 
             default:
                 break
