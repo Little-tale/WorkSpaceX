@@ -16,4 +16,8 @@ extension String {
         return DateManager.shared.toDateISO(self)
     }
     
+    var removeForURLChannelChats: String {
+        let remove = self.replacingOccurrences(of: "/static/channelChats/", with: "")
+        return remove
+    }
 }

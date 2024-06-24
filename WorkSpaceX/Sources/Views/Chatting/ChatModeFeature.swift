@@ -97,7 +97,7 @@ struct ChatModeFeature {
 extension ChatModeFeature {
     
     func fileTypeCase(from url: String) -> FileType {
-        if url.lowercased().hasPrefix(".jpeg") || url.lowercased().hasSuffix(".png") {
+        if url.lowercased().hasSuffix(".jpeg") || url.lowercased().hasSuffix(".png") {
             return .image
         } else if url.lowercased().hasSuffix(".pdf") {
             return .PDF

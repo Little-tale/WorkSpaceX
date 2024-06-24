@@ -23,7 +23,6 @@ struct ChatModeView: View {
                             .font(WSXFont.caption)
                             .padding(.leading, 15)
                         modelCaseView()
-                            .modifier(ChatModifier(isMe: true))
                             .padding(.trailing, 10)
                             
                     }
@@ -36,8 +35,7 @@ struct ChatModeView: View {
                             .font(WSXFont.regu1)
                         HStack(alignment:.bottom) {
                             modelCaseView()
-                                .modifier(ChatModifier(isMe: false))
-                    
+                                
                             Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: false))
                                 .font(WSXFont.caption)
                                 .padding(.trailing, 15)
@@ -57,10 +55,19 @@ struct ChatModeView: View {
         switch store.chatMode {
         case .text:
             textModeView()
+                .modifier(ChatModifier(isMe: store.model.isMe == .me))
         case .File:
             fileCountCaseView(with: store.fileCountCase)
+                .modifier(ChatModifier(isMe: store.model.isMe == .me))
         case .textAndFile:
-            EmptyView()
+            VStack(alignment: store.model.isMe == .me ? .trailing : .leading) {
+                textModeView()
+                    .modifier(ChatModifier(isMe: store.model.isMe == .me))
+                fileCountCaseView(with: store.fileCountCase)
+                    .foregroundStyle(WSXColor.black)
+                    .modifier(ChatModifier(isMe: store.model.isMe == .me))
+            }
+            
         case .loading:
             ProgressView()
         }
@@ -111,11 +118,23 @@ extension ChatModeView {
         case .image:
             DownSamplingImageView(url: URL(string: model), size: CGSize(width: 60, height: 60))
         case .PDF:
-            Image(systemName: "doc.richtext")
-                .resizable()
+            VStack {
+                Image(systemName: "doc.richtext")
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+                    .background(WSXColor.white)
+                Text(model.removeForURLChannelChats)
+            }
+            .font(WSXFont.caption)
         case .ZIP:
-            Image(systemName: "doc.zipper")
-                .resizable()
+            VStack {
+                Image(systemName: "doc.zipper")
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+                    .background(WSXColor.white)
+                Text(model.removeForURLChannelChats)
+            }
+            .font(WSXFont.caption)
         }
     }
     
@@ -128,7 +147,6 @@ extension ChatModeView {
             if let file = store.model.files.first, let fileType = store.fileModeModels[file] {
                 imageForFileType(fileType, model: file)
                     .frame(width: 100, height: 100)
-                    .background(WSXColor.errorRed)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .asButton {
                         store.send(.selectedFileURLString(file))
@@ -139,7 +157,6 @@ extension ChatModeView {
                 if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
                     imageForFileType(fileType1, model: file1)
                         .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .asButton {
                             store.send(.selectedFileURLString(file1))
@@ -148,7 +165,6 @@ extension ChatModeView {
                 if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
                     imageForFileType(fileType2, model: file2)
                         .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .asButton {
                             store.send(.selectedFileURLString(file2))
@@ -161,7 +177,6 @@ extension ChatModeView {
                     if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
                         imageForFileType(fileType1, model: file1)
                             .frame(width: 80, height: 80)
-                            .background(WSXColor.errorRed)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file1))
@@ -170,7 +185,6 @@ extension ChatModeView {
                     if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
                         imageForFileType(fileType2, model: file2)
                             .frame(width: 80, height: 80)
-                            .background(WSXColor.errorRed)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file2))
@@ -180,7 +194,6 @@ extension ChatModeView {
                 if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
                     imageForFileType(fileType3, model: file3)
                         .frame(width: 80, height: 80)
-                        .background(WSXColor.errorRed)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .asButton {
                             store.send(.selectedFileURLString(file3))
@@ -193,7 +206,6 @@ extension ChatModeView {
                     if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
                         imageForFileType(fileType1, model: file1)
                             .frame(width: 80, height: 80)
-                            .background(WSXColor.errorRed)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file1))
@@ -202,7 +214,6 @@ extension ChatModeView {
                     if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
                         imageForFileType(fileType2, model: file2)
                             .frame(width: 80, height: 80)
-                            .background(WSXColor.errorRed)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file2))
@@ -213,7 +224,6 @@ extension ChatModeView {
                     if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
                         imageForFileType(fileType3, model: file3)
                             .frame(width: 80, height: 80)
-                            .background(WSXColor.errorRed)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file3))
@@ -222,7 +232,6 @@ extension ChatModeView {
                     if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
                         imageForFileType(fileType4, model: file4)
                             .frame(width: 80, height: 80)
-                            .background(WSXColor.errorRed)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file4))
@@ -235,8 +244,7 @@ extension ChatModeView {
                 HStack {
                     if let file1 = store.model.files[safe: 0], let fileType1 = store.fileModeModels[file1] {
                         imageForFileType(fileType1, model: file1)
-                            .frame(width: 60, height: 60)
-                            .background(WSXColor.errorRed)
+                            .frame(width: 55, height: 55)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file1))
@@ -244,8 +252,7 @@ extension ChatModeView {
                     }
                     if let file2 = store.model.files[safe: 1], let fileType2 = store.fileModeModels[file2] {
                         imageForFileType(fileType2, model: file2)
-                            .frame(width: 60, height: 60)
-                            .background(WSXColor.errorRed)
+                            .frame(width: 55, height: 55)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file2))
@@ -253,8 +260,7 @@ extension ChatModeView {
                     }
                     if let file3 = store.model.files[safe: 2], let fileType3 = store.fileModeModels[file3] {
                         imageForFileType(fileType3, model: file3)
-                            .frame(width: 60, height: 60)
-                            .background(WSXColor.errorRed)
+                            .frame(width: 55, height: 55)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file3))
@@ -264,8 +270,7 @@ extension ChatModeView {
                 HStack {
                     if let file4 = store.model.files[safe: 3], let fileType4 = store.fileModeModels[file4] {
                         imageForFileType(fileType4, model: file4)
-                            .frame(width: 80, height: 70)
-                            .background(WSXColor.errorRed)
+                            .frame(width: 90, height: 70)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file4))
@@ -273,8 +278,7 @@ extension ChatModeView {
                     }
                     if let file5 = store.model.files[safe: 4], let fileType5 = store.fileModeModels[file5] {
                         imageForFileType(fileType5, model: file5)
-                            .frame(width: 80, height: 70)
-                            .background(WSXColor.errorRed)
+                            .frame(width: 90, height: 70)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .asButton {
                                 store.send(.selectedFileURLString(file5))
@@ -291,14 +295,15 @@ extension ChatModeView {
     ChatModeView(store: Store(
         initialState: ChatModeFeature.State(model: .init(
             chatID: "asd",
-            isMe: .other(.init(
-                userID: "TestID",
-                email: "이메일",
-                nickName: "라일리",
-                profileImage: nil)
-            ),
-            content: "",
-            files: [".zip",".zip",".zip",".pdf",".pdf"],
+            isMe: .me,
+            content: "댓글도 있었을때",
+            files: [
+                "/static/channelChats/면접질문 정리_1701706651157.zip",
+                "/static/channelChats/면접질문 정리_1701706651157.zip",
+                "/static/channelChats/면접질문 정리_1701706651157.zip",
+                "/static/channelChats/면접질문 정리_1701706651157.pdf",
+                "/static/channelChats/면접질문 정리_1701706651157.pdf"
+            ],
             date: Date())
         ),
         reducer: {
