@@ -548,6 +548,37 @@ extension RealmRepository {
         return model
     }
 }
+extension RealmRepository {
+    func toChat(_ models: [ChatRealmModel], userID: String) -> [ChatModeEntity] {
+        
+        models.compactMap { @MainActor model in
+            toChat(model, userID: userID)
+        }
+    }
+    
+    func toChat(_ model: ChatRealmModel, userID: String) -> ChatModeEntity? {
+        
+        guard let user = model.user else { return nil }
+        
+        let ifMe: Bool = user.userID == userID
+        
+        let fakeModel = WorkSpaceMemberEntity(
+            userID: user.userID,
+            email: user.email,
+            nickName: user.nickName,
+            profileImage: user.profileImage
+        )
+        
+        return ChatModeEntity(
+            chatID: model.chatID,
+            isMe: ifMe ? .me : .other(fakeModel),
+            content: model.content,
+            files: Array(model.files),
+            date: model.createdAt ?? Date()
+        )
+    }
+}
+
 
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()

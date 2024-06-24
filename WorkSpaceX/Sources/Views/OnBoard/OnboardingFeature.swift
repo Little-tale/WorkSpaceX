@@ -71,6 +71,7 @@ struct OnboardingFeature {
                 
                 return .run { send in
                     try await realmeRepo.upsertUserModel(response: model)
+                    try await Task.sleep(for:.seconds(0.4))
                     await send(.testSuccess)
                 } catch: { error , send in
                    print(error)

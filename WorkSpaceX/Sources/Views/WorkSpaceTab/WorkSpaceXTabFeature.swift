@@ -168,9 +168,9 @@ struct WorkSpaceTabCoordinator {
             case let .saveRealmOfWorkSpaces(workSpaces):
                 return .run { send in
                     try await realmeRepo.upsertWorkSpaces(responses: workSpaces)
-                    
+                    print("처음 : \(workSpaces.count)")
                     if workSpaces.isEmpty {
-                       
+                        
                         await send(.showEmptyView(true))
                         
                     }
@@ -269,12 +269,14 @@ struct WorkSpaceTabCoordinator {
                 let count = models.count
                 state.currentCount = count
                 
+                state.currentModels = models
+                
+                print("처음 \(count)")
                 if state.firstInTrigger {
                     state.firstInTrigger = false
                     state.ifNoneSpace = count <= 0
+                    // 이게 원인 같아 보임.
                 }
-                
-                state.currentModels = models
             
                 // HomeTabDelegte
             case .homeTabbar(.delegate(.openSideMenu)):

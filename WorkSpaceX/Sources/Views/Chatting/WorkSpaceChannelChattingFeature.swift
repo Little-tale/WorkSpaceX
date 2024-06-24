@@ -27,6 +27,10 @@ struct WorkSpaceChannelChattingFeature {
         var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
         
         var scrollTo: String = ""
+        var lastFetchDate: Date = Date()
+        
+        var currentModels: [ChatModeEntity] = []
+        
     }
     
     enum Action {
@@ -53,7 +57,9 @@ struct WorkSpaceChannelChattingFeature {
         
         // 채팅들 액션
         case chats(IdentifiedActionOf<ChatModeFeature>)
+        case firstInit
         case showChats([ChatModeEntity])
+        case appenChats([ChatModeEntity])
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -71,12 +77,13 @@ struct WorkSpaceChannelChattingFeature {
                 let workSpaceID = state.workSpaceID
                 
                 // 1. 채팅 데이터가 존재하는지 최소한 한번은 확인해야함.
+                // 1.0.1 렘 페이지 네이션을 위해. 날짜별 호출 먼저 최초 1회 후
                 // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
                 // 2. 없다면 커서 데이트를 빈값으로 보내야함.
                 // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
                 // + 렘 멤버 도 꼭 확인
                 return .run { send in
-                
+                    
                     let date = try await realmRepo.findChatsForChannel(channelId: channelID)
                     await send(.chatDate(date))
                 }
@@ -87,7 +94,9 @@ struct WorkSpaceChannelChattingFeature {
                 if let date {
                     // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
                     // 렘옵저버 선 후 -> 통신
-                    
+                    return .run { send in
+                        await send(.firstInit)
+                    }
                 } else {
                     // 2. 없다면 커서 데이트를 빈값으로 보내야함.
                     // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
@@ -96,6 +105,8 @@ struct WorkSpaceChannelChattingFeature {
                         print("받기 \(result)")
                         await send(.networkResult(result))
                         await send(.channelInfoRequest)
+                        // 처음 렘
+                        await send(.firstInit)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
                             if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
@@ -143,6 +154,26 @@ struct WorkSpaceChannelChattingFeature {
                 
             case let .userFeildText(text):
                 state.userFeildText = text
+                
+                /// 처음엔
+            case .firstInit:
+                let channelID = state.channelID
+                let meID = state.userID
+                return .run { @MainActor send in
+                    if let result = try await realmRepo.findChatsForChannelModel(channelId: channelID, ifRealm: nil) {
+                        
+                        let chatMessages = Array(result.chatMessages)
+                        
+                        let entitys = realmRepo.toChat(chatMessages, userID: meID)
+                        
+                        send(.showChats(entitys))
+                    }
+                }
+                
+            case let .showChats(models):
+                state.currentModels = models
+                let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
+                state.chatStates.append(contentsOf: states)
                 
             default:
                 break

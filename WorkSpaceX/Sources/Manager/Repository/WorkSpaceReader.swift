@@ -139,6 +139,46 @@ extension WorkSpaceReader {
             }
         }
     }
+    
+    /// 해당 메서드는 업데이트 만을 방출합니다.
+    func observeNewMessage(channelID: String) -> AsyncStream<ChatRealmModel> {
+        
+        return AsyncStream { contin in
+            Task {
+                do {
+                    let realm = try await Realm(actor: MainActor.shared)
+                    
+                    guard let channel = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelID) else {
+                        contin.finish()
+                        return
+                    }
+                    
+                    let tokken = channel.chatMessages.observe { change in
+                        Task { @MainActor in
+                            switch change {
+                            case .initial(_):
+                                break
+                            case .update(let models, deletions: let deletions, insertions: let insertions, modifications: let modifications):
+                                for index in insertions {
+                                    let new = models[index]
+                                    contin.yield(new)
+                                }
+                            case .error(_):
+                                contin.finish()
+                            }
+                        }
+                    }
+                    
+                    contin.onTermination = { @Sendable _ in
+                        tokken.invalidate()
+                    }
+                } catch {
+                    contin.finish()
+                }
+            }
+        }
+    }
+    
 }
 
 extension WorkSpaceReader: DependencyKey {
