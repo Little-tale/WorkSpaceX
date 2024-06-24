@@ -497,12 +497,14 @@ extension RealmRepository {
             throw RealmError.cantFindModel
         }
         
-        let cancelUpadate = Set(channel.chatMessages.map{ $0.channelID })
+        let cancelUpadate = Set(channel.chatMessages.map{ $0.chatID })
         
         var chatModels = [ChatRealmModel] ()
-        
+        var count: Int = 0
         for chat in models {
-            if cancelUpadate.contains(chat.channelId) {
+            if cancelUpadate.contains(chat.chatId) {
+                print (count + 1 )
+                count += 1
                 continue
             }
             guard let user = try await upsertMembers(response: chat.user, ifRealm: realm) else {

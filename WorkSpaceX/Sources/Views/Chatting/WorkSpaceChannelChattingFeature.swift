@@ -63,7 +63,7 @@ struct WorkSpaceChannelChattingFeature {
         case chats(IdentifiedActionOf<ChatModeFeature>)
         case firstInit
         case showChats([ChatModeEntity])
-        case appenChats([ChatModeEntity])
+        case appendChat(ChatModeEntity)
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -99,7 +99,14 @@ struct WorkSpaceChannelChattingFeature {
                     // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
                     // 렘옵저버 선 후 -> 통신
                     return .run { send in
+                        await send(.channelInfoRequest)
+                        
                         await send(.firstInit)
+                        await send(.realmobserberStart)
+                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
+                        
+                        await send(.networkResult(result))
+                        
                     }
                 } else {
                     // 2. 없다면 커서 데이트를 빈값으로 보내야함.
@@ -111,6 +118,7 @@ struct WorkSpaceChannelChattingFeature {
                         await send(.channelInfoRequest)
                         // 처음 렘
                         await send(.firstInit)
+                        await send(.realmobserberStart)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
                             if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
@@ -123,7 +131,7 @@ struct WorkSpaceChannelChattingFeature {
                     }
                 }
             case let .networkResult(results):
-                print(results)
+                print("네트워크",results)
                 let channelID = state.channelID
                 // [WorkSpaceChatEntity]
                 return .run { send in
@@ -156,6 +164,9 @@ struct WorkSpaceChannelChattingFeature {
                 
                 break
                 
+            case let .chats(.element(id: _, action: .delegate(.selectedFileURLString(text)))):
+                print(text)
+                
             case let .userFeildText(text):
                 state.userFeildText = text
                 
@@ -164,6 +175,7 @@ struct WorkSpaceChannelChattingFeature {
                 let channelID = state.channelID
                 let meID = state.userID
                 return .run { @MainActor send in
+                    
                     if let result = try await realmRepo.findChatsForChannelModel(channelId: channelID, ifRealm: nil) {
                         
                         let chatMessages = Array(result.chatMessages)
@@ -179,7 +191,12 @@ struct WorkSpaceChannelChattingFeature {
                 let content = state.userFeildText
 //                let files = state.currentDatas
                 let multi = ChatMultipart(content: content, files: nil)
+                state.userFeildText = ""
+                
+                // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
+                
                 return .run { send in
+                    // 소켓을 연결할것으로 예상됨으로. 패스.
                     let result = try await workSpaceRepo.sendChatting(
                         workSpaceID,
                         channelID,
@@ -200,7 +217,27 @@ struct WorkSpaceChannelChattingFeature {
                     }
                 }
                 
+            case .realmobserberStart:
+                let channelID = state.channelID
+                let userID = state.userID
+                return .run { @MainActor send in
+                    
+                    for await model in await reader.observeNewMessage(channelID: channelID) {
+                        if let result = realmRepo.toChat(model, userID: userID) {
+                            
+                            try await Task.sleep(for: .seconds(0.03))
+                            send(.appendChat(result))
+                        }
+                    }
+                }
+                
+            case let .appendChat(model):
+                state.currentModels.insert(model, at: 0)
+                let chatState = ChatModeFeature.State(model: model)
+                state.chatStates.append(chatState)
+                
             case let .showChats(models):
+                dump(models)
                 state.currentModels = models
                 let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
                 state.chatStates.append(contentsOf: states)

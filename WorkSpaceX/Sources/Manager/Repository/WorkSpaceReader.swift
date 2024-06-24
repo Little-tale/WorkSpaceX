@@ -141,10 +141,11 @@ extension WorkSpaceReader {
     }
     
     /// 해당 메서드는 업데이트 만을 방출합니다.
+    @MainActor
     func observeNewMessage(channelID: String) -> AsyncStream<ChatRealmModel> {
         
         return AsyncStream { contin in
-            Task {
+            Task { @MainActor in
                 do {
                     let realm = try await Realm(actor: MainActor.shared)
                     

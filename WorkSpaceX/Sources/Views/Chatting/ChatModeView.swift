@@ -291,26 +291,26 @@ extension ChatModeView {
 }
 
 
-#Preview {
-    ChatModeView(store: Store(
-        initialState: ChatModeFeature.State(model: .init(
-            chatID: "asd",
-            isMe: .me,
-            content: "댓글도 있었을때",
-            files: [
-                "/static/channelChats/면접질문 정리_1701706651157.zip",
-                "/static/channelChats/면접질문 정리_1701706651157.zip",
-                "/static/channelChats/면접질문 정리_1701706651157.zip",
-                "/static/channelChats/면접질문 정리_1701706651157.pdf",
-                "/static/channelChats/면접질문 정리_1701706651157.pdf"
-            ],
-            date: Date())
-        ),
-        reducer: {
-            ChatModeFeature()
-        })
-    )
-}
+//#Preview {
+//    ChatModeView(store: Store(
+//        initialState: ChatModeFeature.State(model: .init(
+//            chatID: "asd",
+//            isMe: .me,
+//            content: "댓글도 있었을때",
+//            files: [
+//                "/static/channelChats/면접질문 정리_1701706651157.zip",
+//                "/static/channelChats/면접질문 정리_1701706651157.zip",
+//                "/static/channelChats/면접질문 정리_1701706651157.zip",
+//                "/static/channelChats/면접질문 정리_1701706651157.pdf",
+//                "/static/channelChats/면접질문 정리_1701706651157.pdf"
+//            ],
+//            date: Date())
+//        ),
+//        reducer: {
+//            ChatModeFeature()
+//        })
+//    )
+//}
 
 /*
  .other(.init(
