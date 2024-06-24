@@ -13,6 +13,7 @@ struct ChatModeView: View {
     @Perception.Bindable var store: StoreOf<ChatModeFeature>
     
     var body: some View {
+        WithPerceptionTracking {
             HStack(alignment: .top) {
                 switch store.model.isMe {
                 case .me:
@@ -48,6 +49,7 @@ struct ChatModeView: View {
             .onAppear {
                 store.send(.onAppear)
             }
+        }
     }
     
     @ViewBuilder
@@ -74,6 +76,9 @@ struct ChatModeView: View {
                     .frame(width: 40, height: 40)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
+        }
+        .asButton {
+            store.send(.profileClicked)
         }
     }
 }

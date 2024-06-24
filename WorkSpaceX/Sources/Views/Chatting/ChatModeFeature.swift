@@ -34,6 +34,14 @@ struct ChatModeFeature {
     
     enum Action {
         case onAppear
+        
+        case delegate(Delegate)
+        
+        case profileClicked
+        
+        enum Delegate {
+            case selectedProfile(WorkSpaceMemberEntity)
+        }
     }
     
     var body: some ReducerOf<Self> {
@@ -41,7 +49,18 @@ struct ChatModeFeature {
             switch action {
                 
             case .onAppear:
+                break
+            case .profileClicked:
+                switch state.model.isMe {
+                case .me:
+                    break
+                case let .other(member):
+                    return .run { send in
+                        await send(.delegate(.selectedProfile(member)))
+                    }
+                }
                 
+            default:
                 break
             }
             
