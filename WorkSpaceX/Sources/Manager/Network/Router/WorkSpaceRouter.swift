@@ -261,19 +261,22 @@ extension WorkSpaceRouter {
         let multiPart = MultipartFormData()
         
         if let content = data.content {
-            multiPart.append(
-                content.toData,
-                withName: "content",
-                fileName: nil,
-                mimeType: MimeType.text.rawValue,
-                boundary: boundary
-            )
+            if content != "" {
+                multiPart.append(
+                    content.toData,
+                    withName: "content",
+                    fileName: nil,
+                    mimeType: MimeType.text.rawValue,
+                    boundary: boundary
+                )
+            }
         }
         if let datas = data.files {
-            datas.forEach { file in
+            dump(datas)
+            for file in datas {
                 multiPart.append(
                     file.data,
-                    withName: "files[]",
+                    withName: "files",
                     fileName: file.fileName,
                     mimeType: file.fileType.mimeType,
                     boundary: boundary

@@ -90,7 +90,7 @@ struct WorkSpaceChannelChattingFeature {
         // 파일 피커
         case showFilePicker
         case filePickerBool(Bool)
-        case filePickOber
+        case filePickOver
         case filePickerResults([URL])
     }
     
@@ -217,10 +217,14 @@ struct WorkSpaceChannelChattingFeature {
                 let workSpaceID = state.workSpaceID
                 let channelID = state.channelID
                 let content = state.userFeildText
-//                let files = state.currentDatas
-                let multi = ChatMultipart(content: content, files: nil)
-                state.userFeildText = ""
+                let files = state.currentDatas
                 
+                if content == "" && files.isEmpty {
+                    break
+                }
+                let multi = ChatMultipart(content: content, files: files)
+                state.userFeildText = ""
+                state.currentDatas = []
                 // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
                 
                 return .run { send in
@@ -252,8 +256,6 @@ struct WorkSpaceChannelChattingFeature {
                     
                     for await model in  reader.observeNewMessage(channelID: channelID) {
                         if let result = realmRepo.toChat(model, userID: userID) {
-                            
-                            try await Task.sleep(for: .seconds(0.03))
                             send(.appendChat(result))
                         }
                     }
@@ -274,7 +276,7 @@ struct WorkSpaceChannelChattingFeature {
                 // 이미지 피커란
             case .showImagePicker:
                 if state.dataCanCount == 0 {
-                    break
+                    return .run { send in await send(.filePickOver)}
                 }
                 return .run { send in
                     await send(.imagePickerBool(true))
@@ -287,7 +289,7 @@ struct WorkSpaceChannelChattingFeature {
                 let multiToImage = datas.map { data in
                     ChatMultipart.File(
                         data: data,
-                        fileName: "WORKSPACEX\(UUID())",
+                        fileName: "WorkSpaceX_\(UUID()).jpeg",
                         fileType: .image
                     )
                 }
@@ -302,7 +304,7 @@ struct WorkSpaceChannelChattingFeature {
                 }
             case let .filePickerBool(bool):
                 if state.dataCanCount == 0 {
-                    break
+                    return .run { send in await send(.filePickOver)}
                 }
                 state.filePickerTrigger = bool
                 
@@ -338,6 +340,8 @@ struct WorkSpaceChannelChattingFeature {
                         await send(.dataCountChaeck)
                     }
                 }
+            case .filePickOver:
+                state.errorMessage = "총 5개 제한 이에요 ㅠㅠ"
 
                 // 데이터 카운트 관리
             case .dataCountChaeck:
@@ -351,6 +355,8 @@ struct WorkSpaceChannelChattingFeature {
                 return .run { send in
                     await send(.dataCountChaeck)
                 }
+                
+                
                 // 알렛 메시지
             case let .errorMessage(message):
                 state.errorMessage = message

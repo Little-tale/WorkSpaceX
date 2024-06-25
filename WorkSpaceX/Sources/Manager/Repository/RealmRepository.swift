@@ -537,7 +537,7 @@ extension RealmRepository {
             realm.create(ChatRealmModel.self, value: [
                 "chatID": model.chatId,
                 "channelID" : model.channelId,
-                "content" : model.content,
+                "content" : model.content as Any,
                 "createdAt" : model.createdAt.toDate as Any,
                 "user" : user,
                 "files" : model.files ?? []
@@ -574,7 +574,7 @@ extension RealmRepository {
         return ChatModeEntity(
             chatID: model.chatID,
             isMe: ifMe ? .me : .other(fakeModel),
-            content: model.content,
+            content: model.content ?? "",
             files: Array(model.files),
             date: model.createdAt ?? Date()
         )

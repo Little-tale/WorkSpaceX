@@ -98,7 +98,7 @@ struct WorkSpaceChannelChattingView: View {
                     selectedLimit: store.dataCanCount) { dataURLs in
                         store.send(.filePickerResults(dataURLs))
                     } ifNeedRemitOver: {
-                        store.send(.filePickOber)
+                        store.send(.filePickOver)
                     }
                 EmptyView()
                     .presentationDetents([.large])
@@ -177,7 +177,7 @@ extension WorkSpaceChannelChattingView {
                         ZStack(alignment: .topTrailing) {
                             workSpaceChatFileCaseView(file: item)
                                 .frame(width: 45, height: 45)
-                            
+                                
                             WSXImage.xImage
                                 .resizable()
                                 .renderingMode(.template)

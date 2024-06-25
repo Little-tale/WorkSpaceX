@@ -60,6 +60,7 @@ struct ChatModeView: View {
             case .File:
                 fileCountCaseView(with: store.fileCountCase)
                     .modifier(ChatModifier(isMe: store.model.isMe == .me))
+                    
             case .textAndFile:
                 VStack(alignment: store.model.isMe == .me ? .trailing : .leading) {
                     textModeView()
@@ -79,9 +80,7 @@ struct ChatModeView: View {
         WithPerceptionTracking {
             HStack {
                 if let image = model.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: CGSize(width: 40, height: 40))
-                        .frame(width: 40 , height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    DownSamplingImageView(url: URL(string: image), size: CGSize(width: 100, height: 100))
                 } else {
                     WSXImage.profileEmpty1
                         .resizable()
@@ -124,13 +123,16 @@ extension ChatModeView {
             Image(systemName: "questionmark")
                 .resizable()
         case .image:
-            DownSamplingImageView(url: URL(string: model), size: CGSize(width: 60, height: 60))
+            DownSamplingImageView(url: URL(string: model), size: CGSize(width: 150, height: 150))
+                
         case .pdf:
             VStack {
                 Image(systemName: "doc.richtext")
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .background(WSXColor.white)
+                    .foregroundStyle(WSXColor.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 Text(model.removeForURLChannelChats)
             }
             .font(WSXFont.caption)
@@ -140,6 +142,8 @@ extension ChatModeView {
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .background(WSXColor.white)
+                    .foregroundStyle(WSXColor.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 Text(model.removeForURLChannelChats)
             }
             .font(WSXFont.caption)

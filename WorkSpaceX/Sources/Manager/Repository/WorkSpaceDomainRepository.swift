@@ -140,6 +140,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 ),
                 errorType: WorkSpaceChatSendAPIError.self
             )
+            print("쳇 결과 : ",result.files)
             return workSpaceMapper.workSpaceChatDtoToEntity(dto: result)
         }
     )
