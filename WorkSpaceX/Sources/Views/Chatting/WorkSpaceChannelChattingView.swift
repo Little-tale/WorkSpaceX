@@ -74,7 +74,7 @@ struct WorkSpaceChannelChattingView: View {
             .fullScreenCover(isPresented: $store.imagePickerTrigger.sending(\.imagePickerBool)){
                 CustomImagePicker(
                     isPresented: $store.imagePickerTrigger.sending(\.imagePickerBool),
-                    selectedLimit: store.imageCanImageCount,
+                    selectedLimit: store.dataCanCount,
                     filter: .images,
                     selectedDataForJPEG:  { datas in
                         store.send(.imageDataPicks(datas))

@@ -8,7 +8,13 @@
 import Foundation
 
 
-struct ChatMultipart {
+struct ChatMultipart: Equatable {
     var content: String?
-    var files: [(data: Data, fileName: String, fileType: FileType)]?
+    var files: [File]?
+    
+    struct File: Equatable {
+        let data: Data
+        let fileName: String
+        let fileType: FileType
+    }
 }

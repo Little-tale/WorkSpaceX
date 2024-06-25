@@ -23,7 +23,7 @@ struct WorkSpaceChannelChattingFeature {
         var navigationMemberCount: String = "0"
         
         var userFeildText: String = ""
-        var currentDatas: [Data] = []
+        var currentDatas: [ChatMultipart.File] = []
         
         var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
         
@@ -35,7 +35,9 @@ struct WorkSpaceChannelChattingFeature {
         var errorMessage: String? = nil
         /// 이미지 피커 트리거
         var imagePickerTrigger: Bool = false
-        var imageCanImageCount: Int = 5
+        
+        // 데이터 관리 카운트
+        var dataCanCount: Int = 5
     }
     
     enum Action {
@@ -70,6 +72,9 @@ struct WorkSpaceChannelChattingFeature {
         
         // ONCHANGED 이슈로 인한
         case onChangeForScroll(String)
+        
+        // 데이터 카운터 관리
+        case dataCountChaeck
         
         // 이미지 피커
         case showImagePicker
@@ -257,12 +262,34 @@ struct WorkSpaceChannelChattingFeature {
                 
                 // 이미지 피커란
             case .showImagePicker:
+                if state.dataCanCount == 0 {
+                    break
+                }
                 return .run { send in
                     await send(.imagePickerBool(true))
                 }
             case let .imagePickerBool(bool):
                 state.imagePickerTrigger = bool
+                // 이미지 피커 데이터
+            case let .imageDataPicks(datas):
                 
+                let multiToImage = datas.map { data in
+                    ChatMultipart.File(
+                        data: data,
+                        fileName: "WORKSPACEX\(UUID())",
+                        fileType: .image
+                    )
+                }
+                state.currentDatas.append(contentsOf: multiToImage)
+                return .run { send in
+                    await send(.dataCountChaeck)
+                }
+                
+                // 데이터 카운트 관리
+            case .dataCountChaeck:
+                state.dataCanCount = 5 - state.currentDatas.count
+                
+                // 알렛 메시지
             case let .errorMessage(message):
                 state.errorMessage = message
                 

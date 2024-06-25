@@ -23,6 +23,9 @@ struct CustomImagePicker: UIViewControllerRepresentable {
     var selectedDataForJPEG: (([Data]) -> Void)?
     
     func makeUIViewController(context: Context) -> some UIViewController {
+        if selectedLimit == 0 {
+            isPresented.toggle()
+        }
         var config = PHPickerConfiguration()
         config.selectionLimit = selectedLimit
         config.filter = filter
