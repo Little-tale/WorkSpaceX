@@ -33,6 +33,9 @@ struct WorkSpaceChannelChattingFeature {
         var currentModels: [ChatModeEntity] = []
         
         var errorMessage: String? = nil
+        /// 이미지 피커 트리거
+        var imagePickerTrigger: Bool = false
+        var imageCanImageCount: Int = 5
     }
     
     enum Action {
@@ -54,8 +57,6 @@ struct WorkSpaceChannelChattingFeature {
         
         case realmobserberStart
         
-        case imageDataPicks([Data])
-        
         case errorMessage(String?)
         
         // 전송
@@ -69,6 +70,12 @@ struct WorkSpaceChannelChattingFeature {
         
         // ONCHANGED 이슈로 인한
         case onChangeForScroll(String)
+        
+        // 이미지 피커
+        case showImagePicker
+        case imageDataPicks([Data])
+        case imagePickerBool(Bool)
+        case imagePickerCanCount(Int)
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -227,7 +234,7 @@ struct WorkSpaceChannelChattingFeature {
                 let userID = state.userID
                 return .run { @MainActor send in
                     
-                    for await model in await reader.observeNewMessage(channelID: channelID) {
+                    for await model in  reader.observeNewMessage(channelID: channelID) {
                         if let result = realmRepo.toChat(model, userID: userID) {
                             
                             try await Task.sleep(for: .seconds(0.03))
@@ -246,6 +253,15 @@ struct WorkSpaceChannelChattingFeature {
                 state.currentModels = models
                 let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
                 state.chatStates.append(contentsOf: states)
+                
+                
+                // 이미지 피커란
+            case .showImagePicker:
+                return .run { send in
+                    await send(.imagePickerBool(true))
+                }
+            case let .imagePickerBool(bool):
+                state.imagePickerTrigger = bool
                 
             case let .errorMessage(message):
                 state.errorMessage = message

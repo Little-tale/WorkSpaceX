@@ -13,6 +13,7 @@ struct WorkSpaceChannelChattingView: View {
     @Perception.Bindable var store: StoreOf<WorkSpaceChannelChattingFeature>
     
     @State var scrollTo: String = ""
+    @State var keyboardTool: Bool = false
     
     var body: some View {
         WithPerceptionTracking {
@@ -70,6 +71,15 @@ struct WorkSpaceChannelChattingView: View {
             }
             .navigationBarBackButtonHidden()
             .toolbar(.hidden, for: .tabBar)
+            .fullScreenCover(isPresented: $store.imagePickerTrigger.sending(\.imagePickerBool)){
+                CustomImagePicker(
+                    isPresented: $store.imagePickerTrigger.sending(\.imagePickerBool),
+                    selectedLimit: store.imageCanImageCount,
+                    filter: .images,
+                    selectedDataForJPEG:  { datas in
+                        store.send(.imageDataPicks(datas))
+                    })
+            }
         }
     }
 }
@@ -99,7 +109,7 @@ extension WorkSpaceChannelChattingView {
                         .foregroundStyle(WSXColor.black)
                         .padding(.leading, 8)
                         .asButton {
-//                            openKeyboardInfo.toggle()
+                            keyboardTool.toggle()
                         }
                     TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
                     WSXImage.send
@@ -133,25 +143,27 @@ extension WorkSpaceChannelChattingView {
                 HStack {
                     HStack(spacing: 10) {
                         // 이미지 먼저 후 -> PDF, 등의 파일 처리
-//                        if openKeyboardInfo {
-//                            WSXImage.gallary
-//                                .sideImage()
-//                                .asButton {
-//                                    // 이미지 피커 해야함 .
-//                                }
-//                                .padding(.leading, 10)
-//                                .padding(.vertical, 5)
-//                        }
+                        if keyboardTool {
+                            VStack(alignment: .center) {
+                                WSXImage.gallary
+                                    .sideImage()
+                                Text("이미지")
+                                    .font(WSXFont.regu1)
+                            }
+                            .padding(.leading, 10)
+                            .padding(.vertical, 5)
+                            .asButton {
+                                store.send(.showImagePicker)
+                            }
+                        }
                         Spacer()
                     }
                     .background(WSXColor.white)
                 }
                 .transition(.scale)
-//                .animation(.easeInOut,value: openKeyboardInfo)
+                .animation(.easeInOut, value: keyboardTool)
             }
         }
         
     }
-    
-    
 }
