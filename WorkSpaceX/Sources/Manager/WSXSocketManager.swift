@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 import SocketIO
 
 enum ChatSocketManagerError: Error {
@@ -47,7 +48,7 @@ final class WSXSocketManager {
     private init() {}
     
     /// 연결 메서드 입니다. 시작 메서드와 스탑 메서드는 분리 되어있어
-    func connect<T: DTO>(to socketCase: SocketCase) -> AsyncStream<Result<T,ChatSocketManagerError>> {
+    func connect<T: DTO>(to socketCase: SocketCase, type: T.Type) -> AsyncStream<Result<T,ChatSocketManagerError>> {
         
         guard let url = URL(string: socketCase.address) else {
             return AsyncStream { continuation in
@@ -140,3 +141,14 @@ final class WSXSocketManager {
         socket = nil
     }
 }
+/// 고민해야 할 부분
+//extension WSXSocketManager: DependencyKey {
+//    static var liveValue: WSXSocketManager = WSXSocketManager.shared
+//}
+//
+//extension DependencyValues {
+//    var socketManager: WSXSocketManager {
+//        get { self[WSXSocketManager.self] }
+//        set { self[WSXSocketManager.self] = newValue }
+//    }
+//}

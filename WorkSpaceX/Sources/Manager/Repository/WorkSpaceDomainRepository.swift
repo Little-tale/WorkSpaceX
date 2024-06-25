@@ -30,6 +30,8 @@ struct WorkSpaceDomainRepository {
     var channelInfoRequest: (_ workSpaceID: String, _ channelID: String) async throws -> ChanelEntity
     
     var sendChatting: (_ workSpaceID: String, _ ChannelID: String,_ model: ChatMultipart) async throws -> WorkSpaceChatEntity
+    
+    var channelSocketReqeust: (_ channelID: String) -> AsyncStream<Result<WorkSpaceChatEntity,ChatSocketManagerError>>
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -142,6 +144,24 @@ extension WorkSpaceDomainRepository: DependencyKey {
             )
             print("쳇 결과 : ",result.files)
             return workSpaceMapper.workSpaceChatDtoToEntity(dto: result)
+        }, channelSocketReqeust: { channelID in
+            return AsyncStream { contin in
+                let stream = WSXSocketManager.shared.connect(
+                    to: .channelChat(channelID: channelID),
+                    type: WorkSpaceChatDTO.self
+                )
+                Task {
+                    for await result in stream {
+                        switch result {
+                        case .success(let success):
+                            let model = workSpaceMapper.workSpaceChatDtoToEntity(dto: success)
+                            contin.yield(.success(model))
+                        case .failure(let error):
+                            contin.yield(.failure(error))
+                        }
+                    }
+                }
+            }
         }
     )
     
