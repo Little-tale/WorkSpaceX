@@ -32,10 +32,9 @@ final class WSXSocketManager {
         case channelChat(channelID: String)
         
         var address: String {
-            let base = APIKey.baseURL
             switch self {
             case .channelChat(let channelID):
-                return "\(base)/ws-channel-\(channelID)"
+                return "/ws-channel-\(channelID)"
             }
         }
     }
@@ -49,8 +48,8 @@ final class WSXSocketManager {
     
     /// 연결 메서드 입니다. 시작 메서드와 스탑 메서드는 분리 되어있어
     func connect<T: DTO>(to socketCase: SocketCase, type: T.Type) -> AsyncStream<Result<T,ChatSocketManagerError>> {
-        
-        guard let url = URL(string: socketCase.address) else {
+        let base = APIKey.baseURL
+        guard let url = URL(string: base) else {
             print("유효하지 않은 소켓 URL")
             return AsyncStream { continuation in
                 continuation.yield(.failure(.weakError))
@@ -75,7 +74,7 @@ final class WSXSocketManager {
         ]
         manager = SocketManager(socketURL: url, config: config)
         
-        socket = manager?.defaultSocket
+        socket = manager?.socket(forNamespace: socketCase.address)
         
         return AsyncStream { [weak self] contin in
             guard let self else {
