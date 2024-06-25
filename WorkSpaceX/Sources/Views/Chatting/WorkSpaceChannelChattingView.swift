@@ -80,6 +80,17 @@ struct WorkSpaceChannelChattingView: View {
                         store.send(.imageDataPicks(datas))
                     })
             }
+            .fullScreenCover(isPresented: $store.filePickerTrigger.sending(\.filePickerBool)) {
+                EmptyView()
+                CustomDataPicker(
+                    isPresented: $store.filePickerTrigger.sending(\.filePickerBool),
+                    selectedLimit: store.dataCanCount) { dataURLs in
+                        
+                    } ifNeedRemitOver: {
+                        store.send(.filePickOber)
+                    }
+
+            }
         }
     }
 }
@@ -241,6 +252,19 @@ extension WorkSpaceChannelChattingView {
                                 keyboardTool.toggle()
                                 store.send(.showImagePicker)
                             }
+                            VStack(alignment: .center) {
+                                WSXImage.folder
+                                    .sideImage()
+                                Text("파일")
+                                    .font(WSXFont.regu1)
+                            }
+                            .padding(.leading, 10)
+                            .padding(.vertical, 5)
+                            .asButton {
+                                keyboardTool.toggle()
+                                store.send(.showFilePicker)
+                            }
+                            
                         }
                         Spacer()
                     }

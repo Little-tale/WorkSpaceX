@@ -50,4 +50,6 @@ extension WSXImage {
     static let gallary = Image(systemName: "photo.fill")
     
     static let send = Image(.sendRegular)
+    
+    static let folder = Image(systemName: "folder.fill")
 }

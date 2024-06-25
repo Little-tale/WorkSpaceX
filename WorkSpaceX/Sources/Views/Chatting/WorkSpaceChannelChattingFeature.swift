@@ -36,6 +36,8 @@ struct WorkSpaceChannelChattingFeature {
         var errorMessage: String? = nil
         /// 이미지 피커 트리거
         var imagePickerTrigger: Bool = false
+        /// 파일 피커 트리거
+        var filePickerTrigger: Bool = false
         
         // 데이터 관리 카운트
         var dataCanCount: Int = 5
@@ -83,6 +85,11 @@ struct WorkSpaceChannelChattingFeature {
         case imageDataPicks([Data])
         case imagePickerBool(Bool)
         case imagePickerCanCount(Int)
+        
+        // 파일 피커
+        case showFilePicker
+        case filePickerBool(Bool)
+        case filePickOber
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -286,6 +293,17 @@ struct WorkSpaceChannelChattingFeature {
                 return .run { send in
                     await send(.dataCountChaeck)
                 }
+                
+            case .showFilePicker:
+                return .run { send in
+                    await send(.filePickerBool(true))
+                }
+            case let .filePickerBool(bool):
+                if state.dataCanCount == 0 {
+                    break
+                }
+                state.filePickerTrigger = bool
+                
                 
                 // 데이터 카운트 관리
             case .dataCountChaeck:

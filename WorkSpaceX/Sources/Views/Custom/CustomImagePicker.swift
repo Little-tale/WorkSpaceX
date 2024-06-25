@@ -38,6 +38,7 @@ struct CustomImagePicker: UIViewControllerRepresentable {
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
+        
     }
     
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
