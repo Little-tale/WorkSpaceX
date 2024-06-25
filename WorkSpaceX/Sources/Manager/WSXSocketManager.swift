@@ -83,8 +83,13 @@ final class WSXSocketManager {
                 contin.finish()
             }
             
-            socket?.once("channel") { dataArray, ack in
-                
+            socket?.once("channel") { [weak self] dataArray, ack in
+                guard let self else {
+                    contin.yield(.failure(.weakError))
+                    self?.stopAndRemoveSocket()
+                    contin.finish()
+                    return
+                }
                 do {
                     if let datafirst = dataArray.first {
                         
@@ -96,12 +101,20 @@ final class WSXSocketManager {
                         
                     } else {
                         contin.yield(.failure(.JSONDecodeError))
+                        self.stopAndRemoveSocket()
                         contin.finish()
                     }
                 } catch {
                     contin.yield(.failure(.weakError))
+                    self.stopAndRemoveSocket()
                     contin.finish()
                 }
+            }
+            
+            socket?.connect()
+            
+            contin.onTermination = { @Sendable _ in
+                self.stopSocket()
             }
         }
         
@@ -111,9 +124,13 @@ final class WSXSocketManager {
         socket?.connect()
     }
     
+    func stopAndRemoveSocket() {
+        stopSocket()
+        removeSocket()
+    }
+    
     func stopSocket() {
         socket?.disconnect()
-        
     }
     
     func removeSocket() {
