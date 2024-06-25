@@ -100,29 +100,37 @@ extension WorkSpaceChannelChattingView {
     
     func workSpaceTextField() -> some View {
         WithPerceptionTracking {
-            HStack {
-                HStack {
-                    WSXImage.plus
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(WSXColor.black)
-                        .padding(.leading, 8)
-                        .asButton {
-                            keyboardTool.toggle()
+            VStack {
+                VStack {
+                    HStack {
+                        WSXImage.plus
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(WSXColor.black)
+                            .padding(.leading, 8)
+                            .asButton {
+                                keyboardTool.toggle()
+                            }
+                        VStack {
+                            TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
                         }
-                    TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
-                    WSXImage.send
-                        .resizable()
-                        .renderingMode(.template)
-                        .aspectRatio(1, contentMode: .fit)
-                        .frame(width: 24, height: 24)
-                        .asButton {
-                            store.send(.sendTapped)
-                        }
-                        .padding(.trailing, 5)
+                        WSXImage.send
+                            .resizable()
+                            .renderingMode(.template)
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                            .asButton {
+                                store.send(.sendTapped)
+                            }
+                            .padding(.trailing, 5)
+                    }
+                    .frame(height: 50)
+                    if store.showChatBottom {
+                        workSpaceChatBottomItemView()
+                            .padding(.bottom, 4)
+                    }
                 }
-                .frame(height: 50)
                 .background {
                     RoundedRectangle(cornerRadius: 18)
                         .fill(WSXColor.black.opacity(0.1))
@@ -132,6 +140,83 @@ extension WorkSpaceChannelChattingView {
             }
         }
     }
+}
+
+/// 데이터에 따른 스택 뷰 준비
+extension WorkSpaceChannelChattingView {
+    
+    private func workSpaceChatBottomItemView() -> some View {
+        WithPerceptionTracking {
+            withAnimation {
+                HStack {
+                    ForEach(Array(store.currentDatas.enumerated()), id: \.element.fileName) { index, item in
+                        ZStack(alignment: .topTrailing) {
+                            workSpaceChatFileCaseView(file: item)
+                                .frame(width: 45, height: 45)
+                            
+                            WSXImage.xImage
+                                .resizable()
+                                .renderingMode(.template)
+                                .aspectRatio(1, contentMode: .fit)
+                                .frame(width: 10, height: 10)
+                                .padding(.all, 4)
+                                .background {
+                                    WSXColor.white
+                                }
+                                .clipShape(
+                                    Circle()
+                                )
+                                .overlay(
+                                    Circle()
+                                        .stroke(WSXColor.black.opacity(0.8), lineWidth: 1)
+                                )
+                                .padding(.top, -4)
+                                .padding(.trailing, -4)
+                                .asButton {
+                                    store.send(.dataRemoveToIndex(index))
+                                }
+                        }
+                        
+                    }
+                }
+                .frame(height: 50)
+            }
+            .transition(.scale)
+            .animation(.easeInOut, value: store.showChatBottom)
+        }
+    }
+    private func workSpaceChatFileCaseView(file: ChatMultipart.File) -> some View {
+        WithPerceptionTracking {
+            switch file.fileType {
+            case .image:
+                Image(uiImage: UIImage(data: file.data) ?? UIImage(systemName: "questionmark")!)
+                    .resizable()
+            case .pdf:
+                VStack {
+                    Image(systemName: "doc.richtext")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .background(WSXColor.white)
+                    Text(file.fileName)
+                }
+                .font(WSXFont.caption)
+            case .zip:
+                VStack {
+                    Image(systemName: "doc.zipper")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .background(WSXColor.white)
+                    Text(file.fileName)
+                }
+                .font(WSXFont.caption)
+            default:
+                Image(systemName: "questionmark")
+                    .resizable()
+            }
+        }
+    }
+    
+    
 }
 
 
@@ -153,6 +238,7 @@ extension WorkSpaceChannelChattingView {
                             .padding(.leading, 10)
                             .padding(.vertical, 5)
                             .asButton {
+                                keyboardTool.toggle()
                                 store.send(.showImagePicker)
                             }
                         }

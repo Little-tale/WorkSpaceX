@@ -24,6 +24,7 @@ struct WorkSpaceChannelChattingFeature {
         
         var userFeildText: String = ""
         var currentDatas: [ChatMultipart.File] = []
+        var showChatBottom: Bool = false
         
         var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
         
@@ -75,7 +76,8 @@ struct WorkSpaceChannelChattingFeature {
         
         // 데이터 카운터 관리
         case dataCountChaeck
-        
+        // 데이터 제거 관리
+        case dataRemoveToIndex(Int)
         // 이미지 피커
         case showImagePicker
         case imageDataPicks([Data])
@@ -288,7 +290,15 @@ struct WorkSpaceChannelChattingFeature {
                 // 데이터 카운트 관리
             case .dataCountChaeck:
                 state.dataCanCount = 5 - state.currentDatas.count
-                
+                let bool = state.currentDatas.count > 0
+                state.showChatBottom = bool
+               
+                // 데이터 삭제 관리
+            case let .dataRemoveToIndex(index):
+                state.currentDatas.remove(at: index)
+                return .run { send in
+                    await send(.dataCountChaeck)
+                }
                 // 알렛 메시지
             case let .errorMessage(message):
                 state.errorMessage = message

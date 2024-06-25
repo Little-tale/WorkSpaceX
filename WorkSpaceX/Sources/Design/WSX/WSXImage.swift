@@ -19,6 +19,7 @@ extension WSXImage {
     static let emailLoginButton: Image = Image(.emailLoginButton).resizable()
     
     static let xImage: Image = Image(systemName: "xmark").resizable().renderingMode(.template)
+    static let removeX: Image = Image(.removeX)
     
     static let back: Image = Image(.backCross).renderingMode(.template)
     
