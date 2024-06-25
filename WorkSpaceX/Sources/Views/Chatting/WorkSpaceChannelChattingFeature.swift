@@ -92,6 +92,8 @@ struct WorkSpaceChannelChattingFeature {
         case filePickerBool(Bool)
         case filePickOver
         case filePickerResults([URL])
+        
+        case socketConnected
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -134,7 +136,7 @@ struct WorkSpaceChannelChattingFeature {
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
                         
                         await send(.networkResult(result))
-                        
+                        await send(.socketConnected)
                     }
                 } else {
                     // 2. 없다면 커서 데이트를 빈값으로 보내야함.
@@ -147,6 +149,7 @@ struct WorkSpaceChannelChattingFeature {
                         // 처음 렘
                         await send(.firstInit)
                         await send(.realmobserberStart)
+                        await send(.socketConnected)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
                             if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
@@ -355,7 +358,21 @@ struct WorkSpaceChannelChattingFeature {
                 return .run { send in
                     await send(.dataCountChaeck)
                 }
-                
+            case .socketConnected:
+                let channelID = state.channelID
+                return .run { send in
+                    for await result in  workSpaceRepo.channelSocketReqeust(channelID) {
+                        switch result {
+                        case let .success(model):
+                            try await realmRepo.upsertToChatInChannel(models: [model])
+                        case .failure(let error):
+                            print("마지막 소켓 에러 발생")
+                            await send(.errorMessage(error.message))
+                        }
+                    }
+                } catch: { error, send in
+                    print("소켓 렘 에러",error) // 렘 에러.
+                }
                 
                 // 알렛 메시지
             case let .errorMessage(message):

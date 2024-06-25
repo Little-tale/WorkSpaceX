@@ -151,15 +151,21 @@ extension WorkSpaceDomainRepository: DependencyKey {
                     type: WorkSpaceChatDTO.self
                 )
                 Task {
+                    print("중간 소켓 관찰 시작")
                     for await result in stream {
                         switch result {
                         case .success(let success):
+                            print("중간 소켓 형변환")
                             let model = workSpaceMapper.workSpaceChatDtoToEntity(dto: success)
                             contin.yield(.success(model))
                         case .failure(let error):
+                            print("중간 소켓 에러 발생")
                             contin.yield(.failure(error))
+                            contin.finish()
                         }
                     }
+                    print("중간 소켓 관찰 안함.")
+                    contin.finish()
                 }
             }
         }
