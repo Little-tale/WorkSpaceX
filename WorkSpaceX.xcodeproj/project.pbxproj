@@ -17,6 +17,8 @@
 		7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9A12C296FD30035C3C8 /* FileType.swift */; };
 		7B10A9A42C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */; };
 		7B23ADCC2C2A8DED00A9E499 /* CustomDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADCB2C2A8DED00A9E499 /* CustomDataPicker.swift */; };
+		7B23ADCE2C2ADA4500A9E499 /* WSXSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */; };
+		7B23ADD12C2ADB1E00A9E499 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B23ADD02C2ADB1E00A9E499 /* SocketIO */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -206,6 +208,7 @@
 		7B10A9A12C296FD30035C3C8 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatSendAPIError.swift; sourceTree = "<group>"; };
 		7B23ADCB2C2A8DED00A9E499 /* CustomDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDataPicker.swift; sourceTree = "<group>"; };
+		7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXSocketManager.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -386,6 +389,7 @@
 				7B8FD6382C1AB50100948E7C /* Realm in Frameworks */,
 				7B5AEB072C108FCB00D10330 /* PopupView in Frameworks */,
 				7B8FD6592C1BFCAB00948E7C /* ComposableArchitecture in Frameworks */,
+				7B23ADD12C2ADB1E00A9E499 /* SocketIO in Frameworks */,
 				7B8FD63A2C1AB50100948E7C /* RealmSwift in Frameworks */,
 				7BEC45B32C130EB700576ECA /* KakaoSDKUser in Frameworks */,
 				7B8FD6462C1AF19400948E7C /* Kingfisher in Frameworks */,
@@ -656,6 +660,7 @@
 				7B8FD6422C1AC0C100948E7C /* DateManager.swift */,
 				7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */,
 				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
+				7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1066,6 +1071,7 @@
 				7B8FD6452C1AF19400948E7C /* Kingfisher */,
 				7B8FD6582C1BFCAB00948E7C /* ComposableArchitecture */,
 				7B26D1922C1C4EF300BC9912 /* TCACoordinators */,
+				7B23ADD02C2ADB1E00A9E499 /* SocketIO */,
 			);
 			productName = WorkSpaceX;
 			productReference = 7B592E812C0E251F00E47797 /* WorkSpaceX.app */;
@@ -1102,6 +1108,7 @@
 				7B8FD6442C1AF19400948E7C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7B8FD6572C1BFCAB00948E7C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 7B592E822C0E251F00E47797 /* Products */;
 			projectDirPath = "";
@@ -1135,6 +1142,7 @@
 				7B26D1F82C2120C500BC9912 /* WorkSpaceEditView.swift in Sources */,
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
+				7B23ADCE2C2ADA4500A9E499 /* WSXSocketManager.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
 				7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */,
 				7B8FD63D2C1AB6B000948E7C /* UserRealmModel.swift in Sources */,
@@ -1525,6 +1533,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 16.1.0;
+			};
+		};
 		7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators.git";
@@ -1576,6 +1592,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7B23ADD02C2ADB1E00A9E499 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
+		};
 		7B26D1922C1C4EF300BC9912 /* TCACoordinators */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
