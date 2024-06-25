@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum FileType {
+enum FileType: String {
     case image
-    case pdf
-    case zip
+    case pdf = "pdf"
+    case zip = "zip"
     case unknown
     
     var mimeType: String {

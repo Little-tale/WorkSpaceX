@@ -34,6 +34,7 @@ struct WorkSpaceChannelChattingFeature {
         var currentModels: [ChatModeEntity] = []
         
         var errorMessage: String? = nil
+        
         /// 이미지 피커 트리거
         var imagePickerTrigger: Bool = false
         /// 파일 피커 트리거
@@ -90,6 +91,7 @@ struct WorkSpaceChannelChattingFeature {
         case showFilePicker
         case filePickerBool(Bool)
         case filePickOber
+        case filePickerResults([URL])
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -304,7 +306,39 @@ struct WorkSpaceChannelChattingFeature {
                 }
                 state.filePickerTrigger = bool
                 
+            case let .filePickerResults(urls):
+                var datas: [ChatMultipart.File] = []
+                var ifOberData: Bool = false
+                for url in urls {
+                    guard let data = try? Data(contentsOf: url) else { continue }
+                    let dataSize = Double(data.count)
+                    if dataSize > (4.99 * 1024 * 1024) {
+                        ifOberData = true
+                        continue
+                    }
+                    let fileName: String = url.lastPathComponent
+                    let filType = fileType(from: url)
+                    let result = ChatMultipart.File(
+                        data: data,
+                        fileName: fileName,
+                        fileType: filType
+                    )
+                    datas.append(result)
+                }
                 
+                state.currentDatas.append(contentsOf: datas)
+                
+                if ifOberData {
+                    return .run { send in
+                        await send(.dataCountChaeck)
+                        await send(.errorMessage("5mb 초과 데이터는 추가하실 수 없습니다!"))
+                    }
+                } else {
+                    return .run { send in
+                        await send(.dataCountChaeck)
+                    }
+                }
+
                 // 데이터 카운트 관리
             case .dataCountChaeck:
                 state.dataCanCount = 5 - state.currentDatas.count
@@ -333,6 +367,15 @@ struct WorkSpaceChannelChattingFeature {
             ChatModeFeature()
         }
         
+    }
+    
+}
+
+extension WorkSpaceChannelChattingFeature {
+    
+    private func fileType(from url: URL) -> FileType {
+        let fileEx = url.pathExtension.lowercased()
+        return FileType(rawValue: fileEx) ?? .unknown
     }
     
 }

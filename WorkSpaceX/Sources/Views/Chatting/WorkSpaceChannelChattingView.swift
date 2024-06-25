@@ -71,6 +71,18 @@ struct WorkSpaceChannelChattingView: View {
             }
             .navigationBarBackButtonHidden()
             .toolbar(.hidden, for: .tabBar)
+            .alert(item: $store.errorMessage.sending(\.errorMessage), title: { _ in
+                Text("경고")
+            }, actions: { _ in
+                Text("확인")
+                    .font(WSXFont.title15)
+                    .asButton {
+                        store.send(.errorMessage(nil))
+                    }
+            }, message: { message in
+                Text(message)
+                    .font(WSXFont.title15)
+            })
             .fullScreenCover(isPresented: $store.imagePickerTrigger.sending(\.imagePickerBool)){
                 CustomImagePicker(
                     isPresented: $store.imagePickerTrigger.sending(\.imagePickerBool),
@@ -80,17 +92,18 @@ struct WorkSpaceChannelChattingView: View {
                         store.send(.imageDataPicks(datas))
                     })
             }
-            .fullScreenCover(isPresented: $store.filePickerTrigger.sending(\.filePickerBool)) {
-                EmptyView()
+            .sheet(isPresented: $store.filePickerTrigger.sending(\.filePickerBool)) {
                 CustomDataPicker(
                     isPresented: $store.filePickerTrigger.sending(\.filePickerBool),
                     selectedLimit: store.dataCanCount) { dataURLs in
-                        
+                        store.send(.filePickerResults(dataURLs))
                     } ifNeedRemitOver: {
                         store.send(.filePickOber)
                     }
-
+                EmptyView()
+                    .presentationDetents([.large])
             }
+
         }
     }
 }
