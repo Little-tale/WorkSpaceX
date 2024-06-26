@@ -42,11 +42,14 @@ struct WorkSpaceChannelChattingFeature {
         
         // 데이터 관리 카운트
         var dataCanCount: Int = 5
+        
+        var ownerID: String?
     }
     
     enum Action {
-        
+        // 상위뷰 관찰
         case popClicked
+        case sendToList(channelID: String, isOwner: Bool)
         
         // 채팅 분기점
         case chatDate(Date?)
@@ -93,6 +96,7 @@ struct WorkSpaceChannelChattingFeature {
         case filePickerResults([URL])
         
         case socketConnected
+        case listButtonTapped
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -193,7 +197,7 @@ struct WorkSpaceChannelChattingFeature {
                 
             case let .channelResult(channel):
                 state.navigationMemberCount = String(channel.users.count)
-                
+                state.ownerID = channel.owner_id
                 break
                 
             case let .chats(.element(id: _, action: .delegate(.selectedFileURLString(text)))):
@@ -389,6 +393,16 @@ struct WorkSpaceChannelChattingFeature {
                 
             case let .onChangeForScroll(string):
                 state.scrollTo = string
+                
+            case .listButtonTapped:
+                let channelID = state.channelID
+                if let owner = state.ownerID {
+                    let ifOwner = owner == state.userID
+                    return .run { send in
+                        await send(.sendToList(channelID: channelID,isOwner: ifOwner))
+                    }
+                }
+                
                 
             default:
                 break

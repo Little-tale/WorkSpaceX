@@ -107,8 +107,14 @@ struct WorkSpaceListCordinator {
                     state.identeRoutes.push(.chattingView(chatState))
                 }
             case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
+                
+                WSXSocketManager.shared.stopAndRemoveSocket()
                 state.identeRoutes.popToRoot()
-                                
+                
+            case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channelID, let isOwner)))):
+                print("리스트 뷰로 이동해야합니다!")
+                break
+                
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 state.identeRoutes.dismiss()

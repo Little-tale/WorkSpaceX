@@ -46,9 +46,6 @@ struct WorkSpaceChannelChattingView: View {
             .onAppear {
                 store.send(.onAppear)
             }
-            .onDisappear {
-                WSXSocketManager.shared.stopAndRemoveSocket()
-            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     WSXImage.back
@@ -73,6 +70,16 @@ struct WorkSpaceChannelChattingView: View {
                         Text(store.navigationMemberCount)
                             .font(WSXFont.regu1)
                     }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    WSXImage.hambergerList
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(WSXColor.black)
+                        .asButton {
+                            store.send(.listButtonTapped)
+                        }
                 }
             }
             .navigationBarBackButtonHidden()

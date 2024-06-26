@@ -52,4 +52,6 @@ extension WSXImage {
     static let send = Image(.sendRegular)
     
     static let folder = Image(systemName: "folder.fill")
+    
+    static let hambergerList = Image(systemName: "list.bullet")
 }
