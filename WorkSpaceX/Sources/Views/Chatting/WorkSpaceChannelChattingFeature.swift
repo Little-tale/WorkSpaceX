@@ -29,7 +29,7 @@ struct WorkSpaceChannelChattingFeature {
         var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
         
         var scrollTo: String = ""
-        var lastFetchDate: Date = Date()
+        var lastFetchDate: Date? = nil
         
         var currentModels: [ChatModeEntity] = []
         
@@ -64,7 +64,6 @@ struct WorkSpaceChannelChattingFeature {
         case realmobserberStart
         
         case errorMessage(String?)
-        
         // 전송
         case sendTapped
         
@@ -128,12 +127,14 @@ struct WorkSpaceChannelChattingFeature {
                 if let date {
                     // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
                     // 렘옵저버 선 후 -> 통신
+                    state.lastFetchDate = date
                     return .run { send in
+                        
                         await send(.channelInfoRequest)
                         
                         await send(.firstInit)
                         await send(.realmobserberStart)
-                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
+                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
                         
                         await send(.networkResult(result))
                         await send(.socketConnected)
@@ -205,6 +206,7 @@ struct WorkSpaceChannelChattingFeature {
             case .firstInit:
                 let channelID = state.channelID
                 let meID = state.userID
+                
                 return .run { @MainActor send in
                     
                     if let result = try await realmRepo.findChatsForChannelModel(channelId: channelID, ifRealm: nil) {

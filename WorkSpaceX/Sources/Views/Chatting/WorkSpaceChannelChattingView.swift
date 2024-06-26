@@ -27,14 +27,17 @@ struct WorkSpaceChannelChattingView: View {
                                     .id(store.model.chatID)
                             }
                         }
-                        .rotationEffect(.degrees(180))
+                        .rotationEffect(.radians(.pi))
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
                         // 확실히 이것이 문제가 맞음
                         .onChange(of: scrollTo) { new in
                             proxy.scrollTo(new)
                         }
                         .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
                     }
-                    .rotationEffect(.degrees(180))
+                    .rotationEffect(.radians(.pi))
+                    .scaleEffect(x: -1, y: 1, anchor: .center)
+                    
                 }
                 
                 Spacer()
