@@ -365,6 +365,7 @@ struct WorkSpaceChannelChattingFeature {
                         switch result {
                         case let .success(model):
                             try await realmRepo.upsertToChatInChannel(models: [model])
+                            print("마지막 소켓 model 받음")
                         case .failure(let error):
                             print("마지막 소켓 에러 발생")
                             await send(.errorMessage(error.message))

@@ -37,8 +37,15 @@ final class WSXSocketManager {
                 return "/ws-channel-\(channelID)"
             }
         }
+        
+        var eventName: String {
+            switch self {
+            case .channelChat:
+                return "channel"
+            }
+        }
     }
-    /// 소켓 해제를 각별히 유의해 주시길 바랍니다. 1. 방나갈때 2. 백그라운드
+    
     static let shared = WSXSocketManager()
     
     private var manager: SocketManager?
@@ -46,8 +53,7 @@ final class WSXSocketManager {
     
     private init() {}
     
-    /// 연결 메서드 입니다. 시작 메서드와 스탑 메서드는 분리 되어있어
-    func connect<T: DTO>(to socketCase: SocketCase, type: T.Type) -> AsyncStream<Result<T,ChatSocketManagerError>> {
+    func connect<T: DTO>(to socketCase: SocketCase, type: T.Type) -> AsyncStream<Result<T, ChatSocketManagerError>> {
         let base = APIKey.baseURL
         guard let url = URL(string: base) else {
             print("유효하지 않은 소켓 URL")
@@ -58,81 +64,80 @@ final class WSXSocketManager {
         }
         print("소켓 요청 URL :" + url.absoluteString)
         
-        let config : SocketIOClientConfiguration = [
+        let config: SocketIOClientConfiguration = [
             .log(true), // 로그
             .compress, // 압축
             .reconnects(true),
             .reconnectWait(10),
             .reconnectAttempts(-1), // 무한 재연결
-            .forceNew(true), // 새로운것이 있을시 예전것 삭제
+            .forceNew(true), // 새로운 것이 있을 시 예전 것 삭제
             .secure(false), // https
-//            .extraHeaders([
-//                WSXHeader.Key.sesacKey: APIKey.secretKey
-//            ])
-            .compress,
-            .selfSigned(true)
+            .compress
         ]
-        manager = SocketManager(socketURL: url, config: config)
         
+        manager = SocketManager(socketURL: url, config: config)
         socket = manager?.socket(forNamespace: socketCase.address)
         
-        return AsyncStream { [weak self] contin in
+        return AsyncStream { [weak self] continuation in
             guard let self else {
                 print("소켓에 Weak Self Error")
-                contin.yield(.failure(.weakError))
+                continuation.yield(.failure(.weakError))
                 self?.stopAndRemoveSocket()
-                contin.finish()
+                continuation.finish()
                 return
             }
             print("소켓 AsyncStream Start")
-            socket?.on(clientEvent: .connect) { data, ack in
-                print("소켓 시작 되었습니다.")
-                print("\(data) - \(ack)")
-            }
-            socket?.on(clientEvent: .disconnect) { data, ack in
-                print("소켓이 정지 됩니다.")
-                print("\(data) - \(ack)")
-            }
-            
-            socket?.on(clientEvent: .error) { data, ack in
-                print("소켓에 문제가 발생합니다.")
-                contin.yield(.failure(.weakError))
-                self.stopAndRemoveSocket()
-                contin.finish()
-            }
-            
-            socket?.once("channel") { dataArray, ack in
-                print("소켓 channel ->>> ")
-                do {
-                    if let datafirst = dataArray.first {
-                        print("소켓 jsonData try")
-                        let jsonData = try JSONSerialization.data(withJSONObject: datafirst, options: [])
-                        print("소켓 jsonDecoding try")
-                        let dto = try WSXCoder.shared.jsonDecoding(model: T.self, from: jsonData)
-                        print("소켓 방출")
-                        contin.yield(.success(dto))
-                    } else {
-                        print("소켓에 jSON Error")
-                        contin.yield(.failure(.JSONDecodeError))
-                        self.stopAndRemoveSocket()
-                        contin.finish()
-                    }
-                } catch {
-                    print("소켓에 Unknown Error")
-                    contin.yield(.failure(.weakError))
-                    self.stopAndRemoveSocket()
-                    contin.finish()
-                }
-            }
-            
+            self.setupSocketHandlers(continuation: continuation, type: type, eventName: socketCase.eventName)
             socket?.connect()
             
-            contin.onTermination = { @Sendable [weak self] _ in
+            continuation.onTermination = { @Sendable _ in
                 print("소켓 생성자 다이")
-                self?.stopSocket()
+                self.stopSocket()
             }
         }
+    }
+    
+    private func setupSocketHandlers<T: DTO>(continuation: AsyncStream<Result<T, ChatSocketManagerError>>.Continuation, type: T.Type, eventName: String) {
+        socket?.on(clientEvent: .connect) { data, ack in
+            print("소켓 시작 되었습니다.")
+            print("\(data) - \(ack)")
+        }
         
+        socket?.on(clientEvent: .disconnect) { data, ack in
+            print("소켓이 정지 됩니다.")
+            print("\(data) - \(ack)")
+        }
+        
+        socket?.on(clientEvent: .error) { data, ack in
+            print("소켓에 문제가 발생합니다.")
+            continuation.yield(.failure(.weakError))
+            self.stopAndRemoveSocket()
+            continuation.finish()
+        }
+        
+        socket?.on(eventName) { dataArray, ack in
+            print("소켓 channel ->>> ")
+            do {
+                if let datafirst = dataArray.first {
+                    print("소켓 jsonData try")
+                    let jsonData = try JSONSerialization.data(withJSONObject: datafirst, options: [])
+                    print("소켓 jsonDecoding try")
+                    let dto = try WSXCoder.shared.jsonDecoding(model: T.self, from: jsonData)
+                    print("소켓 방출")
+                    continuation.yield(.success(dto))
+                } else {
+                    print("소켓에 jSON Error")
+                    continuation.yield(.failure(.JSONDecodeError))
+                    self.stopAndRemoveSocket()
+                    continuation.finish()
+                }
+            } catch {
+                print("소켓에 Unknown Error")
+                continuation.yield(.failure(.weakError))
+                self.stopAndRemoveSocket()
+                continuation.finish()
+            }
+        }
     }
     
     func startSocket() {
@@ -161,8 +166,8 @@ final class WSXSocketManager {
     deinit {
         print("소켓 디이닛..?")
     }
-    
 }
+
 /// 고민해야 할 부분
 //extension WSXSocketManager: DependencyKey {
 //    static var liveValue: WSXSocketManager = WSXSocketManager.shared

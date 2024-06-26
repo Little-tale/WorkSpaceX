@@ -146,11 +146,11 @@ extension WorkSpaceDomainRepository: DependencyKey {
             return workSpaceMapper.workSpaceChatDtoToEntity(dto: result)
         }, channelSocketReqeust: { channelID in
             return AsyncStream { contin in
-                let stream = WSXSocketManager.shared.connect(
-                    to: .channelChat(channelID: channelID),
-                    type: WorkSpaceChatDTO.self
-                )
                 Task {
+                    let stream = WSXSocketManager.shared.connect(
+                        to: .channelChat(channelID: channelID),
+                        type: WorkSpaceChatDTO.self
+                    )
                     print("중간 소켓 관찰 시작")
                     for await result in stream {
                         switch result {
