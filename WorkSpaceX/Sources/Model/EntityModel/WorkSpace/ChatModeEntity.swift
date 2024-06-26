@@ -23,4 +23,5 @@ struct ChatModeEntity: Entity {
     
     var files: [String]
     var date: Date
+    var isFirstDate: Bool
 }

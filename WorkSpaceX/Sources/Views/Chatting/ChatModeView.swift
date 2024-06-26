@@ -14,38 +14,61 @@ struct ChatModeView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            HStack(alignment: .top) {
-                switch store.model.isMe {
-                case .me:
-                    HStack(alignment: .bottom) {
-                        Spacer()
-                        Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: true))
-                            .font(WSXFont.caption)
-                            .padding(.leading, 15)
-                        modelCaseView()
-                            .padding(.trailing, 10)
-                            
-                    }
-                case .other(let member):
-                    otherProfileView(model: member)
-                        .padding(.leading, 10)
-
-                    VStack (alignment: .leading) {
-                        Text(member.nickName)
+            
+            if store.model.isFirstDate {
+                VStack(alignment: .center) {
+                    HStack {
+                        Text(DateManager.shared.dateToStringToChatSection(store.model.date))
                             .font(WSXFont.regu1)
-                        HStack(alignment:.bottom) {
-                            modelCaseView()
-                                
-                            Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: false))
-                                .font(WSXFont.caption)
-                                .padding(.trailing, 15)
-                        }
+                            .foregroundStyle(WSXColor.white)
+                            .lineLimit(1)
+                            .padding(.vertical, 6)
+                            .padding(.horizontal, 10)
                     }
-                    Spacer()
+                    .background(
+                        WSXColor.black.opacity(0.3)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.top, 4)
+                    .padding(.bottom, 8)
                 }
             }
+            sectionInView()
             .onAppear {
                 store.send(.onAppear)
+            }
+        }
+    }
+    
+    private func sectionInView() -> some View {
+        HStack(alignment: .top) {
+            switch store.model.isMe {
+            case .me:
+                HStack(alignment: .bottom) {
+                    Spacer()
+                    Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: true))
+                        .font(WSXFont.caption)
+                        .padding(.leading, 15)
+                    modelCaseView()
+                        .padding(.trailing, 10)
+                        
+                }
+            case .other(let member):
+                otherProfileView(model: member)
+                    .padding(.leading, 10)
+
+                VStack (alignment: .leading) {
+                    Text(member.nickName)
+                        .font(WSXFont.regu1)
+                    HStack(alignment:.bottom) {
+                        modelCaseView()
+                            
+                        Text(DateManager.shared.dateToStringToChat(store.model.date, isMe: false))
+                            .font(WSXFont.caption)
+                            .padding(.trailing, 15)
+                    }
+                }
+                Spacer()
             }
         }
     }

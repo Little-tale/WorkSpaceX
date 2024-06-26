@@ -593,7 +593,8 @@ extension RealmRepository {
             isMe: ifMe ? .me : .other(fakeModel),
             content: model.content ?? "",
             files: Array(model.files),
-            date: model.createdAt ?? Date()
+            date: model.createdAt ?? Date(),
+            isFirstDate: model.isDateSection
         )
     }
 }

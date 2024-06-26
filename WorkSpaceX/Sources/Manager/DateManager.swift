@@ -54,4 +54,11 @@ final class DateManager {
         return dateFormatter.string(from: date)
     }
     
+    func dateToStringToChatSection(_ date: Date) -> String {
+        dateFormatter.setLocalizedDateFormatFromTemplate("yyyyMMMMd")
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        
+        return dateFormatter.string(from: date)
+    }
+    
 }
