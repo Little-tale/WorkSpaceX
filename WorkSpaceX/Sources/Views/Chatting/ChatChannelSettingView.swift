@@ -12,7 +12,10 @@ struct ChatChannelSettingView: View {
     
     @Perception.Bindable var store: StoreOf<ChatChannelSettingFeature>
     
-    @State var memberToggle: Bool = false
+    @State 
+    var memberToggle: Bool = false
+    
+    var rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 5)
     
     var body: some View {
         WithPerceptionTracking {
@@ -74,10 +77,10 @@ extension ChatChannelSettingView {
             List {
                 Section {
                     if memberToggle {
-                        Text("무언가 두둥장 할 예정")
+                        memberContentView()
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets())
-                             
+                            .padding(.top, 10)
                     }
                 } header: {
                     memberHeaderView()
@@ -109,4 +112,36 @@ extension ChatChannelSettingView {
         }
     }
     
+    private func memberContentView() -> some View {
+        WithPerceptionTracking {
+            LazyVGrid(columns: rows) {
+                ForEach(Array(store.users.enumerated()), id:\.element.userID) { index, user in
+                    memberView(with: user)
+                }
+            }
+        }
+    }
+    
+    private func memberView(
+        with member: WorkSpaceMembersEntity
+    ) -> some View {
+        WithPerceptionTracking {
+            VStack(alignment: .center) {
+                if let imageString = member.profileImage {
+                    DownSamplingImageView(url: URL(string: imageString), size: CGSize(width: 50, height: 50)
+                    )
+                    .frame(width: 40, height: 40)
+                } else {
+                    WSXImage.profileEmpty1
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                }
+                Text(member.nickname)
+                    .font(WSXFont.regu1)
+                    .frame(maxWidth: 40)
+                    .lineLimit(1)
+                    .foregroundStyle(WSXColor.black)
+            }
+        }
+    }
 }

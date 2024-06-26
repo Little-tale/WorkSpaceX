@@ -133,6 +133,7 @@ struct WorkSpaceListCordinator {
                 
                 // 팀원 추가 클릭
             case .router(.routeAction(id: _, action: .rootScreen(.addMemberClicked))) :
+                
                 if let id = state.currentWorkSpaceId {
                     state.identeRoutes.presentSheet(.memberAdd(AddMemberFeature.State( currentWorkSpaceID: id)), embedInNavigationView: true)
                 }

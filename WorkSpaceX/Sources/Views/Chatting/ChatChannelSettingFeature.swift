@@ -43,10 +43,8 @@ struct ChatChannelSettingFeature {
                 state.users = state.channelEntity.users
                 let count = state.channelEntity.users.count
                 state.usersCount = "(\(count))"
-                
-                break
-                
             }
+            
             return .none
         }
     }
