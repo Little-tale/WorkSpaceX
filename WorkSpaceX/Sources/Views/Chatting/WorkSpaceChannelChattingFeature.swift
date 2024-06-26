@@ -71,7 +71,7 @@ struct WorkSpaceChannelChattingFeature {
         case chats(IdentifiedActionOf<ChatModeFeature>)
         case firstInit
         case showChats([ChatModeEntity])
-        case appendChat(ChatModeEntity)
+        case appendChat([ChatModeEntity])
         
         // ONCHANGED 이슈로 인한
         case onChangeForScroll(String)
@@ -164,7 +164,7 @@ struct WorkSpaceChannelChattingFeature {
                 }
             case let .networkResult(results):
                 print("네트워크",results)
-                let channelID = state.channelID
+                //let channelID = state.channelID
                 // [WorkSpaceChatEntity]
                 return .run { send in
                     try await realmRepo.upsertToChatInChannel( models: results)
@@ -234,6 +234,7 @@ struct WorkSpaceChannelChattingFeature {
                 
                 return .run { send in
                     // 소켓을 연결할것으로 예상됨으로. 패스.
+                    await send(.dataCountChaeck)
                     let result = try await workSpaceRepo.sendChatting(
                         workSpaceID,
                         channelID,
@@ -260,16 +261,21 @@ struct WorkSpaceChannelChattingFeature {
                 return .run { @MainActor send in
                     
                     for await model in  reader.observeNewMessage(channelID: channelID) {
-                        if let result = realmRepo.toChat(model, userID: userID) {
-                            send(.appendChat(result))
+                        
+                        let result = model.compactMap { @MainActor model in
+                            realmRepo.toChat(model, userID: userID)
                         }
+                        send(.appendChat(result))
                     }
                 }
                 
-            case let .appendChat(model):
-                state.currentModels.insert(model, at: 0)
-                let chatState = ChatModeFeature.State(model: model)
-                state.chatStates.append(chatState)
+            case let .appendChat(models):
+                var chatStates: [ChatModeFeature.State] = []
+                for model in models {
+                    state.currentModels.insert(model, at: 0)
+                    chatStates.append(ChatModeFeature.State(model: model))
+                }
+                state.chatStates.append(contentsOf: chatStates)
                 
             case let .showChats(models):
                 dump(models)

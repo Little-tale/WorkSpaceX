@@ -142,7 +142,7 @@ extension WorkSpaceReader {
     
     /// 해당 메서드는 업데이트 만을 방출합니다.
     @MainActor
-    func observeNewMessage(channelID: String) -> AsyncStream<ChatRealmModel> {
+    func observeNewMessage(channelID: String) -> AsyncStream<[ChatRealmModel]> {
         
         return AsyncStream { contin in
             Task { @MainActor in
@@ -160,10 +160,11 @@ extension WorkSpaceReader {
                             case .initial(_):
                                 break
                             case .update(let models, deletions: let deletions, insertions: let insertions, modifications: let modifications):
-                                for index in insertions {
-                                    let new = models[index]
-                                    contin.yield(new)
-                                }
+//                                for index in insertions {
+//                                    let new = models[index]
+//                                   
+//                                }
+                                contin.yield(Array(models))
                             case .error(_):
                                 contin.finish()
                             }
