@@ -7,12 +7,12 @@
 
 import SwiftUI
 
+enum AlertMode {
+    case onlyCheck
+    case cancelWith
+}
+
 struct CustomAlertView: View {
-    
-    enum AlertMode {
-        case onlyCheck
-        case cancelWith
-    }
     
     var alertMode: AlertMode
     

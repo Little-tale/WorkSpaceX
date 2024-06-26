@@ -7,6 +7,12 @@
 
 import SwiftUI
 import ComposableArchitecture
+/*
+ 1. 채널에서 나가기 구현
+ 2. 채널에서 관리자 변경 구현
+ 3. 채널 편집 뷰 구현
+ 4. 다른 사용자 프로필 화면 구현
+ */
 
 struct ChatChannelSettingView: View {
     
@@ -14,6 +20,12 @@ struct ChatChannelSettingView: View {
     
     @State 
     var memberToggle: Bool = false
+    
+    /// TCA Router ISSUE 로 인한 방책
+    @State
+    var alertCaseOf: ChatChannelSettingFeature.State.AlertCase? = nil
+    @State
+    var alertTrigger: Bool = false
     
     var rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: 5)
     
@@ -33,12 +45,50 @@ struct ChatChannelSettingView: View {
                     buttonSetView(isOwner: store.isOwner)
                 }
             }
+            .bind($store.alertCaseOf.sending(\.alertCaseOf), to: $alertCaseOf)
+            .onChange(of: alertCaseOf) { _ in
+                withAnimation {
+                    if alertCaseOf != nil {
+                        alertTrigger = true
+                    } else {
+                        alertTrigger = false
+                    }
+                }
+            }
+            .onChange(of: alertCaseOf) { newValue in
+                print("뷰 얼렛 케이스 발동")
+                guard let newValue else { return }
+                CustomAlertWindow.shared.show {
+                    CustomAlertView(
+                        alertMode: newValue.alertMode,
+                        isShowing: $alertTrigger,
+                        title: newValue.title,
+                        message: newValue.message,
+                        onCancel: {
+                            store.send(.alertCaseOf(nil))
+                        }, onAction: {
+                            store.send(.alertAction(newValue))
+                            store.send(.alertCaseOf(nil))
+                        }, actionTitle: newValue.alertActionTitle)
+                }
+            }
             .navigationTitle("채널 설정")
             .toolbar(.hidden, for: .bottomBar)
             .onAppear {
                 store.send(.onAppear)
             }
         }
+    }
+    
+    private func customBinding() -> Binding<Bool> {
+        return Binding(
+            get: {alertCaseOf != nil},
+            set: { new in
+                if !new {
+                    store.send(.alertCaseOf(nil))
+                }
+            }
+        )
     }
 }
 
@@ -170,7 +220,7 @@ extension ChatChannelSettingView {
             VStack {
                 Text("채널에서 나가기")
                     .modifier(NormalButtonViewModifier(colorSetting: .red) {
-                        
+                        store.send(.channelExitTry)
                     })
             }
         }

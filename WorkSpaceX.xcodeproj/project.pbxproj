@@ -22,6 +22,7 @@
 		7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */; };
 		7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */; };
 		7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */; };
+		7B23ADDB2C2C437B00A9E499 /* ExBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -215,6 +216,7 @@
 		7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingView.swift; sourceTree = "<group>"; };
 		7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingFeature.swift; sourceTree = "<group>"; };
 		7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalButtonViewModifier.swift; sourceTree = "<group>"; };
+		7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExBinding.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */,
 				7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */,
 				7B10A9992C2910090035C3C8 /* ExCollection.swift */,
+				7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -1251,6 +1254,7 @@
 				7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */,
 				7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */,
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
+				7B23ADDB2C2C437B00A9E499 /* ExBinding.swift in Sources */,
 				7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */,
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */,

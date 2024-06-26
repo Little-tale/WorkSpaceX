@@ -8,11 +8,15 @@
 import SwiftUI
 import ComposableArchitecture
 
+/*
+ proxy 이슈가 있음. 여전히 원인은 알수가 없음
+ */
+
 struct WorkSpaceChannelChattingView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceChannelChattingFeature>
     
-    @State var scrollTo: String = ""
+//    @State var scrollTo: String = ""
     @State var keyboardTool: Bool = false
     
     var body: some View {
@@ -29,11 +33,18 @@ struct WorkSpaceChannelChattingView: View {
                         }
                         .rotationEffect(.radians(.pi))
                         .scaleEffect(x: -1, y: 1, anchor: .center)
+                        
                         // 확실히 이것이 문제가 맞음
-                        .onChange(of: scrollTo) { new in
-                            proxy.scrollTo(new)
-                        }
-                        .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
+//                        .onChange(of: scrollTo) { new in
+//                            proxy.scrollTo(new)
+//
+//                        }
+//                        .onChange(of: store.scrollTo) { new in
+//                            proxy.scrollTo(new)
+//                        }
+// 해당 것도 추적이 안된다는 것으로 나옴...
+//                        .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
+                        
                     }
                     .rotationEffect(.radians(.pi))
                     .scaleEffect(x: -1, y: 1, anchor: .center)
