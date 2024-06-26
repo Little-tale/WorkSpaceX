@@ -21,6 +21,7 @@
 		7B23ADD12C2ADB1E00A9E499 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B23ADD02C2ADB1E00A9E499 /* SocketIO */; };
 		7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */; };
 		7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */; };
+		7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -213,6 +214,7 @@
 		7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXSocketManager.swift; sourceTree = "<group>"; };
 		7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingView.swift; sourceTree = "<group>"; };
 		7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingFeature.swift; sourceTree = "<group>"; };
+		7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalButtonViewModifier.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -1047,6 +1049,7 @@
 			children = (
 				7BF9D7432C2708F50021D043 /* ShadowModifier.swift */,
 				7B10A9952C28345A0035C3C8 /* ChatModifier.swift */,
+				7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -1186,6 +1189,7 @@
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
+				7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */,
 				7BF9D7442C2708F50021D043 /* ShadowModifier.swift in Sources */,
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
 				7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */,

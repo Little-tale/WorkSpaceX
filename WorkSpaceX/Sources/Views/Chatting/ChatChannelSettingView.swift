@@ -28,8 +28,13 @@ struct ChatChannelSettingView: View {
                     channelIntroView()
                         .padding(.bottom, 5)
                     memberExtensionView()
-                    
-                    Spacer()
+                    if memberToggle {
+                        Spacer()
+                        
+                    } else {
+                        outOfChannelButtonView()
+                        Spacer()
+                    }
                 }
             }
             .navigationTitle("채널 설정")
@@ -92,6 +97,7 @@ extension ChatChannelSettingView {
             .background {
                 WSXColor.lightGray
             }
+            .frame(maxHeight: memberToggle ? .infinity : 60)
         }
     }
     
@@ -144,4 +150,19 @@ extension ChatChannelSettingView {
             }
         }
     }
+}
+
+extension ChatChannelSettingView {
+    
+    private func outOfChannelButtonView() -> some View {
+        WithPerceptionTracking {
+            VStack {
+                Text("채널에서 나가기")
+                    .modifier(NormalButtonViewModifier(colorSetting: .red) {
+                        
+                    })
+            }
+        }
+    }
+    
 }
