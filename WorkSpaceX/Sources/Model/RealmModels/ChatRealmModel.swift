@@ -15,8 +15,11 @@ class ChatRealmModel: Object {
     @Persisted var createdAt: Date?
     @Persisted var user: UserRealmModel?
     @Persisted var files: List<String>
+    /// 날짜 별 섹션 처럼 보여주기 위한 트리거
+    @Persisted var isDateSection: Bool = false
     
-    convenience 
+    
+    convenience
     init(chatID: String, channelID: String, content: String?, createdAt: Date?, user: UserRealmModel?, files: [String]) {
         self.init()
         self.chatID = chatID

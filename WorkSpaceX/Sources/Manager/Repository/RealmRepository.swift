@@ -491,7 +491,7 @@ extension RealmRepository {
         
         guard let first = models.first else { return }
         
-        var realm = try await Realm(actor: MainActor.shared)
+        let realm = try await Realm(actor: MainActor.shared)
         
         guard let channel = try await findChatsForChannelModel(channelId: first.channelId, ifRealm: realm) else {
             throw RealmError.cantFindModel
@@ -517,6 +517,23 @@ extension RealmRepository {
         try await realm.asyncWrite {
             // 새 메시지 추가
             channel.chatMessages.append(objectsIn: chatModels)
+            
+            
+            let allChats = channel.chatMessages.sorted(byKeyPath: "createdAt", ascending: true)
+            var lastDate: Date? = nil
+            
+            for chat in allChats {
+                let chatDate = Calendar.current.startOfDay(for: chat.createdAt ?? Date())
+                
+                if lastDate != chatDate {
+                    chat.isDateSection = true
+                    lastDate = chatDate
+                } else {
+                    chat.isDateSection = false
+                }
+                
+                realm.add(chat, update: .modified)
+            }
         }
     }
 }
