@@ -43,6 +43,9 @@ struct WorkSpaceChannelChattingView: View {
             .onAppear {
                 store.send(.onAppear)
             }
+            .onDisappear {
+                WSXSocketManager.shared.stopAndRemoveSocket()
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     WSXImage.back

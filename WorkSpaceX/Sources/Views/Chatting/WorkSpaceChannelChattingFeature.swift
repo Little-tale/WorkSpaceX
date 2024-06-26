@@ -59,6 +59,7 @@ struct WorkSpaceChannelChattingFeature {
         case navigationMemberCount(Int)
         
         case onAppear
+        case onDisappear
         case userFeildText(String)
         
         case realmobserberStart
