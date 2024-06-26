@@ -15,6 +15,8 @@ struct WorkSpaceChannelChattingFeature {
     struct State: Equatable {
         let id: UUID = UUID()
         
+        var onAppearTrigger = true
+        
         let channelID: String
         let workSpaceID: String
         let userID : String
@@ -109,6 +111,8 @@ struct WorkSpaceChannelChattingFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                if !state.onAppearTrigger { break }
+                state.onAppearTrigger = false
                 let channelID = state.channelID
                 
                 let workSpaceID = state.workSpaceID

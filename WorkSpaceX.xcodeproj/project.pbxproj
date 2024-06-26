@@ -19,6 +19,8 @@
 		7B23ADCC2C2A8DED00A9E499 /* CustomDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADCB2C2A8DED00A9E499 /* CustomDataPicker.swift */; };
 		7B23ADCE2C2ADA4500A9E499 /* WSXSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */; };
 		7B23ADD12C2ADB1E00A9E499 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B23ADD02C2ADB1E00A9E499 /* SocketIO */; };
+		7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */; };
+		7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -209,6 +211,8 @@
 		7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChatSendAPIError.swift; sourceTree = "<group>"; };
 		7B23ADCB2C2A8DED00A9E499 /* CustomDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDataPicker.swift; sourceTree = "<group>"; };
 		7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXSocketManager.swift; sourceTree = "<group>"; };
+		7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingView.swift; sourceTree = "<group>"; };
+		7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingFeature.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -1032,6 +1036,8 @@
 				7BF9D7302C2593940021D043 /* WorkSpaceChannelChattingFeature.swift */,
 				7B10A9932C2832440035C3C8 /* ChatModeView.swift */,
 				7B10A9972C2851080035C3C8 /* ChatModeFeature.swift */,
+				7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */,
+				7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -1199,6 +1205,7 @@
 				7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
+				7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */,
 				7BF9D71F2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift in Sources */,
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
 				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,
@@ -1310,6 +1317,7 @@
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
 				7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
+				7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */,
 				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,
 				7B8FD64F2C1BEB9900948E7C /* WorkSpaceSideView.swift in Sources */,
 			);
