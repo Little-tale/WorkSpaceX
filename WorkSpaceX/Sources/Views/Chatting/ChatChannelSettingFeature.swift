@@ -15,12 +15,40 @@ struct ChatChannelSettingFeature {
     @ObservableState
     struct State: Equatable {
         let id = UUID()
-        let channelID: String
+        let channelEntity: ChanelEntity
         let isOwner: Bool
+        
+        var channelName: String = "#"
+        var channelIntro: String = ""
+        var usersCount: String = "(0)"
+        var users: [WorkSpaceMembersEntity] = []
     }
+    
     
     enum Action {
         case onAppear
+    }
+    
+    var body: some ReducerOf<Self> {
+        
+        Reduce { state, action in
+            switch action {
+                
+            case .onAppear:
+                
+                state.channelName = "# " + state.channelEntity.name
+                
+                state.channelIntro = state.channelEntity.description
+                
+                state.users = state.channelEntity.users
+                let count = state.channelEntity.users.count
+                state.usersCount = "(\(count))"
+                
+                break
+                
+            }
+            return .none
+        }
     }
     
 }

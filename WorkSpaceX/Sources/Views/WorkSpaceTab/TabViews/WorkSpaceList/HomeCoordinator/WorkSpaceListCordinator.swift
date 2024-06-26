@@ -113,9 +113,10 @@ struct WorkSpaceListCordinator {
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 state.identeRoutes.popToRoot()
                 
-            case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channelID, let isOwner)))):
+                // 쳇 세팅 이동.
+            case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channel, let isOwner)))):
                 
-                let chatState = ChatChannelSettingFeature.State(channelID: channelID, isOwner: isOwner)
+                let chatState = ChatChannelSettingFeature.State(channelEntity: channel, isOwner: isOwner)
                 
                 state.identeRoutes.push(.chatChannelSettingView(chatState))
                 

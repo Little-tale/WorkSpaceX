@@ -46,12 +46,14 @@ struct WorkSpaceChannelChattingFeature {
         var dataCanCount: Int = 5
         
         var ownerID: String?
+        
+        var channelModel: ChanelEntity?
     }
     
     enum Action {
         // 상위뷰 관찰
         case popClicked
-        case sendToList(channelID: String, isOwner: Bool)
+        case sendToList(channel: ChanelEntity, isOwner: Bool)
         
         // 채팅 분기점
         case chatDate(Date?)
@@ -181,6 +183,7 @@ struct WorkSpaceChannelChattingFeature {
             case .channelInfoRequest:
                 let workSpaceID = state.workSpaceID
                 let channelID = state.channelID
+                
                 return .run { send in
                     let result = try await workSpaceRepo.channelInfoRequest(workSpaceID, channelID)
                     await send(.channelResult(result))
@@ -200,6 +203,7 @@ struct WorkSpaceChannelChattingFeature {
                 }
                 
             case let .channelResult(channel):
+                state.channelModel = channel
                 state.navigationMemberCount = String(channel.users.count)
                 state.ownerID = channel.owner_id
                 break
@@ -400,10 +404,12 @@ struct WorkSpaceChannelChattingFeature {
                 
             case .listButtonTapped:
                 let channelID = state.channelID
-                if let owner = state.ownerID {
+                
+                if let owner = state.ownerID,
+                   let chatmodel = state.channelModel {
                     let ifOwner = owner == state.userID
                     return .run { send in
-                        await send(.sendToList(channelID: channelID,isOwner: ifOwner))
+                        await send(.sendToList(channel: chatmodel, isOwner: ifOwner))
                     }
                 }
                 

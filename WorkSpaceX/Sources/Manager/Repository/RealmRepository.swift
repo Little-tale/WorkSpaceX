@@ -281,8 +281,10 @@ extension RealmRepository {
         }
     }
     
+    
     @MainActor
-    func upsertToWorkSpaceChannelAppend(workSpaceID: String, chanel: ChanelEntity, userBool: Bool = false) async throws {
+    @discardableResult
+    func upsertToWorkSpaceChannelAppend(workSpaceID: String, chanel: ChanelEntity, userBool: Bool = false) async throws -> ChanelEntity {
         
         let realm = try await Realm(actor: MainActor.shared)
         
@@ -317,6 +319,7 @@ extension RealmRepository {
                     update: .modified)
                 
             }
+            return chanel
         } else {
             
             var update = Array(workSpaceModel.channels)
@@ -337,6 +340,7 @@ extension RealmRepository {
                     ],
                     update: .modified)
             }
+            return chanel
         }
     }
     
