@@ -141,7 +141,7 @@ struct WorkSpaceChannelChattingFeature {
                     return .run { send in
                         
                         await send(.channelInfoRequest)
-                        
+                        try await Task.sleep(for: .seconds(0.3))
                         await send(.firstInit)
                         await send(.realmobserberStart)
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
@@ -153,10 +153,14 @@ struct WorkSpaceChannelChattingFeature {
                     // 2. 없다면 커서 데이트를 빈값으로 보내야함.
                     // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
                     return .run { send in
+                        await send(.channelInfoRequest)
+                        
+                        try await Task.sleep(for: .seconds(0.3))
+                        
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
                         print("받기 \(result)")
                         await send(.networkResult(result))
-                        await send(.channelInfoRequest)
+                        
                         // 처음 렘
                         await send(.firstInit)
                         await send(.realmobserberStart)
@@ -195,18 +199,20 @@ struct WorkSpaceChannelChattingFeature {
                         if error.ifReFreshDead {
                             RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
                         } else {
-                            print(error)
+                            print("체널 에러 발생 이긴함. ",error)
                         }
                     } else {
-                        print(error)
+                        print("체널 에러 발생 이긴함. ",error)
                     }
                 }
                 
             case let .channelResult(channel):
                 state.channelModel = channel
-                state.navigationMemberCount = String(channel.users.count)
                 state.ownerID = channel.owner_id
-                break
+                
+                return .run { send in
+                    await send(.navigationMemberCount(channel.users.count))
+                }
                 
             case let .chats(.element(id: _, action: .delegate(.selectedFileURLString(text)))):
                 print(text)
@@ -412,7 +418,8 @@ struct WorkSpaceChannelChattingFeature {
                         await send(.sendToList(channel: chatmodel, isOwner: ifOwner))
                     }
                 }
-                
+            case let .navigationMemberCount(count):
+                state.navigationMemberCount = String(count)
                 
             default:
                 break

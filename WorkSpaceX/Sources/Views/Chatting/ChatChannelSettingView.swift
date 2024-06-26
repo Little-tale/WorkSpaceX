@@ -28,13 +28,9 @@ struct ChatChannelSettingView: View {
                     channelIntroView()
                         .padding(.bottom, 5)
                     memberExtensionView()
-                    if memberToggle {
-                        Spacer()
-                        
-                    } else {
-                        outOfChannelButtonView()
-                        Spacer()
-                    }
+                    
+                    Spacer()
+                    buttonSetView(isOwner: store.isOwner)
                 }
             }
             .navigationTitle("채널 설정")
@@ -154,11 +150,59 @@ extension ChatChannelSettingView {
 
 extension ChatChannelSettingView {
     
+    private func buttonSetView(isOwner: Bool) -> some View {
+        WithPerceptionTracking {
+            if isOwner {
+                VStack( spacing: 8 ) {
+                    channelEditButton()
+                    changeOwnerButton()
+                    outOfChannelButtonView()
+                    deleteChannelButtonView()
+                }
+            } else {
+                outOfChannelButtonView()
+            }
+        }
+    }
+    
     private func outOfChannelButtonView() -> some View {
         WithPerceptionTracking {
             VStack {
                 Text("채널에서 나가기")
                     .modifier(NormalButtonViewModifier(colorSetting: .red) {
+                        
+                    })
+            }
+        }
+    }
+    
+    private func deleteChannelButtonView() -> some View {
+        WithPerceptionTracking {
+            VStack {
+                Text("채널 삭제")
+                    .modifier(NormalButtonViewModifier(colorSetting: .red) {
+                        
+                    })
+            }
+        }
+    }
+    
+    private func changeOwnerButton() -> some View {
+        WithPerceptionTracking {
+            VStack {
+                Text("채널 관리자 변경")
+                    .modifier(NormalButtonViewModifier(colorSetting: .def) {
+                        
+                    })
+            }
+        }
+    }
+    
+    private func channelEditButton() -> some View {
+        WithPerceptionTracking {
+            VStack {
+                Text("채널 편집")
+                    .modifier(NormalButtonViewModifier(colorSetting: .custom(WSXColor.lightGreen)) {
                         
                     })
             }
