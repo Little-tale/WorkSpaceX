@@ -141,7 +141,7 @@ struct WorkSpaceChannelChattingFeature {
                     return .run { send in
                         
                         await send(.channelInfoRequest)
-                        try await Task.sleep(for: .seconds(0.3))
+                        try await Task.sleep(for: .seconds(0.2))
                         await send(.firstInit)
                         await send(.realmobserberStart)
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
@@ -155,7 +155,7 @@ struct WorkSpaceChannelChattingFeature {
                     return .run { send in
                         await send(.channelInfoRequest)
                         
-                        try await Task.sleep(for: .seconds(0.3))
+                        try await Task.sleep(for: .seconds(0.2))
                         
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
                         print("받기 \(result)")

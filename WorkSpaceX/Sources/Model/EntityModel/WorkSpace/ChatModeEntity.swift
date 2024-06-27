@@ -8,7 +8,7 @@
 import Foundation
 
 struct ChatModeEntity: Entity {
-    
+    let testID = UUID()
     let chatID: String
     
     enum isME: Equatable, Hashable {

@@ -158,8 +158,9 @@ extension WorkSpaceReader {
                     let token = channel.chatMessages.observe { change in
                         Task { @MainActor in
                             switch change {
-                            case .initial(let models):
-                                continuation.yield(Array(models))
+                            case .initial:
+                                break
+//                                continuation.yield(Array(models))
                             case .update(let models, deletions: _, insertions: _, modifications: _):
                                 continuation.yield(Array(models))
                             case .error(_):

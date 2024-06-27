@@ -28,7 +28,7 @@ struct WorkSpaceChannelChattingView: View {
                         LazyVStack {
                             ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
                                 ChatModeView(store: store)
-                                    .id(store.model.chatID)
+//                                    .id(store.model.chatID)
                             }
                         }
                         .rotationEffect(.radians(.pi))
@@ -162,6 +162,7 @@ extension WorkSpaceChannelChattingView {
                             }
                         VStack {
                             TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
+//                                .lineLimit(3)
                         }
                         WSXImage.send
                             .resizable()
