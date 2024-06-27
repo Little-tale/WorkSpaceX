@@ -115,13 +115,19 @@ struct WorkSpaceListCordinator {
                 
                 // 쳇 세팅 이동.
             case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channel, let isOwner)))):
-                
-                let chatState = ChatChannelSettingFeature.State(channelEntity: channel, isOwner: isOwner)
-                
-                state.identeRoutes.push(.chatChannelSettingView(chatState))
-                
-                print("리스트 뷰로 이동해야합니다!")
-                break
+                if let workSpaceID = state.currentWorkSpaceId {
+                    let chatState = ChatChannelSettingFeature.State(
+                        workSpaceID: workSpaceID,
+                        channelEntity: channel,
+                        isOwner: isOwner
+                    )
+                    state.identeRoutes.push(.chatChannelSettingView(chatState))
+                    print("리스트 뷰로 이동해야합니다!")
+                }
+                // 채널 나가기 완료 시
+            case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.exitConfirm)))):
+                print("채널 나옴으로 처음으로 돌아갑니다.")
+                state.identeRoutes.goBackToRoot()
                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
