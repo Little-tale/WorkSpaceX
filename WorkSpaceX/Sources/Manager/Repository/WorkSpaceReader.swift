@@ -9,9 +9,11 @@ import Foundation
 import RealmSwift
 import ComposableArchitecture
 
-struct WorkSpaceReader {
+class WorkSpaceReader {
     
     static let shared = WorkSpaceReader()
+    
+    private var tokens: [String: NotificationToken] = [:]
     
     @MainActor
     func observeChanges<M: Object>(
@@ -143,48 +145,51 @@ extension WorkSpaceReader {
     /// 해당 메서드는 업데이트 만을 방출합니다.
     @MainActor
     func observeNewMessage(channelID: String) -> AsyncStream<[ChatRealmModel]> {
-        
-        return AsyncStream { contin in
+        return AsyncStream { continuation in
             Task { @MainActor in
                 do {
                     let realm = try await Realm(actor: MainActor.shared)
                     
                     guard let channel = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelID) else {
-                        contin.finish()
+                        continuation.finish()
                         return
                     }
                     
-                    let tokken = channel.chatMessages.observe { change in
+                    let token = channel.chatMessages.observe { change in
                         Task { @MainActor in
                             switch change {
-                            case .initial(_):
-                                break
-                            case .update(let models, deletions: let deletions, insertions: let insertions, modifications: let modifications):
-//                                for index in insertions {
-//                                    let new = models[index]
-//                                   
-//                                }
-                                contin.yield(Array(models))
+                            case .initial(let models):
+                                continuation.yield(Array(models))
+                            case .update(let models, deletions: _, insertions: _, modifications: _):
+                                continuation.yield(Array(models))
                             case .error(_):
-                                contin.finish()
+                                continuation.finish()
                             }
                         }
                     }
                     
-                    contin.onTermination = { @Sendable _ in
-                        tokken.invalidate()
+                    tokens[channelID] = token
+                    
+                    continuation.onTermination = { @Sendable [weak self] _ in
+                        token.invalidate()
+                        self?.tokens[channelID] = nil
                     }
                 } catch {
-                    contin.finish()
+                    continuation.finish()
                 }
             }
         }
     }
     
+    func observeChannelStop(_ channelID: String) async {
+        tokens[channelID]?.invalidate()
+        tokens[channelID] = nil
+    }
+    
 }
 
 extension WorkSpaceReader: DependencyKey {
-    static var liveValue: WorkSpaceReader = Self.shared
+    static var liveValue: WorkSpaceReader = WorkSpaceReader.shared
 }
 extension DependencyValues {
     var workSpaceReader: WorkSpaceReader {

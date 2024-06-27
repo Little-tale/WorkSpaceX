@@ -34,10 +34,12 @@ struct WorkSpaceTabCoordinator {
     
     @ObservableState
     struct State: Equatable {
+        static let homeCoordiID = UUID()
+        
         
         static let initalState = State(
             selectedTab: .home,
-            homeState: .initialState
+            homeState: WorkSpaceListCordinator.State.initialState
         )
         
         var selectedTab: Tab

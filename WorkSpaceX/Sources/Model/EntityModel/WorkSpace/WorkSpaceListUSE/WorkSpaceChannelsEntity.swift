@@ -10,5 +10,6 @@ import Foundation
 struct WorkSpaceChannelsEntity: Entity, Identifiable {
     let id = UUID()
     let name = "채널"
-    var items: [WorkSpaceChannelRealmModel]
+    /// WorkSpaceChannelRealmModel ->
+    var items: [WorkSpaceChannelEntity]
 }

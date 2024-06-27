@@ -399,17 +399,23 @@ extension RealmRepository {
         print("워크 스페이스 체널 저장과 동기화 ....")
         
         var results: [WorkSpaceChannelRealmModel] = []
+        var ifremove: [WorkSpaceChannelRealmModel] = []
+        
+        let currentIDs = Set(realm.objects(WorkSpaceChannelRealmModel.self).map{ $0.channelID })
+        
+        let serverIDs = channels.map { $0.channelId }
+        
+        let idsToDelete = currentIDs.subtracting(serverIDs)
+        
+        let objectsToDelete = realm.objects(WorkSpaceChannelRealmModel.self).filter("channelID IN %@", idsToDelete)
+        
+        ifremove.append(contentsOf: Array(objectsToDelete))
+        
+        for model in ifremove {
+            await WorkSpaceReader.shared.observeChannelStop(model.channelID)
+        }
         
         try await realm.asyncWrite { // 서버에 없는것 부터 제거
-            
-            let currentIDs = Set(realm.objects(WorkSpaceChannelRealmModel.self).map{ $0.channelID })
-            
-            let serverIDs = channels.map { $0.channelId }
-            
-            let idsToDelete = currentIDs.subtracting(serverIDs)
-            
-            let objectsToDelete = realm.objects(WorkSpaceChannelRealmModel.self).filter("channelID IN %@", idsToDelete)
-            
             realm.delete(objectsToDelete)
         }
         

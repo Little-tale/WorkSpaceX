@@ -143,6 +143,8 @@ struct ChatChannelSettingFeature {
                         workSpaceId,
                         channelID
                     )
+                    WSXSocketManager.shared.stopAndRemoveSocket()
+//                    await send(.delegate(.exitConfirm))
                     await send(.realmChannelsUpdate(results))
                 } catch: { error, send in
                     if let error = error as? WorkSpaceExitChannelAPIError {
@@ -159,6 +161,9 @@ struct ChatChannelSettingFeature {
                 }
                 
             case let .realmChannelsUpdate(models):
+//                return .run { send in
+//                    await send(.delegate(.exitConfirm))
+//                }
                 return .run { send in
                     try await realmRepo.upserWorkSpaceChannels(
                         channels: models

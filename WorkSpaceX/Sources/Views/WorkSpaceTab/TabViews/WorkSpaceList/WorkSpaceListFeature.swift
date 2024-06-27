@@ -38,6 +38,8 @@ struct WorkSpaceListFeature {
     }
     
     enum Action {
+        case onAppear
+        
         case currentWorkSpaceIdCatch(String)
        
         case observerStart(String)
@@ -72,19 +74,34 @@ struct WorkSpaceListFeature {
             // 채널 탐색
             case channelSerching
         }
+        case parentToAction(ParentToAction)
+        
+        enum ParentToAction {
+            case reload
+        }
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
                 
+            case .onAppear:
+                
+                guard let workSpaceID = state.currentWorkSpaceId else {
+                    break
+                }
+                return .run { send in
+                    await send(.firstRealm(workSpaceID))
+                    await send(.observerStart(workSpaceID))
+                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
+                    await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
+                }
+                
             case let .currentWorkSpaceIdCatch(workSpaceId):
                 print("전달 받음",workSpaceId)
+                state.currentWorkSpaceId = workSpaceId
                 return .run { send in
-                    await send(.firstRealm(workSpaceId))
-                    await send(.observerStart(workSpaceId))
-                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceId))
-                    await send(.workSpaceMembersUpdate(workSpaceID: workSpaceId))
+                    await send(.onAppear)
                 }
                 
             case let .firstRealm(workSpaceId):
@@ -193,6 +210,11 @@ struct WorkSpaceListFeature {
             case .alertSheet(.dismiss):
                 state.alert = nil
              
+            case .parentToAction(.reload):
+                
+                return .run { send in
+                    await send(.onAppear)
+                }
                 
             default :
                 break

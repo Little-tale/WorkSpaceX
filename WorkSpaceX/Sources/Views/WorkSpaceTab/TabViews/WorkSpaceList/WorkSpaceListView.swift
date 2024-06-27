@@ -24,7 +24,7 @@ struct WorkSpaceListView: View {
                 List {
                     Section {
                         if channelToggle {
-                            ForEach(store.chanelSection.items, id: \.channelID ) { item in
+                            ForEach(store.chanelSection.items, id: \.channelID) { item in
                                 channelContents(model: item)
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(EdgeInsets())
@@ -49,6 +49,9 @@ struct WorkSpaceListView: View {
                     }
                 }
                 .listStyle(.plain)
+            }
+            .onAppear {
+                store.send(.onAppear)
             }
             .confirmationDialog($store.scope(state: \.alert, action: \.alertSheet))
             .toolbar {
@@ -102,7 +105,7 @@ struct WorkSpaceListView: View {
         .frame(height: 30)
     }
     
-    private func channelContents(model: WorkSpaceChannelRealmModel) -> some View {
+    private func channelContents(model: WorkSpaceChannelEntity) -> some View {
         HStack {
             WSXImage.shapThin
                 .resizable()

@@ -24,6 +24,7 @@
 		7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */; };
 		7B23ADDB2C2C437B00A9E499 /* ExBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */; };
 		7B23ADDD2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDC2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift */; };
+		7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDE2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
@@ -219,6 +220,7 @@
 		7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalButtonViewModifier.swift; sourceTree = "<group>"; };
 		7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExBinding.swift; sourceTree = "<group>"; };
 		7B23ADDC2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceExitChannelAPIError.swift; sourceTree = "<group>"; };
+		7B23ADDE2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelEntity.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
@@ -1005,6 +1007,7 @@
 				7BF9D71A2C2406A40021D043 /* WorkSpaceMemberEntity.swift */,
 				7B10A9912C282EBC0035C3C8 /* ChatMode.swift */,
 				7B10A9A12C296FD30035C3C8 /* FileType.swift */,
+				7B23ADDE2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift */,
 			);
 			path = WorkSpaceListUSE;
 			sourceTree = "<group>";
@@ -1193,6 +1196,7 @@
 				7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */,
 				7B26D21B2C227E7E00BC9912 /* ChanelEntity.swift in Sources */,
 				7BEC45C52C15D59C00576ECA /* AppleLoginErrorHandeler.swift in Sources */,
+				7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */,
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,

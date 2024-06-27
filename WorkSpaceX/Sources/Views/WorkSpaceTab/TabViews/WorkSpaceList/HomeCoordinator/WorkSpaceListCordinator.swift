@@ -65,8 +65,9 @@ struct WorkSpaceListCordinator {
                 
             case let .sendToRootWorkSpaceID(id):
                 state.currentWorkSpaceId = id
+                let uuid = WorkSpaceListCordinator.State.uuid
                 return .run { send in
-                   await send(.router(.routeAction(id: WorkSpaceListCordinator.State.uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
+                   await send(.router(.routeAction(id: uuid, action: .rootScreen(.currentWorkSpaceIdCatch(id)))))
                 }
                 
             case .router(.routeAction(id: _, action: .rootScreen(.openSideMenu))) :
@@ -75,10 +76,11 @@ struct WorkSpaceListCordinator {
                 }
                 
             case .router(.routeAction(id: _, action: .rootScreen(.chnnelAddClicked))) :
-                
+                let uuid = WorkSpaceListCordinator.State.uuid
                 if let id = state.currentWorkSpaceId {
                     state.identeRoutes.presentSheet(.channelAdd(WorkSpaceChannelAddFeature.State(id: state.sheetID, workSpaceId: id)), embedInNavigationView: true)
                 }
+                
                 
             case .router(.routeAction(id: _, action: .rootScreen(.channelSerching))):
                 let channelId = state.ChannelListID
@@ -89,6 +91,7 @@ struct WorkSpaceListCordinator {
                             workSpaceID: id
                         )))
                 }
+                
                 // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
                 state.identeRoutes.pop()
@@ -96,13 +99,13 @@ struct WorkSpaceListCordinator {
                 // 채팅 넘어감.
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.lastConfirm(let model))))) :
                 print("전달받음 : ",model)
-                if let id = state.currentWorkSpaceId,
-                let userID = UserDefaultsManager.userID {
-                    
+                
+                if let workSpaceID = state.currentWorkSpaceId,
+                   let userId = UserDefaultsManager.userID {
                     let chatState = WorkSpaceChannelChattingFeature.State(
                         channelID: model.channelId,
-                        workSpaceID: id,
-                        userID: userID,
+                        workSpaceID: workSpaceID,
+                        userID: userId,
                         navigationTitle: model.name
                     )
                     
@@ -124,11 +127,18 @@ struct WorkSpaceListCordinator {
                     state.identeRoutes.push(.chatChannelSettingView(chatState))
                     print("리스트 뷰로 이동해야합니다!")
                 }
+                
+                
                 // 채널 나가기 완료 시
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.exitConfirm)))):
                 print("채널 나옴으로 처음으로 돌아갑니다.")
-                state.identeRoutes.goBackToRoot()
-                
+                if let workID =  state.currentWorkSpaceId {
+                    let id = WorkSpaceListCordinator.State.uuid
+                    state.identeRoutes.popToCurrentNavigationRoot()
+//                    return .run { send in
+//                        await send(.router(.routeAction(id: id, action: .rootScreen(.currentWorkSpaceIdCatch(workID)))))
+//                    }
+                }
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 state.identeRoutes.dismiss()

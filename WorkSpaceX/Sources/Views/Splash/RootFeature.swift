@@ -65,7 +65,7 @@ struct RootFeature {
                         state.currentLoginState = .firstLogin
                     } else {
                         // 여기에 알지?
-                        state.workSpaceTabViewState = .initalState
+                        state.workSpaceTabViewState =  WorkSpaceTabCoordinator.State.initalState
                         state.currentLoginState = .login
                     }
                 } else {
