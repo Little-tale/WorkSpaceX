@@ -26,13 +26,7 @@ struct WorkSpaceChannelChattingView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         LazyVStack {
-//                            ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
-//                                ChatModeView(store: store)
-////                                    .id(store.model.chatID)
-//                            }
-//                            ForEach(store.currentModels,  id: \.chatId ) { model in
-//                                EmptyView()
-//                            }
+
                             ForEach(store.currentModels, id: \.testID) { send in
                                 ChatModeView(
                                     setModel: send,
@@ -329,3 +323,10 @@ extension WorkSpaceChannelChattingView {
         
     }
 }
+//                            ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
+//                                ChatModeView(store: store)
+////                                    .id(store.model.chatID)
+//                            }
+//                            ForEach(store.currentModels,  id: \.chatId ) { model in
+//                                EmptyView()
+//                            }

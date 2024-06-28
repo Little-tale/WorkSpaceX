@@ -490,7 +490,7 @@ extension RealmRepository {
         let model = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelId)
         
         guard let model else { return nil }
-        
+        print("//??",model)
         return model
     }
 }
