@@ -45,6 +45,7 @@ struct WorkSpaceListFeature {
         case observerStart(String)
         case firstRealm(String)
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
+        case updateChannels(WorkSpaceChannelsEntity)
         
         case workSpaceMembersUpdate(workSpaceID: String)
         // 워크스페이스 채널 네트워크 요청단
@@ -136,7 +137,13 @@ struct WorkSpaceListFeature {
                 }
                 state.workSpaceName = model.workSpaceName
                 print("응답 받음 \(model.channels.count)")
-                state.chanelSection = workSpaceRepo.workSpaceToChannel(model)
+                return .run { send in
+                    let models = await realmRepo.workSpaceToChannel(model)
+                    await send(.updateChannels(models))
+                }
+            case let .updateChannels(models):
+                
+                state.chanelSection = models
                 
             case let .workSpaceMembersUpdate(id):
                 return .run { send in

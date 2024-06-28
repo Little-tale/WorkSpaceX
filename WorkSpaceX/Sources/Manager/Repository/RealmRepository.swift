@@ -570,7 +570,7 @@ extension RealmRepository {
                 "channelID" : model.channelId,
                 "content" : model.content as Any,
                 "createdAt" : model.createdAt.toDate as Any,
-                "user" : user,
+                "user" : user.userID,
                 "files" : model.files ?? []
             ], update: .modified)
         }
@@ -582,18 +582,35 @@ extension RealmRepository {
     }
 }
 extension RealmRepository {
-    func toChat(_ models: [ChatRealmModel], userID: String) -> [ChatModeEntity] {
+    func toChat(_ models: [ChatRealmModel], userID: String)  async throws -> [ChatModeEntity] {
         
-        models.compactMap { @MainActor model in
-            toChat(model, userID: userID)
+        var wait = [ChatModeEntity] ()
+        for model in models {
+            let result = try await toChat(model, userID: userID)
+            if let result {
+                wait.append(result)
+            }
         }
+        return wait
     }
     
-    func toChat(_ model: ChatRealmModel, userID: String) -> ChatModeEntity? {
+    func toChat(_ model: ChatRealmModel, userID: String, ifRealm: Realm? = nil)  async throws -> ChatModeEntity? {
+        var realm: Realm
         
-        guard let user = model.user else { return nil }
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
         
-        let ifMe: Bool = user.userID == userID
+        guard let user = realm.object(
+            ofType: UserRealmModel.self,
+            forPrimaryKey: model.user
+        ) else { return nil }
+        
+//        guard let user = model.user else { return nil }
+        
+        let ifMe: Bool = model.user == userID
         
         let fakeModel = WorkSpaceMemberEntity(
             userID: user.userID,
@@ -612,7 +629,28 @@ extension RealmRepository {
         )
     }
 }
-
+extension RealmRepository {
+    
+    func workSpaceToChannel(_ workSpace: WorkSpaceRealmModel) async -> WorkSpaceChannelsEntity {
+        
+        let itemSetting = Array(workSpace.channels.sorted(by: \.createdAt))
+        
+        let item = itemSetting.compactMap { @MainActor model in
+            
+            return WorkSpaceChannelEntity(
+                channelID: model.channelID,
+                name: model.name,
+                introduce: model.introduce,
+                ownerID: model.ownerID,
+                didNotReadCount: model.didNotReadCount
+            )
+        }
+        
+        let channel = WorkSpaceChannelsEntity(items: item)
+        
+        return channel
+    }
+}
 
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()

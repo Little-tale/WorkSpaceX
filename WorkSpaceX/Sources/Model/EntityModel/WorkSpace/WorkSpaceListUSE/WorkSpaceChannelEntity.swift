@@ -22,5 +22,5 @@ struct WorkSpaceChannelEntity: Entity {
     
     var didNotReadCount: Int
     
-    var chatMessages: [WorkSpaceChatEntity]
+//     var chatMessages: [WorkSpaceChatEntity]
 }

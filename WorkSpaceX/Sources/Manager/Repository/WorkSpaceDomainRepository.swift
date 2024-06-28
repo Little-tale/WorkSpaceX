@@ -184,39 +184,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
         }
     )
     
-    func workSpaceToChannel(_ workSpace: WorkSpaceRealmModel) -> WorkSpaceChannelsEntity {
-        
-        let items = Array(workSpace.channels.sorted(by: \.createdAt)).map { @MainActor model in
-            WorkSpaceChannelEntity(
-                channelID: model.channelID,
-                name: model.name,
-                introduce: model.introduce,
-                ownerID: model.ownerID,
-                didNotReadCount: model.didNotReadCount,
-                chatMessages: model.chatMessages.map{ @MainActor chat in
-                    let user = chat.user
-                    return WorkSpaceChatEntity(
-                        channelId: chat.channelID,
-                        channelName: model.name,
-                        chatId: chat.chatID,
-                        content: chat.content,
-                        createdAt: chat.createdAt?.description ?? "",
-                        files: Array(chat.files),
-                        user: WorkSpaceMembersEntity(
-                            userID: user?.userID ?? "",
-                            email: user?.email ?? "",
-                            nickname: user?.nickName ?? "",
-                            profileImage: user?.profileImage ?? ""
-                        )
-                    )
-                }
-            )
-        }
-        
-        let channel = WorkSpaceChannelsEntity(items: items)
-        
-        return channel
-    }
+    
     
 }
 
