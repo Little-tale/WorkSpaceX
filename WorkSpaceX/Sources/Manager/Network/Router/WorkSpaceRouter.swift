@@ -28,6 +28,8 @@ enum WorkSpaceRouter: Router {
     case sendChat(workSpaceID: String, _ ChannelID: String,_ multi: ChatMultipart, boundary: String)
     
     case exitChannel(workSpaceID: String, _ ChannelID: String)
+    
+    case editToChannel(workSpaceID: String, _ ChannelID: String, multi: ModifyWorkSpaceDTORequest, randomBoundary: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -44,8 +46,9 @@ extension WorkSpaceRouter {
             return .post
         case .removeWorkSpace:
             return .delete
-        case .modifyWorkSpace:
+        case .modifyWorkSpace, .editToChannel:
             return .put
+            
         }
     }
     
@@ -91,6 +94,9 @@ extension WorkSpaceRouter {
         case let .exitChannel(workSpaceID, channelID):
             print("나가기 시도 -> \(workSpaceID) -> \(channelID)")
             return APIKey.version + "/workspaces/\(workSpaceID)/channels/\(channelID)/exit"
+            
+        case let .editToChannel(workSpaceID, channelID, multi, randomBoundary):
+            return APIKey.version + "/workspaces/\(workSpaceID)/channels/\(channelID)"
         }
     }
     
@@ -125,6 +131,9 @@ extension WorkSpaceRouter {
         case let .sendChat(_,_,_, boundary):
             let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
+        case let .editToChannel(_, _, _, boundary):
+            let multipartFoemData = MultipartFormData()
+            return multipartFoemData.headers(boundary: boundary)
         }
     }
     
@@ -133,7 +142,8 @@ extension WorkSpaceRouter {
         case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersReqeust, .channelListSearching,
                 .channelInfoReqesut,
                 .sendChat,
-                .exitChannel :
+                .exitChannel,
+                .editToChannel :
             return nil
             
         case let .workSpaceChatRequest(_, _, date):
@@ -162,6 +172,9 @@ extension WorkSpaceRouter {
             
         case let .sendChat(_, _, model, boundary):
             return makeChatMultipartData(model, boundary: boundary)
+            
+        case let .editToChannel(_,_, model, boundary):
+            return makeWorkSpaceMultipartData(model, boundary: boundary)
         }
     }
     
@@ -179,12 +192,17 @@ extension WorkSpaceRouter {
             
         case .makeWorkSpace :
             return .multiPart
+            
         case .modifyWorkSpace :
             return .multiPart
+            
         case .createChannel :
             return .multiPart
             
         case .sendChat:
+            return .multiPart
+            
+        case .editToChannel:
             return .multiPart
             
         case .workSpaceAddMember:

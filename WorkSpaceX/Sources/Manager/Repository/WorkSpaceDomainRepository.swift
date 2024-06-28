@@ -34,6 +34,8 @@ struct WorkSpaceDomainRepository {
     var channelSocketReqeust: (_ channelID: String) -> AsyncStream<Result<WorkSpaceChatEntity,ChatSocketManagerError>>
     
     var exitChannel: (_ workSpaceID: String,_ channelID: String) async throws -> [ChanelEntity]
+    
+    var editToChannel: (_ workSpaceID: String,_ channelID: String, _ reqesut: ModifyWorkSpaceDTORequest) async throws -> ChanelEntity
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -179,6 +181,21 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 ), errorType: WorkSpaceExitChannelAPIError.self)
             
             let mapping = workSpaceMapper.workSpaceChannelListDTOToChannels(dto: result)
+            
+            return mapping
+        }, editToChannel: { wornSpaceId, ChannelID, request in
+            
+            let result = try await NetworkManager.shared.requestDto(
+                WorkSpaceChanelsDTO.self,
+                router: WorkSpaceRouter.editToChannel(
+                    workSpaceID: wornSpaceId,
+                    ChannelID, multi: request,
+                    randomBoundary: MultipartFormData.randomBoundary()
+                ), errorType: ChannelEditAPIError.self)
+            
+            let mapping = workSpaceMapper.workSpaceChanelsDTOToChannel(
+                dto: result
+            )
             
             return mapping
         }
