@@ -518,9 +518,6 @@ extension RealmRepository {
             lastDate = Calendar.current.startOfDay(for: lastChat.createdAt ?? Date())
         }
         
-//        // 새로운 채팅 메시지를 처리합니다.
-//        var chatModels = [ChatRealmModel]()
-        
         for chat in models {
             if cancelUpdate.contains(chat.chatId) {
                 continue
