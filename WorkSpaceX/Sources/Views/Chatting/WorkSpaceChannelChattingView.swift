@@ -39,7 +39,7 @@ struct WorkSpaceChannelChattingView: View {
                                     profileClicked: { reModel in
                                         
                                     },
-                                    fileClicked: { url in
+                                    fileClicked: { urlString in
                                         
                                     }
                                 )

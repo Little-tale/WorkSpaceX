@@ -288,10 +288,11 @@ struct WorkSpaceChannelChattingFeature {
                 }
                 
             case let .appendChat(models):
-                var chatStates: [ChatModeFeature.State] = []
+//                var chatStates: [ChatModeFeature.State] = []
                 for model in models {
-                    state.currentModels.insert(model, at: 0)
-                    chatStates.append(ChatModeFeature.State(model: model))
+//                    state.currentModels.insert(model, at: 0)
+                    state.currentModels.append(model)
+//                    chatStates.append(ChatModeFeature.State(model: model))
                 }
 //                state.chatStates.append(contentsOf: chatStates)
                 
