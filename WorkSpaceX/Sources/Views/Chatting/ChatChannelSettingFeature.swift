@@ -14,7 +14,7 @@ struct ChatChannelSettingFeature {
     
     @ObservableState
     struct State: Equatable {
-        let id = UUID()
+        let id: UUID
         let workSpaceID: String
         let channelEntity: ChanelEntity
         var isOwner: Bool
@@ -23,6 +23,8 @@ struct ChatChannelSettingFeature {
         var channelIntro: String = ""
         var usersCount: String = "(0)"
         var users: [WorkSpaceMembersEntity] = []
+        
+        var errorMessage: String? = nil
         
         var alertCaseOf: AlertCase?
         
@@ -86,12 +88,16 @@ struct ChatChannelSettingFeature {
         
         case alertAction(State.AlertCase)
         
+        case netWorkResult(ChanelEntity)
+        
         case exitChannel
         
         // 채널 수정 클릭
         case channelEditClicked
         
         case delegate(Delegate)
+        
+        case errorMessage(String?)
         
         enum Delegate {
             case exitConfirm
@@ -116,6 +122,44 @@ struct ChatChannelSettingFeature {
                 state.users = state.channelEntity.users
                 let count = state.channelEntity.users.count
                 state.usersCount = "(\(count))"
+                
+                let workSpaceID = state.workSpaceID
+                let cheenlID = state.channelEntity.channelId
+                
+                
+                
+                return .run { send in
+                    let result = try await workSpaceRepo.channelInfoRequest(
+                        workSpaceID,
+                        cheenlID
+                    )
+                    await send(.netWorkResult(result))
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceChannelListAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
+                
+            case let .netWorkResult(model):
+                
+                state.channelName = "# " + model.name
+                
+                state.channelIntro = model.description
+                
+                state.users = model.users
+                
+                let count = state.channelEntity.users.count
+                
+                state.usersCount = "(\(count))"
+                
                 
             case .channelExitTry:
                 print("채널 나가기 시도")

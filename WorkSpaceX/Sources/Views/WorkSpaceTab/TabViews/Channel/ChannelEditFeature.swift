@@ -15,7 +15,7 @@ struct ChannelEditFeature {
     struct State: Equatable {
         var id: UUID = UUID()
         
-        let channelEntity: ChanelEntity
+        var channelEntity: ChanelEntity
         let workSpaceId: String
         
         var imagePick = CustomImagePickPeature.State()
@@ -49,7 +49,11 @@ struct ChannelEditFeature {
         
         case realmRegSuccess
         
-        case ifNeedSuccessTrigger
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case successChannel(ChanelEntity)
+        }
         case alertSuccessTapped
     }
     
@@ -96,7 +100,8 @@ struct ChannelEditFeature {
                 }
                 
             case .binding:
-                state.regButtonState = state.channelName != ""
+                let bool = state.channelName != state.channelEntity.name
+                state.regButtonState = state.channelName != "" && bool
                 
             case .regButtonTapped:
                 let workSpaceId = state.workSpaceId
@@ -132,6 +137,7 @@ struct ChannelEditFeature {
                 }
                 
             case let .realmRegStart(model):
+                state.channelEntity = model
                 return .run { @MainActor send in
                     let result = try await realmRepo.upserWorkSpaceChannel(
                         channel: model,
@@ -139,15 +145,12 @@ struct ChannelEditFeature {
                     )
                     if result == nil {
                         send(.errorMessage("등록중 문제가 발생했습니다."))
+                    } else {
+                        send(.successMessage("등록이 완료 되었습니다."))
+                        
                     }
                 } catch: { error, send in
                     print(error)
-                }
-                
-            case .realmRegSuccess:
-                
-                return .run { send in
-                    await send(.successMessage("저장 되었습니다."))
                 }
                 
             case let .errorMessage(message):
@@ -157,8 +160,9 @@ struct ChannelEditFeature {
                 state.successMessage = message
                 
             case .alertSuccessTapped:
+                let successModel = state.channelEntity
                 return .run { send in
-                    await send(.ifNeedSuccessTrigger)
+                    await send(.delegate(.successChannel(successModel)))
                 }
                 
             default :

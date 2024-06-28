@@ -39,6 +39,8 @@ struct WorkSpaceListCordinator {
         
         let ChannelListID = UUID()
         
+        let channelEditID = UUID()
+        
         static let initialState = State(
             identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State(id: uuid)), embedInNavigationView: true)]
         )
@@ -121,6 +123,7 @@ struct WorkSpaceListCordinator {
             case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channel, let isOwner)))):
                 if let workSpaceID = state.currentWorkSpaceId {
                     let chatState = ChatChannelSettingFeature.State(
+                        id: state.channelEditID,
                         workSpaceID: workSpaceID,
                         channelEntity: channel,
                         isOwner: isOwner
@@ -150,6 +153,18 @@ struct WorkSpaceListCordinator {
                     ),
                     embedInNavigationView: true
                 )
+                
+            case .router(.routeAction(id: _, action: .chatnnelEdit(.dismissButtonTapped))):
+                
+                state.identeRoutes.dismiss()
+                
+            case .router(.routeAction(id: _, action: .chatnnelEdit(.delegate(.successChannel(let model))))):
+                
+                state.identeRoutes.dismiss()
+                let id = state.channelEditID
+                return .run { send in
+                    await send(.router(.routeAction(id: id, action: .chatChannelSettingView(.onAppear))))
+                }
                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
