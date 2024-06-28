@@ -141,9 +141,15 @@ struct WorkSpaceListCordinator {
                 // 채널 편집뷰로 이동
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model, let workSpaceId))))):
                 
-                state.identeRoutes.push(.chatnnelEdit(ChannelEditFeature.State(channelEntity: model, workSpaceId: workSpaceId)))
-                
-                break
+                state.identeRoutes.presentSheet(
+                    .chatnnelEdit(
+                        ChannelEditFeature.State(
+                            channelEntity: model,
+                            workSpaceId: workSpaceId
+                        )
+                    ),
+                    embedInNavigationView: true
+                )
                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):

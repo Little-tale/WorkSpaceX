@@ -67,9 +67,15 @@ struct ChannelEditFeature {
             switch action {
                 
             case .onAppear:
+                print("채널 편집 ->")
                 let model = state.channelEntity
                 state.channelName = model.name
                 state.channelIntro = model.description
+                if let image = model.coverImage {
+                    return .run { send in
+                        await send(.imagePickFeature(.ifURLString(image)))
+                    }
+                }
                 
             case .showImagePicker:
                 state.showImagePicker = true
