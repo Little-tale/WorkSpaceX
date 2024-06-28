@@ -42,6 +42,8 @@ struct ChannelEditFeature {
         case regButtonTapped
         case dismissButtonTapped
         
+        case realmRegStart(ChanelEntity)
+        
         case errorMessage(String?)
         case successMessage(String?)
         
@@ -51,7 +53,7 @@ struct ChannelEditFeature {
         case alertSuccessTapped
     }
     
-    @Dependency(\.workspaceDomainRepository) var repository
+    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
@@ -97,10 +99,53 @@ struct ChannelEditFeature {
                 state.regButtonState = state.channelName != ""
                 
             case .regButtonTapped:
+                let workSpaceId = state.workSpaceId
+                let channelID = state.channelEntity.channelId
                 
-                break
+                let reqeust = ModifyWorkSpaceDTORequest(
+                    name: state.channelName,
+                    description: state.channelIntro,
+                    image: state.image
+                )
+                
+                return .run { send in
+                    
+                    let result = try await workSpaceRepo.editToChannel(
+                        workSpaceId,
+                        channelID,
+                        reqeust
+                    )
+                    
+                    await send(.realmRegStart(result))
+                } catch: { error, send in
+                    if let error = error as? ChannelEditAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
+                
+            case let .realmRegStart(model):
+                return .run { @MainActor send in
+                    let result = try await realmRepo.upserWorkSpaceChannel(
+                        channel: model,
+                        ifRealm: nil
+                    )
+                    if result == nil {
+                        send(.errorMessage("등록중 문제가 발생했습니다."))
+                    }
+                } catch: { error, send in
+                    print(error)
+                }
                 
             case .realmRegSuccess:
+                
                 return .run { send in
                     await send(.successMessage("저장 되었습니다."))
                 }
