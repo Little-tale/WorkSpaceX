@@ -135,10 +135,12 @@ struct WorkSpaceListCordinator {
                 if let workID =  state.currentWorkSpaceId {
                     let id = WorkSpaceListCordinator.State.uuid
                     state.identeRoutes.popToCurrentNavigationRoot()
-//                    return .run { send in
-//                        await send(.router(.routeAction(id: id, action: .rootScreen(.currentWorkSpaceIdCatch(workID)))))
-//                    }
                 }
+                
+            case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model))))):
+                // 채널 편집뷰로 이동해야함.
+                break
+                
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 state.identeRoutes.dismiss()
