@@ -507,24 +507,24 @@ extension RealmRepository {
             throw RealmError.cantFindModel
         }
         
-//        let cancelUpdate = Set(channel.chatMessages.map { $0.chatID })
-//        
-//        var chatModels = [ChatRealmModel]()
-//        var lastDate: Date? = nil
-//        
-//        // 채팅 메시지의 마지막 날짜를 가져옵니다.
-//        let allChats = channel.chatMessages.sorted(byKeyPath: "createdAt", ascending: true)
-//        if let lastChat = allChats.last {
-//            lastDate = Calendar.current.startOfDay(for: lastChat.createdAt ?? Date())
-//        }
+        let cancelUpdate = Set(channel.chatMessages.map { $0.chatID })
         
-        // 새로운 채팅 메시지를 처리합니다.
         var chatModels = [ChatRealmModel]()
+        var lastDate: Date? = nil
+        
+        // 채팅 메시지의 마지막 날짜를 가져옵니다.
+        let allChats = channel.chatMessages.sorted(byKeyPath: "createdAt", ascending: true)
+        if let lastChat = allChats.last {
+            lastDate = Calendar.current.startOfDay(for: lastChat.createdAt ?? Date())
+        }
+        
+//        // 새로운 채팅 메시지를 처리합니다.
+//        var chatModels = [ChatRealmModel]()
         
         for chat in models {
-//            if cancelUpdate.contains(chat.chatId) {
-//                continue
-//            }
+            if cancelUpdate.contains(chat.chatId) {
+                continue
+            }
             guard let user = try await upsertMembers(response: chat.user, ifRealm: realm) else {
                 throw RealmError.failAdd
             }
@@ -534,18 +534,18 @@ extension RealmRepository {
         }
         
         try await realm.asyncWrite {
-//            for chatModel in chatModels {
-//                let chatDate = Calendar.current.startOfDay(for: chatModel.createdAt ?? Date())
-//                
-//                if lastDate != chatDate {
-//                    chatModel.isDateSection = true
-//                    lastDate = chatDate
-//                } else {
-//                    chatModel.isDateSection = false
-//                }
-//                
-//                realm.add(chatModel, update: .modified)
-//            }
+            for chatModel in chatModels {
+                let chatDate = Calendar.current.startOfDay(for: chatModel.createdAt ?? Date())
+                
+                if lastDate != chatDate {
+                    chatModel.isDateSection = true
+                    lastDate = chatDate
+                } else {
+                    chatModel.isDateSection = false
+                }
+                
+                realm.add(chatModel, update: .modified)
+            }
             
             channel.chatMessages.append(objectsIn: chatModels)
         }

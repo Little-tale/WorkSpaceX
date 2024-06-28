@@ -28,7 +28,7 @@ struct WorkSpaceChannelChattingFeature {
         var currentDatas: [ChatMultipart.File] = []
         var showChatBottom: Bool = false
         
-        var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
+//        var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
         
         var scrollTo: String = ""
         var lastFetchDate: Date? = nil
@@ -75,7 +75,7 @@ struct WorkSpaceChannelChattingFeature {
         case sendTapped
         
         // 채팅들 액션
-        case chats(IdentifiedActionOf<ChatModeFeature>)
+//        case chats(IdentifiedActionOf<ChatModeFeature>)
         case firstInit
         case showChats([ChatModeEntity])
         case appendChat([ChatModeEntity])
@@ -214,8 +214,8 @@ struct WorkSpaceChannelChattingFeature {
                     await send(.navigationMemberCount(channel.users.count))
                 }
                 
-            case let .chats(.element(id: _, action: .delegate(.selectedFileURLString(text)))):
-                print(text)
+//            case let .chats(.element(id: _, action: .delegate(.selectedFileURLString(text)))):
+//                print(text)
                 
             case let .userFeildText(text):
                 state.userFeildText = text
@@ -293,13 +293,13 @@ struct WorkSpaceChannelChattingFeature {
                     state.currentModels.insert(model, at: 0)
                     chatStates.append(ChatModeFeature.State(model: model))
                 }
-                state.chatStates.append(contentsOf: chatStates)
+//                state.chatStates.append(contentsOf: chatStates)
                 
             case let .showChats(models):
                 dump(models)
                 state.currentModels = models
-                let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
-                state.chatStates.append(contentsOf: states)
+//                let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
+//                state.chatStates.append(contentsOf: states)
                 
                 
                 // 이미지 피커란
@@ -426,9 +426,9 @@ struct WorkSpaceChannelChattingFeature {
             }
             return .none
         }
-        .forEach(\.chatStates, action: \.chats) {
-            ChatModeFeature()
-        }
+//        .forEach(\.chatStates, action: \.chats) {
+//            ChatModeFeature()
+//        }
         
     }
     
