@@ -17,7 +17,8 @@ enum WorkSpaceListScreens {
     // Middel
     case workSpaceChannelListView(WorkSpaceChannelListFeature)
     case chattingView(WorkSpaceChannelChattingFeature)
-
+    case chatnnelEdit(ChannelEditFeature)
+    
     // setting
     case chatChannelSettingView(ChatChannelSettingFeature)
     
@@ -137,8 +138,11 @@ struct WorkSpaceListCordinator {
                     state.identeRoutes.popToCurrentNavigationRoot()
                 }
                 
-            case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model))))):
-                // 채널 편집뷰로 이동해야함.
+                // 채널 편집뷰로 이동
+            case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model, let workSpaceId))))):
+                
+                state.identeRoutes.push(.chatnnelEdit(ChannelEditFeature.State(channelEntity: model, workSpaceId: workSpaceId)))
+                
                 break
                 
                 // 채널추가

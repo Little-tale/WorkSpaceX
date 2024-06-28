@@ -253,7 +253,7 @@ extension ChatChannelSettingView {
             VStack {
                 Text("채널 편집")
                     .modifier(NormalButtonViewModifier(colorSetting: .custom(WSXColor.lightGreen)) {
-                        
+                        store.send(.channelEditClicked)
                     })
             }
         }

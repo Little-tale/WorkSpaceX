@@ -96,7 +96,7 @@ struct ChatChannelSettingFeature {
         enum Delegate {
             case exitConfirm
             
-            case channelEditClicked(ChanelEntity)
+            case channelEditClicked(model: ChanelEntity, workSpaceID: String)
         }
     }
     
@@ -177,8 +177,9 @@ struct ChatChannelSettingFeature {
                 }
             case .channelEditClicked:
                 let channel = state.channelEntity
+                let workSpaceID = state.workSpaceID
                 return .run { send in
-                    await send(.delegate(.channelEditClicked(channel)))
+                    await send(.delegate(.channelEditClicked(model: channel, workSpaceID: workSpaceID)))
                 }
                 
             default:
