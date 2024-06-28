@@ -113,11 +113,13 @@ struct WorkSpaceChannelChattingFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                if !state.onAppearTrigger { break }
-                state.onAppearTrigger = false
-                let channelID = state.channelID
                 
                 let workSpaceID = state.workSpaceID
+                let channelID = state.channelID
+                
+                let bool = state.onAppearTrigger
+                state.onAppearTrigger = false
+                
                 
                 // 1. 채팅 데이터가 존재하는지 최소한 한번은 확인해야함.
                 // 1.0.1 렘 페이지 네이션을 위해. 날짜별 호출 먼저 최초 1회 후
@@ -126,6 +128,10 @@ struct WorkSpaceChannelChattingFeature {
                 // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
                 // + 렘 멤버 도 꼭 확인
                 return .run { send in
+                    
+                    await send(.channelInfoRequest)
+                    
+                    if !bool { return }
                     
                     let date = try await realmRepo.findChatsForChannel(channelId: channelID)
                     await send(.chatDate(date))
@@ -139,9 +145,8 @@ struct WorkSpaceChannelChattingFeature {
                     // 렘옵저버 선 후 -> 통신
                     state.lastFetchDate = date
                     return .run { send in
-                        
-                        await send(.channelInfoRequest)
-                        try await Task.sleep(for: .seconds(0.2))
+                    
+                        try await Task.sleep(for: .seconds(0.1))
                         await send(.firstInit)
                         await send(.realmobserberStart)
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
@@ -153,7 +158,6 @@ struct WorkSpaceChannelChattingFeature {
                     // 2. 없다면 커서 데이트를 빈값으로 보내야함.
                     // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
                     return .run { send in
-                        await send(.channelInfoRequest)
                         
                         try await Task.sleep(for: .seconds(0.2))
                         
@@ -209,6 +213,8 @@ struct WorkSpaceChannelChattingFeature {
             case let .channelResult(channel):
                 state.channelModel = channel
                 state.ownerID = channel.owner_id
+                
+                state.navigationTitle = channel.name
                 
                 return .run { send in
                     await send(.navigationMemberCount(channel.users.count))
