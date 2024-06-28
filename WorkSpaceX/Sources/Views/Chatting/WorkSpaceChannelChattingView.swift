@@ -42,17 +42,7 @@ struct WorkSpaceChannelChattingView: View {
                         .rotationEffect(.radians(.pi))
                         .scaleEffect(x: -1, y: 1, anchor: .center)
                         
-                        // 확실히 이것이 문제가 맞음
-//                        .onChange(of: scrollTo) { new in
-//                            proxy.scrollTo(new)
-//
-//                        }
-//                        .onChange(of: store.scrollTo) { new in
-//                            proxy.scrollTo(new)
-//                        }
-// 해당 것도 추적이 안된다는 것으로 나옴...
-//                        .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
-                        
+        
                     }
                     .rotationEffect(.radians(.pi))
                     .scaleEffect(x: -1, y: 1, anchor: .center)
@@ -169,9 +159,12 @@ extension WorkSpaceChannelChattingView {
                                 keyboardTool.toggle()
                             }
                         VStack {
-                            TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText))
-//                                .lineLimit(3)
+                            TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText), axis: .vertical)
+                                .lineLimit(4)
+                                .padding(.vertical, 2)
                         }
+                        .frame(minHeight: 50)
+                        
                         WSXImage.send
                             .resizable()
                             .renderingMode(.template)
@@ -182,7 +175,7 @@ extension WorkSpaceChannelChattingView {
                             }
                             .padding(.trailing, 5)
                     }
-                    .frame(height: 50)
+                   
                     if store.showChatBottom {
                         workSpaceChatBottomItemView()
                             .padding(.bottom, 4)
@@ -330,3 +323,13 @@ extension WorkSpaceChannelChattingView {
 //                            ForEach(store.currentModels,  id: \.chatId ) { model in
 //                                EmptyView()
 //                            }
+// 확실히 이것이 문제가 맞음
+//                        .onChange(of: scrollTo) { new in
+//                            proxy.scrollTo(new)
+//
+//                        }
+//                        .onChange(of: store.scrollTo) { new in
+//                            proxy.scrollTo(new)
+//                        }
+// 해당 것도 추적이 안된다는 것으로 나옴...
+//                        .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
