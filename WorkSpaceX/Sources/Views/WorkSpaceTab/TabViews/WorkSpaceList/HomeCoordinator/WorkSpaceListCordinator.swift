@@ -165,12 +165,18 @@ struct WorkSpaceListCordinator {
                 return .run { send in
                     await send(.router(.routeAction(id: id, action: .chatChannelSettingView(.onAppear))))
                 }
+                /// 채널 주인 변경 뷰 이동
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelOwnerChangeReqeust(model: let model, workSpaceID: let id))))):
                 
                 state.identeRoutes.presentSheet(.ChannelOwnerChange(ChannelOwnerChangeFeature.State(
                     workSpaceID: id,
                     channel: model)
                 ), embedInNavigationView: true)
+                
+                // 채널 주인 변경뷰 뒤로 가기 연결
+            case .router(.routeAction(id: _, action: .ChannelOwnerChange(.delegate(.backButtonTapped)))):
+                
+                state.identeRoutes.dismiss()
                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):

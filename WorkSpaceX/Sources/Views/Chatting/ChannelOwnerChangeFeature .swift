@@ -20,9 +20,31 @@ struct ChannelOwnerChangeFeature {
     }
     
     enum Action {
+        case onAppar
+        case delegate(Delegate)
         
+        
+        case backButtonTapped
+        enum Delegate {
+            case backButtonTapped
+        }
     }
     
-    
+    var body: some ReducerOf<Self> {
+        
+        Reduce { state, action in
+            
+            switch action {
+                
+            case .backButtonTapped:
+                return .run { send in await send(.delegate(.backButtonTapped))}
+                
+            default:
+                break
+            }
+            return .none
+        }
+        
+    }
     
 }

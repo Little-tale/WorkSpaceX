@@ -15,6 +15,24 @@ struct ChannelOwnerChangeView: View {
     var body: some View {
         WithPerceptionTracking {
             
+            VStack {
+                
+            }
+            .navigationTitle("채널 관리자 변경")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .bottomBar)
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    WSXImage.xImage
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundStyle(WSXColor.black)
+                        .asButton {
+                            store.send(.backButtonTapped)
+                        }
+                }
+            }
         }
     }
 }
