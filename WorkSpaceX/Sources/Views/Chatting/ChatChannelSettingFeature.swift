@@ -31,6 +31,7 @@ struct ChatChannelSettingFeature {
         enum AlertCase: Equatable {
             case exitChannelToOwner
             case exitChneel
+            case noMemberButOwnerChangeTry
             
             // Error
             case errorEvent(String)
@@ -39,6 +40,8 @@ struct ChatChannelSettingFeature {
                 switch self {
                 case .exitChannelToOwner, .exitChneel:
                     return "채널에서 나가기"
+                case .noMemberButOwnerChangeTry:
+                    return "채널 관리자 변경 불가"
                 case .errorEvent:
                     return "Error"
                 }
@@ -50,7 +53,8 @@ struct ChatChannelSettingFeature {
                     return "회원님은 채널 관리자 입니다.\n채널 관리자를 변경후 나가실수 있어요!"
                 case .exitChneel:
                     return "나가시면 채널 목록이 삭제 됩니다."
-                    
+                case .noMemberButOwnerChangeTry:
+                    return "채널 멤버가 없어 관리자 변경을 할 수 없습니다."
                 case let .errorEvent(message):
                     return message
                 }
@@ -62,7 +66,8 @@ struct ChatChannelSettingFeature {
                     return .onlyCheck
                 case .exitChneel:
                     return .cancelWith
-                    
+                case .noMemberButOwnerChangeTry:
+                    return .onlyCheck
                 case .errorEvent:
                     return .onlyCheck
                 }
@@ -70,7 +75,7 @@ struct ChatChannelSettingFeature {
             
             var alertActionTitle: String {
                 switch self {
-                case .exitChannelToOwner, .errorEvent:
+                case .exitChannelToOwner, .errorEvent, .noMemberButOwnerChangeTry:
                     return "확인"
                 case .exitChneel:
                     return "나가기"
@@ -94,6 +99,8 @@ struct ChatChannelSettingFeature {
         
         // 채널 수정 클릭
         case channelEditClicked
+        // 채널 관리자 변경 클릭
+        case channelOwnerChangeRequest
         
         case delegate(Delegate)
         
@@ -176,7 +183,7 @@ struct ChatChannelSettingFeature {
             case let .alertAction(caseOf):
                 print("얼렛 액션 발동 \(caseOf)")
                 switch caseOf {
-                case .exitChannelToOwner, .errorEvent:
+                case .exitChannelToOwner, .errorEvent, .noMemberButOwnerChangeTry:
                     break
                 case .exitChneel:
                     return .run { send in
@@ -226,6 +233,17 @@ struct ChatChannelSettingFeature {
                     await send(.delegate(.channelEditClicked(model: channel, workSpaceID: workSpaceID)))
                 }
                 
+            case .channelOwnerChangeRequest:
+                let channel = state.channelEntity
+                let bool = channel.users.count <= 1
+                
+                if bool {
+                    return .run { send in
+                        await send(.alertAction(.noMemberButOwnerChangeTry))
+                    }
+                } else {
+                    
+                }
             default:
                 break
             }

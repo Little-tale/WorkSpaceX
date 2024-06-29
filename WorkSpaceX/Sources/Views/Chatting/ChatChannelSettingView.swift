@@ -242,7 +242,7 @@ extension ChatChannelSettingView {
             VStack {
                 Text("채널 관리자 변경")
                     .modifier(NormalButtonViewModifier(colorSetting: .def) {
-                        
+                        store.send(.channelOwnerChangeRequest)
                     })
             }
         }
