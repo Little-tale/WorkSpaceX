@@ -13,11 +13,11 @@ import TCACoordinators
 enum WorkSpaceListScreens {
     case rootScreen(WorkSpaceListFeature)
     
-    
     // Middel
     case workSpaceChannelListView(WorkSpaceChannelListFeature)
     case chattingView(WorkSpaceChannelChattingFeature)
     case chatnnelEdit(ChannelEditFeature)
+    case ChannelOwnerChange(ChannelOwnerChangeFeature)
     
     // setting
     case chatChannelSettingView(ChatChannelSettingFeature)
@@ -158,13 +158,19 @@ struct WorkSpaceListCordinator {
                 
                 state.identeRoutes.dismiss()
                 
-            case .router(.routeAction(id: _, action: .chatnnelEdit(.delegate(.successChannel(let model))))):
+            case .router(.routeAction(id: _, action: .chatnnelEdit(.delegate(.successChannel(_))))):
                 
                 state.identeRoutes.dismiss()
                 let id = state.channelEditID
                 return .run { send in
                     await send(.router(.routeAction(id: id, action: .chatChannelSettingView(.onAppear))))
                 }
+            case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelOwnerChangeReqeust(model: let model, workSpaceID: let id))))):
+                
+                state.identeRoutes.presentSheet(.ChannelOwnerChange(ChannelOwnerChangeFeature.State(
+                    workSpaceID: id,
+                    channel: model)
+                ), embedInNavigationView: true)
                 
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):

@@ -38,6 +38,9 @@ struct WorkSpaceListCoordinatorView: View {
                     
                 case let .chatnnelEdit(store):
                     ChannelEditView(store: store)
+                    
+                case let .ChannelOwnerChange(store):
+                    ChannelOwnerChangeView(store: store)
                 }
             }
         }
@@ -60,6 +63,8 @@ extension WorkSpaceListScreens.State: Identifiable {
         case let .chatChannelSettingView(state):
             return state.id
         case let .chatnnelEdit(state):
+            return state.id
+        case let .ChannelOwnerChange(state):
             return state.id
         }
     }

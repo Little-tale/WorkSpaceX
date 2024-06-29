@@ -107,6 +107,8 @@
 		7B7EB80A2C2E9D9B00D22362 /* ChannelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8092C2E9D9B00D22362 /* ChannelEditView.swift */; };
 		7B7EB80C2C2EA9A200D22362 /* ChannelMultiPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB80B2C2EA9A200D22362 /* ChannelMultiPart.swift */; };
 		7B7EB80E2C2EAC5900D22362 /* ChannelEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB80D2C2EAC5900D22362 /* ChannelEditAPIError.swift */; };
+		7B7EB8102C2FF01100D22362 /* ChannelOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB80F2C2FF01100D22362 /* ChannelOwnerChangeView.swift */; };
+		7B7EB8122C2FF09100D22362 /* ChannelOwnerChangeFeature .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -308,6 +310,8 @@
 		7B7EB8092C2E9D9B00D22362 /* ChannelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditView.swift; sourceTree = "<group>"; };
 		7B7EB80B2C2EA9A200D22362 /* ChannelMultiPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMultiPart.swift; sourceTree = "<group>"; };
 		7B7EB80D2C2EAC5900D22362 /* ChannelEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditAPIError.swift; sourceTree = "<group>"; };
+		7B7EB80F2C2FF01100D22362 /* ChannelOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangeView.swift; sourceTree = "<group>"; };
+		7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelOwnerChangeFeature .swift"; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -1061,6 +1065,8 @@
 				7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */,
 				7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */,
 				7B7EB8092C2E9D9B00D22362 /* ChannelEditView.swift */,
+				7B7EB80F2C2FF01100D22362 /* ChannelOwnerChangeView.swift */,
+				7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -1240,6 +1246,7 @@
 				7BF9D7312C2593940021D043 /* WorkSpaceChannelChattingFeature.swift in Sources */,
 				7B2EEE1E2C1190520024853C /* CommonError.swift in Sources */,
 				7B8FD6172C19CEE600948E7C /* WorkSpaceMeError.swift in Sources */,
+				7B7EB8102C2FF01100D22362 /* ChannelOwnerChangeView.swift in Sources */,
 				7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
 				7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */,
@@ -1333,6 +1340,7 @@
 				7B26D2252C228B1800BC9912 /* WorkSpaceChanelsDTO.swift in Sources */,
 				7B26D2292C228CDE00BC9912 /* WorkSpaceMyChannelError.swift in Sources */,
 				7BEC45AA2C12E80F00576ECA /* reFreshError.swift in Sources */,
+				7B7EB8122C2FF09100D22362 /* ChannelOwnerChangeFeature .swift in Sources */,
 				7B8FD6412C1ABE1A00948E7C /* RealmError.swift in Sources */,
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,

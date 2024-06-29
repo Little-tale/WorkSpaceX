@@ -110,6 +110,8 @@ struct ChatChannelSettingFeature {
             case exitConfirm
             
             case channelEditClicked(model: ChanelEntity, workSpaceID: String)
+            
+            case channelOwnerChangeReqeust(model: ChanelEntity, workSpaceID: String)
         }
     }
     
@@ -236,13 +238,15 @@ struct ChatChannelSettingFeature {
             case .channelOwnerChangeRequest:
                 let channel = state.channelEntity
                 let bool = channel.users.count <= 1
-                
+                let workSpace = state.workSpaceID
                 if bool {
                     return .run { send in
                         await send(.alertAction(.noMemberButOwnerChangeTry))
                     }
                 } else {
-                    
+                    return .run { send in
+                        await send(.delegate(.channelOwnerChangeReqeust(model: channel, workSpaceID: workSpace)))
+                    }
                 }
             default:
                 break
