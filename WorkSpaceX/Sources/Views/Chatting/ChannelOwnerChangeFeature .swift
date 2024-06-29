@@ -17,12 +17,16 @@ struct ChannelOwnerChangeFeature {
         let workSpaceID: String
         let channel: ChanelEntity
         
+        var users: [WorkSpaceMembersEntity] = []
+        
+        var userID: String? = nil
     }
     
     enum Action {
-        case onAppar
+        case onAppear
         case delegate(Delegate)
         
+        case selectedUser(WorkSpaceMembersEntity)
         
         case backButtonTapped
         enum Delegate {
@@ -36,6 +40,16 @@ struct ChannelOwnerChangeFeature {
             
             switch action {
                 
+            case .onAppear:
+                var models: [WorkSpaceMembersEntity] = []
+                
+                if let userID = UserDefaultsManager.userID {
+                    state.userID = userID
+                    models = filterMe(state.channel, userID: userID)
+                }
+                
+                state.users = models
+                
             case .backButtonTapped:
                 return .run { send in await send(.delegate(.backButtonTapped))}
                 
@@ -45,6 +59,13 @@ struct ChannelOwnerChangeFeature {
             return .none
         }
         
+    }
+    
+}
+extension ChannelOwnerChangeFeature {
+    
+    private func filterMe(_ model: ChanelEntity, userID: String) -> [WorkSpaceMembersEntity] {
+        return model.users.filter { $0.userID != userID }
     }
     
 }
