@@ -12,6 +12,11 @@ struct ChannelOwnerChangeView: View {
     
     @Perception.Bindable var store: StoreOf<ChannelOwnerChangeFeature>
     
+    @State var alertTrigger: Bool = false
+    
+    @State
+    var alertCaseOf: ChannelOwnerChangeFeature.AlertAction? = nil
+    
     var body: some View {
         WithPerceptionTracking {
             
@@ -43,6 +48,33 @@ struct ChannelOwnerChangeView: View {
                         .asButton {
                             store.send(.backButtonTapped)
                         }
+                }
+            }
+            .bind($store.alertState.sending(\.alertAction), to: $alertCaseOf)
+            .onChange(of: alertCaseOf) { model in
+                withAnimation {
+                    if model != nil {
+                        alertTrigger = true
+                    } else {
+                        alertTrigger = false
+                    }
+                }
+            }
+            .onChange(of: alertCaseOf) { newValue in
+                print("뷰 얼렛 케이스 발동")
+                guard let newValue else { return }
+                CustomAlertWindow.shared.show {
+                    CustomAlertView(
+                        alertMode: newValue.alertMode,
+                        isShowing: $alertTrigger,
+                        title: newValue.title,
+                        message: newValue.message,
+                        onCancel: {
+                            store.send(.alertAction(nil))
+                        }, onAction: {
+                            store.send(.alertActted(newValue))
+                            store.send(.alertAction(nil))
+                        }, actionTitle: newValue.actionTitle)
                 }
             }
         }
