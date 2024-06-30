@@ -30,6 +30,8 @@ enum WorkSpaceRouter: Router {
     case exitChannel(workSpaceID: String, _ ChannelID: String)
     
     case editToChannel(workSpaceID: String, _ ChannelID: String, multi: ModifyWorkSpaceDTORequest, randomBoundary: String)
+    
+    case channelOwnerChanged(workSpaceId: String, ChannelID: String, request: ChannelOwnerRequestDTO)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -46,7 +48,7 @@ extension WorkSpaceRouter {
             return .post
         case .removeWorkSpace:
             return .delete
-        case .modifyWorkSpace, .editToChannel:
+        case .modifyWorkSpace, .editToChannel, .channelOwnerChanged:
             return .put
             
         }
@@ -95,8 +97,11 @@ extension WorkSpaceRouter {
             print("나가기 시도 -> \(workSpaceID) -> \(channelID)")
             return APIKey.version + "/workspaces/\(workSpaceID)/channels/\(channelID)/exit"
             
-        case let .editToChannel(workSpaceID, channelID, multi, randomBoundary):
+        case let .editToChannel(workSpaceID, channelID, _, randomBoundary):
             return APIKey.version + "/workspaces/\(workSpaceID)/channels/\(channelID)"
+            
+        case let .channelOwnerChanged(workSpace,channel,_):
+            return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)/transfer/ownership"
         }
     }
     
@@ -109,7 +114,8 @@ extension WorkSpaceRouter {
                 .workSpaceMembersReqeust,
                 .channelListSearching,
                 .channelInfoReqesut,
-                .exitChannel :
+                .exitChannel,
+                .channelOwnerChanged:
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -143,7 +149,8 @@ extension WorkSpaceRouter {
                 .channelInfoReqesut,
                 .sendChat,
                 .exitChannel,
-                .editToChannel :
+                .editToChannel,
+                .channelOwnerChanged :
             return nil
             
         case let .workSpaceChatRequest(_, _, date):
@@ -175,6 +182,8 @@ extension WorkSpaceRouter {
             
         case let .editToChannel(_,_, model, boundary):
             return makeWorkSpaceMultipartData(model, boundary: boundary)
+        case let .channelOwnerChanged(_,_,request):
+            return requestToBody(request)
         }
     }
     
@@ -205,7 +214,7 @@ extension WorkSpaceRouter {
         case .editToChannel:
             return .multiPart
             
-        case .workSpaceAddMember:
+        case .workSpaceAddMember, .channelOwnerChanged:
             return .json
         }
     }
