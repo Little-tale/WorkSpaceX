@@ -32,6 +32,8 @@ enum WorkSpaceRouter: Router {
     case editToChannel(workSpaceID: String, _ ChannelID: String, multi: ModifyWorkSpaceDTORequest, randomBoundary: String)
     
     case channelOwnerChanged(workSpaceId: String, ChannelID: String, request: ChannelOwnerRequestDTO)
+    
+    case channelDelegte(workSpaceID: String, channelID: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -46,7 +48,7 @@ extension WorkSpaceRouter {
             return .get
         case .makeWorkSpace, .createChannel, .workSpaceAddMember, .sendChat:
             return .post
-        case .removeWorkSpace:
+        case .removeWorkSpace, .channelDelegte:
             return .delete
         case .modifyWorkSpace, .editToChannel, .channelOwnerChanged:
             return .put
@@ -102,6 +104,9 @@ extension WorkSpaceRouter {
             
         case let .channelOwnerChanged(workSpace,channel,_):
             return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)/transfer/ownership"
+            
+        case let .channelDelegte(workSpace, channel):
+            return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)"
         }
     }
     
@@ -115,7 +120,8 @@ extension WorkSpaceRouter {
                 .channelListSearching,
                 .channelInfoReqesut,
                 .exitChannel,
-                .channelOwnerChanged:
+                .channelOwnerChanged,
+                .channelDelegte:
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -150,7 +156,8 @@ extension WorkSpaceRouter {
                 .sendChat,
                 .exitChannel,
                 .editToChannel,
-                .channelOwnerChanged :
+                .channelOwnerChanged,
+                .channelDelegte :
             return nil
             
         case let .workSpaceChatRequest(_, _, date):
@@ -164,7 +171,7 @@ extension WorkSpaceRouter {
     
     var body: Data? {
         switch self {
-        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust, .channelListSearching, .workSpaceChatRequest, .channelInfoReqesut, .exitChannel :
+        case .meWorkSpace, .removeWorkSpace, .findWorkSpaceChannels, .workSpaceMembersReqeust, .channelListSearching, .workSpaceChatRequest, .channelInfoReqesut, .exitChannel, .channelDelegte :
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -196,7 +203,8 @@ extension WorkSpaceRouter {
                 .channelListSearching,
                 .workSpaceChatRequest,
                 .channelInfoReqesut,
-                .exitChannel :
+                .exitChannel,
+                .channelDelegte :
             return .url
             
         case .makeWorkSpace :

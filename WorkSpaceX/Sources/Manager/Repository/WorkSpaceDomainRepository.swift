@@ -38,6 +38,8 @@ struct WorkSpaceDomainRepository {
     var editToChannel: (_ workSpaceID: String,_ channelID: String, _ reqesut: ModifyWorkSpaceDTORequest) async throws -> ChanelEntity
     
     var channelOWnerChanged: (_ workSpaceID: String, _ ChannelID: String, _ changedID: String) async throws -> ChanelEntity
+    
+    var channelDeleteReqeust: (_ workSpaceID: String, _ channelID: String) async throws -> Void
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -217,11 +219,10 @@ extension WorkSpaceDomainRepository: DependencyKey {
             let mapping = workSpaceMapper.workSpaceChanelsDTOToChannel(dto: result)
             
             return mapping
+        }, channelDeleteReqeust: { workSpaceID, channelID in
+            
         }
     )
-    
-    
-    
 }
 
 extension DependencyValues {
