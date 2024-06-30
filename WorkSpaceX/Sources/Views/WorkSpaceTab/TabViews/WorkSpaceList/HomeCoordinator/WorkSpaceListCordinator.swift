@@ -178,6 +178,15 @@ struct WorkSpaceListCordinator {
                 
                 state.identeRoutes.dismiss()
                 
+                // 채널 주인 변경후 뒤로가기 연결
+            case .router(.routeAction(id: _, action: .ChannelOwnerChange(.delegate(.successChanged)))):
+                
+                state.identeRoutes.dismiss()
+                let id = state.channelEditID
+                return .run { send in
+                    await send(.router(.routeAction(id: id, action: .chatChannelSettingView(.onAppear))))
+                }
+                
                 // 채널추가
             case .router(.routeAction(id: _, action: .channelAdd(.dismissButtonTapped))):
                 state.identeRoutes.dismiss()

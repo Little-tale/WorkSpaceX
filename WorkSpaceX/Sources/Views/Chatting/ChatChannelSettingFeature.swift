@@ -168,7 +168,9 @@ struct ChatChannelSettingFeature {
                 let count = state.channelEntity.users.count
                 
                 state.usersCount = "(\(count))"
-                
+                if let userID = UserDefaultsManager.userID {
+                    state.isOwner = model.owner_id == userID
+                }
                 
             case .channelExitTry:
                 print("채널 나가기 시도")

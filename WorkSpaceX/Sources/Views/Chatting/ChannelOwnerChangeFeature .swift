@@ -42,6 +42,7 @@ struct ChannelOwnerChangeFeature {
         
         enum Delegate {
             case backButtonTapped
+            case successChanged
         }
     }
     
@@ -151,6 +152,7 @@ struct ChannelOwnerChangeFeature {
                 
                 return .run { send in
                     try await realmRepo.upserWorkSpaceChannel(channel: model)
+                    await send(.delegate(.successChanged))
                 } catch: { error, send in
                     print(error)
                 }
