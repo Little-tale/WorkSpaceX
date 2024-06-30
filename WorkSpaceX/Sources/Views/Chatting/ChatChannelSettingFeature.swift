@@ -32,7 +32,7 @@ struct ChatChannelSettingFeature {
             case exitChannelToOwner
             case exitChneel
             case noMemberButOwnerChangeTry
-            
+            case channelDelegteTry
             // Error
             case errorEvent(String)
             
@@ -44,6 +44,8 @@ struct ChatChannelSettingFeature {
                     return "채널 관리자 변경 불가"
                 case .errorEvent:
                     return "Error"
+                case .channelDelegteTry:
+                    return "채널 삭제"
                 }
             }
             
@@ -55,6 +57,8 @@ struct ChatChannelSettingFeature {
                     return "나가시면 채널 목록이 삭제 됩니다."
                 case .noMemberButOwnerChangeTry:
                     return "채널 멤버가 없어 관리자 변경을 할 수 없습니다."
+                case .channelDelegteTry:
+                    return "정말 이 채널을 삭제 하시겠습니까?\n 삭제시 멤버/채팅 등 채널내의 모든 정보가 삭제되며 복구 하실수 없습니다."
                 case let .errorEvent(message):
                     return message
                 }
@@ -64,12 +68,18 @@ struct ChatChannelSettingFeature {
                 switch self {
                 case .exitChannelToOwner:
                     return .onlyCheck
+                    
                 case .exitChneel:
                     return .cancelWith
+                    
                 case .noMemberButOwnerChangeTry:
                     return .onlyCheck
+                    
                 case .errorEvent:
                     return .onlyCheck
+                    
+                case .channelDelegteTry:
+                    return .cancelWith
                 }
             }
             
@@ -79,6 +89,8 @@ struct ChatChannelSettingFeature {
                     return "확인"
                 case .exitChneel:
                     return "나가기"
+                case .channelDelegteTry:
+                    return "삭제"
                 }
             }
         }
@@ -101,6 +113,8 @@ struct ChatChannelSettingFeature {
         case channelEditClicked
         // 채널 관리자 변경 클릭
         case channelOwnerChangeRequest
+        // 채널 삭제 클릭
+        case channelDeleteClicked
         
         case delegate(Delegate)
         
@@ -193,6 +207,9 @@ struct ChatChannelSettingFeature {
                     return .run { send in
                         await send(.exitChannel)
                     }
+                case .channelDelegteTry:
+                    
+                    break
                 }
                 
             case .exitChannel:
@@ -250,6 +267,11 @@ struct ChatChannelSettingFeature {
                         await send(.delegate(.channelOwnerChangeReqeust(model: channel, workSpaceID: workSpace)))
                     }
                 }
+            case .channelDeleteClicked:
+                return .run { send in
+                    await send(.alertCaseOf(.channelDelegteTry))
+                }
+                
             default:
                 break
             }

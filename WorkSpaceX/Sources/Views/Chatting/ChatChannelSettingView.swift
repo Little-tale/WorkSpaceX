@@ -231,7 +231,7 @@ extension ChatChannelSettingView {
             VStack {
                 Text("채널 삭제")
                     .modifier(NormalButtonViewModifier(colorSetting: .red) {
-                        
+                        store.send(.channelDeleteClicked)
                     })
             }
         }
