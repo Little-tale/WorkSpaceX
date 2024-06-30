@@ -109,6 +109,8 @@
 		7B7EB80E2C2EAC5900D22362 /* ChannelEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB80D2C2EAC5900D22362 /* ChannelEditAPIError.swift */; };
 		7B7EB8102C2FF01100D22362 /* ChannelOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB80F2C2FF01100D22362 /* ChannelOwnerChangeView.swift */; };
 		7B7EB8122C2FF09100D22362 /* ChannelOwnerChangeFeature .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */; };
+		7B7EB8142C3146CC00D22362 /* ChannelOwnerRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8132C3146CC00D22362 /* ChannelOwnerRequestDTO.swift */; };
+		7B7EB8162C31486300D22362 /* ChannelOwnerChangedAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -312,6 +314,8 @@
 		7B7EB80D2C2EAC5900D22362 /* ChannelEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditAPIError.swift; sourceTree = "<group>"; };
 		7B7EB80F2C2FF01100D22362 /* ChannelOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangeView.swift; sourceTree = "<group>"; };
 		7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelOwnerChangeFeature .swift"; sourceTree = "<group>"; };
+		7B7EB8132C3146CC00D22362 /* ChannelOwnerRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerRequestDTO.swift; sourceTree = "<group>"; };
+		7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangedAPIError.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -973,6 +977,7 @@
 				7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */,
 				7B23ADDC2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift */,
 				7B7EB80D2C2EAC5900D22362 /* ChannelEditAPIError.swift */,
+				7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1040,6 +1045,7 @@
 				7BF9D73C2C26A52E0021D043 /* ChattingReqeustDTO.swift */,
 				7B10A99F2C296B680035C3C8 /* ChatMultipart.swift */,
 				7B7EB80B2C2EA9A200D22362 /* ChannelMultiPart.swift */,
+				7B7EB8132C3146CC00D22362 /* ChannelOwnerRequestDTO.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -1204,6 +1210,7 @@
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B8FD60B2C198D9E00948E7C /* WorkSpaceEmptyListFeature.swift in Sources */,
+				7B7EB8142C3146CC00D22362 /* ChannelOwnerRequestDTO.swift in Sources */,
 				7B8FD6072C19813500948E7C /* WorkSpaceListFeature.swift in Sources */,
 				7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */,
 				7B10A99A2C2910090035C3C8 /* ExCollection.swift in Sources */,
@@ -1303,6 +1310,7 @@
 				7BF9D7192C2405130021D043 /* WorkSpaceAddMemberRequestDTO.swift in Sources */,
 				7BEC45ED2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift in Sources */,
 				7B7EB80E2C2EAC5900D22362 /* ChannelEditAPIError.swift in Sources */,
+				7B7EB8162C31486300D22362 /* ChannelOwnerChangedAPIError.swift in Sources */,
 				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
 				7B26D21D2C227FB500BC9912 /* WorkSpaceMembersEntity.swift in Sources */,

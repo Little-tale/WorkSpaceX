@@ -76,6 +76,8 @@ struct ChannelOwnerChangeFeature {
         }
     }
     
+    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+    
     var body: some ReducerOf<Self> {
         
         Reduce { state, action in
@@ -102,6 +104,12 @@ struct ChannelOwnerChangeFeature {
             case let .alertAction(action):
                 if action == nil { state.currentUserSelected = nil }
                 state.alertState = action
+                
+            case let .alertActted(action):
+                switch action {
+                case .reallyChangeOwner(name: let name):
+                    <#code#>
+                }
                 
             default:
                 break

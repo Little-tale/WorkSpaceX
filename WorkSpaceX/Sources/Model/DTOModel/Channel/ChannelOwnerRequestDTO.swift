@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct ChannelOwnerRequestDTO: DTORequest {
+    let owner_id: String
+}
