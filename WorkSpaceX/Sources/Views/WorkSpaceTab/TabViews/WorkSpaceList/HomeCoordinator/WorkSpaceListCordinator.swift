@@ -98,7 +98,17 @@ struct WorkSpaceListCordinator {
                 // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
                 state.identeRoutes.pop()
-    
+                
+            case .router(.routeAction(id: _, action: .rootScreen(.parentToAction(.selectedChannel(let workSpaceID, let channel))))):
+                if let userId = UserDefaultsManager.userID {
+                    state.identeRoutes.push(.chattingView(WorkSpaceChannelChattingFeature.State(
+                        channelID: channel.channelID,
+                        workSpaceID: workSpaceID,
+                        userID: userId,
+                        navigationTitle: channel.name))
+                    )
+                }
+            
                 // 채팅 넘어감.
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.lastConfirm(let model))))) :
                 print("전달받음 : ",model)

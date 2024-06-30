@@ -67,6 +67,7 @@ struct WorkSpaceListFeature {
         // AlertSheet
         case alertSheet(PresentationAction<actionSheetAction>)
         
+        case selectedChannel(WorkSpaceChannelEntity)
         
         @CasePathable
         enum actionSheetAction {
@@ -79,6 +80,7 @@ struct WorkSpaceListFeature {
         
         enum ParentToAction {
             case reload
+            case selectedChannel(workSpaceID: String, channel: WorkSpaceChannelEntity)
         }
     }
     
@@ -222,6 +224,17 @@ struct WorkSpaceListFeature {
                 return .run { send in
                     await send(.onAppear)
                 }
+                
+            case .selectedChannel(let model):
+                if let workSpaceId = state.currentWorkSpaceId {
+                    
+                    return .run { send in
+                        await send(.parentToAction(.selectedChannel(
+                            workSpaceID: workSpaceId,
+                            channel: model)))
+                    }
+                }
+                
                 
             default :
                 break

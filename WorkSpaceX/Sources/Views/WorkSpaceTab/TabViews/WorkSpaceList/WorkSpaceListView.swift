@@ -121,6 +121,9 @@ struct WorkSpaceListView: View {
             Spacer()
         }
         .frame(height: 30)
+        .asButton {
+            store.send(.selectedChannel(model))
+        }
     }
     
     private func channelAddView() -> some View {
