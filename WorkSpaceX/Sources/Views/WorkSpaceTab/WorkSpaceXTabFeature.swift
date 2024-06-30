@@ -51,7 +51,7 @@ struct WorkSpaceTabCoordinator {
         var homeState: WorkSpaceListCordinator.State
         
         
-        var ifNoneSpace = true
+        var ifNoneSpace: viewStateCase = .loading
         
         var sideMenuOpen = false
         
@@ -69,6 +69,11 @@ struct WorkSpaceTabCoordinator {
         
         // Refresh
         var refreshAlert: Bool = false
+    }
+    enum viewStateCase {
+        case loading
+        case noneSpace
+        case notEmpty
     }
     
     enum Action: BindableAction {
@@ -174,18 +179,19 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                     try await realmeRepo.upsertWorkSpaces(responses: workSpaces)
                     print("처음 : \(workSpaces.count)")
-                    if workSpaces.isEmpty {
-                        
-                        await send(.showEmptyView(true))
-                        
-                    }
+                    await send(.showEmptyView(workSpaces.isEmpty))
                 } catch: { error, _ in
                     print(error)
                 }
                 
                 
             case let .showEmptyView(bool):
-                state.ifNoneSpace = bool
+                if bool {
+                    state.ifNoneSpace = .noneSpace
+                } else {
+                    state.ifNoneSpace = .notEmpty
+                }
+                
                 return .none
                
             case .sidebar(.sendToMakeWorkSpace):
@@ -279,8 +285,9 @@ struct WorkSpaceTabCoordinator {
                 print("처음 \(count)")
                 if state.firstInTrigger {
                     state.firstInTrigger = false
-                    state.ifNoneSpace = count <= 0
-                    // 이게 원인 같아 보임.
+                    return .run{ send in
+                        await send(.showEmptyView(count == 0))
+                    }
                 }
             
                 // HomeTabDelegte

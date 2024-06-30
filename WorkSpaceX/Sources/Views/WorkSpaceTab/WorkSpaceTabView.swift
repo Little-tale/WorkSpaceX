@@ -17,7 +17,10 @@ struct WorkSpaceTabView: View {
         
         WithPerceptionTracking {
             ZStack {
-                if store.state.ifNoneSpace {
+                switch store.state.ifNoneSpace {
+                case .loading:
+                    ProgressView()
+                case .noneSpace:
                     NavigationStack {
                         WorkSpaceEmptyListView(
                             store: store.scope(
@@ -26,7 +29,7 @@ struct WorkSpaceTabView: View {
                             )
                         )
                     }
-                } else {
+                case .notEmpty:
                     TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
                         
                         WorkSpaceListCoordinatorView(
@@ -53,7 +56,6 @@ struct WorkSpaceTabView: View {
                         
                     }
                     .tint(WSXColor.black)
-                    
                 }
                 SideMenu()
             }
