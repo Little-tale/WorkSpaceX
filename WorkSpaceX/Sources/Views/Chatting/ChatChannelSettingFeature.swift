@@ -115,6 +115,7 @@ struct ChatChannelSettingFeature {
         case channelOwnerChangeRequest
         // 채널 삭제 클릭
         case channelDeleteClicked
+        case channelDeleteStart
         
         case delegate(Delegate)
         
@@ -126,6 +127,8 @@ struct ChatChannelSettingFeature {
             case channelEditClicked(model: ChanelEntity, workSpaceID: String)
             
             case channelOwnerChangeReqeust(model: ChanelEntity, workSpaceID: String)
+            
+            case channelDeleteConfirm
         }
     }
     
@@ -208,7 +211,9 @@ struct ChatChannelSettingFeature {
                         await send(.exitChannel)
                     }
                 case .channelDelegteTry:
-                    
+                    return .run { send in
+                        await send(.channelDeleteStart)
+                    }
                     break
                 }
                 
@@ -270,6 +275,30 @@ struct ChatChannelSettingFeature {
             case .channelDeleteClicked:
                 return .run { send in
                     await send(.alertCaseOf(.channelDelegteTry))
+                }
+                
+            case .channelDeleteStart:
+                let workSpaceID = state.workSpaceID
+                let channelID = state.channelEntity.channelId
+                return .run { send in
+                    
+                    try await workSpaceRepo.channelDeleteReqeust(workSpaceID, channelID)
+                    await WorkSpaceReader.shared.observeChannelStop(channelID)
+                    
+                    try await realmRepo.removeChannel(channelID)
+                    
+                    await send(.delegate(.channelDeleteConfirm))
+                    
+                } catch: { error, send in
+                    if let error = error as? ChannelDeleteAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else { print(error) }
                 }
                 
             default:

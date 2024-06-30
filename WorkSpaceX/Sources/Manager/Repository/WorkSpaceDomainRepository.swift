@@ -220,7 +220,13 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
             return mapping
         }, channelDeleteReqeust: { workSpaceID, channelID in
-            
+            let result = try await NetworkManager.shared.request(
+                WorkSpaceRouter.channelDelete(
+                workSpaceID: workSpaceID,
+                channelID: channelID),
+                errorType: ChannelDeleteAPIError.self
+            )
+            return 
         }
     )
 }

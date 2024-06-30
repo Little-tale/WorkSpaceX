@@ -649,6 +649,27 @@ extension RealmRepository {
         return channel
     }
 }
+extension RealmRepository {
+    
+    func removeChannel(_ channelID: String,_ ifRealm: Realm? = nil) async throws {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        guard let channel = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelID) else {
+            throw RealmError.cantFindModel
+        }
+        
+        try await realm.asyncWrite {
+            realm.delete(channel.chatMessages)
+            realm.delete(channel)
+        }
+    }
+}
 
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()

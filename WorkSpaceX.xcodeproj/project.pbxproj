@@ -111,6 +111,7 @@
 		7B7EB8122C2FF09100D22362 /* ChannelOwnerChangeFeature .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */; };
 		7B7EB8142C3146CC00D22362 /* ChannelOwnerRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8132C3146CC00D22362 /* ChannelOwnerRequestDTO.swift */; };
 		7B7EB8162C31486300D22362 /* ChannelOwnerChangedAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */; };
+		7B7EB8182C31643300D22362 /* ChannelDeleteAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -316,6 +317,7 @@
 		7B7EB8112C2FF09100D22362 /* ChannelOwnerChangeFeature .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelOwnerChangeFeature .swift"; sourceTree = "<group>"; };
 		7B7EB8132C3146CC00D22362 /* ChannelOwnerRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerRequestDTO.swift; sourceTree = "<group>"; };
 		7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOwnerChangedAPIError.swift; sourceTree = "<group>"; };
+		7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDeleteAPIError.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 				7B23ADDC2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift */,
 				7B7EB80D2C2EAC5900D22362 /* ChannelEditAPIError.swift */,
 				7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */,
+				7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1353,6 +1356,7 @@
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B8FD6092C198D7B00948E7C /* WorkSpaceEmptyListView.swift in Sources */,
+				7B7EB8182C31643300D22362 /* ChannelDeleteAPIError.swift in Sources */,
 				7B26D2232C2282E200BC9912 /* WorkSpaceUserRealmModel.swift in Sources */,
 				7BEC45EB2C1703C100576ECA /* WorkSpaceFirstStartView.swift in Sources */,
 				7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */,
