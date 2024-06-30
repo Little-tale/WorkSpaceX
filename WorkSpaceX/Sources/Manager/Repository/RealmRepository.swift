@@ -430,6 +430,7 @@ extension RealmRepository {
     }
     
     @MainActor
+    @discardableResult
     func upserWorkSpaceChannel(channel: ChanelEntity, ifRealm: Realm? = nil) async throws ->  WorkSpaceChannelRealmModel? {
         
         var realm: Realm

@@ -38,18 +38,24 @@ struct ChannelOwnerChangeFeature {
         
         case alertActted(AlertAction)
         
+        case realmUpsert(ChanelEntity)
+        
         enum Delegate {
             case backButtonTapped
         }
     }
     
     enum AlertAction: Equatable {
-        case reallyChangeOwner(name: String)
+        
+        case reallyChangeOwner(name: String, id: String)
+        case error(message: String)
         
         var title: String {
             switch self {
-            case let .reallyChangeOwner(name):
+            case let .reallyChangeOwner(name,_):
                 return name + " 님을 관리자로 지정하시겠습니까?"
+            case .error:
+                return "에러"
             }
         }
         
@@ -60,11 +66,15 @@ struct ChannelOwnerChangeFeature {
 * 채널 이름 또는 설명 변경
 * 채널 삭제
 """
+            case let .error(message):
+                return message
             }
         }
         var actionTitle: String {
             switch self {
             case .reallyChangeOwner:
+                return "확인"
+            case .error:
                 return "확인"
             }
         }
@@ -72,11 +82,14 @@ struct ChannelOwnerChangeFeature {
             switch self {
             case .reallyChangeOwner:
                 return .cancelWith
+            case .error:
+                return .onlyCheck
             }
         }
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+    @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
         
@@ -98,7 +111,7 @@ struct ChannelOwnerChangeFeature {
                 return .run { send in await send(.delegate(.backButtonTapped))}
                 
             case let .selectedUser(model):
-                state.alertState = .reallyChangeOwner(name: model.nickname)
+                state.alertState = .reallyChangeOwner(name: model.nickname, id: model.userID)
                 state.currentUserSelected = model
                 
             case let .alertAction(action):
@@ -107,8 +120,39 @@ struct ChannelOwnerChangeFeature {
                 
             case let .alertActted(action):
                 switch action {
-                case .reallyChangeOwner(name: let name):
-                    <#code#>
+                case .reallyChangeOwner(_, let id):
+                    let workSpaceID = state.workSpaceID
+                    let channelID = state.channel.channelId
+                    return .run { send in
+                        let result = try await workSpaceRepo.channelOWnerChanged(
+                            workSpaceID,
+                            channelID,
+                            id
+                        )
+                        await send(.realmUpsert(result))
+                    } catch: { error, send in
+                        if let error = error as? ChannelOwnerChangedAPIError {
+                            if error.ifReFreshDead {
+                                RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                            } else if !error.ifDevelopError {
+                                await send(.alertAction(.error(message: error.message)))
+                            } else {
+                                print(error)
+                            }
+                        } else {
+                            print(error)
+                        }
+                    }
+                default:
+                    break
+                }
+                
+            case let .realmUpsert(model):
+                
+                return .run { send in
+                    try await realmRepo.upserWorkSpaceChannel(channel: model)
+                } catch: { error, send in
+                    print(error)
                 }
                 
             default:
