@@ -66,6 +66,9 @@ struct WorkSpaceTabCoordinator {
         @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
         var currentCount = 0
         var currentModels: [WorkSpaceRealmModel] = []
+        
+        // Refresh
+        var refreshAlert: Bool = false
     }
     
     enum Action: BindableAction {
@@ -87,7 +90,7 @@ struct WorkSpaceTabCoordinator {
             case refreshTokkenDead
         }
         case alert(PresentationAction<Alert>)
-        
+        case refreshChecked
         // case sideMenuCoordiAction(SideMenuCoordinator.Action)
         case sideMenuMake(Bool)
         

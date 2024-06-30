@@ -17,7 +17,6 @@ struct RootView: View {
             ZStack {
                 switch store.currentLoginState {
                 case .firstLogin:
-                    
                     IfLetStore(store.scope(state: \.workWpaceFirstViewState, action: \.sendToWorkSpaceStart)) { store in
                         WorkSpaceFirstStartView(store: store)
                     }
@@ -35,22 +34,8 @@ struct RootView: View {
                 }
             }
             .onAppear {
-                print("감시중")
-                NotificationCenter.default.addObserver(
-                    forName: .refreshTokenDead,
-                    object: nil,
-                    queue: .main) {  _ in
-                        store.send(.alert(.presented(.refreshTokkenDead)))
-                    }
                 store.send(.onAppear)
             }
-            .onDisappear {
-                print("감시해제")
-                NotificationCenter.default.removeObserver(self, name: .refreshTokenDead, object: nil)
-            }
-            .alert($store.scope(
-                state: \.alert, action: \.alert)
-            )
         }
     }
 }

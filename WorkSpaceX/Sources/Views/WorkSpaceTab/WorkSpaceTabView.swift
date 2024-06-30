@@ -57,14 +57,33 @@ struct WorkSpaceTabView: View {
                 }
                 SideMenu()
             }
-            .onAppear {
-                print("????? 왜? ")
-                store.send(.onAppear)
-            }
-            .alert($store.scope(state: \.alert, action: \.alert))
             .sheet(item: $store.scope(state: \.makeWorkSpaceState, action: \.sendWorkSpaceMakeAction)) { store in
                 WorkSpaceInitalView(store: store)
             }
+            .onAppear {
+                print("감시중")
+                NotificationCenter.default.addObserver(
+                    forName: .refreshTokenDead,
+                    object: nil,
+                    queue: .main) {  _ in
+                        store.send(.alert(.presented(.refreshTokkenDead)))
+                    }
+                store.send(.onAppear)
+            }
+            .onDisappear {
+                print("감시해제")
+                NotificationCenter.default.removeObserver(self, name: .refreshTokenDead, object: nil)
+            }
+            .alert("재로그인 필요",
+                   isPresented: $store.refreshAlert) {
+                Text("확인")
+                    .asButton {
+                        store.send(.refreshChecked)
+                    }
+            } message: {
+                Text("로그인 정보가 만료되어 재로그인이 필요합니다.")
+            }
+
         }
     }
     

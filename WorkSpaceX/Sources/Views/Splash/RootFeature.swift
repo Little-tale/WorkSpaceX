@@ -100,6 +100,12 @@ struct RootFeature {
             case .sendToOnboardingView:
                 
                 return .none
+                
+            case .sendToWorkSpaceTab(.refreshChecked):
+                return .run { send in
+                    await send(.onAppear)
+                }
+                
             case .sendToWorkSpaceTab:
                 return .none
                 
@@ -109,6 +115,7 @@ struct RootFeature {
             case .showRefreshAlert:
                 state.alert = AlertState.refreshDeadAlert
                 return .none
+    
             case .alert(.presented(.refreshTokkenDead)):
                 
                 return .run { send in
