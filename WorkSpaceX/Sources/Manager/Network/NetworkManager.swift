@@ -107,8 +107,13 @@ extension NetworkManager {
     }
     
     private func refreshAccessToken() async throws {
-        guard let refresh = UserDefaultsManager.refreshToken,
-              let access = UserDefaultsManager.accessToken else {
+        try await Task.sleep(for: .seconds(0.3))
+        guard let refresh = UserDefaultsManager.refreshToken else {
+            print("엑세스 Miss \(UserDefaultsManager.refreshToken)")
+            throw APIError.httpError("엑세스 Miss")
+        }
+        guard let access = UserDefaultsManager.accessToken else {
+            print("RefreshToken Miss \(UserDefaultsManager.accessToken)")
             throw APIError.httpError("RefreshToken Miss")
         }
         

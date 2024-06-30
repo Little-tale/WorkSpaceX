@@ -153,6 +153,15 @@ struct WorkSpaceChannelChattingFeature {
                         
                         await send(.networkResult(result))
                         await send(.socketConnected)
+                    } catch: { error, send in
+                        if let error = error as? WorkSpaceChannelListAPIError {
+                            if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
+                            else if error.errorCode == "E13" {
+                                print("존재하지 않는 워크 스페이스..?")
+                            }
+                        } else {
+                            print(error)
+                        }
                     }
                 } else {
                     // 2. 없다면 커서 데이트를 빈값으로 보내야함.

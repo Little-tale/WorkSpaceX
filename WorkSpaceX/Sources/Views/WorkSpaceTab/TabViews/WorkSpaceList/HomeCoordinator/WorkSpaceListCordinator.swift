@@ -114,10 +114,14 @@ struct WorkSpaceListCordinator {
                     
                     state.identeRoutes.push(.chattingView(chatState))
                 }
+                
+                // 채널 채팅뷰 뒤로가기시.
             case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
                 
                 WSXSocketManager.shared.stopAndRemoveSocket()
-                state.identeRoutes.popToRoot()
+                let count = state.identeRoutes.count
+                state.identeRoutes.remove(at: count - 1)
+                state.identeRoutes.popToCurrentNavigationRoot()
                 
                 // 쳇 세팅 이동.
             case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channel, let isOwner)))):
@@ -136,13 +140,15 @@ struct WorkSpaceListCordinator {
                 // 채널 나가기 완료 시
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.exitConfirm)))):
                 print("채널 나옴으로 처음으로 돌아갑니다.")
+                WSXSocketManager.shared.stopAndRemoveSocket()
                 if let workID =  state.currentWorkSpaceId {
-//                    let id = WorkSpaceListCordinator.State.uuid
                     state.identeRoutes.popToCurrentNavigationRoot()
                 }
-                
+                // 채널 삭제시..
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelDeleteConfirm)))):
-//                let id = WorkSpaceListCordinator.State.uuid
+
+                WSXSocketManager.shared.stopAndRemoveSocket()
+                
                 state.identeRoutes.popToCurrentNavigationRoot()
                 
                 // 채널 편집뷰로 이동
