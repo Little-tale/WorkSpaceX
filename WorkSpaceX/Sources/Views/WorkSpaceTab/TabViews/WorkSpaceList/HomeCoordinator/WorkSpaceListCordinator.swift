@@ -137,9 +137,13 @@ struct WorkSpaceListCordinator {
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.exitConfirm)))):
                 print("채널 나옴으로 처음으로 돌아갑니다.")
                 if let workID =  state.currentWorkSpaceId {
-                    let id = WorkSpaceListCordinator.State.uuid
+//                    let id = WorkSpaceListCordinator.State.uuid
                     state.identeRoutes.popToCurrentNavigationRoot()
                 }
+                
+            case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelDeleteConfirm)))):
+//                let id = WorkSpaceListCordinator.State.uuid
+                state.identeRoutes.popToCurrentNavigationRoot()
                 
                 // 채널 편집뷰로 이동
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model, let workSpaceId))))):
