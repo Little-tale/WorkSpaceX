@@ -15,6 +15,8 @@ class WorkSpaceReader {
     
     private var tokens: [String: NotificationToken] = [:]
     
+    private var dmListTokenID = "DMLISTTOKEN"
+    
     @MainActor
     func observeChanges<M: Object>(
         for modelType: M.Type,
@@ -189,6 +191,57 @@ extension WorkSpaceReader {
         tokens[channelID] = nil
     }
     
+}
+extension WorkSpaceReader {
+    
+    @MainActor
+    func observerToDMSRoom(workSpaceID: String) -> AsyncStream<[DMSRoomRealmModel]> {
+        return AsyncStream { continuation in
+            Task { @MainActor in
+                do {
+                    let realm = try await Realm(actor: MainActor.shared)
+                  
+                    let dmsRoom = realm.objects(DMSRoomRealmModel.self).where({ $0.workSpaceID == workSpaceID })
+                    
+                    let token = dmsRoom.observe { change in
+                        Task { @MainActor in
+                            switch change {
+                            case .initial(let models):
+                                continuation.yield(Array(models))
+                            case .update(let models, let deletions, let insertAt, let modifications):
+                                
+                                let new = insertAt.map { models[$0] }
+                                
+                                let deleted = deletions.map { models[$0] }
+                                
+                                continuation.yield(Array(new))
+                            case .error(let error):
+                                continuation.finish()
+                            }
+                        }
+                    }
+                    
+                    tokens[dmListTokenID] = token
+                    
+                    continuation.onTermination = { @Sendable [weak self] _ in
+                        guard let self else {
+                            token.invalidate()
+                            return
+                        }
+                        token.invalidate()
+                        self.tokens[dmListTokenID] = nil
+                    }
+                } catch {
+                    continuation.finish()
+                }
+            }
+        }
+    }
+    
+    func stopToDMSRoom() {
+        tokens[dmListTokenID]?.invalidate()
+        tokens[dmListTokenID] = nil
+    }
 }
 
 extension WorkSpaceReader: DependencyKey {

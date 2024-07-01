@@ -125,6 +125,7 @@
 		7B7EB8342C32890000D22362 /* DMSListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8332C32890000D22362 /* DMSListView.swift */; };
 		7B7EB8362C32893C00D22362 /* DMSListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8352C32893C00D22362 /* DMSListFeature.swift */; };
 		7B7EB8382C328E6D00D22362 /* RefreshTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8372C328E6D00D22362 /* RefreshTokenManager.swift */; };
+		7B7EB83A2C32D4D900D22362 /* DMSRoomRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8392C32D4D900D22362 /* DMSRoomRealmModel.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -344,6 +345,7 @@
 		7B7EB8332C32890000D22362 /* DMSListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSListView.swift; sourceTree = "<group>"; };
 		7B7EB8352C32893C00D22362 /* DMSListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSListFeature.swift; sourceTree = "<group>"; };
 		7B7EB8372C328E6D00D22362 /* RefreshTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenManager.swift; sourceTree = "<group>"; };
+		7B7EB8392C32D4D900D22362 /* DMSRoomRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomRealmModel.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -947,6 +949,7 @@
 				7B26D2202C2280FB00BC9912 /* WorkSpaceChannelRealmModel.swift */,
 				7B26D2222C2282E200BC9912 /* WorkSpaceUserRealmModel.swift */,
 				7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */,
+				7B7EB8392C32D4D900D22362 /* DMSRoomRealmModel.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -1302,6 +1305,7 @@
 				7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */,
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
+				7B7EB83A2C32D4D900D22362 /* DMSRoomRealmModel.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
 				7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */,
 				7BF9D7442C2708F50021D043 /* ShadowModifier.swift in Sources */,

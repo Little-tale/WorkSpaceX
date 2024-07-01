@@ -700,6 +700,55 @@ extension RealmRepository {
     }
 }
 
+extension RealmRepository {
+    
+    @MainActor
+    @discardableResult
+    func upsertDMSRoomEntity(_ models: [DMSRoomEntity], workSpaceID: String,_ ifRealm: Realm? = nil) async throws -> [DMSRoomRealmModel] {
+        
+        var realm: Realm
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        var results: [DMSRoomRealmModel] = []
+        for model in models {
+            let result = try await upsertDMSRoomEntity(model, workSpaceID: workSpaceID, realm)
+            results.append(result)
+        }
+        return results
+    }
+    
+    @MainActor
+    @discardableResult
+    func upsertDMSRoomEntity(_ model: DMSRoomEntity, workSpaceID: String,_ ifRealm: Realm? = nil ) async throws -> DMSRoomRealmModel {
+        var realm: Realm
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(DMSRoomRealmModel.self, value: [
+                "roomId": model.roomId,
+                "workSpaceID": workSpaceID,
+                "userID" : model.user.userID,
+                "email" : model.user.email,
+                "nickName" : model.user.nickname,
+                "profileImage" : model.user.profileImage
+            ], update: .modified)
+        }
+        let model = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: model.roomId)
+        
+        guard let model else { throw RealmError.failAdd }
+        
+        return model
+    }
+}
+
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()
 }

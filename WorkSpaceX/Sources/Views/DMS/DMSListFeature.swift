@@ -37,6 +37,7 @@ struct DMSListFeature {
         case delegate(Delegate)
         
         case workSpaceInfoObserver(workSpaceID: String)
+        case listDMSInfoObserver(WorkSpaceID: String)
         
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
         case requestWorkSpaceMember(WorkSpaceID: String)
@@ -44,6 +45,7 @@ struct DMSListFeature {
         case justReqeustRealmMember(WorkSpaceID: String)
         
         case users([WorkSpaceMembersEntity])
+        case dmsListReqeust(WorkSpaceID: String)
         
         enum ParentAction {
             case getWorkSpaceId(String)
@@ -58,6 +60,7 @@ struct DMSListFeature {
     @Dependency(\.workSpaceReader) var workSpaceReader
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
+    @Dependency(\.dmsRepository) var dmsRepo
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -69,10 +72,11 @@ struct DMSListFeature {
                 return .run { send in
                     if id != "", bool {
                         await send(.workSpaceInfoObserver(workSpaceID: id))
+                        await send(.listDMSInfoObserver(WorkSpaceID: id))
                     }
                     if id != "" {
                         await send(.requestWorkSpaceMember(WorkSpaceID: id))
-                        
+                        await send(.dmsListReqeust(WorkSpaceID: id))
                     }
                 }
             case let .parentAction(.getWorkSpaceId(id)):
@@ -90,6 +94,15 @@ struct DMSListFeature {
                         }
                     }
                 }
+            case let .dmsListReqeust(workSpaceID):
+                if state.onAppearTrigger {
+                    return .run { @MainActor send in
+                        for await currentModel in workSpaceReader.observerToDMSRoom(workSpaceID: workSpaceID) {
+                            
+                        }
+                    }
+                }
+                
             case let .requestWorkSpaceMember(id):
                 return .run { send in
                     let result = try await workSpaceRepo.workSpaceMemberUpdate(id)
@@ -146,6 +159,23 @@ struct DMSListFeature {
             case .clickedAddMember:
                 return .run { send in
                     await send(.delegate(.clickedAddMember))
+                }
+                
+            case let .dmsListReqeust(workSpaceID):
+                return .run { send in
+                    let result = try await dmsRepo.dmRoomListReqeust(workSpaceID)
+                    try await realmRepo.upsertDMSRoomEntity(result, workSpaceID: workSpaceID)
+                    
+                } catch: { error, send in
+                    if let error = error as? DMSListAPIError {
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
                 }
                 
             default:
