@@ -19,7 +19,28 @@ struct DMSListFeature {
     }
     
     enum Action {
+        case onAppaer
         
+        case parentAction(ParentAction)
+        
+        enum ParentAction {
+            case getWorkSpaceId(String)
+        }
+    }
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .onAppaer:
+                print(state.currentWorkSpaceID)
+            case let .parentAction(.getWorkSpaceId(id)):
+                state.currentWorkSpaceID = id
+                
+            default:
+                break
+            }
+            return .none
+        }
     }
     
 }

@@ -30,12 +30,25 @@ struct DMSCoordinator {
     
     enum Action {
         case router(IdentifiedRouterActionOf<DMSListScreens>)
+        
+        case parentAction(ParentAction)
+        
+        enum ParentAction {
+            case getWorkSpaceId(String)
+        }
     }
     
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+                
+            case let .parentAction(.getWorkSpaceId(workSpaceID)):
+                state.currentWorkSpaceId = workSpaceID
+                let id = workSpaceID
+                return .run { send in
+                    await send(.router(.routeAction(id: DMSCoordinator.State.uuid, action: .dmHome(.parentAction(.getWorkSpaceId(id))))))
+                }
             default:
                 break
             }

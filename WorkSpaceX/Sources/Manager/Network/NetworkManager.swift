@@ -83,28 +83,24 @@ extension NetworkManager {
     }
     
     private func startIntercept<E: WSXErrorType>(_ urlRequest: inout URLRequest, retryCount: Int, errorType: E.Type) async throws -> Data {
-        let request = intercept(&urlRequest)
-        print(request.allHTTPHeaderFields ?? [:])
-        do {
-            let data = try await performRequest(request, errorType: errorType)
-            return data
-        }catch let error as E where retryCount > 0 {
-            print("유저 에러 인터셉터 상황 \(error.ifCommonError?.isAccessTokenError)")
-            if error.ifCommonError?.isAccessTokenError == true {
-                print("유저 에러 인터셉터 시작.\(error.ifCommonError)")
-                  // 0.1초 지연
-                try await RefreshTokenManager.shared.refreshAccessToken()
-                
-                try await Task.sleep(nanoseconds: 100_000_000)
-                
-                return try await startIntercept(&urlRequest, retryCount: retryCount - 1, errorType: errorType)
-            } else {
-                throw error
-            }
-        } catch {
-            throw error
-        }
-    }
+           let request = intercept(&urlRequest)
+           do {
+               let data = try await performRequest(request, errorType: errorType)
+               return data
+           } catch let error as E where retryCount > 0 {
+               if error.ifCommonError?.isAccessTokenError == true {
+                   try await RefreshTokenManager.shared.refreshAccessToken()
+                   
+                   try await Task.sleep(for: .seconds(0.2))
+                   
+                   return try await startIntercept(&urlRequest, retryCount: retryCount - 1, errorType: errorType)
+               } else {
+                   throw error
+               }
+           } catch {
+               throw error
+           }
+       }
     
     private func intercept(_ request: inout URLRequest) -> URLRequest {
         print("에러 intercept \(UserDefaultsManager.accessToken ?? "없음")")

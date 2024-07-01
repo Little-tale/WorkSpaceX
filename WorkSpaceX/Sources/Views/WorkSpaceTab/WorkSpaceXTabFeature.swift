@@ -222,6 +222,7 @@ struct WorkSpaceTabCoordinator {
                 
                 return .run { send in
                     await send(.homeTabbar(.sendToRootWorkSpaceID(worSpaceId)))
+                    await send(.dmsTabbar(.parentAction(.getWorkSpaceId(worSpaceId))))
                 }
                 
             case .sidebar(.removeSuccessAlertTapped) :
@@ -232,8 +233,10 @@ struct WorkSpaceTabCoordinator {
                         await send(.noWorkSpaceTrigger)
                     }
                 } else if let first = state.currentModels.first {
-                    return .send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
-                    
+                    return .run { send in
+                        await send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
+                        await send(.dmsTabbar(.parentAction(.getWorkSpaceId(first.workSpaceID))))
+                    }
                 }
             case .sendWorkSpaceMakeAction(.presented(.realmRegSuccess(let id))):
                 return .run { send in
@@ -245,6 +248,8 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                      await send(.homeTabbar(.sendToRootWorkSpaceID(id)))
                     await send(.onAppear)
+                    
+                    await send(.dmsTabbar(.parentAction(.getWorkSpaceId(id))))
                 }
                 
             case let .refreshDeadAlert(bool):
@@ -252,17 +257,22 @@ struct WorkSpaceTabCoordinator {
 
             
             case .workSpaceSubscribe:
+                
+                let workSpaceID = UserDefaultsManager.workSpaceSelectedID
+                
                 return .run { send in
                     let result = try await workSpaceRepo.findMyWordSpace()
                     
                     await send(.saveRealmOfWorkSpaces(result))
                     
-                    if UserDefaultsManager.workSpaceSelectedID != "" {
-                        await send(.homeTabbar(.sendToRootWorkSpaceID(UserDefaultsManager.workSpaceSelectedID)))
+                    if workSpaceID != "" {
+                        await send(.homeTabbar(.sendToRootWorkSpaceID(workSpaceID)))
+                        await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
                     } else if let first = result.first {
                         UserDefaultsManager.workSpaceSelectedID
                         = first.workSpaceID
-                        await send(.homeTabbar(.sendToRootWorkSpaceID(UserDefaultsManager.workSpaceSelectedID)))
+                        await send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
+                        await send(.dmsTabbar(.parentAction(.getWorkSpaceId(first.workSpaceID))))
                     }
                     
                     for await models in await workSpaceReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
@@ -298,10 +308,11 @@ struct WorkSpaceTabCoordinator {
             case .homeTabbar(.delegate(.openSideMenu)):
                 return .send(.sideMenuMake(true))
             case .homeTabbar(.delegate(.moveToDirect(workSpaceID: let workSpaceID))):
-                
                 state.selectedTab = .dm
                 
-                return .none
+                return .run { send in
+                    await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
+                }
                 
             default:
                 break

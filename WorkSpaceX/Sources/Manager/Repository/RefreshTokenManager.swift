@@ -20,7 +20,7 @@ actor RefreshTokenManager {
                 pendingRequests.append(continuation)
             }
         }
-        
+        try await Task.sleep(for: .seconds(0.3))
         isRefreshing = true
         defer { isRefreshing = false }
         
@@ -92,5 +92,4 @@ actor RefreshTokenManager {
             }
         }
     }
-
 }

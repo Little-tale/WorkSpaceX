@@ -38,7 +38,10 @@ struct WorkSpaceTabView: View {
                         )
                         .tag(WorkSpaceTabCoordinator.Tab.home)
                         .tabItem {
-                            WSXImage.homeImage.renderingMode(.template)
+                            WSXImage.homeImage
+                                .resizable()
+                                .renderingMode(.template)
+                                .frame(width: 12, height: 12)
                             Text(WorkSpaceTabCoordinator.Tab.home.title)
                         }
                         
@@ -47,13 +50,9 @@ struct WorkSpaceTabView: View {
                             .tabItem {
                                 WSXImage.dmsTab.resizable()
                                     .renderingMode(.template)
-                                    .frame(width: 15, height: 15)
+                                    .frame(width: 12, height: 12)
                                 Text(WorkSpaceTabCoordinator.Tab.dm.title)
                             }
-                        //                            Text("DM")
-                        //                                .tabItem {
-                        //
-                        //
                         //                            Text("search")
                         //                                .tabItem {
                         //                                    Text(WorkSpaceXTabFeature.Tab.search.title) }.tag(WorkSpaceXTabFeature.Tab.search)
