@@ -10,13 +10,15 @@ import ComposableArchitecture
 
 struct DMSRepository {
     
-    func dmRoomListReqeust(_ workSpaceID: String) async throws -> Void {
+    @Dependency(\.dmsMapper) var dmsMapper
+    
+    func dmRoomListReqeust(_ workSpaceID: String) async throws -> [DMSRoomEntity] {
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomListDTO.self,
             router: DMSRouter.dmRoomListReqeust(workSpaceID),
             errorType: DMSListAPIError.self
         )
-        
+        return dmsMapper.toEntity(result)
     }
 }
 

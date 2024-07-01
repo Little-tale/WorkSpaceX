@@ -31,6 +31,7 @@ struct WorkSpaceListFeature {
     @Dependency(\.workSpaceReader) var workSpaceReader
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+    @Dependency(\.dmsRepository) var dmsRepository
     
     enum isCurrent {
         case empty
@@ -50,6 +51,8 @@ struct WorkSpaceListFeature {
         case workSpaceMembersUpdate(workSpaceID: String)
         // 워크스페이스 채널 네트워크 요청단
         case workSpaceChnnelUpdate(workSpaceID: String)
+        // 워크 스페이스 DMRoomList 요청
+        case dmRoomListReqeust(wrokSpaceID: String)
         
         // 팀원 추가
         case addMemberClicked
@@ -98,6 +101,7 @@ struct WorkSpaceListFeature {
                     await send(.observerStart(workSpaceID))
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
                     await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
+                    await send(.dmRoomListReqeust(wrokSpaceID: workSpaceID))
                 }
                 
             case let .currentWorkSpaceIdCatch(workSpaceId):
@@ -185,6 +189,26 @@ struct WorkSpaceListFeature {
                         }
                     } else {
                         print(error)
+                    }
+                }
+                // DMS Room List 요청단
+            case let .dmRoomListReqeust(workSpaceID):
+                return .run { send in
+                    let result = try await dmsRepository.dmRoomListReqeust(
+                        workSpaceID
+                    )
+                    print("가져오기 성공 \(result)")
+                } catch: { error, send in
+                    if let error = error as? DMSListAPIError {
+                        if error.ifReFreshDead {
+                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                        } else if !error.ifDevelopError {
+                            await send(.alertErrorMessage(error.message))
+                        } else {
+                            print("설마...?",error)
+                        }
+                    } else {
+                        print("설마...?",error)
                     }
                 }
                 

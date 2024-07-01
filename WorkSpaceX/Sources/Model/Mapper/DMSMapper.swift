@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 struct DMSMapper: Mapper { }
 
@@ -27,5 +28,15 @@ extension DMSMapper {
             )
         )
     }
-    
+}
+
+extension DMSMapper: DependencyKey {
+    static var liveValue: Self = Self()
+}
+
+extension DependencyValues {
+    var dmsMapper: DMSMapper {
+        get { self[DMSMapper.self] }
+        set { self[DMSMapper.self] = newValue }
+    }
 }
