@@ -36,7 +36,7 @@ extension WSXErrorType {
     }
     
     var ifThisError: Bool {
-        return thisErrorCodes.contains(errorCode)
+        return !thisErrorCodes.contains(errorCode)
     }
     
     var ifReFreshDead: Bool {

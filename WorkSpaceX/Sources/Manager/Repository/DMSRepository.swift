@@ -11,7 +11,11 @@ import ComposableArchitecture
 struct DMSRepository {
     
     func dmRoomListReqeust(_ workSpaceID: String) async throws -> Void {
-        
+        let result = try await NetworkManager.shared.requestDto(
+            DMSRoomListDTO.self,
+            router: DMSRouter.dmRoomListReqeust(workSpaceID),
+            errorType: <#T##WSXErrorType.Type#>
+        )
     }
 }
 

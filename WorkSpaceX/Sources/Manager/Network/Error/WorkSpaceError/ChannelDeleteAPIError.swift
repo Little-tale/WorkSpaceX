@@ -29,7 +29,7 @@ struct ChannelDeleteAPIError: WSXErrorType {
     }
     
     var ifDevelopError: Bool {
-        return thisErrorCodes.contains { $0 == errorCode }
+        return !thisErrorCodes.contains { $0 == errorCode }
     }
     
     static func makeErrorType(from customError: String) -> Self {
