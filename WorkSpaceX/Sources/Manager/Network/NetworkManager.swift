@@ -83,6 +83,7 @@ extension NetworkManager {
     }
     
     private func startIntercept<E: WSXErrorType>(_ urlRequest: inout URLRequest, retryCount: Int, errorType: E.Type) async throws -> Data {
+        try await Task.sleep(for: .seconds(0.2))
            let request = intercept(&urlRequest)
            do {
                let data = try await performRequest(request, errorType: errorType)
@@ -101,7 +102,8 @@ extension NetworkManager {
        }
     
     private func intercept(_ request: inout URLRequest) -> URLRequest {
-        print("에러 intercept \(UserDefaultsManager.accessToken ?? "없음")")
+        print("유저 바껴야 할것. 엑세스 토큰 \(UserDefaultsManager.accessToken ?? "없음")")
+        print("유저 네트워크 주소 \(request.headers)")
         if let access = UserDefaultsManager.accessToken  {
             request.addValue(access, forHTTPHeaderField: WSXHeader.Key.authorization)
         }

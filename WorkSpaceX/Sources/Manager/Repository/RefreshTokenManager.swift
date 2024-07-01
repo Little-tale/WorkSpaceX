@@ -20,13 +20,15 @@ actor RefreshTokenManager {
                 pendingRequests.append(continuation)
             }
         }
-        try await Task.sleep(for: .seconds(0.3))
         isRefreshing = true
         defer { isRefreshing = false }
         
         do {
             print("유저 리프레시 \(UserDefaultsManager.refreshToken)")
             print("유저 엑세스 \(UserDefaultsManager.accessToken)")
+            
+            try await Task.sleep(for: .seconds(0.3))
+            
             guard let refresh = UserDefaultsManager.refreshToken else {
                 print("리프레시 Miss \(UserDefaultsManager.refreshToken)")
                 throw APIError.httpError("엑세스 Miss")

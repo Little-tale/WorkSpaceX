@@ -281,6 +281,19 @@ extension RealmRepository {
         }
     }
     
+    @MainActor
+    func findMembers(workSpaceID: String) async throws -> [UserRealmModel]{
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        let model = realm.object(ofType: WorkSpaceRealmModel.self, forPrimaryKey: workSpaceID)
+        if let model {
+            let array = Array(model.users)
+            return array 
+        } else {
+            return []
+        }
+        
+    }
     
     @MainActor
     @discardableResult
@@ -648,6 +661,22 @@ extension RealmRepository {
         
         return channel
     }
+    
+    func userToMember(_ users: [UserRealmModel]) -> [WorkSpaceMembersEntity] {
+        return users.map { @MainActor model in
+            return userToMember(model)
+        }
+    }
+    
+    func userToMember(_ user: UserRealmModel) -> WorkSpaceMembersEntity {
+        return WorkSpaceMembersEntity(
+            userID: user.userID,
+            email: user.email,
+            nickname: user.nickName,
+            profileImage: user.profileImage
+        )
+    }
+    
 }
 extension RealmRepository {
     
