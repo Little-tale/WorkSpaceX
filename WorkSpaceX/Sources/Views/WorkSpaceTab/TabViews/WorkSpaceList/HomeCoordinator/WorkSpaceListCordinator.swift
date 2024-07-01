@@ -58,6 +58,7 @@ struct WorkSpaceListCordinator {
         
         enum Delegate {
             case openSideMenu
+            case moveToDirect(workSpaceID: String)
         }
     }
     //currentWorkSpaceIdCatch
@@ -99,6 +100,7 @@ struct WorkSpaceListCordinator {
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
                 state.identeRoutes.pop()
                 
+                // 채팅 이동
             case .router(.routeAction(id: _, action: .rootScreen(.parentToAction(.selectedChannel(let workSpaceID, let channel))))):
                 if let userId = UserDefaultsManager.userID {
                     state.identeRoutes.push(.chattingView(WorkSpaceChannelChattingFeature.State(
@@ -167,7 +169,7 @@ struct WorkSpaceListCordinator {
                 if let workID =  state.currentWorkSpaceId {
                     state.identeRoutes.popToCurrentNavigationRoot()
                 }
-                // 채널 삭제시..
+                // 채널 삭제시..parentToAction
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelDeleteConfirm)))):
 
                 WSXSocketManager.shared.stopAndRemoveSocket()
@@ -186,6 +188,12 @@ struct WorkSpaceListCordinator {
                     ),
                     embedInNavigationView: true
                 )
+                
+            case .router(.routeAction(id: _, action: .rootScreen(.parentToAction(.moveToDirectedMessage(WorkSpaceID: let workSpaceId))))):
+
+                return .run { send in
+                    await send(.delegate(.moveToDirect(workSpaceID: workSpaceId)))
+                }
                 
             case .router(.routeAction(id: _, action: .chatnnelEdit(.dismissButtonTapped))):
                 

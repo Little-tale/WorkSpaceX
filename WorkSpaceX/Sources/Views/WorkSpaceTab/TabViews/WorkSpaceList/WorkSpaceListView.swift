@@ -221,6 +221,7 @@ struct WorkSpaceListView: View {
                 .foregroundStyle(WSXColor.gray)
                 .asButton {
                     // 메시지 추가 로직 구성해야함.
+                    store.send(.selectedNewChannel)
                 }
             Spacer()
         }

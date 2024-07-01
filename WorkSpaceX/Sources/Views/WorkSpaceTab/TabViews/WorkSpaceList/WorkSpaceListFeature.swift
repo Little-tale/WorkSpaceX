@@ -74,6 +74,9 @@ struct WorkSpaceListFeature {
         // 선택
         case selectedChannel(WorkSpaceChannelEntity)
         case selectedRoom(DMSRoomEntity)
+        case selectedNewChannel
+        
+        
         @CasePathable
         enum actionSheetAction {
             // 채널 추가
@@ -86,6 +89,7 @@ struct WorkSpaceListFeature {
         enum ParentToAction {
             case reload
             case selectedChannel(workSpaceID: String, channel: WorkSpaceChannelEntity)
+            case moveToDirectedMessage(WorkSpaceID: String)
         }
     }
     
@@ -265,8 +269,13 @@ struct WorkSpaceListFeature {
                             channel: model)))
                     }
                 }
-                
-                
+                /// 상위 코디네이터에서 탭을 전환 -> DM
+            case .selectedNewChannel:
+                if let workSpaceId = state.currentWorkSpaceId {
+                    return .run { send in
+                        await send(.parentToAction(.moveToDirectedMessage(WorkSpaceID: workSpaceId)))
+                    }
+                }
             default :
                 break
             }

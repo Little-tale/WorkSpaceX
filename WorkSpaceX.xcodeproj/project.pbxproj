@@ -120,6 +120,11 @@
 		7B7EB8252C3267B700D22362 /* DMSMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8242C3267B700D22362 /* DMSMapper.swift */; };
 		7B7EB8282C32682800D22362 /* DMSRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8272C32682800D22362 /* DMSRoomEntity.swift */; };
 		7B7EB82A2C326ED600D22362 /* DMSRoomSectionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8292C326ED600D22362 /* DMSRoomSectionEntity.swift */; };
+		7B7EB82D2C3286CD00D22362 /* DMSCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB82C2C3286CD00D22362 /* DMSCoordinator.swift */; };
+		7B7EB8312C32881600D22362 /* DMSCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8302C32881600D22362 /* DMSCoordinatorView.swift */; };
+		7B7EB8342C32890000D22362 /* DMSListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8332C32890000D22362 /* DMSListView.swift */; };
+		7B7EB8362C32893C00D22362 /* DMSListFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8352C32893C00D22362 /* DMSListFeature.swift */; };
+		7B7EB8382C328E6D00D22362 /* RefreshTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8372C328E6D00D22362 /* RefreshTokenManager.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -334,6 +339,11 @@
 		7B7EB8242C3267B700D22362 /* DMSMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSMapper.swift; sourceTree = "<group>"; };
 		7B7EB8272C32682800D22362 /* DMSRoomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomEntity.swift; sourceTree = "<group>"; };
 		7B7EB8292C326ED600D22362 /* DMSRoomSectionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomSectionEntity.swift; sourceTree = "<group>"; };
+		7B7EB82C2C3286CD00D22362 /* DMSCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSCoordinator.swift; sourceTree = "<group>"; };
+		7B7EB8302C32881600D22362 /* DMSCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSCoordinatorView.swift; sourceTree = "<group>"; };
+		7B7EB8332C32890000D22362 /* DMSListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSListView.swift; sourceTree = "<group>"; };
+		7B7EB8352C32893C00D22362 /* DMSListFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSListFeature.swift; sourceTree = "<group>"; };
+		7B7EB8372C328E6D00D22362 /* RefreshTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenManager.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -718,6 +728,7 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B7EB8322C3288C700D22362 /* DMS */,
 				7BF9D72D2C2593410021D043 /* Chatting */,
 				7B8FD6242C1AA49000948E7C /* SideMenuView */,
 				7B8FD5FD2C19725800948E7C /* WorkSpaceTab */,
@@ -861,6 +872,24 @@
 			path = DMS;
 			sourceTree = "<group>";
 		};
+		7B7EB82B2C3286BF00D22362 /* DMS */ = {
+			isa = PBXGroup;
+			children = (
+				7B7EB82C2C3286CD00D22362 /* DMSCoordinator.swift */,
+				7B7EB8302C32881600D22362 /* DMSCoordinatorView.swift */,
+			);
+			path = DMS;
+			sourceTree = "<group>";
+		};
+		7B7EB8322C3288C700D22362 /* DMS */ = {
+			isa = PBXGroup;
+			children = (
+				7B7EB8332C32890000D22362 /* DMSListView.swift */,
+				7B7EB8352C32893C00D22362 /* DMSListFeature.swift */,
+			);
+			path = DMS;
+			sourceTree = "<group>";
+		};
 		7B8FD5FD2C19725800948E7C /* WorkSpaceTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -874,6 +903,7 @@
 		7B8FD6002C19762000948E7C /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
+				7B7EB82B2C3286BF00D22362 /* DMS */,
 				7BF9D7262C255A3B0021D043 /* Channel */,
 				7B8FD6052C19812400948E7C /* WorkSpaceList */,
 			);
@@ -1032,6 +1062,7 @@
 				7B8FD6402C1ABE1A00948E7C /* RealmError.swift */,
 				7B26D1F52C20200D00BC9912 /* WorkSpaceReader.swift */,
 				7B7EB8192C325C0300D22362 /* DMSRepository.swift */,
+				7B7EB8372C328E6D00D22362 /* RefreshTokenManager.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1318,6 +1349,7 @@
 				7BEC45A72C12E7D300576ECA /* AccessTokenDTO.swift in Sources */,
 				7B8FD61F2C1A901500948E7C /* UserProfileDTO.swift in Sources */,
 				7B8FD6432C1AC0C100948E7C /* DateManager.swift in Sources */,
+				7B7EB8342C32890000D22362 /* DMSListView.swift in Sources */,
 				7BF9D71D2C24070B0021D043 /* WorkSpaceAddMemberDTO.swift in Sources */,
 				7B10A9922C282EBC0035C3C8 /* ChatMode.swift in Sources */,
 				7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */,
@@ -1342,6 +1374,7 @@
 				7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */,
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */,
+				7B7EB82D2C3286CD00D22362 /* DMSCoordinator.swift in Sources */,
 				7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */,
 				7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */,
 				7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */,
@@ -1352,6 +1385,7 @@
 				7B23ADCC2C2A8DED00A9E499 /* CustomDataPicker.swift in Sources */,
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
+				7B7EB8312C32881600D22362 /* DMSCoordinatorView.swift in Sources */,
 				7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */,
 				7BEC45DF2C16E60100576ECA /* WorkSpaceDomainError.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
@@ -1395,6 +1429,8 @@
 				7B26D1E22C1DB5E300BC9912 /* ExScreens.swift in Sources */,
 				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
 				7B26D2252C228B1800BC9912 /* WorkSpaceChanelsDTO.swift in Sources */,
+				7B7EB8382C328E6D00D22362 /* RefreshTokenManager.swift in Sources */,
+				7B7EB8362C32893C00D22362 /* DMSListFeature.swift in Sources */,
 				7B26D2292C228CDE00BC9912 /* WorkSpaceMyChannelError.swift in Sources */,
 				7BEC45AA2C12E80F00576ECA /* reFreshError.swift in Sources */,
 				7B7EB8122C2FF09100D22362 /* ChannelOwnerChangeFeature .swift in Sources */,

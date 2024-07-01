@@ -39,7 +39,8 @@ struct WorkSpaceTabCoordinator {
         
         static let initalState = State(
             selectedTab: .home,
-            homeState: WorkSpaceListCordinator.State.initialState
+            homeState: WorkSpaceListCordinator.State.initialState,
+            dmHomeState: DMSCoordinator.State.initialState
         )
         
         var selectedTab: Tab
@@ -49,7 +50,8 @@ struct WorkSpaceTabCoordinator {
         
         // HOME STATE
         var homeState: WorkSpaceListCordinator.State
-        
+        // DM State
+        var dmHomeState: DMSCoordinator.State
         
         var ifNoneSpace: viewStateCase = .loading
         
@@ -77,7 +79,9 @@ struct WorkSpaceTabCoordinator {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case sidebar(WorkSpaceSideFeature.Action)
+        
         case homeTabbar(WorkSpaceListCordinator.Action)
+        case dmsTabbar(DMSCoordinator.Action)
         
         case tabSelected(Tab)
         case onAppear
@@ -121,7 +125,10 @@ struct WorkSpaceTabCoordinator {
         Scope(state: \.homeState, action: \.homeTabbar) {
             WorkSpaceListCordinator()
         }
-        
+        // DMS 탭 바의 스테이트
+        Scope(state: \.dmHomeState, action: \.dmsTabbar) {
+            DMSCoordinator()
+        }
         
         Reduce { state, action in
             switch action {
@@ -290,6 +297,11 @@ struct WorkSpaceTabCoordinator {
                 // HomeTabDelegte
             case .homeTabbar(.delegate(.openSideMenu)):
                 return .send(.sideMenuMake(true))
+            case .homeTabbar(.delegate(.moveToDirect(workSpaceID: let workSpaceID))):
+                
+                state.selectedTab = .dm
+                
+                return .none
                 
             default:
                 break

@@ -55,9 +55,9 @@ extension NetworkManager {
                 
                 print("네트워크 에러코드 :", errorResponse.errorCode)
                 let errorCode = errorResponse.errorCode
-//                if errorCode == CommonError.refreshDead.rawValue {
-//                    RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-//                }
+                if errorCode == CommonError.refreshDead.rawValue {
+                    RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                }
                 let errorInstance = errorType.makeErrorType(from: errorResponse.errorCode)
                 
                 throw errorInstance
@@ -92,8 +92,11 @@ extension NetworkManager {
             print("유저 에러 인터셉터 상황 \(error.ifCommonError?.isAccessTokenError)")
             if error.ifCommonError?.isAccessTokenError == true {
                 print("유저 에러 인터셉터 시작.\(error.ifCommonError)")
-                try await Task.sleep(nanoseconds: 100_000_000)  // 0.1초 지연
-                try await refreshAccessToken()
+                  // 0.1초 지연
+                try await RefreshTokenManager.shared.refreshAccessToken()
+                
+                try await Task.sleep(nanoseconds: 100_000_000)
+                
                 return try await startIntercept(&urlRequest, retryCount: retryCount - 1, errorType: errorType)
             } else {
                 throw error
@@ -111,35 +114,5 @@ extension NetworkManager {
         return request
     }
     
-    private func refreshAccessToken() async throws {
-        try await Task.sleep(for: .seconds(0.3))
-        print("유저 리프레시 \(UserDefaultsManager.refreshToken)")
-        print("유저 엑세스 \(UserDefaultsManager.accessToken)")
-        guard let refresh = UserDefaultsManager.refreshToken else {
-            print("리프레시 Miss \(UserDefaultsManager.refreshToken)")
-            throw APIError.httpError("엑세스 Miss")
-        }
-        guard let access = UserDefaultsManager.accessToken else {
-            print("엑세스 Miss \(UserDefaultsManager.accessToken)")
-            
-            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-            return
-        }
-        
-        print("리프레시 전 : ", refresh)
-        let router = AuthRouter.refreshToken(access: access, token: refresh)
-        let request = try router.asURLRequest()
-        print(request)
-        print(request.url ?? "없음")
-        print(request.httpMethod ?? "없음")
-        print("리프레시 당시 헤더 \(request.allHTTPHeaderFields ?? [:])")
-        let data = try await performRequest(request, errorType: reFreshError.self)
-        print("리프레시 당시 데이터 \(data)")
-        let result = try WSXCoder.shared.jsonDecoding(model: AccessTokenDTO.self, from: data)
-        
-        UserDefaultsManager.accessToken = result.accessToken
-        
-        try await Task.sleep(for: .seconds(0.1))
-        
-    }
 }
+

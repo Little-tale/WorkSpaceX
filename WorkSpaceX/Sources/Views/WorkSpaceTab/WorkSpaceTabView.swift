@@ -42,9 +42,17 @@ struct WorkSpaceTabView: View {
                             Text(WorkSpaceTabCoordinator.Tab.home.title)
                         }
                         
+                        DMSCoordinatorView(store: store.scope(state: \.dmHomeState, action: \.dmsTabbar))
+                            .tag(WorkSpaceTabCoordinator.Tab.dm)
+                            .tabItem {
+                                WSXImage.dmsTab.resizable()
+                                    .renderingMode(.template)
+                                    .frame(width: 15, height: 15)
+                                Text(WorkSpaceTabCoordinator.Tab.dm.title)
+                            }
                         //                            Text("DM")
                         //                                .tabItem {
-                        //                                    Text(WorkSpaceXTabFeature.Tab.dm.title) }.tag(WorkSpaceXTabFeature.Tab.dm)
+                        //
                         //
                         //                            Text("search")
                         //                                .tabItem {
