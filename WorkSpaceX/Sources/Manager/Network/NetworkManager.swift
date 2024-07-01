@@ -20,7 +20,7 @@ extension NetworkManager {
         if !checkRequestInterceptorURLRequest(urlRequest: &request) {
             return try await performRequest(request, errorType: errorType)
         } else {
-            try await refreshAccessToken()
+//            try await refreshAccessToken()
             let data = try await startIntercept(&request, retryCount: 3, errorType: errorType)
             return data
         }
@@ -33,7 +33,7 @@ extension NetworkManager {
             let data = try await performRequest(request, errorType: errorType)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
         } else {
-            try await refreshAccessToken()
+//            try await refreshAccessToken()
             let data = try await startIntercept(&request, retryCount: 3, errorType: errorType)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
         }
@@ -55,9 +55,9 @@ extension NetworkManager {
                 
                 print("네트워크 에러코드 :", errorResponse.errorCode)
                 let errorCode = errorResponse.errorCode
-                if errorCode == CommonError.refreshDead.rawValue {
-                    RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                }
+//                if errorCode == CommonError.refreshDead.rawValue {
+//                    RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+//                }
                 let errorInstance = errorType.makeErrorType(from: errorResponse.errorCode)
                 
                 throw errorInstance
@@ -88,11 +88,16 @@ extension NetworkManager {
         do {
             let data = try await performRequest(request, errorType: errorType)
             return data
-        }catch let error as E where retryCount > 0 && error.ifCommonError?.isAccessTokenError == true {
-            print("에러 인터셉터 시작.")
-            try await Task.sleep(nanoseconds: 100_000_000)  // 0.1초 지연
-            try await refreshAccessToken()
-            return try await startIntercept(&urlRequest, retryCount: retryCount - 1, errorType: errorType)
+        }catch let error as E where retryCount > 0 {
+            print("유저 에러 인터셉터 상황 \(error.ifCommonError?.isAccessTokenError)")
+            if error.ifCommonError?.isAccessTokenError == true {
+                print("유저 에러 인터셉터 시작.\(error.ifCommonError)")
+                try await Task.sleep(nanoseconds: 100_000_000)  // 0.1초 지연
+                try await refreshAccessToken()
+                return try await startIntercept(&urlRequest, retryCount: retryCount - 1, errorType: errorType)
+            } else {
+                throw error
+            }
         } catch {
             throw error
         }
@@ -108,16 +113,18 @@ extension NetworkManager {
     
     private func refreshAccessToken() async throws {
         try await Task.sleep(for: .seconds(0.3))
+        print("유저 리프레시 \(UserDefaultsManager.refreshToken)")
+        print("유저 엑세스 \(UserDefaultsManager.accessToken)")
         guard let refresh = UserDefaultsManager.refreshToken else {
-            print("엑세스 Miss \(UserDefaultsManager.refreshToken)")
+            print("리프레시 Miss \(UserDefaultsManager.refreshToken)")
             throw APIError.httpError("엑세스 Miss")
         }
         guard let access = UserDefaultsManager.accessToken else {
-            print("RefreshToken Miss \(UserDefaultsManager.accessToken)")
-            throw APIError.httpError("RefreshToken Miss")
+            print("엑세스 Miss \(UserDefaultsManager.accessToken)")
+            
+            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+            return
         }
-        
-        UserDefaultsManager.accessToken = nil
         
         print("리프레시 전 : ", refresh)
         let router = AuthRouter.refreshToken(access: access, token: refresh)
@@ -131,5 +138,8 @@ extension NetworkManager {
         let result = try WSXCoder.shared.jsonDecoding(model: AccessTokenDTO.self, from: data)
         
         UserDefaultsManager.accessToken = result.accessToken
+        
+        try await Task.sleep(for: .seconds(0.1))
+        
     }
 }
