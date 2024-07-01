@@ -21,6 +21,13 @@ struct DMSListFeature {
         var errorMessage: String? = nil
         
         var userList: [WorkSpaceMembersEntity] = []
+        
+        var viewState: DmViewState = .loading
+    }
+    enum DmViewState {
+        case loading
+        case empty
+        case members
     }
     
     enum Action {
@@ -115,7 +122,18 @@ struct DMSListFeature {
                 }
                 
             case let .users(member):
-                state.userList = member
+                if let user = UserDefaultsManager.userID {
+                    let models = member.filter({ $0.userID != user })
+                    state.userList = models
+                    if models.count == 0 {
+                        state.viewState = .empty
+                    } else {
+                        state.viewState = .members
+                    }
+                } else {
+                    state.userList = member
+                }
+                
                 
             case let .catchToWorkSpaceRealmModel(model):
                 state.navigationImage = model.coverImage

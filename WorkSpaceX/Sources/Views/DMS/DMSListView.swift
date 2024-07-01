@@ -18,11 +18,17 @@ struct DMSListView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack{
-                List {
-                    memberListView()
-                    
+                switch store.viewState {
+                case .loading:
+                    ProgressView()
+                case .empty:
+                    emptyMembersView()
+                case .members:
+                    List {
+                        memberListView()
+                    }
+                    .listStyle(.plain)
                 }
-                .listStyle(.plain)
             }
             .onAppear {
                 store.send(.onAppaer)
@@ -66,6 +72,34 @@ extension DMSListView {
             Text(model.nickname)
                 .frame(maxWidth: 50)
                 .font(WSXFont.regu1)
+        }
+    }
+    
+}
+// 나를 제외한 멤버가 없을때
+extension DMSListView {
+    
+    private func emptyMembersView() -> some View {
+        VStack {
+            Text("워크 스페이스에\n멤버가 없어요.")
+                .font(WSXFont.title1)
+                .foregroundStyle(WSXColor.black)
+                .padding(.bottom, 8)
+            
+            Text("새로운 팀원을 초대해 보세요!")
+                .font(WSXFont.regu1)
+                .foregroundStyle(WSXColor.black)
+                .padding(.bottom, 8)
+            
+            Text("팀원 초대하기")
+                .modifier(CommonButtonModifer())
+                .background(WSXColor.green)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(WSXColor.white)
+                .padding(.horizontal, 40)
+                .asButton {
+                    
+                }
         }
     }
     
