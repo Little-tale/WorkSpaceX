@@ -20,7 +20,7 @@ struct WorkSpaceListFeature {
         var workSpaceName: String?
         
         var chanelSection = WorkSpaceChannelsEntity(items: [])
-        
+        var dmsRoomSection = DMSRoomSectionEntity(items: [])
         
         var alertErrorMessage: String?
         
@@ -47,6 +47,7 @@ struct WorkSpaceListFeature {
         case firstRealm(String)
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
         case updateChannels(WorkSpaceChannelsEntity)
+        case updateDMSRooms(DMSRoomSectionEntity)
         
         case workSpaceMembersUpdate(workSpaceID: String)
         // 워크스페이스 채널 네트워크 요청단
@@ -70,8 +71,9 @@ struct WorkSpaceListFeature {
         // AlertSheet
         case alertSheet(PresentationAction<actionSheetAction>)
         
+        // 선택
         case selectedChannel(WorkSpaceChannelEntity)
-        
+        case selectedRoom(DMSRoomEntity)
         @CasePathable
         enum actionSheetAction {
             // 채널 추가
@@ -198,10 +200,11 @@ struct WorkSpaceListFeature {
                         workSpaceID
                     )
                     print("가져오기 성공 \(result)")
+                    await send(.updateDMSRooms(DMSRoomSectionEntity(items: result)))
                 } catch: { error, send in
                     if let error = error as? DMSListAPIError {
                         if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+        
                         } else if !error.ifDevelopError {
                             await send(.alertErrorMessage(error.message))
                         } else {
@@ -211,6 +214,10 @@ struct WorkSpaceListFeature {
                         print("설마...?",error)
                     }
                 }
+            case let .updateDMSRooms(model):
+                state.dmsRoomSection = model
+                // 렘에도 등록해야함
+                
                 
             case .showAlertSheet:
                 state.alert = ConfirmationDialogState(title: {

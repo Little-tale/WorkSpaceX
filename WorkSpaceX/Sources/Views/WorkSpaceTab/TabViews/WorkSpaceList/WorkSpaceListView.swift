@@ -37,20 +37,38 @@ struct WorkSpaceListView: View {
                                     return -vd.width
                                 }
                         }
-                        if directedToggle {
-                            
-                        }
-                        teamMemberAddView()
-                            .listRowInsets(EdgeInsets())
-                            .alignmentGuide(.listRowSeparatorLeading) { vd in
-                                print(vd.width)
-                                return -vd.width
-                            }
                     } header: {
                         chanelHeader()
                     }.background  {
                         WSXColor.white
                     }
+                    Section { 
+                        if directedToggle {
+                            ForEach(store.dmsRoomSection.items, id: \.roomId) { model in
+                                directMessgageView(model)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets())
+                            }
+                            newDMSStartView()
+                                .listRowInsets(EdgeInsets())
+                                .alignmentGuide(.listRowSeparatorLeading) { vd in
+                                    print(vd.width)
+                                    return -vd.width
+                                }
+                        }
+                    } header: {
+                        dmsHeader()
+                    }.background  {
+                        WSXColor.white
+                    }
+                    
+                    teamMemberAddView()
+                        .listRowInsets(EdgeInsets())
+                        .alignmentGuide(.listRowSeparatorLeading) { vd in
+                            print(vd.width)
+                            return -vd.width
+                    }
+                    
                 }
                 .listStyle(.plain)
             }
@@ -130,6 +148,50 @@ struct WorkSpaceListView: View {
         }
     }
     
+    private func dmsHeader() -> some View {
+        HStack {
+            Text(store.dmsRoomSection.name)
+                .font(WSXFont.title15)
+                .foregroundStyle(WSXColor.black)
+            Spacer()
+            Image(systemName: directedToggle ? "chevron.down" : "chevron.right")
+                .asButton {
+                    withAnimation {
+                        directedToggle.toggle()
+                    }
+                }
+        }
+        .frame(height: 30)
+    }
+    
+    private func directMessgageView (_ model: DMSRoomEntity) -> some View {
+        
+        HStack {
+            if let userProfile = model.user.profileImage {
+                DownSamplingImageView(url: URL(string: userProfile), size: CGSize(width: 50 , height: 50))
+                    .frame(width: 14, height: 14)
+                    .padding(.leading, 10)
+            } else {
+                WSXImage.profileEmpty1
+                    .resizable()
+                    .foregroundStyle(WSXColor.gray)
+                    .frame(width: 14, height: 14)
+                    .padding(.leading, 10)
+            }
+            
+            Text(model.user.nickname)
+                .font(WSXFont.title2)
+                .foregroundStyle(WSXColor.black)
+                .padding(.horizontal, 4)
+            
+            Spacer()
+        }
+        .frame(height: 30)
+        .asButton {
+            store.send(.selectedRoom(model))
+        }
+    }
+    
     private func channelAddView() -> some View {
         HStack {
             WSXImage.plus.renderingMode(.template)
@@ -141,6 +203,24 @@ struct WorkSpaceListView: View {
                 .foregroundStyle(WSXColor.gray)
                 .asButton {
                     store.send(.showAlertSheet)
+                }
+            Spacer()
+        }
+        .padding(.leading, 10)
+        .frame(height: 30)
+    }
+    
+    private func newDMSStartView() -> some View {
+        HStack {
+            WSXImage.plus.renderingMode(.template)
+                .resizable()
+                .foregroundStyle(WSXColor.gray)
+                .frame(width: 14, height: 14)
+            Text("새 메시지 시작")
+                .font(WSXFont.title2)
+                .foregroundStyle(WSXColor.gray)
+                .asButton {
+                    // 메시지 추가 로직 구성해야함.
                 }
             Spacer()
         }

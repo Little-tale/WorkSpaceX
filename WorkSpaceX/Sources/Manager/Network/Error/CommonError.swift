@@ -58,6 +58,6 @@ extension CommonError {
     }
     
     var isAccessTokenError: Bool {
-        return self == CommonError(rawValue: "accessToken")
+        return self == .accessToken
     }
 }

@@ -119,6 +119,7 @@
 		7B7EB8232C32657200D22362 /* DMSListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8222C32657200D22362 /* DMSListAPIError.swift */; };
 		7B7EB8252C3267B700D22362 /* DMSMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8242C3267B700D22362 /* DMSMapper.swift */; };
 		7B7EB8282C32682800D22362 /* DMSRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8272C32682800D22362 /* DMSRoomEntity.swift */; };
+		7B7EB82A2C326ED600D22362 /* DMSRoomSectionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8292C326ED600D22362 /* DMSRoomSectionEntity.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -332,6 +333,7 @@
 		7B7EB8222C32657200D22362 /* DMSListAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSListAPIError.swift; sourceTree = "<group>"; };
 		7B7EB8242C3267B700D22362 /* DMSMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSMapper.swift; sourceTree = "<group>"; };
 		7B7EB8272C32682800D22362 /* DMSRoomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomEntity.swift; sourceTree = "<group>"; };
+		7B7EB8292C326ED600D22362 /* DMSRoomSectionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomSectionEntity.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -854,6 +856,7 @@
 			isa = PBXGroup;
 			children = (
 				7B7EB8272C32682800D22362 /* DMSRoomEntity.swift */,
+				7B7EB8292C326ED600D22362 /* DMSRoomSectionEntity.swift */,
 			);
 			path = DMS;
 			sourceTree = "<group>";
@@ -1234,6 +1237,7 @@
 				7BF9D72A2C255A8B0021D043 /* WorkSpaceChannelListFeature.swift in Sources */,
 				7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */,
 				7BEC45E92C16FEDE00576ECA /* RootFeature.swift in Sources */,
+				7B7EB82A2C326ED600D22362 /* DMSRoomSectionEntity.swift in Sources */,
 				7B2EEE362C11EA570024853C /* WSXErrorType.swift in Sources */,
 				7B7EB81A2C325C0300D22362 /* DMSRepository.swift in Sources */,
 				7BF9D7212C242A790021D043 /* WorkSpaceDetailEntity.swift in Sources */,

@@ -102,10 +102,13 @@ struct RootFeature {
                 return .none
                 
             case .sendToWorkSpaceTab(.refreshChecked):
-                return .run { send in
-                    await send(.onAppear)
-                }
+                state.OnboardingViewState = OnboardingFeature.State()
+                state.currentLoginState = .logout
                 
+//                return .run { send in
+//                    await send(.onAppear)
+//                }
+                return .none
             case .sendToWorkSpaceTab:
                 return .none
                 
@@ -118,9 +121,13 @@ struct RootFeature {
     
             case .alert(.presented(.refreshTokkenDead)):
                 
-                return .run { send in
-                    await send(.onAppear)
-                }
+                state.OnboardingViewState = OnboardingFeature.State()
+                state.currentLoginState = .logout
+                
+//                return .run { send in
+//                    await send(.onAppear)
+//                }
+                return .none
             }
         }
         .ifLet(\.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
