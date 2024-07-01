@@ -91,8 +91,6 @@ extension NetworkManager {
                if error.ifCommonError?.isAccessTokenError == true {
                    try await RefreshTokenManager.shared.refreshAccessToken()
                    
-                   try await Task.sleep(for: .seconds(0.2))
-                   
                    return try await startIntercept(&urlRequest, retryCount: retryCount - 1, errorType: errorType)
                } else {
                    throw error

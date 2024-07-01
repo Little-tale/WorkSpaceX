@@ -24,6 +24,29 @@ struct DMSListView: View {
                 store.send(.onAppaer)
             }
             .toolbar {
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    HStack {
+                        Group {
+                            if let image = store.navigationImage {
+                                DownSamplingImageView(url: URL(string: image), size: CGSize(
+                                    width: 50,
+                                    height: 50
+                                ))
+                            } else {
+                                WSXImage.logoImage
+                                    .resizable()
+                            }
+                        }
+                        .frame(width: 30, height: 30)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        
+                        Text("Direct Message")
+                            .font(WSXFont.title1)
+                    }
+                    
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     if let userProfile = userProfile.first,
                        let image = userProfile.profileImage {

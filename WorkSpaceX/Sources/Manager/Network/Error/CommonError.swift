@@ -58,7 +58,6 @@ extension CommonError {
     }
     
     var isAccessTokenError: Bool {
-        return self == .accessToken
-        // || self == .failAuthentication
+        return self == .accessToken || self == .failAuthentication
     }
 }

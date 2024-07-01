@@ -25,7 +25,7 @@ struct WorkSpaceListFeature {
         var alertErrorMessage: String?
         
         @Presents var alert: ConfirmationDialogState<Action.actionSheetAction>?
-        
+        var appearTrigger: Bool = true
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
@@ -102,9 +102,13 @@ struct WorkSpaceListFeature {
                 guard let workSpaceID = state.currentWorkSpaceId else {
                     break
                 }
+                let bool = state.appearTrigger
+                
                 return .run { send in
                     await send(.firstRealm(workSpaceID))
-                    await send(.observerStart(workSpaceID))
+                    if bool {
+                        await send(.observerStart(workSpaceID))
+                    }
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
                     await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
                     await send(.dmRoomListReqeust(wrokSpaceID: workSpaceID))
@@ -130,15 +134,20 @@ struct WorkSpaceListFeature {
             
                 
             case let .observerStart(workSpaceID):
-                return .run { send in
-                    for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
-                        print("응답 받음 ")
-                        if let currentModel{
-                            await send(.catchToWorkSpaceRealmModel(currentModel))
+                if state.appearTrigger {
+                    
+                    state.appearTrigger = false
+                    
+                    return .run { send in
+                        for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                            print("응답 받음 ")
+                            if let currentModel{
+                                await send(.catchToWorkSpaceRealmModel(currentModel))
+                            }
                         }
                     }
-                    
                 }
+                
                 
             case let .catchToWorkSpaceRealmModel(model):
                 state.currentWorkSpaceId = model.workSpaceID
