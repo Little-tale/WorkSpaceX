@@ -114,6 +114,8 @@
 		7B7EB8182C31643300D22362 /* ChannelDeleteAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */; };
 		7B7EB81A2C325C0300D22362 /* DMSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8192C325C0300D22362 /* DMSRepository.swift */; };
 		7B7EB81C2C325DA700D22362 /* DMSRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB81B2C325DA700D22362 /* DMSRouter.swift */; };
+		7B7EB81F2C32638400D22362 /* DMSRoomDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB81E2C32638400D22362 /* DMSRoomDTO.swift */; };
+		7B7EB8212C3263E700D22362 /* DMSRoomListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8202C3263E700D22362 /* DMSRoomListDTO.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -322,6 +324,8 @@
 		7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDeleteAPIError.swift; sourceTree = "<group>"; };
 		7B7EB8192C325C0300D22362 /* DMSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRepository.swift; sourceTree = "<group>"; };
 		7B7EB81B2C325DA700D22362 /* DMSRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRouter.swift; sourceTree = "<group>"; };
+		7B7EB81E2C32638400D22362 /* DMSRoomDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomDTO.swift; sourceTree = "<group>"; };
+		7B7EB8202C3263E700D22362 /* DMSRoomListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomListDTO.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 		7B2EEE0A2C117A7D0024853C /* DTOModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B7EB81D2C32636C00D22362 /* DMS */,
 				7BF9D7172C2404E10021D043 /* Channel */,
 				7BEC45D92C16E1E000576ECA /* WorkSpace */,
 				7BEC45A52C12E7C000576ECA /* AuthDomain */,
@@ -827,6 +832,15 @@
 				7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */,
 			);
 			path = Toast;
+			sourceTree = "<group>";
+		};
+		7B7EB81D2C32636C00D22362 /* DMS */ = {
+			isa = PBXGroup;
+			children = (
+				7B7EB81E2C32638400D22362 /* DMSRoomDTO.swift */,
+				7B7EB8202C3263E700D22362 /* DMSRoomListDTO.swift */,
+			);
+			path = DMS;
 			sourceTree = "<group>";
 		};
 		7B8FD5FD2C19725800948E7C /* WorkSpaceTab */ = {
@@ -1336,6 +1350,7 @@
 				7BEC45F32C18074D00576ECA /* NewWorkSpaceRequest.swift in Sources */,
 				7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */,
 				7B8FD6132C19B9C800948E7C /* EmailLoginAPIError.swift in Sources */,
+				7B7EB81F2C32638400D22362 /* DMSRoomDTO.swift in Sources */,
 				7BEC45F92C1813FE00576ECA /* ImageMapper.swift in Sources */,
 				7BEC45FF2C18363900576ECA /* ExString.swift in Sources */,
 				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */,
@@ -1369,6 +1384,7 @@
 				7BEC45EB2C1703C100576ECA /* WorkSpaceFirstStartView.swift in Sources */,
 				7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */,
 				7BF9D70D2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift in Sources */,
+				7B7EB8212C3263E700D22362 /* DMSRoomListDTO.swift in Sources */,
 				7B26D1F02C1FE11D00BC9912 /* CustomAlertView.swift in Sources */,
 				7B8FD63F2C1ABD0B00948E7C /* RealmRepository.swift in Sources */,
 				7B7EB8082C2E92F000D22362 /* ChannelEditFeature.swift in Sources */,
