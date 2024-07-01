@@ -17,6 +17,7 @@ struct WorkSpaceListView: View {
     
     @State var channelToggle: Bool = false
     
+    @State var directedToggle: Bool = false
     
     var body: some View {
         WithPerceptionTracking {
@@ -35,6 +36,9 @@ struct WorkSpaceListView: View {
                                     print(vd.width)
                                     return -vd.width
                                 }
+                        }
+                        if directedToggle {
+                            
                         }
                         teamMemberAddView()
                             .listRowInsets(EdgeInsets())
