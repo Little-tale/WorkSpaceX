@@ -19,6 +19,8 @@ struct DMSCoordinatorView: View {
                 switch screen.case {
                 case let .dmHome(store):
                     DMSListView(store: store)
+                case let .memberAdd(store):
+                    AddMemberView(store: store)
                 }
             }
         }
@@ -30,6 +32,8 @@ extension DMSListScreens.State: Identifiable {
     var id: UUID {
         switch self {
         case let .dmHome(state):
+            return state.id
+        case let .memberAdd(state):
             return state.id
         }
     }

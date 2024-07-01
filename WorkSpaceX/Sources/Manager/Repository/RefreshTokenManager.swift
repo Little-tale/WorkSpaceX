@@ -21,7 +21,11 @@ actor RefreshTokenManager {
             }
         }
         isRefreshing = true
-        defer { isRefreshing = false }
+        defer { 
+            isRefreshing = false
+            pendingRequests.forEach { $0.resume() }
+            pendingRequests.removeAll()
+        }
         
         do {
             print("유저 리프레시 \(UserDefaultsManager.refreshToken)")

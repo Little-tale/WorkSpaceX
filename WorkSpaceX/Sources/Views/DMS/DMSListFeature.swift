@@ -34,6 +34,8 @@ struct DMSListFeature {
         case onAppaer
         
         case parentAction(ParentAction)
+        case delegate(Delegate)
+        
         case workSpaceInfoObserver(workSpaceID: String)
         
         case catchToWorkSpaceRealmModel(WorkSpaceRealmModel)
@@ -46,6 +48,10 @@ struct DMSListFeature {
         enum ParentAction {
             case getWorkSpaceId(String)
         }
+        enum Delegate {
+            case clickedAddMember
+        }
+        case clickedAddMember
         case errorMessage(String?)
     }
     
@@ -137,6 +143,10 @@ struct DMSListFeature {
                 
             case let .catchToWorkSpaceRealmModel(model):
                 state.navigationImage = model.coverImage
+            case .clickedAddMember:
+                return .run { send in
+                    await send(.delegate(.clickedAddMember))
+                }
                 
             default:
                 break

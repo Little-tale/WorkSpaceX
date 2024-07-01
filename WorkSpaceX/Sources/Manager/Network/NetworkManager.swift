@@ -20,7 +20,6 @@ extension NetworkManager {
         if !checkRequestInterceptorURLRequest(urlRequest: &request) {
             return try await performRequest(request, errorType: errorType)
         } else {
-//            try await refreshAccessToken()
             let data = try await startIntercept(&request, retryCount: 3, errorType: errorType)
             return data
         }
@@ -33,7 +32,7 @@ extension NetworkManager {
             let data = try await performRequest(request, errorType: errorType)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
         } else {
-//            try await refreshAccessToken()
+
             let data = try await startIntercept(&request, retryCount: 3, errorType: errorType)
             return try WSXCoder.shared.jsonDecoding(model: T.self, from: data)
         }
@@ -104,9 +103,10 @@ extension NetworkManager {
     private func intercept(_ request: inout URLRequest) -> URLRequest {
         print("유저 바껴야 할것. 엑세스 토큰 \(UserDefaultsManager.accessToken ?? "없음")")
         print("유저 네트워크 주소 \(request.headers)")
-        if let access = UserDefaultsManager.accessToken  {
-            request.addValue(access, forHTTPHeaderField: WSXHeader.Key.authorization)
+        if let access = UserDefaultsManager.accessToken {
+            request.setValue(access, forHTTPHeaderField: WSXHeader.Key.authorization)
         }
+        print("유저 네트워크 주소 \(request.headers)")
         return request
     }
     

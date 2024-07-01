@@ -98,7 +98,7 @@ extension DMSListView {
                 .foregroundStyle(WSXColor.white)
                 .padding(.horizontal, 40)
                 .asButton {
-                    
+                    store.send(.clickedAddMember)
                 }
         }
     }

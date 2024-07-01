@@ -12,6 +12,9 @@ import ComposableArchitecture
 @Reducer(state: .equatable)
 enum DMSListScreens {
     case dmHome(DMSListFeature)
+    
+    // sheet
+    case memberAdd(AddMemberFeature)
 }
 
 @Reducer
@@ -49,6 +52,24 @@ struct DMSCoordinator {
                 return .run { send in
                     await send(.router(.routeAction(id: DMSCoordinator.State.uuid, action: .dmHome(.parentAction(.getWorkSpaceId(id))))))
                 }
+            case .router(.routeAction(id: _, action: .dmHome(.delegate(.clickedAddMember)))):
+                
+                if let id = state.currentWorkSpaceId {
+                    state.identeRoutes.presentSheet(.memberAdd(AddMemberFeature.State( currentWorkSpaceID: id)), embedInNavigationView: true)
+                }
+                
+            case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
+                
+                state.identeRoutes.dismiss()
+                let id = DMSCoordinator.State.uuid
+                
+                return .run { send in
+                    await send(.router(.routeAction(id: id, action: .dmHome(.onAppaer))))
+                }
+            case .router(.routeAction(id: _, action: .memberAdd(.dismissButtonTapped))):
+                
+                state.identeRoutes.dismiss()
+                
             default:
                 break
             }
