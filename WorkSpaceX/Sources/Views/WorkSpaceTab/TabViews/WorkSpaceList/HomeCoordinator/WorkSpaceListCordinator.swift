@@ -124,6 +124,19 @@ struct WorkSpaceListCordinator {
                     
                     state.identeRoutes.push(.chattingView(chatState))
                 }
+                // 이미 해당 유저일때 바로 채팅 넘김
+            case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.alreadyToConfirm(let model))))):
+                if let workSpaceID = state.currentWorkSpaceId,
+                   let userId = UserDefaultsManager.userID {
+                    let chatState = WorkSpaceChannelChattingFeature.State(
+                        channelID: model.channelId,
+                        workSpaceID: workSpaceID,
+                        userID: userId,
+                        navigationTitle: model.name
+                    )
+                    
+                    state.identeRoutes.push(.chattingView(chatState))
+                }
                 
                 // 채널 채팅뷰 뒤로가기시.
             case .router(.routeAction(id: _, action: .chattingView(.popClicked))):

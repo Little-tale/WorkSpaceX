@@ -17,7 +17,7 @@ struct WorkSpaceChannelListFeature {
         var workSpaceID: String
         var errorMessage: String?
         var channelList = [ChanelEntity] ()
-        
+        var myChannelList = [ChanelEntity] ()
         
         var ifNeedChannelAlert: Bool = false
         var onApperTrigger: Bool = false
@@ -30,7 +30,7 @@ struct WorkSpaceChannelListFeature {
         case onAppear
         
         case catchModels([ChanelEntity])
-        
+        case catchMyChannels([ChanelEntity])
         case errorMessage(String?)
         
         case selectedModel(ChanelEntity)
@@ -42,6 +42,7 @@ struct WorkSpaceChannelListFeature {
         case delegate(Delegate)
         enum Delegate {
             case lastConfirm(ChanelEntity)
+            case alreadyToConfirm(ChanelEntity)
         }
     }
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -56,8 +57,11 @@ struct WorkSpaceChannelListFeature {
                 
                 return .run { send in
                     let result = try await workSpaceRepo.workSpaceSearchingToChannel(id)
-                    await send(.catchModels(result))
                     
+                    let myResult = try await workSpaceRepo.findWorkSpaceChnnel(id)
+                    
+                    await send(.catchModels(result))
+                    await send(.catchMyChannels(myResult))
                 } catch: { error, send in
                     if let error = error as? WorkSpaceChannelListAPIError {
                         if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
@@ -68,11 +72,22 @@ struct WorkSpaceChannelListFeature {
                 }
                 
             case let .selectedModel(model):
+                
                 state.selectedModel = model
-                state.chaannelAlertMessage = "[\(model.name)] 채널에 참여 하시겠습니까?"
-                return .run { send in
-                    await send(.channelAlertBool(true))
+                
+                if state.myChannelList.contains(
+                    where: { $0.channelId == model.channelId }
+                ) {
+                    return .run { send in
+                        await send(.delegate(.alreadyToConfirm(model)))
+                    }
+                } else {
+                    state.chaannelAlertMessage = "[\(model.name)] 채널에 참여 하시겠습니까?"
+                    return .run { send in
+                        await send(.channelAlertBool(true))
+                    }
                 }
+                
             case .channelALertConfirm:
                 if let model = state.selectedModel {
                     return .run { send in
@@ -95,6 +110,9 @@ struct WorkSpaceChannelListFeature {
                 
             case let .errorMessage(message):
                 state.errorMessage = message
+                
+            case let .catchMyChannels(models):
+                state.myChannelList = models
             default :
                 break
             }
