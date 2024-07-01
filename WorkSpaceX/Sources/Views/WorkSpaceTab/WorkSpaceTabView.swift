@@ -68,7 +68,7 @@ struct WorkSpaceTabView: View {
                     forName: .refreshTokenDead,
                     object: nil,
                     queue: .main) {  _ in
-                        store.send(.alert(.presented(.refreshTokkenDead)))
+                        store.send(.refreshDeadAlert(true))
                     }
                 store.send(.onAppear)
             }

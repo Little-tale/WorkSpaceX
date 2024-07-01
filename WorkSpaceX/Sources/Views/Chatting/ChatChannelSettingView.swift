@@ -7,10 +7,11 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 /*
- 1. 채널에서 나가기 구현
- 2. 채널에서 관리자 변경 구현
- 3. 채널 편집 뷰 구현
+ 1. 채널에서 나가기 구현 0
+ 2. 채널에서 관리자 변경 구현 0
+ 3. 채널 편집 뷰 구현 0
  4. 다른 사용자 프로필 화면 구현
  */
 
@@ -71,6 +72,14 @@ struct ChatChannelSettingView: View {
                             store.send(.alertCaseOf(nil))
                         }, actionTitle: newValue.alertActionTitle)
                 }
+            }
+            .popup(isPresented: $store.channelOwnerChanged.sending(\.channelOwnerChanged)) {
+                PopUpViewSmall(text: "채널 관리자가 변경되었습니다.")
+            } customize: {
+                $0
+                    .type(.toast)
+                    .position(.bottom)
+                    .autohideIn(2)
             }
             .navigationTitle("채널 설정")
             .toolbar(.hidden, for: .bottomBar)

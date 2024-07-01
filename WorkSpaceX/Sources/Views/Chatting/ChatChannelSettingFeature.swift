@@ -94,6 +94,8 @@ struct ChatChannelSettingFeature {
                 }
             }
         }
+        
+        var channelOwnerChanged: Bool = false
     }
     
     
@@ -119,6 +121,8 @@ struct ChatChannelSettingFeature {
         
         case delegate(Delegate)
         
+        case parentsAction(ParentAction)
+        case channelOwnerChanged(Bool)
         case errorMessage(String?)
         
         enum Delegate {
@@ -129,6 +133,9 @@ struct ChatChannelSettingFeature {
             case channelOwnerChangeReqeust(model: ChanelEntity, workSpaceID: String)
             
             case channelDeleteConfirm
+        }
+        enum ParentAction {
+            case successOwnerChange
         }
     }
     
@@ -300,6 +307,12 @@ struct ChatChannelSettingFeature {
                         }
                     } else { print(error) }
                 }
+            case .parentsAction(.successOwnerChange):
+                return .run { send in
+                    await send(.channelOwnerChanged(true))
+                }
+            case let .channelOwnerChanged(bool):
+                state.channelOwnerChanged = bool
                 
             default:
                 break

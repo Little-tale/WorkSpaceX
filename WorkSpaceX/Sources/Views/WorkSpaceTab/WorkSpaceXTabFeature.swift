@@ -58,8 +58,6 @@ struct WorkSpaceTabCoordinator {
         // 만약 워크 스페이스가 없을시
         var makeSpaceViewState = WorkSpaceEmptyListFeature.State()
         
-        @Presents var alert: AlertState<Action.Alert>?
-        
         var sideMenuState: WorkSpaceSideFeature.State?
         
         // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
@@ -90,12 +88,8 @@ struct WorkSpaceTabCoordinator {
         
         case showEmptyView(Bool)
         
-        @CasePathable
-        enum Alert {
-            case refreshTokkenDead
-        }
-        case alert(PresentationAction<Alert>)
         case refreshChecked
+        case refreshDeadAlert(Bool)
         // case sideMenuCoordiAction(SideMenuCoordinator.Action)
         case sideMenuMake(Bool)
         
@@ -245,6 +239,9 @@ struct WorkSpaceTabCoordinator {
                      await send(.homeTabbar(.sendToRootWorkSpaceID(id)))
                     await send(.onAppear)
                 }
+                
+            case let .refreshDeadAlert(bool):
+                state.refreshAlert = bool
 
             
             case .workSpaceSubscribe:
@@ -306,7 +303,7 @@ struct WorkSpaceTabCoordinator {
         .ifLet(\.sideMenuState, action: \.sidebar) {
             WorkSpaceSideFeature()
         }
-        .ifLet(\.$alert, action: \.alert)
+        
     }
 }
 

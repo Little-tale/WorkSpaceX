@@ -205,6 +205,7 @@ struct WorkSpaceListCordinator {
                 let id = state.channelEditID
                 return .run { send in
                     await send(.router(.routeAction(id: id, action: .chatChannelSettingView(.onAppear))))
+                    await send(.router(.routeAction(id: id, action: .chatChannelSettingView(.parentsAction(.successOwnerChange)))))
                 }
                 
                 // 채널추가
