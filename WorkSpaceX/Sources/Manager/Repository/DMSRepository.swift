@@ -14,8 +14,9 @@ struct DMSRepository {
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomListDTO.self,
             router: DMSRouter.dmRoomListReqeust(workSpaceID),
-            errorType: <#T##WSXErrorType.Type#>
+            errorType: DMSListAPIError.self
         )
+        
     }
 }
 
