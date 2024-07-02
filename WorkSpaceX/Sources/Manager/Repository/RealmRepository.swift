@@ -506,6 +506,7 @@ extension RealmRepository {
         }
         return results.first
     }
+    
     func findDMSRoom(roomID: String, _ ifRealm: Realm? = nil) async throws -> DMSRoomRealmModel? {
         
         var realm: Realm
@@ -920,6 +921,7 @@ extension RealmRepository {
                 "workSpaceID": workSpaceID,
                 "userID" : model.user.userID,
                 "email" : model.user.email,
+                "createdAt": model.createdAt,
                 "nickName" : model.user.nickname,
                 "profileImage" : model.user.profileImage
             ], update: .modified)
@@ -930,6 +932,32 @@ extension RealmRepository {
         
         return model
     }
+    
+    @MainActor
+    @discardableResult
+    func upsertDMSRoomEntityToUser(_ roomID: String, member: WorkSpaceMembersEntity,_ ifRealm: Realm? = nil ) async throws -> DMSRoomRealmModel {
+        var realm: Realm
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(DMSRoomRealmModel.self, value: [
+                "roomId": roomID,
+                "email" : member.email,
+                "nickName" : member.nickname,
+                "profileImage" : member.profileImage
+            ], update: .modified)
+        }
+        let model = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)
+        
+        guard let model else { throw RealmError.failAdd }
+        
+        return model
+    }
+    
 }
 
 extension RealmRepository: DependencyKey {

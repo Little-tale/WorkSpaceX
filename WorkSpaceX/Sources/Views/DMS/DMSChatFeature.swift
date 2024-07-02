@@ -56,6 +56,7 @@ struct DMSChatFeature {
         
         case roomToEntity(DMSRoomRealmModel?)
         case catchToDMSRoomEntity(DMSRoomEntity)
+        case userInfoReqeust(memberID: String)
         case networkResult([DMSChatEntity])
         
         case navigationTitle(String) // 전뷰에서 받아왔지만 한번더
@@ -75,7 +76,7 @@ struct DMSChatFeature {
         
         case showChats([ChatModeEntity])
         case appendChat([ChatModeEntity])
-        
+
         // ONCHANGED 이슈로 인한
         case onChangeForScroll(String)
         
@@ -95,10 +96,10 @@ struct DMSChatFeature {
         case filePickOver
         case filePickerResults([URL])
         
+        case userInfoResult(WorkSpaceMembersEntity)
         case socketConnected
     }
-    
-
+    @Dependency(\.workspaceDomainRepository) var workRepo
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.workSpaceReader) var reader
     @Dependency(\.dmsRepository) var dmsRepo
@@ -111,10 +112,11 @@ struct DMSChatFeature {
                 let workSpaceID = state.workSpaceID
                 let userId = state.toModelEntity.userID
                 let bool = state.onAppearTrigger
+                let member = state.toModelEntity
                 state.onAppearTrigger = false
                 
                 return .run { @MainActor send in
-                    
+                    send(.userInfoReqeust(memberID: member.userID))
                     if !bool { return }
                     
                     let ifRealm = try await realmRepo.findDMSRoom(
@@ -122,6 +124,7 @@ struct DMSChatFeature {
                         userId
                     )
                     send(.roomToEntity(ifRealm))
+                    send(.userInfoResult(member))
                 }
             case let .roomToEntity(model):
                 let workSpaceID = state.workSpaceID
@@ -161,7 +164,6 @@ struct DMSChatFeature {
             case let .catchToDMSRoomEntity(model):
                 print(model)
                 state.roomID = model.roomId
-                
                 let id = state.workSpaceID
                 guard id != "" else { break }
                 return .run { send in
@@ -204,7 +206,23 @@ struct DMSChatFeature {
                         send(.showChats(entitys))
                     }
                 }
-                
+            case let .userInfoReqeust(memberId):
+                return .run { send in
+                    let result = try await workRepo.reqeustUserInfo(
+                        userID: memberId
+                    )
+                    await send(.userInfoResult(result))
+                } catch: { error, send in
+                    if let error = error as? UserInfoReqeustAPIError {
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
 //            case let .chatDate(date) :
 ////                let channelId = state.channelID
 //                let roomID = state.roomID
@@ -345,9 +363,9 @@ struct DMSChatFeature {
                     )
                 }
                 state.currentDatas.append(contentsOf: multiToImage)
-                return .run { send in
-                    await send(.dataCountChaeck)
-                }
+//                return .run { send in
+//                    await send(.dataCountChaeck)
+//                }
                 
             case .showFilePicker:
                 return .run { send in
@@ -429,7 +447,9 @@ struct DMSChatFeature {
                 
             case let .onChangeForScroll(string):
                 state.scrollTo = string
-            
+                
+            case let .userInfoResult(model):
+                state.navigationTitle = model.nickname
                 
             default:
                 break

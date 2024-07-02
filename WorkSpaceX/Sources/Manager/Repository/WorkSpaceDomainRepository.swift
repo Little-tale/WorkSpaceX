@@ -229,6 +229,21 @@ extension WorkSpaceDomainRepository: DependencyKey {
             return 
         }
     )
+    
+    func reqeustUserInfo(userID: String) async throws -> WorkSpaceMembersEntity {
+
+        let result = try await NetworkManager.shared.requestDto(
+            WorkSpaceAddMemberDTO.self,
+            router: WorkSpaceRouter.reqeustUser(
+                userID: userID
+            ),
+            errorType: UserInfoReqeustAPIError.self
+        )
+        let mapping = WorkSpaceDomainRepository.workSpaceMapper.workSpaceAddMemberDTOToEntity(
+            dto: result
+        )
+        return mapping
+    }
 }
 
 extension DependencyValues {
