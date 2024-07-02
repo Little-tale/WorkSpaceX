@@ -192,13 +192,19 @@ struct DMSListFeature {
                         for model in models {
                             group.addTask {
                                 do {
-                                    // 1. 렘 데이터에서 가장 마지막
-                                    let realmDate = try await realmRepo.findDMSChatLastFrontDate(roomID: model.roomId)
+                                    // 1. 렘 데이터에서 가장 마지막과 에서 전
+                                    let realmDate = try await realmRepo.findDMSChatLastAndPreviousDates(roomID: model.roomId)
+                    
                                     
                                     var dateString: String? = nil
+                                    var lastDateString: String? = nil
                                     
-                                    if let realmDate {
-                                        dateString = DateManager.shared.toDateISO(realmDate)
+                                    if let pre = realmDate.previousDate {
+                                        dateString = DateManager.shared.toDateISO(pre)
+                                    }
+                                    
+                                    if let last = realmDate.lastDate {
+                                        lastDateString = DateManager.shared.toDateISO(last)
                                     }
                                     
                                     let chatList = try await dmsRepo.dmsChatListRqeust(
@@ -207,7 +213,8 @@ struct DMSListFeature {
                                         cursurDate: dateString
                                     )
                                     
-                                    let unreadCount = try await dmsRepo.dmRoomUnreadReqeust(id, roomID: model.roomId, date: dateString)
+                                    // 이때 이미 본것이지만 1임.
+                                    let unreadCount = try await dmsRepo.dmRoomUnreadReqeust(id, roomID: model.roomId, date: lastDateString)
                                     
                                     var update = model
                                     

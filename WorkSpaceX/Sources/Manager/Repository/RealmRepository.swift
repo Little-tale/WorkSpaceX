@@ -569,21 +569,24 @@ extension RealmRepository {
     }
     
     @MainActor
-    func findDMSChatLastFrontDate(roomID: String) async throws -> Date? {
+    func findDMSChatLastAndPreviousDates(roomID: String) async throws -> (lastDate: Date?, previousDate: Date?) {
         let realm = try await Realm(actor: MainActor.shared)
         
         guard let chatMessages = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)?.chatMessages else {
-            return nil
+            return (nil, nil)
         }
         
         let sortedMessages = chatMessages.sorted(by: \.createdAt, ascending: false)
         
-        if sortedMessages.count <= 1 {
-            // 메시지가 1개 이하인 경우 nil 반환
-            return nil
+        if sortedMessages.isEmpty {
+            // 메시지가 없는 경우 nil 반환
+            return (nil, nil)
+        } else if sortedMessages.count == 1 {
+            // 메시지가 1개인 경우
+            return (sortedMessages[0].createdAt, nil)
         } else {
-            // 마지막의 전 메시지 반환
-            return sortedMessages[1].createdAt
+            // 마지막 메시지와 그 전 메시지 반환
+            return (sortedMessages[0].createdAt, sortedMessages[1].createdAt)
         }
     }
     
