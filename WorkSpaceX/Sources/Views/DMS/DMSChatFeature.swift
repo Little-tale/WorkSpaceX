@@ -165,16 +165,40 @@ struct DMSChatFeature {
             case let .catchToDMSRoomEntity(model):
                 print(model)
                 state.roomID = model.roomId
+                let roomID = model.roomId
                 let id = state.workSpaceID
+    
                 guard id != "" else { break }
                 return .run { send in
-                    let result = try await dmsRepo.dmsChatListRqeust(
-                        model.roomId,
-                        workSpaceId: id,
-                        cursurDate: nil
-                    )
-                    await send(.networkResult(result))
-                    await send(.socketConnected)
+                    
+                    let date = try await realmRepo.findDMSChatLastDate(roomID: roomID)
+                    if let date {
+                        
+                        let date = DateManager.shared.toDateISO(date)
+                        let result = try await dmsRepo.dmsChatListRqeust(
+                            model.roomId,
+                            workSpaceId: id,
+                            cursurDate: date
+                        )
+                        await send(.networkResult(result))
+                        await send(.socketConnected)
+                    } else {
+                        let result = try await dmsRepo.dmsChatListRqeust(
+                            model.roomId,
+                            workSpaceId: id,
+                            cursurDate: nil
+                        )
+                        await send(.networkResult(result))
+                        await send(.socketConnected)
+                    }
+                } catch: { error, send in
+                    if let error = error as? DMSListAPIError{
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else { print(error) }
                 }
                 
             case let .networkResult(results):
@@ -224,68 +248,6 @@ struct DMSChatFeature {
                         print(error)
                     }
                 }
-//            case let .chatDate(date) :
-////                let channelId = state.channelID
-//                let roomID = state.roomID
-//                guard let roomID else { break }
-//                let workSpaceId = state.workSpaceID
-//                
-//                if let date {
-//                    // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
-//                    // 렘옵저버 선 후 -> 통신
-//                    state.lastFetchDate = date
-//                    return .run { send in
-//                    
-//                        try await Task.sleep(for: .seconds(0.1))
-//                        await send(.firstInit)
-//                        await send(.realmobserberStart)
-//                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
-//                        
-//                        await send(.networkResult(result))
-//                        await send(.socketConnected)
-//                    } catch: { error, send in
-//                        if let error = error as? WorkSpaceChannelListAPIError {
-//                            if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
-//                            else if error.errorCode == "E13" {
-//                                print("존재하지 않는 워크 스페이스..?")
-//                            }
-//                        } else {
-//                            print(error)
-//                        }
-//                    }
-//                } else {
-//                    // 2. 없다면 커서 데이트를 빈값으로 보내야함.
-//                    // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
-//                    return .run { send in
-//                        
-//                        try await Task.sleep(for: .seconds(0.2))
-//                        
-//                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
-//                        print("받기 \(result)")
-//                        await send(.networkResult(result))
-//                        
-//                        // 처음 렘
-//                        await send(.firstInit)
-//                        await send(.realmobserberStart)
-//                        await send(.socketConnected)
-//                    } catch: { error, send in
-//                        if let error = error as? WorkSpaceChannelListAPIError {
-//                            if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
-//                            else if error.errorCode == "E13" {
-//                                print("존재하지 않는 워크 스페이스..?")
-//                            }
-//                        } else {
-//                            print(error)
-//                        }
-//                    }
-//                }
-//
-//                
-
-//
-
-
-                // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
 
                 
             case .realmobserberStart:

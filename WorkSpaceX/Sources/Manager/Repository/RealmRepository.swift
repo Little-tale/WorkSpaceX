@@ -555,6 +555,19 @@ extension RealmRepository {
         return Array(model)
     }
     
+    @MainActor
+    func findDMSChatLastDate(roomID: String) async throws -> Date? {
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        guard let chatMessages = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)?.chatMessages else {
+            return nil
+        }
+        if let lastChat = chatMessages.sorted(by: \.createdAt, ascending: false).first {
+            return lastChat.createdAt
+        }
+        return nil
+    }
+    
 }
 
 extension RealmRepository {
