@@ -76,7 +76,7 @@ struct DMSChatFeature {
         
         case showChats([ChatModeEntity])
         case appendChat([ChatModeEntity])
-
+        case socketTORealm(DMSChatEntity, String)
         // ONCHANGED 이슈로 인한
         case onChangeForScroll(String)
         
@@ -136,6 +136,7 @@ struct DMSChatFeature {
                     return .run { send in
                         await send(.catchToDMSRoomEntity(entity))
                         await send(.realmobserberStart)
+                        
                     }
                 } else {
                     return .run { send in
@@ -173,7 +174,7 @@ struct DMSChatFeature {
                         cursurDate: nil
                     )
                     await send(.networkResult(result))
-                    
+                    await send(.socketConnected)
                 }
                 
             case let .networkResult(results):
@@ -363,9 +364,9 @@ struct DMSChatFeature {
                     )
                 }
                 state.currentDatas.append(contentsOf: multiToImage)
-//                return .run { send in
-//                    await send(.dataCountChaeck)
-//                }
+                return .run { send in
+                    await send(.dataCountChaeck)
+                }
                 
             case .showFilePicker:
                 return .run { send in
@@ -424,22 +425,32 @@ struct DMSChatFeature {
                 return .run { send in
                     await send(.dataCountChaeck)
                 }
-//            case .socketConnected:
-//                let channelID = state.channelID
-//                return .run { send in
-//                    for await result in  workSpaceRepo.channelSocketReqeust(channelID) {
-//                        switch result {
-//                        case let .success(model):
-//                            try await realmRepo.upsertToChatInChannel(models: [model])
-//                            print("마지막 소켓 model 받음")
-//                        case .failure(let error):
-//                            print("마지막 소켓 에러 발생")
-//                            await send(.errorMessage(error.message))
-//                        }
-//                    }
-//                } catch: { error, send in
-//                    print("소켓 렘 에러",error) // 렘 에러.
-//                }
+            case .socketConnected:
+                let roomID = state.roomID
+                guard let roomID else { break }
+                return .run { send in
+                    for await result in dmsRepo.dmSocketReqeust(roomID) {
+                        switch result {
+                        case let .success(model):
+                            await send(.socketTORealm(model, roomID))
+                        case let .failure(error):
+                            print(error)
+                            await send(.errorMessage(error.message))
+                        }
+                    }
+                } catch: { error, send in
+                    print("소켓 렘 에러",error) // 렘 에러.
+                }
+                
+            case let .socketTORealm(model, roomID):
+                return .run { send in
+                    try await realmRepo.upsertToDMSChats(
+                        models: [model],
+                        roomID: roomID
+                    )
+                } catch: { error, send in
+                    print(error)
+                }
                 
                 // 알렛 메시지
             case let .errorMessage(message):
