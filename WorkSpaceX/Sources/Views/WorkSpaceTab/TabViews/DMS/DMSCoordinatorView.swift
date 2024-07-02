@@ -21,6 +21,8 @@ struct DMSCoordinatorView: View {
                     DMSListView(store: store)
                 case let .memberAdd(store):
                     AddMemberView(store: store)
+                case let .dmChat(store):
+                    DMSChatView(store: store)
                 }
             }
         }
@@ -34,6 +36,8 @@ extension DMSListScreens.State: Identifiable {
         case let .dmHome(state):
             return state.id
         case let .memberAdd(state):
+            return state.id
+        case let .dmChat(state):
             return state.id
         }
     }

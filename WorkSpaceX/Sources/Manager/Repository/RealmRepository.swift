@@ -491,6 +491,7 @@ extension RealmRepository {
         
         return first.createdAt
     }
+    // DMS 데이트 호출 해야함.
     
     func findChatsForChannelModel(channelId: String, ifRealm: Realm? = nil) async throws -> WorkSpaceChannelRealmModel?  {
         var realm: Realm

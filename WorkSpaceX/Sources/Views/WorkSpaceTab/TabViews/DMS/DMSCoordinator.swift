@@ -12,7 +12,7 @@ import ComposableArchitecture
 @Reducer(state: .equatable)
 enum DMSListScreens {
     case dmHome(DMSListFeature)
-    
+    case dmChat(DMSChatFeature)
     // sheet
     case memberAdd(AddMemberFeature)
 }
@@ -71,8 +71,19 @@ struct DMSCoordinator {
                 state.identeRoutes.dismiss()
                 
                 // DMS 탭에서 프로필 선택시
-            case .router(.routeAction(id: _, action: .dmHome(.delegate(.moveToDMS(let model))))):
-                print(model)
+            case .router(.routeAction(id: _, action: .dmHome(.delegate(.moveToDMS(let model, let workSpaceId))))):
+                if let userid = UserDefaultsManager.userID {
+                    state.identeRoutes.push(.dmChat(
+                        DMSChatFeature.State(
+                            workSpaceID: workSpaceId,
+                            userID: userid,
+                            toModelEntity: model)))
+                }
+            case .router(.routeAction(id: _, action: .dmChat(.popClicked))):
+                
+                // 소켓 연결시 해제 해주어야 함.
+                
+                state.identeRoutes.pop()
                 
             default:
                 break

@@ -128,6 +128,8 @@
 		7B7EB83A2C32D4D900D22362 /* DMSRoomRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8392C32D4D900D22362 /* DMSRoomRealmModel.swift */; };
 		7B7EB83C2C3399BE00D22362 /* DMSRoomUnReadDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB83B2C3399BE00D22362 /* DMSRoomUnReadDTO.swift */; };
 		7B7EB83E2C339A6C00D22362 /* DMSUnReadEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB83D2C339A6C00D22362 /* DMSUnReadEntity.swift */; };
+		7B7EB8402C33A73D00D22362 /* DMSChatFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB83F2C33A73D00D22362 /* DMSChatFeature.swift */; };
+		7B7EB8442C33A81E00D22362 /* DMSChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8432C33A81E00D22362 /* DMSChatView.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -350,6 +352,8 @@
 		7B7EB8392C32D4D900D22362 /* DMSRoomRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomRealmModel.swift; sourceTree = "<group>"; };
 		7B7EB83B2C3399BE00D22362 /* DMSRoomUnReadDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomUnReadDTO.swift; sourceTree = "<group>"; };
 		7B7EB83D2C339A6C00D22362 /* DMSUnReadEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSUnReadEntity.swift; sourceTree = "<group>"; };
+		7B7EB83F2C33A73D00D22362 /* DMSChatFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatFeature.swift; sourceTree = "<group>"; };
+		7B7EB8432C33A81E00D22362 /* DMSChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatView.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -894,6 +898,8 @@
 			children = (
 				7B7EB8332C32890000D22362 /* DMSListView.swift */,
 				7B7EB8352C32893C00D22362 /* DMSListFeature.swift */,
+				7B7EB83F2C33A73D00D22362 /* DMSChatFeature.swift */,
+				7B7EB8432C33A81E00D22362 /* DMSChatView.swift */,
 			);
 			path = DMS;
 			sourceTree = "<group>";
@@ -1294,6 +1300,7 @@
 				7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */,
 				7B8FD6192C19CF9300948E7C /* MakeWorkSpaceAPIError.swift in Sources */,
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
+				7B7EB8442C33A81E00D22362 /* DMSChatView.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B8FD60B2C198D9E00948E7C /* WorkSpaceEmptyListFeature.swift in Sources */,
 				7B7EB8142C3146CC00D22362 /* ChannelOwnerRequestDTO.swift in Sources */,
@@ -1368,6 +1375,7 @@
 				7B7EB8232C32657200D22362 /* DMSListAPIError.swift in Sources */,
 				7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */,
 				7B7EB83C2C3399BE00D22362 /* DMSRoomUnReadDTO.swift in Sources */,
+				7B7EB8402C33A73D00D22362 /* DMSChatFeature.swift in Sources */,
 				7B8FD6262C1AA49C00948E7C /* SideMenuView.swift in Sources */,
 				7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
