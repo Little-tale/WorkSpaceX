@@ -16,4 +16,8 @@ struct DMSRoomEntity: Entity {
     let user: WorkSpaceMembersEntity
     
     var unReadCount: Int = 0 
+    
+    var lastChat: String
+    
+    var lasstChatDate: Date = Date()
 }

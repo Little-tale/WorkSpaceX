@@ -26,6 +26,7 @@ struct DMSListView: View {
                 case .members:
                     List {
                         memberListView()
+                        chatsView()
                     }
                     .listStyle(.plain)
                 }
@@ -79,6 +80,45 @@ extension DMSListView {
     }
     
 }
+extension DMSListView {
+    private func chatsView() -> some View {
+        LazyVStack {
+            ForEach(store.roomList, id: \.roomId) { model in
+                chatView(model)
+                    .asButton {
+                        store.send(.selectedChatRoom(model))
+                    }
+                    .padding(.vertical, 6)
+                    .padding(.horizontal,8)
+            }
+        }
+    }
+    
+    private func chatView(_ model: DMSRoomEntity) -> some View {
+        
+        HStack {
+            Group {
+                if let image = model.user.profileImage {
+                    DownSamplingImageView(url: URL(string: image), size: CGSize(width: 50, height: 50))
+                } else {
+                    WSXImage.profileEmpty1
+                        .resizable()
+                }
+            }
+            .frame(width: 45, height: 45)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            VStack {
+                Text(model.user.nickname)
+                    .frame(maxWidth: 50)
+                Text(model.lastChat)
+            }
+            
+        }
+    }
+}
+
+
+
 // 나를 제외한 멤버가 없을때
 extension DMSListView {
     

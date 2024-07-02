@@ -568,6 +568,25 @@ extension RealmRepository {
         return nil
     }
     
+    @MainActor
+    func findDMSChatLastFrontDate(roomID: String) async throws -> Date? {
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        guard let chatMessages = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)?.chatMessages else {
+            return nil
+        }
+        
+        let sortedMessages = chatMessages.sorted(by: \.createdAt, ascending: false)
+        
+        if sortedMessages.count <= 1 {
+            // 메시지가 1개 이하인 경우 nil 반환
+            return nil
+        } else {
+            // 마지막의 전 메시지 반환
+            return sortedMessages[1].createdAt
+        }
+    }
+    
 }
 
 extension RealmRepository {
@@ -945,6 +964,45 @@ extension RealmRepository {
         
         return model
     }
+    
+    @MainActor
+    @discardableResult
+    func upsertDMSRoomEntityForRoomList(_ model: DMSRoomEntity,
+                                        workSpaceID: String,
+                                        _ ifRealm: Realm? = nil
+    ) async throws -> DMSRoomRealmModel {
+        var realm: Realm
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(DMSRoomRealmModel.self, value: [
+                "roomId": model.roomId,
+                "workSpaceID": workSpaceID,
+                "userID" : model.user.userID,
+                "email" : model.user.email,
+                "createdAt": model.createdAt,
+                "nickName" : model.user.nickname,
+                "profileImage" : model.user.profileImage as Any,
+                "lastChatText" : model.lastChat,
+                "lastChatDate" : model.lasstChatDate,
+                "UnReadCount" : model.unReadCount
+            ], update: .modified)
+        }
+        
+        let model = realm.object(
+            ofType: DMSRoomRealmModel.self,
+            forPrimaryKey: model.roomId
+        )
+        
+        guard let model else { throw RealmError.failAdd }
+        
+        return model
+    }
+    
     
     @MainActor
     @discardableResult

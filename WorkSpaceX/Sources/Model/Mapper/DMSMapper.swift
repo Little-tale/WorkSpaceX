@@ -25,7 +25,7 @@ extension DMSMapper {
                 email: dto.user.email,
                 nickname: dto.user.nickname,
                 profileImage: dto.user.profileImage
-            )
+            ), lastChat: ""
         )
     }
 }

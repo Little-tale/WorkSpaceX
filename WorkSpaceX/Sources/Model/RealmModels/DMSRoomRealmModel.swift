@@ -26,6 +26,12 @@ class DMSRoomRealmModel: Object {
     
     @Persisted var chatMessages = List<DMChatRealmModel>()
     
+    @Persisted var lastChatText: String = ""
+    
+    @Persisted var lastChatDate: Date? = nil
+    
+    @Persisted var UnReadCount: Int = 0
+    
     convenience
     init(
         roomId: String,
