@@ -209,12 +209,12 @@ extension WorkSpaceReader {
                             case .initial(let models):
                                 continuation.yield(Array(models))
                             case .update(let models, let deletions, let insertAt, let modifications):
-                                
-                                let new = insertAt.map { models[$0] }
-                                
-                                let deleted = deletions.map { models[$0] }
-                                
-                                continuation.yield(Array(new))
+//
+//                                let new = insertAt.map { models[$0] }
+//
+//                                let deleted = deletions.map { models[$0] }
+//
+                                continuation.yield(Array(models))
                             case .error(let error):
                                 continuation.finish()
                             }
@@ -241,6 +241,52 @@ extension WorkSpaceReader {
     func stopToDMSRoom() {
         tokens[dmListTokenID]?.invalidate()
         tokens[dmListTokenID] = nil
+    }
+    
+    @MainActor
+    func observeNewMessage(dmRoomID: String) -> AsyncStream<[DMChatRealmModel]> {
+        return AsyncStream { continuation in
+            Task { @MainActor in
+                do {
+                    let realm = try await Realm(actor: MainActor.shared)
+                    
+                    guard let dmRoom = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: dmRoomID) else {
+                        continuation.finish()
+                        return
+                    }
+                    
+                    let token = dmRoom.chatMessages.observe { change in
+                        Task { @MainActor in
+                            switch change {
+                            case .initial:
+                                break
+                            case .update(let models, deletions: _, insertions: let insertAt, modifications: _):
+                                
+                                let new = insertAt.map { models[$0] }
+        
+                                continuation.yield(Array(new))
+                            case .error(_):
+                                continuation.finish()
+                            }
+                        }
+                    }
+                    
+                    tokens[dmRoomID] = token
+                    
+                    continuation.onTermination = { @Sendable [weak self] _ in
+                        token.invalidate()
+                        self?.tokens[dmRoomID] = nil
+                    }
+                } catch {
+                    continuation.finish()
+                }
+            }
+        }
+    }
+    
+    func observeDMSStop(_ dmRoomID: String) async {
+        tokens[dmRoomID]?.invalidate()
+        tokens[dmRoomID] = nil
     }
 }
 

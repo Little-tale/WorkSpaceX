@@ -65,13 +65,14 @@ struct DMSChatFeature {
         case userFeildText(String)
         
         case realmobserberStart
+        case firstInit
         
         case errorMessage(String?)
         // 전송
         case sendTapped
         
         // 채팅들 액션
-        case firstInit
+        
         case showChats([ChatModeEntity])
         case appendChat([ChatModeEntity])
         
@@ -97,7 +98,7 @@ struct DMSChatFeature {
         case socketConnected
     }
     
-//    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.workSpaceReader) var reader
     @Dependency(\.dmsRepository) var dmsRepo
@@ -126,11 +127,12 @@ struct DMSChatFeature {
                 let workSpaceID = state.workSpaceID
                 let userId = state.toModelEntity.userID
                 if let model {
-                    
+                    state.roomID = model.roomId
                     let entity = dmsRepo.dmsRealmToEntity(model)
                     // 룸 아이디는 그대로일 것으로 보임 즉 최초로 한번만 룸에 대해서 조사 후 DM 연결해야 함
                     return .run { send in
                         await send(.catchToDMSRoomEntity(entity))
+                        await send(.realmobserberStart)
                     }
                 } else {
                     return .run { send in
@@ -138,7 +140,14 @@ struct DMSChatFeature {
                             workSpaceID,
                             otherUserID: userId
                         )
+                        try await realmRepo.upsertDMSRoomEntity(
+                            result,
+                            workSpaceID: workSpaceID
+                        )
                         await send(.catchToDMSRoomEntity(result))
+                        
+                        await send(.realmobserberStart)
+                        
                     } catch: { error, send in
                         if let error = error as? DMSRoomAPIError {
                             if !error.ifDevelopError {
@@ -162,6 +171,7 @@ struct DMSChatFeature {
                         cursurDate: nil
                     )
                     await send(.networkResult(result))
+                    
                 }
                 
             case let .networkResult(results):
@@ -174,6 +184,23 @@ struct DMSChatFeature {
                         )
                     } catch: { error, send in
                         print(error)
+                    }
+                }
+            case .firstInit:
+                if let roomID = state.roomID {
+                    let meID = state.userID
+                    return .run { @MainActor send in
+                        
+                        let result = try await realmRepo.findDMSChats(
+                            roomID: roomID
+                        )
+                        
+                        let entitys = try await realmRepo.toChat(
+                            result,
+                            userID: meID
+                        )
+                        
+                        send(.showChats(entitys))
                     }
                 }
                 
@@ -232,68 +259,11 @@ struct DMSChatFeature {
 //                        }
 //                    }
 //                }
-//            case let .networkResult(results):
-//                print("네트워크",results)
-//                //let channelID = state.channelID
-//                // [WorkSpaceChatEntity]
-//                return .run { send in
-//                    try await realmRepo.upsertToChatInChannel( models: results)
-//                }
-//                //채널 정보 조회
-//            case .channelInfoRequest:
-//                let workSpaceID = state.workSpaceID
-//                let channelID = state.channelID
+//
 //                
-//                return .run { send in
-//                    let result = try await workSpaceRepo.channelInfoRequest(workSpaceID, channelID)
-//                    await send(.channelResult(result))
-//                    // 이때 렘 업뎃
-//                    try await  realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: workSpaceID, chanel: result, userBool: true)
-//                    
-//                } catch: { error, send in
-//                    if let error = error as? WorkSpaceChannelListAPIError {
-//                        if error.ifReFreshDead {
-//                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-//                        } else {
-//                            print("체널 에러 발생 이긴함. ",error)
-//                        }
-//                    } else {
-//                        print("체널 에러 발생 이긴함. ",error)
-//                    }
-//                }
-//                
-//            case let .channelResult(channel):
-//                state.channelModel = channel
-//                state.ownerID = channel.owner_id
-//                
-//                state.navigationTitle = channel.name
-//                
-//                return .run { send in
-//                    await send(.navigationMemberCount(channel.users.count))
-//                }
-//                
-//            case let .userFeildText(text):
-//                state.userFeildText = text
-//                
-//                /// 처음엔
-//            case .firstInit:
-//                let channelID = state.channelID
-//                let meID = state.userID
-//                
-//                return .run { @MainActor send in
-//                    
-//                    if let result = try await realmRepo.findChatsForChannelModel(channelId: channelID, ifRealm: nil) {
-//                        
-//                        let chatMessages = Array(result.chatMessages)
-//                        
-//                        let entitys = try await realmRepo.toChat(
-//                            chatMessages,
-//                            userID: meID
-//                        )
-//                        
-//                        send(.showChats(entitys))
-//                    }
-//                }
+
+//
+
 //            case .sendTapped:
 //                let workSpaceID = state.workSpaceID
 //                let roomId = state.channelID
@@ -310,21 +280,27 @@ struct DMSChatFeature {
 
                 
             case .realmobserberStart:
-                let roomID = state.roomID
-                let userID = state.userID
-                
-                
+                if let roomID = state.roomID {
+                    let userID = state.userID
+                    return .run { @MainActor send in
+                        for await models in  reader.observeNewMessage(
+                            dmRoomID: roomID
+                        ) {
+                            let result = try await realmRepo.toChat(models, userID: userID)
+                            send(.appendChat(result))
+                        }
+                    }
+                }
                 
             case let .appendChat(models):
-
-                for model in models {
-                    state.currentModels.append(model)
-                }
+                state.currentModels.append(contentsOf: models)
                 
             case let .showChats(models):
                 dump(models)
                 state.currentModels = models
-      
+                
+            case let .userFeildText(text):
+                state.userFeildText = text
                 
                 // 이미지 피커란
             case .showImagePicker:

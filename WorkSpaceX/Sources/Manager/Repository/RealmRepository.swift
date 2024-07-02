@@ -535,6 +535,25 @@ extension RealmRepository {
         print("//??",model)
         return model
     }
+    
+    @MainActor
+    func findDMSChats(roomID: String, ifRealm: Realm? = nil) async throws -> [DMChatRealmModel]  {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+    
+        let model = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)?.chatMessages
+        
+        guard let model else { return [] }
+        
+        print("//??",model)
+        return Array(model)
+    }
+    
 }
 
 extension RealmRepository {
@@ -752,6 +771,50 @@ extension RealmRepository {
         
         return ChatModeEntity(
             chatID: model.chatID,
+            isMe: ifMe ? .me : .other(fakeModel),
+            content: model.content ?? "",
+            files: Array(model.files),
+            date: model.createdAt ?? Date(),
+            isFirstDate: model.isDateSection
+        )
+    }
+    
+    func toChat(_ models: [DMChatRealmModel], userID: String)  async throws -> [ChatModeEntity] {
+        var wait = [ChatModeEntity] ()
+        for model in models {
+            let result = try await toChat(model, userID: userID)
+            if let result {
+                wait.append(result)
+            }
+        }
+        return wait
+    }
+    
+    func toChat(_ model: DMChatRealmModel, userID: String, ifRealm: Realm? = nil)  async throws -> ChatModeEntity? {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        guard let user = realm.object(
+            ofType: UserRealmModel.self,
+            forPrimaryKey: model.user
+        ) else { return nil }
+        
+        let ifMe: Bool = model.user == userID
+        
+        let fakeModel = WorkSpaceMemberEntity(
+            userID: user.userID,
+            email: user.email,
+            nickName: user.nickName,
+            profileImage: user.profileImage
+        )
+        
+        return ChatModeEntity(
+            chatID: model.dmID,
             isMe: ifMe ? .me : .other(fakeModel),
             content: model.content ?? "",
             files: Array(model.files),
