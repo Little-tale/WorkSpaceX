@@ -24,15 +24,28 @@ class DMSRoomRealmModel: Object {
     
     @Persisted var profileImage: String?
     
+    @Persisted var chatMessages = List<DMChatRealmModel>()
+    
     convenience
-    init(roomId: String, createdAt: String, userID: String, email: String, nickName: String, profileImage: String? = nil) {
+    init(
+        roomId: String,
+        workSpaceID: String,
+        createdAt: String,
+        userID: String,
+        email: String,
+        nickName: String,
+        profileImage: String? = nil,
+        chatMessages: List<DMChatRealmModel> = List<DMChatRealmModel>()
+    ) {
         self.init()
         self.roomId = roomId
+        self.workSpaceID = workSpaceID
         self.createdAt = createdAt
         self.userID = userID
         self.email = email
         self.nickName = nickName
         self.profileImage = profileImage
+        self.chatMessages = chatMessages
     }
     
 }

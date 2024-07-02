@@ -491,7 +491,34 @@ extension RealmRepository {
         
         return first.createdAt
     }
-    // DMS 데이트 호출 해야함.
+    // DMS 모델이 존재하는가?
+    func findDMSRoom(workSpaceID: String,_ userID: String, _ ifRealm: Realm? = nil) async throws -> DMSRoomRealmModel? {
+        
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        let results = realm.objects(DMSRoomRealmModel.self).where {
+            $0.workSpaceID == workSpaceID && $0.userID == userID
+        }
+        return results.first
+    }
+    func findDMSRoom(roomID: String, _ ifRealm: Realm? = nil) async throws -> DMSRoomRealmModel? {
+        
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+
+        let result = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)
+        return result
+    }
     
     func findChatsForChannelModel(channelId: String, ifRealm: Realm? = nil) async throws -> WorkSpaceChannelRealmModel?  {
         var realm: Realm
@@ -563,6 +590,63 @@ extension RealmRepository {
         }
     }
 }
+extension RealmRepository {
+    
+    func upsertToDMSChats(models: [DMSChatEntity], roomID: String) async throws {
+        
+        guard let first = models.first else { return }
+        
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        guard let dmsRoom = try await findDMSRoom(
+            roomID: roomID, realm
+        ) else {
+            throw RealmError.cantFindModel
+        }
+        
+        let cancelUpdate = Set(dmsRoom.chatMessages.map { $0.dmID })
+        
+        var chatModels = [DMChatRealmModel]()
+        var lastDate: Date? = nil
+        
+        // 채팅 메시지의 마지막 날짜를 가져옵니다.
+        let allChats = dmsRoom.chatMessages.sorted(byKeyPath: "createdAt", ascending: true)
+        
+        if let lastChat = allChats.last {
+            lastDate = Calendar.current.startOfDay(for: lastChat.createdAt ?? Date())
+        }
+        
+        for chat in models {
+            if cancelUpdate.contains(chat.dmID) {
+                continue
+            }
+            guard let user = try await upsertMembers(response: chat.user, ifRealm: realm) else {
+                throw RealmError.failAdd
+            }
+            let newChat = try await upsertChat(chat, user: user, ifRealm: realm)
+            
+            chatModels.append(newChat)
+        }
+        
+        try await realm.asyncWrite {
+            for chatModel in chatModels {
+                let chatDate = Calendar.current.startOfDay(for: chatModel.createdAt ?? Date())
+                
+                if lastDate != chatDate {
+                    chatModel.isDateSection = true
+                    lastDate = chatDate
+                } else {
+                    chatModel.isDateSection = false
+                }
+                
+                realm.add(chatModel, update: .modified)
+            }
+            
+            dmsRoom.chatMessages.append(objectsIn: chatModels)
+        }
+    }
+}
+
 
 extension RealmRepository {
     
@@ -592,6 +676,41 @@ extension RealmRepository {
         
         return model
     }
+    
+    @discardableResult
+    func upsertChat(
+        _ model: DMSChatEntity,
+        user: UserRealmModel,
+        ifRealm: Realm? = nil
+    ) async throws -> DMChatRealmModel {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        try await realm.asyncWrite {
+            realm.create(DMChatRealmModel.self, value: [
+                "dmID": model.dmID,
+                "roomID" : model.roomID,
+                "content" : model.content as Any,
+                "createdAt" : model.createdAt.toDate as Any,
+                "user" : user.userID,
+                "files" : model.files ?? []
+            ], update: .modified)
+        }
+        let model = realm.object(
+            ofType: DMChatRealmModel.self,
+            forPrimaryKey: model.dmID
+        )
+        
+        guard let model else { throw RealmError.failAdd }
+        
+        return model
+    }
+    
 }
 extension RealmRepository {
     func toChat(_ models: [ChatRealmModel], userID: String)  async throws -> [ChatModeEntity] {

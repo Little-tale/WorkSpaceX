@@ -130,6 +130,12 @@
 		7B7EB83E2C339A6C00D22362 /* DMSUnReadEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB83D2C339A6C00D22362 /* DMSUnReadEntity.swift */; };
 		7B7EB8402C33A73D00D22362 /* DMSChatFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB83F2C33A73D00D22362 /* DMSChatFeature.swift */; };
 		7B7EB8442C33A81E00D22362 /* DMSChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8432C33A81E00D22362 /* DMSChatView.swift */; };
+		7B7EB8482C33B5F700D22362 /* DMSRoomRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8472C33B5F700D22362 /* DMSRoomRequestDTO.swift */; };
+		7B7EB84A2C33B8EB00D22362 /* DMSRoomAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8492C33B8EB00D22362 /* DMSRoomAPIError.swift */; };
+		7B7EB84E2C33C45900D22362 /* DMSChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB84D2C33C45900D22362 /* DMSChatDTO.swift */; };
+		7B7EB8502C33C53800D22362 /* DMSChatListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB84F2C33C53800D22362 /* DMSChatListDTO.swift */; };
+		7B7EB8522C33C6B700D22362 /* DMSChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */; };
+		7B7EB8542C33CD3700D22362 /* DMChatRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -354,6 +360,12 @@
 		7B7EB83D2C339A6C00D22362 /* DMSUnReadEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSUnReadEntity.swift; sourceTree = "<group>"; };
 		7B7EB83F2C33A73D00D22362 /* DMSChatFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatFeature.swift; sourceTree = "<group>"; };
 		7B7EB8432C33A81E00D22362 /* DMSChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatView.swift; sourceTree = "<group>"; };
+		7B7EB8472C33B5F700D22362 /* DMSRoomRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomRequestDTO.swift; sourceTree = "<group>"; };
+		7B7EB8492C33B8EB00D22362 /* DMSRoomAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSRoomAPIError.swift; sourceTree = "<group>"; };
+		7B7EB84D2C33C45900D22362 /* DMSChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatDTO.swift; sourceTree = "<group>"; };
+		7B7EB84F2C33C53800D22362 /* DMSChatListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatListDTO.swift; sourceTree = "<group>"; };
+		7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatEntity.swift; sourceTree = "<group>"; };
+		7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatRealmModel.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -870,6 +882,9 @@
 				7B7EB81E2C32638400D22362 /* DMSRoomDTO.swift */,
 				7B7EB8202C3263E700D22362 /* DMSRoomListDTO.swift */,
 				7B7EB83B2C3399BE00D22362 /* DMSRoomUnReadDTO.swift */,
+				7B7EB8472C33B5F700D22362 /* DMSRoomRequestDTO.swift */,
+				7B7EB84D2C33C45900D22362 /* DMSChatDTO.swift */,
+				7B7EB84F2C33C53800D22362 /* DMSChatListDTO.swift */,
 			);
 			path = DMS;
 			sourceTree = "<group>";
@@ -880,6 +895,7 @@
 				7B7EB8272C32682800D22362 /* DMSRoomEntity.swift */,
 				7B7EB8292C326ED600D22362 /* DMSRoomSectionEntity.swift */,
 				7B7EB83D2C339A6C00D22362 /* DMSUnReadEntity.swift */,
+				7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */,
 			);
 			path = DMS;
 			sourceTree = "<group>";
@@ -962,6 +978,7 @@
 				7B26D2222C2282E200BC9912 /* WorkSpaceUserRealmModel.swift */,
 				7BF9D7322C26883E0021D043 /* ChatRealmModel.swift */,
 				7B7EB8392C32D4D900D22362 /* DMSRoomRealmModel.swift */,
+				7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -1064,6 +1081,7 @@
 				7B7EB8152C31486300D22362 /* ChannelOwnerChangedAPIError.swift */,
 				7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */,
 				7B7EB8222C32657200D22362 /* DMSListAPIError.swift */,
+				7B7EB8492C33B8EB00D22362 /* DMSRoomAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1279,6 +1297,7 @@
 				7B8FD63D2C1AB6B000948E7C /* UserRealmModel.swift in Sources */,
 				7B7EB8282C32682800D22362 /* DMSRoomEntity.swift in Sources */,
 				7B7EB80C2C2EA9A200D22362 /* ChannelMultiPart.swift in Sources */,
+				7B7EB8502C33C53800D22362 /* DMSChatListDTO.swift in Sources */,
 				7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */,
 				7BF9D72A2C255A8B0021D043 /* WorkSpaceChannelListFeature.swift in Sources */,
 				7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */,
@@ -1378,10 +1397,12 @@
 				7B7EB8402C33A73D00D22362 /* DMSChatFeature.swift in Sources */,
 				7B8FD6262C1AA49C00948E7C /* SideMenuView.swift in Sources */,
 				7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */,
+				7B7EB8482C33B5F700D22362 /* DMSRoomRequestDTO.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7BF9D7372C2697DB0021D043 /* WorkSpaceChatDTO.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,
+				7B7EB84A2C33B8EB00D22362 /* DMSRoomAPIError.swift in Sources */,
 				7B8FD60F2C19B33A00948E7C /* AppleLoginAPIError.swift in Sources */,
 				7BF9D7112C22DEC40021D043 /* WorkSpaceMakeChannelAPIError.swift in Sources */,
 				7B2EEE172C118C660024853C /* HTTPHeaders.swift in Sources */,
@@ -1411,6 +1432,7 @@
 				7BF9D7192C2405130021D043 /* WorkSpaceAddMemberRequestDTO.swift in Sources */,
 				7BEC45ED2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift in Sources */,
 				7B7EB80E2C2EAC5900D22362 /* ChannelEditAPIError.swift in Sources */,
+				7B7EB84E2C33C45900D22362 /* DMSChatDTO.swift in Sources */,
 				7B7EB8162C31486300D22362 /* ChannelOwnerChangedAPIError.swift in Sources */,
 				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
 				7B7EB83E2C339A6C00D22362 /* DMSUnReadEntity.swift in Sources */,
@@ -1459,6 +1481,7 @@
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B8FD6092C198D7B00948E7C /* WorkSpaceEmptyListView.swift in Sources */,
 				7B7EB8182C31643300D22362 /* ChannelDeleteAPIError.swift in Sources */,
+				7B7EB8542C33CD3700D22362 /* DMChatRealmModel.swift in Sources */,
 				7B26D2232C2282E200BC9912 /* WorkSpaceUserRealmModel.swift in Sources */,
 				7B7EB8252C3267B700D22362 /* DMSMapper.swift in Sources */,
 				7BEC45EB2C1703C100576ECA /* WorkSpaceFirstStartView.swift in Sources */,
@@ -1472,6 +1495,7 @@
 				7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */,
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
 				7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */,
+				7B7EB8522C33C6B700D22362 /* DMSChatEntity.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
 				7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */,
 				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,

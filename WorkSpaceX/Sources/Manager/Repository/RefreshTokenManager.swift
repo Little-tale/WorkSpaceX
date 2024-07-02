@@ -21,7 +21,7 @@ actor RefreshTokenManager {
             }
         }
         isRefreshing = true
-        defer { 
+        defer {
             isRefreshing = false
             pendingRequests.forEach { $0.resume() }
             pendingRequests.removeAll()

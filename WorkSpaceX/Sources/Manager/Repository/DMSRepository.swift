@@ -21,6 +21,20 @@ struct DMSRepository {
         return dmsMapper.toEntity(result)
     }
     
+    func dmsRoomRequest(_ workSpaceID: String, otherUserID: String ) async throws -> DMSRoomEntity {
+        let reqeust = dmsMapper.toDTOReqeust(otherUserID)
+        
+        let result = try await NetworkManager.shared.requestDto(
+            DMSRoomDTO.self,
+            router: DMSRouter.dmRoomReqeust(
+                workSpaceID,
+                requestDTO: reqeust
+            ), errorType: DMSRoomAPIError.self)
+        let mapping = dmsMapper.toEntity(result)
+        
+        return mapping
+    }
+    
     func dmRoomUnreadReqeust(_ workSpaceId: String, roomID: String, date: String?) async throws -> DMSUnReadEntity {
         
         let result = try await NetworkManager.shared.requestDto(
@@ -32,6 +46,21 @@ struct DMSRepository {
             ), errorType: DMSListAPIError.self)
         
         return dmsMapper.toEntity(result)
+    }
+    
+    func dmsChatListRqeust(_ roomID: String, workSpaceId: String, cursurDate: String?) async throws -> [DMSChatEntity]  {
+        
+        let result = try await NetworkManager.shared.requestDto(
+            DMSChatListDTO.self,
+            router: DMSRouter.dmRoomChatsReqeust(
+            workSpaceId,
+            roomID: roomID,
+            date: cursurDate
+            ), errorType: DMSListAPIError.self)
+        
+        let mapping = dmsMapper.toEntity(result)
+        
+        return mapping
     }
     
 }

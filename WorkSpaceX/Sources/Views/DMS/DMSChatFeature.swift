@@ -21,6 +21,7 @@ struct DMSChatFeature {
         let userID : String
         let toModelEntity: WorkSpaceMembersEntity
         var navigationTitle: String = ""
+        var roomID: String? = nil
         
         var userFeildText: String = ""
         var currentDatas: [ChatMultipart.File] = []
@@ -53,8 +54,10 @@ struct DMSChatFeature {
         // 채팅 분기점
         case chatDate(Date?)
         
-        case networkResult([WorkSpaceChatEntity])
-       
+        case roomToEntity(DMSRoomRealmModel?)
+        case catchToDMSRoomEntity(DMSRoomEntity)
+        case networkResult([DMSChatEntity])
+        
         case navigationTitle(String) // 전뷰에서 받아왔지만 한번더
         case navigationMemberCount(Int)
         
@@ -94,33 +97,90 @@ struct DMSChatFeature {
         case socketConnected
     }
     
-    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
+//    @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.workSpaceReader) var reader
     @Dependency(\.dmsRepository) var dmsRepo
     
-//    var body: some ReducerOf<Self> {
-//        
-//        
-//        Reduce { state, action in
-//            switch action {
-//            case .onAppear:
-//                
-//                let workSpaceID = state.workSpaceID
-//                let roomID = state.roomID
-//                
-//                let bool = state.onAppearTrigger
-//                state.onAppearTrigger = false
-//                
-//                return .run { send in
-//                    
-//                    if !bool { return }
-//                    
-//                    let date = try await realmRepo.findChatsForChannel(channelId: channelID)
-//                    await send(.chatDate(date))
-//                }
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                
+                let workSpaceID = state.workSpaceID
+                let userId = state.toModelEntity.userID
+                let bool = state.onAppearTrigger
+                state.onAppearTrigger = false
+                
+                return .run { @MainActor send in
+                    
+                    if !bool { return }
+                    
+                    let ifRealm = try await realmRepo.findDMSRoom(
+                        workSpaceID: workSpaceID,
+                        userId
+                    )
+                    send(.roomToEntity(ifRealm))
+                }
+            case let .roomToEntity(model):
+                let workSpaceID = state.workSpaceID
+                let userId = state.toModelEntity.userID
+                if let model {
+                    
+                    let entity = dmsRepo.dmsRealmToEntity(model)
+                    // 룸 아이디는 그대로일 것으로 보임 즉 최초로 한번만 룸에 대해서 조사 후 DM 연결해야 함
+                    return .run { send in
+                        await send(.catchToDMSRoomEntity(entity))
+                    }
+                } else {
+                    return .run { send in
+                        let result = try await dmsRepo.dmsRoomRequest(
+                            workSpaceID,
+                            otherUserID: userId
+                        )
+                        await send(.catchToDMSRoomEntity(result))
+                    } catch: { error, send in
+                        if let error = error as? DMSRoomAPIError {
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
+                            }
+                        } else {
+                            print(error)
+                        }
+                    }
+                }
+            case let .catchToDMSRoomEntity(model):
+                print(model)
+                state.roomID = model.roomId
+                
+                let id = state.workSpaceID
+                guard id != "" else { break }
+                return .run { send in
+                    let result = try await dmsRepo.dmsChatListRqeust(
+                        model.roomId,
+                        workSpaceId: id,
+                        cursurDate: nil
+                    )
+                    await send(.networkResult(result))
+                }
+                
+            case let .networkResult(results):
+                print("네트워크",results)
+                if let roomID = state.roomID {
+                    return .run { send in
+                        try await realmRepo.upsertToDMSChats(
+                            models: results,
+                            roomID: roomID
+                        )
+                    } catch: { error, send in
+                        print(error)
+                    }
+                }
+                
 //            case let .chatDate(date) :
-//                let channelId = state.channelID
+////                let channelId = state.channelID
+//                let roomID = state.roomID
+//                guard let roomID else { break }
 //                let workSpaceId = state.workSpaceID
 //                
 //                if let date {
@@ -236,7 +296,7 @@ struct DMSChatFeature {
 //                }
 //            case .sendTapped:
 //                let workSpaceID = state.workSpaceID
-//                let channelID = state.channelID
+//                let roomId = state.channelID
 //                let content = state.userFeildText
 //                let files = state.currentDatas
 //                
@@ -246,136 +306,108 @@ struct DMSChatFeature {
 //                let multi = ChatMultipart(content: content, files: files)
 //                state.userFeildText = ""
 //                state.currentDatas = []
-//                // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
-//                
-//                return .run { send in
-//                    // 소켓을 연결할것으로 예상됨으로. 패스.
-//                    await send(.dataCountChaeck)
-//                    let result = try await workSpaceRepo.sendChatting(
-//                        workSpaceID,
-//                        channelID,
-//                        multi
-//                    )
-//                    print("전송은 성공 : ",result)
-//                } catch: { error, send in
-//                    if let error = error as? WorkSpaceChatSendAPIError {
-//                        if error.ifReFreshDead {
-//                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-//                        } else if !error.ifDevelopError {
-//                            await send(.errorMessage(error.message))
-//                        } else {
-//                            print(error)
-//                        }
-//                    } else {
-//                        print(error)
-//                    }
-//                }
-//                
-//            case .realmobserberStart:
-//                let channelID = state.channelID
-//                let userID = state.userID
-//                return .run { @MainActor send in
-//                    
-//                    for await model in  reader.observeNewMessage(channelID: channelID) {
-//                        
-//                        let result = try await realmRepo.toChat(model, userID: userID)
-//                        send(.appendChat(result))
-//                    }
-//                }
-//                
-//            case let .appendChat(models):
-//
-//                for model in models {
-//                    state.currentModels.append(model)
-//                }
-//                
-//            case let .showChats(models):
-//                dump(models)
-//                state.currentModels = models
-//      
-//                
-//                // 이미지 피커란
-//            case .showImagePicker:
-//                if state.dataCanCount == 0 {
-//                    return .run { send in await send(.filePickOver)}
-//                }
-//                return .run { send in
-//                    await send(.imagePickerBool(true))
-//                }
-//            case let .imagePickerBool(bool):
-//                state.imagePickerTrigger = bool
-//                // 이미지 피커 데이터
-//            case let .imageDataPicks(datas):
-//                
-//                let multiToImage = datas.map { data in
-//                    ChatMultipart.File(
-//                        data: data,
-//                        fileName: "WorkSpaceX_\(UUID()).jpeg",
-//                        fileType: .image
-//                    )
-//                }
-//                state.currentDatas.append(contentsOf: multiToImage)
-//                return .run { send in
-//                    await send(.dataCountChaeck)
-//                }
-//                
-//            case .showFilePicker:
-//                return .run { send in
-//                    await send(.filePickerBool(true))
-//                }
-//            case let .filePickerBool(bool):
-//                if state.dataCanCount == 0 {
-//                    return .run { send in await send(.filePickOver)}
-//                }
-//                state.filePickerTrigger = bool
-//                
-//            case let .filePickerResults(urls):
-//                var datas: [ChatMultipart.File] = []
-//                var ifOberData: Bool = false
-//                for url in urls {
-//                    guard let data = try? Data(contentsOf: url) else { continue }
-//                    let dataSize = Double(data.count)
-//                    if dataSize > (4.99 * 1024 * 1024) {
-//                        ifOberData = true
-//                        continue
-//                    }
-//                    let fileName: String = url.lastPathComponent
-//                    let filType = fileType(from: url)
-//                    let result = ChatMultipart.File(
-//                        data: data,
-//                        fileName: fileName,
-//                        fileType: filType
-//                    )
-//                    datas.append(result)
-//                }
-//                
-//                state.currentDatas.append(contentsOf: datas)
-//                
-//                if ifOberData {
-//                    return .run { send in
-//                        await send(.dataCountChaeck)
-//                        await send(.errorMessage("5mb 초과 데이터는 추가하실 수 없습니다!"))
-//                    }
-//                } else {
-//                    return .run { send in
-//                        await send(.dataCountChaeck)
-//                    }
-//                }
-//            case .filePickOver:
-//                state.errorMessage = "총 5개 제한 이에요 ㅠㅠ"
-//
-//                // 데이터 카운트 관리
-//            case .dataCountChaeck:
-//                state.dataCanCount = 5 - state.currentDatas.count
-//                let bool = state.currentDatas.count > 0
-//                state.showChatBottom = bool
-//               
-//                // 데이터 삭제 관리
-//            case let .dataRemoveToIndex(index):
-//                state.currentDatas.remove(at: index)
-//                return .run { send in
-//                    await send(.dataCountChaeck)
-//                }
+                // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
+
+                
+            case .realmobserberStart:
+                let roomID = state.roomID
+                let userID = state.userID
+                
+                
+                
+            case let .appendChat(models):
+
+                for model in models {
+                    state.currentModels.append(model)
+                }
+                
+            case let .showChats(models):
+                dump(models)
+                state.currentModels = models
+      
+                
+                // 이미지 피커란
+            case .showImagePicker:
+                if state.dataCanCount == 0 {
+                    return .run { send in await send(.filePickOver)}
+                }
+                return .run { send in
+                    await send(.imagePickerBool(true))
+                }
+            case let .imagePickerBool(bool):
+                state.imagePickerTrigger = bool
+                // 이미지 피커 데이터
+            case let .imageDataPicks(datas):
+                
+                let multiToImage = datas.map { data in
+                    ChatMultipart.File(
+                        data: data,
+                        fileName: "WorkSpaceX_\(UUID()).jpeg",
+                        fileType: .image
+                    )
+                }
+                state.currentDatas.append(contentsOf: multiToImage)
+                return .run { send in
+                    await send(.dataCountChaeck)
+                }
+                
+            case .showFilePicker:
+                return .run { send in
+                    await send(.filePickerBool(true))
+                }
+            case let .filePickerBool(bool):
+                if state.dataCanCount == 0 {
+                    return .run { send in await send(.filePickOver)}
+                }
+                state.filePickerTrigger = bool
+                
+            case let .filePickerResults(urls):
+                var datas: [ChatMultipart.File] = []
+                var ifOberData: Bool = false
+                for url in urls {
+                    guard let data = try? Data(contentsOf: url) else { continue }
+                    let dataSize = Double(data.count)
+                    if dataSize > (4.99 * 1024 * 1024) {
+                        ifOberData = true
+                        continue
+                    }
+                    let fileName: String = url.lastPathComponent
+                    let filType = fileType(from: url)
+                    let result = ChatMultipart.File(
+                        data: data,
+                        fileName: fileName,
+                        fileType: filType
+                    )
+                    datas.append(result)
+                }
+                
+                state.currentDatas.append(contentsOf: datas)
+                
+                if ifOberData {
+                    return .run { send in
+                        await send(.dataCountChaeck)
+                        await send(.errorMessage("5mb 초과 데이터는 추가하실 수 없습니다!"))
+                    }
+                } else {
+                    return .run { send in
+                        await send(.dataCountChaeck)
+                    }
+                }
+            case .filePickOver:
+                state.errorMessage = "총 5개 제한 이에요 ㅠㅠ"
+
+                // 데이터 카운트 관리
+            case .dataCountChaeck:
+                state.dataCanCount = 5 - state.currentDatas.count
+                let bool = state.currentDatas.count > 0
+                state.showChatBottom = bool
+               
+                // 데이터 삭제 관리
+            case let .dataRemoveToIndex(index):
+                state.currentDatas.remove(at: index)
+                return .run { send in
+                    await send(.dataCountChaeck)
+                }
 //            case .socketConnected:
 //                let channelID = state.channelID
 //                return .run { send in
@@ -392,33 +424,21 @@ struct DMSChatFeature {
 //                } catch: { error, send in
 //                    print("소켓 렘 에러",error) // 렘 에러.
 //                }
-//                
-//                // 알렛 메시지
-//            case let .errorMessage(message):
-//                state.errorMessage = message
-//                
-//            case let .onChangeForScroll(string):
-//                state.scrollTo = string
-//                
-//            case .listButtonTapped:
-//                let channelID = state.channelID
-//                
-//                if let owner = state.ownerID,
-//                   let chatmodel = state.channelModel {
-//                    let ifOwner = owner == state.userID
-//                    return .run { send in
-//                        await send(.sendToList(channel: chatmodel, isOwner: ifOwner))
-//                    }
-//                }
-//            case let .navigationMemberCount(count):
-//                state.navigationMemberCount = String(count)
-//                
-//            default:
-//                break
-//            }
-//            return .none
-//        }
-//    }
+                
+                // 알렛 메시지
+            case let .errorMessage(message):
+                state.errorMessage = message
+                
+            case let .onChangeForScroll(string):
+                state.scrollTo = string
+            
+                
+            default:
+                break
+            }
+            return .none
+        }
+    }
     
 }
 
