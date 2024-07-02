@@ -21,7 +21,8 @@ struct DMSListFeature {
         var errorMessage: String? = nil
         
         var userList: [WorkSpaceMembersEntity] = []
-        
+        var roomList: [DMSRoomEntity] = []
+                       
         var viewState: DmViewState = .loading
     }
     enum DmViewState {
@@ -44,6 +45,7 @@ struct DMSListFeature {
         case realmToUpdateMember([WorkSpaceMembersEntity])
         case justReqeustRealmMember(WorkSpaceID: String)
         
+        case roomEntityCatch([DMSRoomEntity])
         case users([WorkSpaceMembersEntity])
         case dmsListReqeust(WorkSpaceID: String)
         
@@ -91,14 +93,6 @@ struct DMSListFeature {
                             if let currentModel{
                                 send(.catchToWorkSpaceRealmModel(currentModel))
                             }
-                        }
-                    }
-                }
-            case let .dmsListReqeust(workSpaceID):
-                if state.onAppearTrigger {
-                    return .run { @MainActor send in
-                        for await currentModel in workSpaceReader.observerToDMSRoom(workSpaceID: workSpaceID) {
-                            
                         }
                     }
                 }
@@ -177,6 +171,18 @@ struct DMSListFeature {
                         print(error)
                     }
                 }
+            case let .listDMSInfoObserver(workSpaceID):
+                if state.onAppearTrigger {
+                    return .run { @MainActor send in
+                        for await currentModel in workSpaceReader.observerToDMSRoom(workSpaceID: workSpaceID) {
+                            let models = dmsRepo.dmsRealmToEntity(currentModel)
+                            send(.roomEntityCatch(models))
+                        }
+                    }
+                }
+                
+            case let .roomEntityCatch(models):
+                state.roomList = models
                 
             default:
                 break

@@ -20,6 +20,30 @@ struct DMSRepository {
         )
         return dmsMapper.toEntity(result)
     }
+    
+    func dmsRealmToEntity(_ models: [DMSRoomRealmModel]) -> [DMSRoomEntity] {
+        var results = [DMSRoomEntity] ()
+        for model in models {
+            results.append(dmsRealmToEntity(model))
+        }
+        return results
+    }
+    
+    func dmsRealmToEntity(_ model: DMSRoomRealmModel) -> DMSRoomEntity {
+        
+        let member = WorkSpaceMembersEntity(
+            userID: model.userID,
+            email: model.email,
+            nickname: model.nickName,
+            profileImage: model.profileImage
+        )
+        
+        return DMSRoomEntity(
+            roomId: model.roomId,
+            createdAt: model.createdAt,
+            user: member
+        )
+    }
 }
 
 extension DMSRepository: DependencyKey {

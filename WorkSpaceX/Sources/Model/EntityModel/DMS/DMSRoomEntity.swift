@@ -15,4 +15,5 @@ struct DMSRoomEntity: Entity {
     
     let user: WorkSpaceMembersEntity
     
+    var unReadCount: Int = 0 
 }
