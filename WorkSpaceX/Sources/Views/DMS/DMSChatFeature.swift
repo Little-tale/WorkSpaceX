@@ -47,10 +47,9 @@ struct DMSChatFeature {
     }
     
     enum Action {
-        // 상위뷰 관찰
-        case popClicked
-        case sendToList(channel: ChanelEntity, isOwner: Bool)
-        
+    
+        case popClick
+    
         // 채팅 분기점
         case chatDate(Date?)
         
@@ -98,6 +97,12 @@ struct DMSChatFeature {
         
         case userInfoResult(WorkSpaceMembersEntity)
         case socketConnected
+        
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case popClicked(roomID: String)
+        }
     }
     @Dependency(\.workspaceDomainRepository) var workRepo
     @Dependency(\.realmRepository) var realmRepo
@@ -423,6 +428,12 @@ struct DMSChatFeature {
                 
             case let .userInfoResult(model):
                 state.navigationTitle = model.nickname
+            case .popClick:
+                if let roomID = state.roomID {
+                    return .run { send in
+                        await send(.delegate(.popClicked(roomID: roomID)))
+                    }
+                }
                 
             default:
                 break

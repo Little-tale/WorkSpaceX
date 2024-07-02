@@ -284,10 +284,11 @@ extension WorkSpaceReader {
         }
     }
     
-    func observeDMSStop(_ dmRoomID: String) async {
+    func observeDMSStop(_ dmRoomID: String) {
         tokens[dmRoomID]?.invalidate()
         tokens[dmRoomID] = nil
     }
+    
 }
 
 extension WorkSpaceReader: DependencyKey {

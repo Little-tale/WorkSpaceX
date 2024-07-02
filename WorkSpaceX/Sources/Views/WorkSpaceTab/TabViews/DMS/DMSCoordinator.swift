@@ -79,10 +79,10 @@ struct DMSCoordinator {
                             userID: userid,
                             toModelEntity: model)))
                 }
-            case .router(.routeAction(id: _, action: .dmChat(.popClicked))):
-                
+            case .router(.routeAction(id: _, action: .dmChat(.delegate(.popClicked(let roomID))))):
+                WorkSpaceReader.shared.observeDMSStop(roomID)
+                WSXSocketManager.shared.stopAndRemoveSocket()
                 // 소켓 연결시 해제 해주어야 함.
-                
                 state.identeRoutes.pop()
                 
             default:

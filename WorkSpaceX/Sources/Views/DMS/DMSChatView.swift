@@ -57,7 +57,7 @@ struct DMSChatView: View {
                         .frame(width: 30, height: 30)
                         .foregroundStyle(WSXColor.black)
                         .asButton {
-                            store.send(.popClicked)
+                            store.send(.popClick)
                         }
                 }
                 ToolbarItem(placement: .principal) {
