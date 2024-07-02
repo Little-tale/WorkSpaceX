@@ -21,6 +21,22 @@ struct DMSRepository {
         return dmsMapper.toEntity(result)
     }
     
+    func dmRoomUnreadReqeust(_ workSpaceId: String, roomID: String, date: String?) async throws -> DMSUnReadEntity {
+        
+        let result = try await NetworkManager.shared.requestDto(
+            DMSRoomUnReadDTO.self,
+            router: DMSRouter.dmRoomUnReadReqeust(
+                workSpaceId,
+                roomID: roomID,
+                date: date
+            ), errorType: DMSListAPIError.self)
+        
+        return dmsMapper.toEntity(result)
+    }
+    
+}
+
+extension DMSRepository {
     func dmsRealmToEntity(_ models: [DMSRoomRealmModel]) -> [DMSRoomEntity] {
         var results = [DMSRoomEntity] ()
         for model in models {

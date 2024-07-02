@@ -22,7 +22,7 @@ struct DMSListFeature {
         
         var userList: [WorkSpaceMembersEntity] = []
         var roomList: [DMSRoomEntity] = []
-                       
+        
         var viewState: DmViewState = .loading
     }
     enum DmViewState {
@@ -48,6 +48,9 @@ struct DMSListFeature {
         case roomEntityCatch([DMSRoomEntity])
         case users([WorkSpaceMembersEntity])
         case dmsListReqeust(WorkSpaceID: String)
+        
+        case unReadReqeust([DMSRoomEntity])
+        case unReadResults([DMSUnReadEntity])
         
         enum ParentAction {
             case getWorkSpaceId(String)
@@ -160,6 +163,8 @@ struct DMSListFeature {
                     let result = try await dmsRepo.dmRoomListReqeust(workSpaceID)
                     try await realmRepo.upsertDMSRoomEntity(result, workSpaceID: workSpaceID)
                     
+                    await send(.roomEntityCatch(result))
+                    
                 } catch: { error, send in
                     if let error = error as? DMSListAPIError {
                         if !error.ifDevelopError {
@@ -183,6 +188,47 @@ struct DMSListFeature {
                 
             case let .roomEntityCatch(models):
                 state.roomList = models
+                return .run { send in
+                    await send(.unReadReqeust(models))
+                }
+                
+            case let .unReadReqeust(models):
+                let id = state.currentWorkSpaceID
+                guard id != "" else { break }
+                
+                return .run { send in
+                    do {
+                        let results = try await withThrowingTaskGroup(of: DMSUnReadEntity.self) { group in
+                            for model in models {
+                                group.addTask {
+                                    try await dmsRepo.dmRoomUnreadReqeust(
+                                        id,
+                                        roomID: model.roomId,
+                                        date: nil
+                                    )
+                                }
+                            }
+                    
+                            var results: [DMSUnReadEntity] = []
+                            for try await result in group {
+                                results.append(result)
+                            }
+
+                            return results
+                        }
+                        
+                        await send(.unReadResults(results))
+                    } catch {
+                        if let error = error as? DMSListAPIError {
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
+                            }
+                        } else {
+                            print(error)
+                        }
+                    }
+                }
+                
                 
             default:
                 break

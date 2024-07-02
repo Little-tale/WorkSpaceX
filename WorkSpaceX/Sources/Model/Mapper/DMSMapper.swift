@@ -30,6 +30,16 @@ extension DMSMapper {
     }
 }
 
+
+extension DMSMapper {
+    func toEntity(_ dto: DMSRoomUnReadDTO) -> DMSUnReadEntity {
+        return DMSUnReadEntity(
+            roomId: dto.room_id,
+            count: dto.count
+        )
+    }
+}
+
 extension DMSMapper: DependencyKey {
     static var liveValue: Self = Self()
 }
