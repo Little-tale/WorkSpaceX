@@ -50,6 +50,9 @@ extension DMSListView {
         LazyHStack {
             ForEach(store.userList, id: \.userID) { model in
                 memberView(model)
+                    .asButton {
+                        store.send(.selectedOtherUser(model))
+                    }
                     .padding(.vertical, 6)
                     .padding(.horizontal,8)
             }

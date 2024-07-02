@@ -70,6 +70,10 @@ struct DMSCoordinator {
                 
                 state.identeRoutes.dismiss()
                 
+                // DMS 탭에서 프로필 선택시
+            case .router(.routeAction(id: _, action: .dmHome(.delegate(.moveToDMS(let model))))):
+                print(model)
+                
             default:
                 break
             }

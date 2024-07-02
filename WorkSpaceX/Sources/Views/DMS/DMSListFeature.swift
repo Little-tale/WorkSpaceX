@@ -52,11 +52,15 @@ struct DMSListFeature {
         case unReadReqeust([DMSRoomEntity])
         case unReadResults([DMSUnReadEntity])
         
+        // 타 사용자 클릭시
+        case selectedOtherUser(WorkSpaceMembersEntity)
+        
         enum ParentAction {
             case getWorkSpaceId(String)
         }
         enum Delegate {
             case clickedAddMember
+            case moveToDMS(WorkSpaceMembersEntity)
         }
         case clickedAddMember
         case errorMessage(String?)
@@ -228,7 +232,10 @@ struct DMSListFeature {
                         }
                     }
                 }
-                
+            case let .selectedOtherUser(model):
+                return .run { send in
+                    await send(.delegate(.moveToDMS(model)))
+                }
                 
             default:
                 break
