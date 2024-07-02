@@ -182,6 +182,7 @@ struct DMSChatFeature {
                             models: results,
                             roomID: roomID
                         )
+                        await send(.firstInit)
                     } catch: { error, send in
                         print(error)
                     }
@@ -264,18 +265,7 @@ struct DMSChatFeature {
 
 //
 
-//            case .sendTapped:
-//                let workSpaceID = state.workSpaceID
-//                let roomId = state.channelID
-//                let content = state.userFeildText
-//                let files = state.currentDatas
-//                
-//                if content == "" && files.isEmpty {
-//                    break
-//                }
-//                let multi = ChatMultipart(content: content, files: files)
-//                state.userFeildText = ""
-//                state.currentDatas = []
+
                 // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
 
                 
@@ -289,6 +279,38 @@ struct DMSChatFeature {
                             let result = try await realmRepo.toChat(models, userID: userID)
                             send(.appendChat(result))
                         }
+                    }
+                }
+            case .sendTapped:
+                guard let roomId = state.roomID else { break }
+                let workSpaceID = state.workSpaceID
+                
+                let content = state.userFeildText
+                let files = state.currentDatas
+                
+                if content == "" && files.isEmpty {
+                    break
+                }
+                let multi = ChatMultipart(content: content, files: files)
+                state.userFeildText = ""
+                state.currentDatas = []
+                return .run { send in
+                    await send(.dataCountChaeck)
+                    // 소켓을 통해 받을 예정
+                    try await dmsRepo.sendChatReqeust(
+                        workSpaceID,
+                        roomID: roomId,
+                        reqeust: multi
+                    )
+                } catch: { error, send in
+                    if let error = error as? DMSRoomAPIError {
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
                     }
                 }
                 

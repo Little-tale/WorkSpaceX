@@ -63,6 +63,23 @@ struct DMSRepository {
         return mapping
     }
     
+    @discardableResult
+    func sendChatReqeust(_ workSpaceID: String, roomID: String, reqeust: ChatMultipart) async throws ->  DMSChatEntity {
+        
+        let result = try await NetworkManager.shared.requestDto(
+            DMSChatDTO.self,
+            router: DMSRouter.sendDmMessage(
+                workSpaceID,
+                roomID: roomID,
+                reqeust: reqeust,
+                boundary: MultipartFormData.randomBoundary()
+            ),
+            errorType: DMSRoomAPIError.self
+        )
+        let mapping = dmsMapper.toEntity(result)
+        return mapping
+    }
+    
 }
 
 extension DMSRepository {

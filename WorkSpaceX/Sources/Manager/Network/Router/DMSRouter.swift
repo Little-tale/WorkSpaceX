@@ -16,6 +16,8 @@ enum DMSRouter: Router {
     case dmRoomReqeust(_ workSpaceID: String, requestDTO: DMSRoomRequestDTO)
     
     case dmRoomChatsReqeust(_ workSpaceID: String, roomID: String, date: String?)
+    
+    case sendDmMessage(_ workSpaceID: String, roomID: String, reqeust: ChatMultipart, boundary: String)
 }
 
 extension DMSRouter {
@@ -26,7 +28,7 @@ extension DMSRouter {
                 .dmRoomUnReadReqeust,
                 .dmRoomChatsReqeust :
             return .get
-        case .dmRoomReqeust:
+        case .dmRoomReqeust, .sendDmMessage:
             return .post
         }
     }
@@ -45,19 +47,31 @@ extension DMSRouter {
             
         case let .dmRoomChatsReqeust(workSpaceID, roomID, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/dms/\(roomID)/chats"
+            
+        case let .sendDmMessage(workSpaceID, roomID, reqeust, _):
+            return APIKey.version + "/workspaces/\(workSpaceID)/dms/\(roomID)/chats"
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .dmRoomListReqeust, .dmRoomUnReadReqeust, .dmRoomReqeust, .dmRoomChatsReqeust:
+        case .dmRoomListReqeust,
+                .dmRoomUnReadReqeust,
+                .dmRoomReqeust,
+                .dmRoomChatsReqeust :
             return nil
+            
+        case let .sendDmMessage(_, _, _, boundary):
+            let multipartFormData = MultipartFormData()
+            return multipartFormData.headers(boundary: boundary)
         }
     }
     
     var parameters: Parameters? {
         switch self {
-        case .dmRoomListReqeust, .dmRoomReqeust:
+        case .dmRoomListReqeust,
+                .dmRoomReqeust,
+                .sendDmMessage:
             return nil
         case let .dmRoomUnReadReqeust(_, _, date):
             if let date {
@@ -82,6 +96,8 @@ extension DMSRouter {
             return nil
         case let .dmRoomReqeust(_, model):
             return requestToBody(model)
+        case let .sendDmMessage(_, _, reqeust, boundary):
+            return makeChatMultipartData(reqeust, boundary: boundary)
         }
     }
     
@@ -91,9 +107,48 @@ extension DMSRouter {
                 .dmRoomUnReadReqeust,
                 .dmRoomChatsReqeust :
             return .url
+            
         case .dmRoomReqeust:
             return .json
+            
+        case .sendDmMessage:
+            return .multiPart
         }
+    }
+    
+}
+
+extension DMSRouter {
+    
+    private func makeChatMultipartData(_ data: ChatMultipart, boundary: String) -> Data {
+        
+        let multiPart = MultipartFormData()
+        
+        if let content = data.content {
+            if content != "" {
+                multiPart.append(
+                    content.toData,
+                    withName: "content",
+                    fileName: nil,
+                    mimeType: MimeType.text.rawValue,
+                    boundary: boundary
+                )
+            }
+        }
+        if let datas = data.files {
+            dump(datas)
+            for file in datas {
+                multiPart.append(
+                    file.data,
+                    withName: "files",
+                    fileName: file.fileName,
+                    mimeType: file.fileType.mimeType,
+                    boundary: boundary
+                )
+            }
+        }
+        
+        return multiPart.finalize(boundary: boundary)
     }
     
 }
