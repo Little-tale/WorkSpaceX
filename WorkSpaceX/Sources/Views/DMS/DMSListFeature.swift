@@ -46,6 +46,7 @@ struct DMSListFeature {
         case justReqeustRealmMember(WorkSpaceID: String)
         
         case roomEntityCatch([DMSRoomEntity])
+        case roomEntityShow([DMSRoomEntity])
         case users([WorkSpaceMembersEntity])
         case dmsListReqeust(WorkSpaceID: String)
         
@@ -183,7 +184,7 @@ struct DMSListFeature {
                 }
                 
             case let .roomEntityCatch(models):
-                state.roomList = models
+                
                 if state.currentWorkSpaceID == "" { break }
                 let id = state.currentWorkSpaceID
                 return .run { send in
@@ -212,6 +213,10 @@ struct DMSListFeature {
                                     
                                     if let lastChat = chatList.last {
                                         update.lastChat = lastChat.content ?? lastChat.files?.first ?? "알수없음"
+                                        if let date = DateManager.shared.toDateISO(lastChat.createdAt) {
+                                            update.lasstChatDate = date
+                                        }
+                                        
                                     }
                                     update.unReadCount = unreadCount.count
                                     
@@ -239,111 +244,6 @@ struct DMSListFeature {
                         }
                     }
                 }
-        
-                /*
-                 // [DMSRoomEntity]
-                 let models = models
-                 
-                 //  렘 데이터에서 사용자가 가장 마지막으로 본 쳇 데이트
-                 let realmDate = try await realmRepo.findDMSChatLastDate(
-                     roomID: <#T##String#>
-                 )
-                 // [DMSChatEntity] // 마지막 배열의 채팅 내용 가져와야함.
-                 let model = try await dmsRepo.dmsChatListRqeust(
-                     <#T##roomID: String##String#>,
-                     workSpaceId: <#T##String#>,
-                     cursurDate: <#T##String?#>
-                 )
-                 // 렘 데이터에서 사용자가 가장 마지막으로 본 쳇 데이트
-                 //  DMSUnReadEntity // 않읽은 갯수를 반한함.
-                 let model2 = try await dmsRepo.dmRoomUnreadReqeust(<#T##workSpaceId: String##String#>, roomID: <#T##String#>, date: <#T##String?#>)
-                 
-                 try await realmRepo.upsertDMSRoomEntity(<#T##model: DMSRoomEntity##DMSRoomEntity#>, workSpaceID: <#T##String#>)
-                 */
-                
-                
-//                    try await realmRepo.upsertDMSRoomEntity(result, workSpaceID: workSpaceID)
-                    
-//                    await send(.unReadReqeust(models))
-               
-//            case let .unReadReqeust(models):
-//                let id = state.currentWorkSpaceID
-//                guard id != "" else { break }
-//                
-//                return .run { send in
-//                    do {
-//
-//                        
-//                        await send(.unReadResults(results))
-//                    } catch {
-//                        if let error = error as? DMSListAPIError {
-//                            if !error.ifDevelopError {
-//                                await send(.errorMessage(error.message))
-//                            }
-//                        } else {
-//                            print(error)
-//                        }
-//                    }
-//                }
-                /*
-                 
-                 let results = try await withThrowingTaskGroup(of: DMSUnReadEntity.self) { group in
-                     for model in models {
-                         
-                         group.addTask {
-                             try await dmsRepo.dmRoomUnreadReqeust(
-                                 id,
-                                 roomID: model.roomId,
-                                 date: nil
-                             )
-                         }
-                     }
-             
-                     var results: [DMSUnReadEntity] = []
-                     for try await result in group {
-                         results.append(result)
-                     }
-
-                     return results
-                 }
-                 */
-//            case let .unReadReqeust(models):
-//                let id = state.currentWorkSpaceID
-//                guard id != "" else { break }
-//                
-//                return .run { send in
-//                    do {
-//                        let results = try await withThrowingTaskGroup(of: DMSUnReadEntity.self) { group in
-//                            for model in models {
-//                                
-//                                group.addTask {
-//                                    try await dmsRepo.dmRoomUnreadReqeust(
-//                                        id,
-//                                        roomID: model.roomId,
-//                                        date: nil
-//                                    )
-//                                }
-//                            }
-//                    
-//                            var results: [DMSUnReadEntity] = []
-//                            for try await result in group {
-//                                results.append(result)
-//                            }
-//
-//                            return results
-//                        }
-//                        
-//                        await send(.unReadResults(results))
-//                    } catch {
-//                        if let error = error as? DMSListAPIError {
-//                            if !error.ifDevelopError {
-//                                await send(.errorMessage(error.message))
-//                            }
-//                        } else {
-//                            print(error)
-//                        }
-//                    }
-//                }
             
             case let .selectedOtherUser(model):
                 let id = state.currentWorkSpaceID
@@ -354,14 +254,15 @@ struct DMSListFeature {
                 
                 // 이걸 가장 마지막에 바라보게 해야함....
             case let .listDMSInfoObserver(workSpaceID):
-                if state.onAppearTrigger {
-                    return .run { @MainActor send in
-                        for await currentModel in workSpaceReader.observerToDMSRoom(workSpaceID: workSpaceID) {
-                            let models = dmsRepo.dmsRealmToEntity(currentModel)
-                            send(.roomEntityCatch(models))
-                        }
+                return .run { @MainActor send in
+                    for await currentModel in workSpaceReader.observerToDMSRoom(workSpaceID: workSpaceID) {
+                        let models = dmsRepo.dmsRealmToEntity(currentModel)
+                        send(.roomEntityShow(models))
                     }
                 }
+                
+            case let .roomEntityShow(models):
+                state.roomList = models
                 
             default:
                 break

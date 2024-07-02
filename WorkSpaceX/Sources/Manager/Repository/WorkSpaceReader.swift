@@ -209,11 +209,7 @@ extension WorkSpaceReader {
                             case .initial(let models):
                                 continuation.yield(Array(models))
                             case .update(let models, let deletions, let insertAt, let modifications):
-//
-//                                let new = insertAt.map { models[$0] }
-//
-//                                let deleted = deletions.map { models[$0] }
-//
+                                
                                 continuation.yield(Array(models))
                             case .error(let error):
                                 continuation.finish()

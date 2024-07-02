@@ -61,4 +61,18 @@ final class DateManager {
         return dateFormatter.string(from: date)
     }
     
+    func dateToStringToRoomList(_ date: Date) -> String {
+        
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(date) {
+            dateFormatter.dateFormat = "a hh:mm"
+        } else {
+            dateFormatter.setLocalizedDateFormatFromTemplate("yyyyMMMMd")
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+        }
+        
+        return dateFormatter.string(from: date)
+    }
+    
 }

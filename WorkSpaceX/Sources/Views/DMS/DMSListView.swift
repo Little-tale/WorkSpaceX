@@ -110,7 +110,10 @@ extension DMSListView {
             VStack {
                 Text(model.user.nickname)
                     .frame(maxWidth: 50)
+                
                 Text(model.lastChat)
+                
+                Text(DateManager.shared.dateToStringToRoomList(model.lasstChatDate))
             }
             
         }
