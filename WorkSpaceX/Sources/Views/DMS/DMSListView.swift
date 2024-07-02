@@ -89,15 +89,14 @@ extension DMSListView {
                         store.send(.selectedChatRoom(model))
                     }
                     .padding(.vertical, 6)
-                    .padding(.horizontal,8)
+                    .padding(.horizontal,4)
             }
         }
     }
     
     private func chatView(_ model: DMSRoomEntity) -> some View {
-        
-        HStack {
-            Group {
+        HStack (alignment: .top) {
+            HStack(alignment: .top) {
                 if let image = model.user.profileImage {
                     DownSamplingImageView(url: URL(string: image), size: CGSize(width: 50, height: 50))
                 } else {
@@ -108,18 +107,48 @@ extension DMSListView {
             .frame(width: 45, height: 45)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             VStack {
-                Text(model.user.nickname)
-                    .frame(maxWidth: 50)
-                
-                Text(model.lastChat)
-                
-                Text(DateManager.shared.dateToStringToRoomList(model.lasstChatDate))
+                HStack(alignment: .top) {
+                    Text(model.user.nickname)
+                        .font(WSXFont.reg05)
+                    Spacer()
+                    
+                    VStack {
+                        Text(DateManager.shared.dateToStringToRoomList(model.lasstChatDate))
+                            .font(WSXFont.regu1)
+                    }
+                }
+                HStack(alignment: .top) {
+                    Text(model.lastChat)
+                        .lineLimit(2)
+                        .font(WSXFont.regu1)
+                    Spacer()
+                    unReadCountView(num: model.unReadCount)
+                }
             }
-            
         }
     }
 }
 
+
+extension DMSListView {
+    
+    @ViewBuilder
+    private func unReadCountView(num: Int) -> some View {
+        if num != 0 {
+            Text(String(num))
+                .font(WSXFont.regu1)
+                .frame(height: 24)
+                .frame(minWidth: 20)
+                .padding(.horizontal, 4)
+                .background(WSXColor.green)
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .foregroundStyle(WSXColor.white)
+        } else {
+            EmptyView()
+        }
+    }
+    
+}
 
 
 // 나를 제외한 멤버가 없을때

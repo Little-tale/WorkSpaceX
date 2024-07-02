@@ -130,6 +130,7 @@ extension DMSRepository {
             roomId: model.roomId,
             createdAt: model.createdAt,
             user: member,
+            unReadCount: model.UnReadCount,
             lastChat: model.lastChatText,
             lasstChatDate: model.lastChatDate ?? Date()
         )
