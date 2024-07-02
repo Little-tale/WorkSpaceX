@@ -125,26 +125,14 @@ extension DMSRepository {
             nickname: model.nickName,
             profileImage: model.profileImage
         )
-        let result = model.chatMessages.sorted(by: \.createdAt, ascending: false).first
-        if let result,
-           let date = result.createdAt {
-    
-            return DMSRoomEntity(
-                roomId: model.roomId,
-                createdAt: model.createdAt,
-                user: member,
-                lastChat: result.content ?? ("파일 :" + (result.files.first ?? "알수 없음")) ,
-                lasstChatDate: date
-            )
-        } else {
-            return DMSRoomEntity(
-                roomId: model.roomId,
-                createdAt: model.createdAt,
-                user: member,
-                lastChat: "비어있음"
-            )
-        }
         
+        return DMSRoomEntity(
+            roomId: model.roomId,
+            createdAt: model.createdAt,
+            user: member,
+            lastChat: model.lastChatText,
+            lasstChatDate: model.lastChatDate ?? Date()
+        )
     }
 }
 
@@ -160,3 +148,24 @@ extension DependencyValues {
         set { self[DMSRepository.self] = newValue }
     }
 }
+
+//        let result = model.chatMessages.sorted(by: \.createdAt, ascending: false).first
+//        if let result,
+//           let date = result.createdAt {
+//
+//            return DMSRoomEntity(
+//                roomId: model.roomId,
+//                createdAt: model.createdAt,
+//                user: member,
+//                lastChat: result.content ?? ("파일 :" + (result.files.first ?? "알수 없음")) ,
+//                lasstChatDate: date
+//            )
+//        } else {
+//            print(result)
+//            return DMSRoomEntity(
+//                roomId: model.roomId,
+//                createdAt: model.createdAt,
+//                user: member,
+//                lastChat: "비어있음"
+//            )
+//        }
