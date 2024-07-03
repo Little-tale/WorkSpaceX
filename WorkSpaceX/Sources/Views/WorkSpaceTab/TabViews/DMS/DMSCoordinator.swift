@@ -62,6 +62,7 @@ struct DMSCoordinator {
                     state.identeRoutes.presentSheet(.memberAdd(AddMemberFeature.State( currentWorkSpaceID: id)), embedInNavigationView: true)
                 }
                 
+                /// 자신의 프로필 이동하기 클릭하였을때
             case .router(.routeAction(id: _, action: .dmHome(.delegate(.moveToProfileView)))):
                 let uuid = state.profileView
                 if let id = UserDefaultsManager.userID {
@@ -74,7 +75,15 @@ struct DMSCoordinator {
                         )
                     )
                 }
-                print("액션 전달 받음")
+               /// 닉네임 수정으로 전환
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToNickNameChange(let model))))):
+                
+                break
+                
+                /// 연락처 수정으로 전환
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToContackChange(let model))))):
+                
+                break
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 
