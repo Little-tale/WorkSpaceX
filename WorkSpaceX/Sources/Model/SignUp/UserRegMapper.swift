@@ -20,6 +20,7 @@ struct UserRegMapper: Mapper {
             phone: userDTO.phone ?? "" ,
             provider: userDTO.provider,
             createdAt: userDTO.createdAt.toDate,
+            sesacCoin: userDTO.sesacCoin,
             token: toEntity(userDTO.token)
         )
         return entity
@@ -41,6 +42,7 @@ struct UserRegMapper: Mapper {
             phone: profileDTO.phone ?? "" ,
             provider: profileDTO.provider,
             createdAt: profileDTO.createdAt.toDate,
+            sesacCoin: profileDTO.sesacCoin,
             token: nil
         )
         return entity

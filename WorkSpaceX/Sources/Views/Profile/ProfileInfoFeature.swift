@@ -17,7 +17,6 @@ struct ProfileInfoFeature {
         var userType: UserType
         var errorMessage: String? = nil
         var userEntity: UserEntity? = nil
-        
         var imagePick = CustomImagePickPeature.State()
         var showImagePicker = false
         
@@ -47,6 +46,8 @@ struct ProfileInfoFeature {
         case resultToMe(UserEntity)
         
         case errorMessage(String?)
+        
+        case selectedMECase(MyProfileViewType)
         
         enum Delegate {
             
@@ -91,6 +92,7 @@ struct ProfileInfoFeature {
                 }
                 
             case let .resultToMe(model):
+                print("모델스",model)
                 state.userEntity = model
                 
             case let .imagePick(bool):
@@ -118,4 +120,61 @@ struct ProfileInfoFeature {
             return .none
         }
     }
+}
+
+
+extension ProfileInfoFeature {
+    /// 본인일 경우
+    enum MyProfileViewType: CaseIterable {
+        
+        case myCoinInfo
+        case nickName
+        case contact
+        case email
+        case connectedSocial
+        case logout
+        
+        var title: String {
+            switch self {
+            case .myCoinInfo:
+                return "내 새싹 코인"
+            case .nickName:
+                return "닉네임"
+            case .contact:
+                return "연락처"
+            case .email:
+                return "이메일"
+            case .connectedSocial:
+                return "연결된 소셜 계정"
+            case .logout:
+                return "로그아웃"
+            }
+        }
+        func detail(from model: UserEntity) -> String? {
+            switch self {
+            case .myCoinInfo:
+                // 코인 정보를 받으셔야함.
+                return String(model.sesacCoin)
+            case .nickName:
+                return model.nickname
+            case .contact:
+                return model.phone
+            case .email:
+                return model.email
+            case .connectedSocial:
+                return model.provider
+            case .logout:
+                return nil
+            }
+        }
+        
+        static var topSectionCases: [MyProfileViewType] {
+            return [.myCoinInfo, .nickName, .contact]
+        }
+        
+        static var bottomSectionCases: [MyProfileViewType] {
+            return [.email, .connectedSocial, .logout]
+        }
+    }
+    
 }

@@ -16,7 +16,7 @@ final class RefreshTokkenDeadReciver {
     func postRefreshTokenDead() {
         UserDefaultsManager.workSpaceSelectedID = ""
         UserDefaultsManager.accessToken = nil
-        
+        UserDefaultsManager.ifEmailLogin = false
         NotificationCenter.default.post(name: .refreshTokenDead, object: nil)
     }
     

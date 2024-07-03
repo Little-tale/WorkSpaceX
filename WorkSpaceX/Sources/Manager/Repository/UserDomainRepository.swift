@@ -92,8 +92,6 @@ extension UserDomainRepository: DependencyKey {
             
             let result = try await NetworkManager.shared.requestDto(UserDTO.self, router: UserDomainRouter.emailLogin(dto), errorType: EmailLoginAPIError.self)
             
-            
-            
             let mapping = mapper.toEntity(result)
             
             UserDefaultsManager.accessToken = result.token.accessToken
@@ -105,6 +103,7 @@ extension UserDomainRepository: DependencyKey {
             
             print("이메일 유저디폴트 입장 \(UserDefaultsManager.accessToken)")
             
+            UserDefaultsManager.ifEmailLogin = true
             
             return mapping
             

@@ -28,67 +28,6 @@ struct ProfileInfoView: View {
             .toolbar(.hidden, for: .tabBar)
         }
     }
-    
-    /// 본인일 경우
-    enum MyProfileViewType {
-        
-        enum TopSection: CaseIterable {
-            case myCoinInfo
-            case nickName
-            case contact
-            
-            var title: String {
-                switch self {
-                case .myCoinInfo:
-                    return "내 새싹 코인"
-                case .nickName:
-                    return "닉네임"
-                case .contact:
-                    return "연락처"
-                }
-            }
-            func detail(from model: UserEntity) -> String? {
-                switch self {
-                case .myCoinInfo:
-                    // 코인 정보를 받으셔야함.
-                    return ""
-                case .nickName:
-                    return model.nickname
-                case .contact:
-                    return model.phone
-                }
-            }
-        }
-        
-        enum BottomSection: CaseIterable {
-            case email
-            case connectedSocial
-            case logout
-            
-            var title: String {
-                switch self {
-                case .email:
-                    return "이메일"
-                case .connectedSocial:
-                    return "연결된 소셜 계정"
-                case .logout:
-                    return "로그아웃"
-                }
-            }
-            
-            func detail(from model: UserEntity) -> String? {
-                
-                switch self {
-                case .email:
-                    return model.email
-                case .connectedSocial:
-                    return model.provider
-                case .logout:
-                    return nil
-                }
-            }
-        }
-    }
 }
 /// 본인일 경우의 뷰
 extension ProfileInfoView {
@@ -122,23 +61,53 @@ extension ProfileInfoView {
     private func myListView(model: UserEntity) -> some View {
         List {
             Section {
-                ForEach(MyProfileViewType.TopSection.allCases, id: \.self) { item in
+                ForEach(ProfileInfoFeature.MyProfileViewType.topSectionCases, id: \.self) { item in
                     HStack {
                         Text(item.title)
-                        Spacer()
-                        Text(item.detail(from: model) ?? "")
+                            .font(WSXFont.title2)
+                        if item == .myCoinInfo {
+                            Text(item.detail(from: model) ?? "")
+                                .foregroundStyle(WSXColor.green)
+                            Spacer()
+                            Text("충전하기")
+                                .foregroundStyle(WSXColor.black.opacity(0.8))
+                                .font(WSXFont.regu1)
+                        } else {
+                            Spacer()
+                            Text(item.detail(from: model) ?? "")
+                                .foregroundStyle(WSXColor.black.opacity(0.8))
+                                .font(WSXFont.regu1)
+                        }
                         Image(systemName: "chevron.right")
                             .foregroundStyle(WSXColor.gray)
+                    }
+                    .asButton {
+                        store.send(.selectedMECase(item))
                     }
                 }
             }
             
             Section {
-                ForEach(MyProfileViewType.BottomSection.allCases, id: \.self) { item in
-                    HStack {
-                        Text(item.title)
-                        Spacer()
-                        Text(item.detail(from: model) ?? "")
+                ForEach(ProfileInfoFeature.MyProfileViewType.bottomSectionCases, id: \.self) { item in
+                    Group {
+                        if item == .connectedSocial {
+                            if !UserDefaultsManager.ifEmailLogin {
+                                HStack {
+                                    Text(item.title)
+                                    Spacer()
+                                    Text(item.detail(from: model) ?? "")
+                                }
+                            }
+                        } else {
+                            HStack {
+                                Text(item.title)
+                                Spacer()
+                                Text(item.detail(from: model) ?? "")
+                            }
+                        }
+                    }
+                    .asButton {
+                        store.send(.selectedMECase(item))
                     }
                 }
             }
