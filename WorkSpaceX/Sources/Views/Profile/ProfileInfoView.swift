@@ -88,26 +88,31 @@ extension ProfileInfoView {
             }
             
             Section {
-                ForEach(ProfileInfoFeature.MyProfileViewType.bottomSectionCases, id: \.self) { item in
-                    Group {
-                        if item == .connectedSocial {
-                            if !UserDefaultsManager.ifEmailLogin {
-                                HStack {
-                                    Text(item.title)
-                                    Spacer()
-                                    Text(item.detail(from: model) ?? "")
-                                }
-                            }
-                        } else {
+                if !UserDefaultsManager.ifEmailLogin {
+                    ForEach(ProfileInfoFeature.MyProfileViewType.bottomSectionCases, id: \.self) { item in
+                        Group {
                             HStack {
                                 Text(item.title)
                                 Spacer()
                                 Text(item.detail(from: model) ?? "")
                             }
                         }
+                        .asButton {
+                            store.send(.selectedMECase(item))
+                        }
                     }
-                    .asButton {
-                        store.send(.selectedMECase(item))
+                } else {
+                    ForEach(ProfileInfoFeature.MyProfileViewType.emalilLogginBottomSection, id: \.self) { item in
+                        Group {
+                            HStack {
+                                Text(item.title)
+                                Spacer()
+                                Text(item.detail(from: model) ?? "")
+                            }
+                        }
+                        .asButton {
+                            store.send(.selectedMECase(item))
+                        }
                     }
                 }
             }

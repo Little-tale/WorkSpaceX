@@ -201,6 +201,10 @@ extension ProfileInfoFeature {
         static var bottomSectionCases: [MyProfileViewType] {
             return [.email, .connectedSocial, .logout]
         }
+        
+        static var emalilLogginBottomSection: [MyProfileViewType] {
+            return [.email, .logout]
+        }
     }
     
 }
