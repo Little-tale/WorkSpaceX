@@ -71,6 +71,8 @@ struct ProfileInfoFeature {
                 switch state.userType {
                 case let .me(userID):
                     return .run { send in
+                        await send(.imagePickFeature(.profileEmpty))
+                        
                         await send(.profilInfoReqeustMe(userID: userID))
                     }
                 case let .other(userID):
@@ -93,9 +95,13 @@ struct ProfileInfoFeature {
                 }
                 
             case let .resultToMe(model):
-                print("모델스",model)
                 state.userEntity = model
-                
+                if let image = model.profileImage {
+                    return .run { send in
+                        await send(.imagePickFeature(.ifURL(URL(string:image))))
+                    }
+                }
+    
             case let .imagePick(bool):
                 state.showImagePicker = bool
                 
