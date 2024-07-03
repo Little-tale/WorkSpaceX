@@ -77,8 +77,18 @@ struct DMSCoordinator {
                         DMSChatFeature.State(
                             workSpaceID: workSpaceId,
                             userID: userid,
-                            toModelEntity: model)))
+                            otherUserID: model.userID)))
                 }
+                // DMS 탭에서 채팅룸을 선택하였을때
+            case .router(.routeAction(id: _, action: .dmHome(.delegate(.moveToDMSForRoom(model: let model, workSpaceID: let workSpaceID))))):
+                if let userid = UserDefaultsManager.userID {
+                    state.identeRoutes.push(.dmChat(DMSChatFeature.State(
+                        workSpaceID: workSpaceID,
+                        userID: userid,
+                        otherUserID: model.user.userID
+                    )))
+                }
+                //otherUserID
             case .router(.routeAction(id: _, action: .dmChat(.delegate(.popClicked(let roomID))))):
                 WorkSpaceReader.shared.observeDMSStop(roomID)
                 WSXSocketManager.shared.stopAndRemoveSocket()

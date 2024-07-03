@@ -14,6 +14,7 @@ final class RefreshTokkenDeadReciver {
     private init() {}
     
     func postRefreshTokenDead() {
+        UserDefaultsManager.workSpaceSelectedID = ""
         NotificationCenter.default.post(name: .refreshTokenDead, object: nil)
     }
     

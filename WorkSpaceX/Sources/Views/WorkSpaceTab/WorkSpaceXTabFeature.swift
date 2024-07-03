@@ -133,22 +133,6 @@ struct WorkSpaceTabCoordinator {
         Reduce { state, action in
             switch action {
                 
-            case let .tabSelected(tab):
-                state.selectedTab = tab
-                
-            case .ifNeedMakeWorkSpace(.openSideMenu):
-                return .run { send in
-                    await send(.sideMenuMake(true))
-                }
-                
-            case let .sideMenuMake(bool):
-                if bool {
-                    state.sideMenuState = WorkSpaceSideFeature.State()
-                } else { state.sideMenuState = nil }
-                state.sideMenuOpen = bool
-                
-            
-                
             case .onAppear:
                 print("????? 왜? 2")
                 return .run { send in
@@ -167,6 +151,26 @@ struct WorkSpaceTabCoordinator {
                         print("별개의 에러",error)
                     }
                 }
+                
+            case let .tabSelected(tab):
+                state.selectedTab = tab
+                
+            case .ifNeedMakeWorkSpace(.openSideMenu):
+                return .run { send in
+                    await send(.sideMenuMake(true))
+                }
+            case .ifNeedMakeWorkSpace(.regSuccess):
+                let id = UserDefaultsManager.workSpaceSelectedID
+                print("허허... 에러인가 \(id)")
+                return .run { send in
+                    await send(.workSpaceSubscribe)
+                }
+                
+            case let .sideMenuMake(bool):
+                if bool {
+                    state.sideMenuState = WorkSpaceSideFeature.State()
+                } else { state.sideMenuState = nil }
+                state.sideMenuOpen = bool
                 
             case let .saveRealmOfProfile(user):
                 
@@ -296,11 +300,12 @@ struct WorkSpaceTabCoordinator {
                 state.currentModels = models
                 
                 print("처음 \(count)")
-                if state.firstInTrigger {
-                    state.firstInTrigger = false
-                    return .run{ send in
-                        await send(.showEmptyView(count == 0))
-                    }
+//                if state.firstInTrigger {
+//                    state.firstInTrigger = false
+//                    
+//                }
+                return .run{ send in
+                    await send(.showEmptyView(count == 0))
                 }
             
                 // HomeTabDelegte

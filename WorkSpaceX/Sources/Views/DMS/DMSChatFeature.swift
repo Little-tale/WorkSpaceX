@@ -19,7 +19,9 @@ struct DMSChatFeature {
         
         let workSpaceID: String
         let userID : String
-        let toModelEntity: WorkSpaceMembersEntity
+        
+        let otherUserID: String
+        
         var navigationTitle: String = ""
         var roomID: String? = nil
         
@@ -115,13 +117,13 @@ struct DMSChatFeature {
             case .onAppear:
                 
                 let workSpaceID = state.workSpaceID
-                let userId = state.toModelEntity.userID
+                let userId = state.otherUserID
                 let bool = state.onAppearTrigger
-                let member = state.toModelEntity
+//                let member = state.toModelEntity
                 state.onAppearTrigger = false
                 
                 return .run { @MainActor send in
-                    send(.userInfoReqeust(memberID: member.userID))
+                    send(.userInfoReqeust(memberID: userId))
                     if !bool { return }
                     
                     let ifRealm = try await realmRepo.findDMSRoom(
@@ -129,11 +131,11 @@ struct DMSChatFeature {
                         userId
                     )
                     send(.roomToEntity(ifRealm))
-                    send(.userInfoResult(member))
+                    
                 }
             case let .roomToEntity(model):
                 let workSpaceID = state.workSpaceID
-                let userId = state.toModelEntity.userID
+                let userId = state.otherUserID
                 if let model {
                     state.roomID = model.roomId
                     let entity = dmsRepo.dmsRealmToEntity(model)
@@ -237,11 +239,21 @@ struct DMSChatFeature {
                     }
                 }
             case let .userInfoReqeust(memberId):
-                return .run { send in
+                return .run { @MainActor send in
                     let result = try await workRepo.reqeustUserInfo(
                         userID: memberId
+                        // 렘에 업데이트하고 가져오는게 낳을것 같음
                     )
-                    await send(.userInfoResult(result))
+                    
+                    let realm = try await realmRepo.upsertMembers(response: result)
+                    
+                    if let realm {
+                        let model = realmRepo.userToMember(realm)
+                        send(.userInfoResult(model))
+                    } else {
+                        send(.userInfoResult(result))
+                    }
+//                    await send(.userInfoResult(result))
                 } catch: { error, send in
                     if let error = error as? UserInfoReqeustAPIError {
                         if !error.ifDevelopError {

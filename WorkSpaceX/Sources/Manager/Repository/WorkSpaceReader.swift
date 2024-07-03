@@ -140,6 +140,12 @@ extension WorkSpaceReader {
                             }
                         }
                     }
+                    contin.onTermination = { @Sendable _ in
+                        token.invalidate()
+                    }
+                } catch {
+                    print(error)
+                    contin.finish()
                 }
             }
         }

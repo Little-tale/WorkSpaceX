@@ -115,11 +115,12 @@ struct WorkSpaceInitalFeature {
                         image: data
                     )
                 }
-                
+       
+
                 return .run { [request = request] send in
                     print(request)
                     let result = try await repository.regWorkSpaceReqeust(request)
-                    
+                    UserDefaultsManager.workSpaceSelectedID = result.workSpaceID
                     await send(.regSuccess(result))
                     await self.dismiss()
                     

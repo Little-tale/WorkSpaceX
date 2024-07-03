@@ -63,6 +63,7 @@ struct DMSListFeature {
         enum Delegate {
             case clickedAddMember
             case moveToDMS(model: WorkSpaceMembersEntity, workSpaceID: String)
+            case moveToDMSForRoom(model: DMSRoomEntity,workSpaceID: String )
         }
         case clickedAddMember
         case errorMessage(String?)
@@ -98,7 +99,7 @@ struct DMSListFeature {
                 }
                 
             case let .workSpaceInfoObserver(workSpaceID):
-                
+                print("이게 왜...? 에러 \(workSpaceID)")
                 return .run { @MainActor send in
                     for await currentModel in workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
                         print("응답 받음 ")
@@ -260,6 +261,17 @@ struct DMSListFeature {
                 return .run { send in
                     await send(.delegate(.moveToDMS(model: model,workSpaceID: id)))
                 }
+            case let .selectedChatRoom(model):
+                let id = state.currentWorkSpaceID
+                guard id != "" else { break }
+                return .run { send in
+                    await send(.delegate(
+                        .moveToDMSForRoom(
+                            model: model,
+                            workSpaceID: id
+                        ))
+                    )
+                }
                 
                 // 이걸 가장 마지막에 바라보게 해야함....
             case let .listDMSInfoObserver(workSpaceID):
@@ -269,6 +281,8 @@ struct DMSListFeature {
                         send(.roomEntityShow(models))
                     }
                 }
+                
+         
                 
             case let .roomEntityShow(models):
                 state.roomList = models
