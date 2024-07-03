@@ -40,7 +40,7 @@ extension ProfileInfoView {
             }
         }
     }
-    private func meProfileView(model: UserEntity) -> some View {
+    private func meProfileView(model: UserInfoEntity) -> some View {
         VStack {
             imagePickView()
             myListView(model: model)
@@ -58,7 +58,7 @@ extension ProfileInfoView {
         }
     }
     
-    private func myListView(model: UserEntity) -> some View {
+    private func myListView(model: UserInfoEntity) -> some View {
         List {
             Section {
                 ForEach(ProfileInfoFeature.MyProfileViewType.topSectionCases, id: \.self) { item in

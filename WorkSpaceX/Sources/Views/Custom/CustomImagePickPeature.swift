@@ -17,6 +17,7 @@ struct CustomImagePickPeature {
         var errorMessage: String? = nil
     }
     enum ImagePickState: Equatable {
+        case profileEmpty
         case empty
         case loading
         case success(Data)
@@ -27,6 +28,7 @@ struct CustomImagePickPeature {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case empty
+        case profileEmpty
         case loading
         case success(Data)
         case ifURL(URL?)
@@ -66,6 +68,8 @@ struct CustomImagePickPeature {
                 }
                 state.imageState = .urlImage(url)
                 
+            case .profileEmpty:
+                state.imageState = .profileEmpty
             default :
                 break
             }

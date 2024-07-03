@@ -15,11 +15,10 @@ struct UserDTO: DTO {
     let phone: String?
     let provider: String?
     let createdAt: String
-    let sesacCoin: Int
     let token: TokenDTO
     
     enum CodingKeys: String, CodingKey {
            case userID = "user_id"
-           case email, nickname, profileImage, phone, provider, createdAt, token, sesacCoin
+           case email, nickname, profileImage, phone, provider, createdAt, token
        }
 }

@@ -140,7 +140,19 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                 
                     let profile = try await userDominRepo.myProfile()
-                    await send(.saveRealmOfProfile(profile))
+               
+                    let user = UserEntity(
+                        userID: profile.userID,
+                        email: profile.email,
+                        nickname: profile.nickname,
+                        profileImage: profile.profileImage,
+                        phone: profile.phone,
+                        provider: profile.provider,
+                        createdAt: profile.createdAt,
+                        token: nil
+                    )
+                    
+                    await send(.saveRealmOfProfile(user))
                     print("프로필 조회임~ ",profile)
                     await send(.workSpaceSubscribe)
                 } catch: { error, send in

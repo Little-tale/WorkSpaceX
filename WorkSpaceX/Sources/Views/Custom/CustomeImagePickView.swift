@@ -18,6 +18,9 @@ struct CustomeImagePickView: View {
         WithPerceptionTracking {
             VStack {
                 switch store.imageState {
+                case .profileEmpty:
+                    WSXImage.profileEmpty1
+                        .resizable()
                 case .empty:
                     WSXImage.logoImage.resizable()
                         

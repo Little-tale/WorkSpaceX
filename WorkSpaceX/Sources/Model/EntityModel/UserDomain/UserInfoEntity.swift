@@ -1,13 +1,13 @@
 //
-//  UserModel.swift
+//  UserInfoEntity.swift
 //  WorkSpaceX
 //
-//  Created by Jae hyung Kim on 6/7/24.
+//  Created by Jae hyung Kim on 7/3/24.
 //
 
 import Foundation
 
-struct UserEntity: Entity {
+struct UserInfoEntity: Entity {
     let userID: String
     let email: String
     let nickname: String
@@ -15,5 +15,5 @@ struct UserEntity: Entity {
     let phone: String?
     let provider: String?
     let createdAt: Date?
-    let token: TokenModel?
+    let sesacCoin: Int
 }

@@ -139,6 +139,7 @@
 		7B7EB8562C33F1C100D22362 /* UserInfoReqeustAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */; };
 		7B7EB8592C35435A00D22362 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */; };
 		7B7EB85B2C3543CB00D22362 /* ProfileInfoFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */; };
+		7B7EB85F2C357D3700D22362 /* UserInfoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -372,6 +373,7 @@
 		7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoReqeustAPIError.swift; sourceTree = "<group>"; };
 		7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoFeature.swift; sourceTree = "<group>"; };
+		7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEntity.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 			children = (
 				7B2EEE462C12C6800024853C /* TokkenModel.swift */,
 				7B2EEE482C12C6F00024853C /* UserEntity.swift */,
+				7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */,
 			);
 			path = UserDomain;
 			sourceTree = "<group>";
@@ -1510,6 +1513,7 @@
 				7B7EB8212C3263E700D22362 /* DMSRoomListDTO.swift in Sources */,
 				7B26D1F02C1FE11D00BC9912 /* CustomAlertView.swift in Sources */,
 				7B8FD63F2C1ABD0B00948E7C /* RealmRepository.swift in Sources */,
+				7B7EB85F2C357D3700D22362 /* UserInfoEntity.swift in Sources */,
 				7B7EB8082C2E92F000D22362 /* ChannelEditFeature.swift in Sources */,
 				7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */,
 				7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */,

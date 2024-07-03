@@ -20,7 +20,6 @@ struct UserRegMapper: Mapper {
             phone: userDTO.phone ?? "" ,
             provider: userDTO.provider,
             createdAt: userDTO.createdAt.toDate,
-            sesacCoin: userDTO.sesacCoin,
             token: toEntity(userDTO.token)
         )
         return entity
@@ -33,8 +32,8 @@ struct UserRegMapper: Mapper {
         return entity
     }
     
-    func toEntityProfile(_ profileDTO: UserProfileDTO) -> UserEntity {
-        let entity = UserEntity(
+    func toEntityProfile(_ profileDTO: UserProfileDTO) -> UserInfoEntity {
+        let entity = UserInfoEntity(
             userID: profileDTO.userID,
             email: profileDTO.email,
             nickname: profileDTO.nickname,
@@ -42,8 +41,7 @@ struct UserRegMapper: Mapper {
             phone: profileDTO.phone ?? "" ,
             provider: profileDTO.provider,
             createdAt: profileDTO.createdAt.toDate,
-            sesacCoin: profileDTO.sesacCoin,
-            token: nil
+            sesacCoin: profileDTO.sesacCoin
         )
         return entity
     }

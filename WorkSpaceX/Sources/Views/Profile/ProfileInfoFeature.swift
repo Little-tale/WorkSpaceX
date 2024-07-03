@@ -16,7 +16,7 @@ struct ProfileInfoFeature {
         var id: UUID
         var userType: UserType
         var errorMessage: String? = nil
-        var userEntity: UserEntity? = nil
+        var userEntity: UserInfoEntity? = nil
         var imagePick = CustomImagePickPeature.State()
         var showImagePicker = false
         
@@ -43,15 +43,15 @@ struct ProfileInfoFeature {
         
         case profilInfoRequestOther(userID: String)
         
-        case resultToMe(UserEntity)
+        case resultToMe(UserInfoEntity)
         
         case errorMessage(String?)
         
         case selectedMECase(MyProfileViewType)
         
         enum Delegate {
-            case moveToNickNameChange(UserEntity)
-            case moveToContackChange(UserEntity)
+            case moveToNickNameChange(UserInfoEntity)
+            case moveToContackChange(UserInfoEntity)
         }
     }
     
@@ -111,7 +111,7 @@ struct ProfileInfoFeature {
                     }
                 } else {
                     return .run { send in
-                        await send(.imagePickFeature(.empty))
+                        await send(.imagePickFeature(.profileEmpty))
                     }
                 }
                 
@@ -176,7 +176,7 @@ extension ProfileInfoFeature {
                 return "로그아웃"
             }
         }
-        func detail(from model: UserEntity) -> String? {
+        func detail(from model: UserInfoEntity) -> String? {
             switch self {
             case .myCoinInfo:
                 // 코인 정보를 받으셔야함.
