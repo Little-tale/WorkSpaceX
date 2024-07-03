@@ -51,7 +51,7 @@ extension DMSListView {
         LazyHStack {
             ForEach(store.userList, id: \.userID) { model in
                 memberView(model)
-                    .asButton {
+                    .onTapGesture {
                         store.send(.selectedOtherUser(model))
                     }
                     .padding(.vertical, 6)
@@ -85,7 +85,7 @@ extension DMSListView {
         LazyVStack {
             ForEach(store.roomList, id: \.roomId) { model in
                 chatView(model)
-                    .asButton {
+                    .onTapGesture {
                         store.send(.selectedChatRoom(model))
                     }
                     .padding(.vertical, 6)

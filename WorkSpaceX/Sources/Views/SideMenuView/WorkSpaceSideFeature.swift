@@ -79,6 +79,12 @@ struct WorkSpaceSideFeature {
         case successMessage(String)
         case successAlertBool(Bool)
         case removeSuccessAlertTapped
+        
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case changedWorkSpaceID(String?)
+        }
     }
     
     enum viewCase {
@@ -242,6 +248,18 @@ struct WorkSpaceSideFeature {
                 
             case let .errorAlertBool(bool):
                 state.errorAlertBoll = bool
+                
+            case .removeSuccessAlertTapped:
+                
+                if let model = state.currentModels.first {
+                    let id = model.workSpaceID
+                    
+                    UserDefaultsManager.workSpaceSelectedID = id
+                    
+                    return .run { send in
+                        await send(.delegate(.changedWorkSpaceID(id)))
+                    }
+                }
                 
             default:
                 break

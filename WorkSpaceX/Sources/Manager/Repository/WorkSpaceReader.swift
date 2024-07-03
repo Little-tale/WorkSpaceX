@@ -138,7 +138,8 @@ extension WorkSpaceReader {
                                 print(error)
                                 contin.finish()
                             }
-                        }                    }
+                        }
+                    }
                 }
             }
         }
@@ -208,10 +209,10 @@ extension WorkSpaceReader {
                             switch change {
                             case .initial(let models):
                                 continuation.yield(Array(models))
-                            case .update(let models, let deletions, let insertAt, let modifications):
+                            case .update(let models, _, _, _):
                                 
                                 continuation.yield(Array(models))
-                            case .error(let error):
+                            case .error(_):
                                 continuation.finish()
                             }
                         }

@@ -35,7 +35,10 @@ struct RealmRepository {
         
         try await realm.asyncWrite{
             if let model = realm.object(ofType: type, forPrimaryKey: modelId) {
-                realm.delete(workspace.users)
+                if let user = UserDefaultsManager.userID {
+                    let users = workspace.users.where { $0.userID != user }
+                    realm.delete(users)
+                }
                 realm.delete(workspace.channels)
                 realm.delete(model)
             }

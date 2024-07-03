@@ -82,26 +82,28 @@ struct DMSListFeature {
                 let bool = state.onAppearTrigger
                 return .run { send in
                     if id != "", bool {
-                        await send(.workSpaceInfoObserver(workSpaceID: id))
-                        await send(.listDMSInfoObserver(WorkSpaceID: id))
+                        
                     }
                     if id != "" {
+                        
                         await send(.requestWorkSpaceMember(WorkSpaceID: id))
                         await send(.dmsListReqeust(WorkSpaceID: id))
                     }
                 }
             case let .parentAction(.getWorkSpaceId(id)):
                 state.currentWorkSpaceID = id
+                return .run { send in
+                    await send(.workSpaceInfoObserver(workSpaceID: id))
+                    await send(.listDMSInfoObserver(WorkSpaceID: id))
+                }
                 
             case let .workSpaceInfoObserver(workSpaceID):
-                if state.onAppearTrigger {
-                    state.onAppearTrigger = false
-                    return .run { @MainActor send in
-                        for await currentModel in workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
-                            print("응답 받음 ")
-                            if let currentModel{
-                                send(.catchToWorkSpaceRealmModel(currentModel))
-                            }
+                
+                return .run { @MainActor send in
+                    for await currentModel in workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                        print("응답 받음 ")
+                        if let currentModel{
+                            send(.catchToWorkSpaceRealmModel(currentModel))
                         }
                     }
                 }

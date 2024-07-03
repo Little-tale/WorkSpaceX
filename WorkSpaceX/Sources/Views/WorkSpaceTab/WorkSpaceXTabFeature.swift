@@ -225,19 +225,29 @@ struct WorkSpaceTabCoordinator {
                     await send(.dmsTabbar(.parentAction(.getWorkSpaceId(worSpaceId))))
                 }
                 
-            case .sidebar(.removeSuccessAlertTapped) :
-                if state.currentCount <= 0 {
-//                    state.sideMenuOpen = false
-                    UserDefaultsManager.workSpaceSelectedID = ""
+//            case .sidebar(.removeSuccessAlertTapped) :
+//                if state.currentCount <= 0 {
+////                    state.sideMenuOpen = false
+//                    UserDefaultsManager.workSpaceSelectedID = ""
+//                    return .run { send in
+//                        await send(.noWorkSpaceTrigger)
+//                    }
+//                } else if let first = state.currentModels.first {
+//                    
+//                }
+                
+            case let .sidebar(.delegate(.changedWorkSpaceID(id))):
+                if let id {
+                    return .run { send in
+                        await send(.homeTabbar(.sendToRootWorkSpaceID(id)))
+                        await send(.dmsTabbar(.parentAction(.getWorkSpaceId(id))))
+                    }
+                } else {
                     return .run { send in
                         await send(.noWorkSpaceTrigger)
                     }
-                } else if let first = state.currentModels.first {
-                    return .run { send in
-                        await send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
-                        await send(.dmsTabbar(.parentAction(.getWorkSpaceId(first.workSpaceID))))
-                    }
                 }
+                
             case .sendWorkSpaceMakeAction(.presented(.realmRegSuccess(let id))):
                 return .run { send in
                     await send(.workSpaceRegSuccess(id: id))
