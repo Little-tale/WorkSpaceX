@@ -106,9 +106,7 @@ struct WorkSpaceListFeature {
                 
                 return .run { send in
                     await send(.firstRealm(workSpaceID))
-                    if bool {
-                        await send(.observerStart(workSpaceID))
-                    }
+                    
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
                     await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
                     await send(.dmRoomListReqeust(wrokSpaceID: workSpaceID))
@@ -119,6 +117,7 @@ struct WorkSpaceListFeature {
                 state.currentWorkSpaceId = workSpaceId
                 return .run { send in
                     await send(.onAppear)
+                    await send(.observerStart(workSpaceId))
                 }
                 
             case let .firstRealm(workSpaceId):
@@ -134,16 +133,12 @@ struct WorkSpaceListFeature {
             
                 
             case let .observerStart(workSpaceID):
-                if state.appearTrigger {
-                    
-                    state.appearTrigger = false
-                    
-                    return .run { send in
-                        for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
-                            print("응답 받음 ")
-                            if let currentModel{
-                                await send(.catchToWorkSpaceRealmModel(currentModel))
-                            }
+                
+                return .run { send in
+                    for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                        print("응답 받음 ")
+                        if let currentModel{
+                            await send(.catchToWorkSpaceRealmModel(currentModel))
                         }
                     }
                 }

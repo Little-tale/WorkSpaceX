@@ -77,7 +77,7 @@ struct DMSListFeature {
         Reduce { state, action in
             switch action {
             case .onAppaer:
-                print(state.currentWorkSpaceID)
+                print("현재 워크 스페이스 아이디",state.currentWorkSpaceID)
                 let id = state.currentWorkSpaceID
                 let bool = state.onAppearTrigger
                 return .run { send in
