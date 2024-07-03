@@ -255,11 +255,12 @@ struct WorkSpaceSideFeature {
                     let id = model.workSpaceID
                     
                     UserDefaultsManager.workSpaceSelectedID = id
-                    state.currentWorkSpaceID = id 
+                    state.currentWorkSpaceID = id
                     return .run { send in
                         await send(.delegate(.changedWorkSpaceID(id)))
                     }
                 } else {
+                    UserDefaultsManager.workSpaceSelectedID = ""
                     return .run { send in
                         await send(.delegate(.changedWorkSpaceID(nil)))
                     }

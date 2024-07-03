@@ -145,10 +145,10 @@ struct WorkSpaceTabCoordinator {
                     await send(.workSpaceSubscribe)
                 } catch: { error, send in
                    if let error = error as? MyProfileAPIError {
-                        
                         if let error = error.ifCommonError {
                             print("프로필 조회 에러",error)
                         }
+                       
                     } else {
                         print("별개의 에러",error)
                     }
@@ -244,9 +244,10 @@ struct WorkSpaceTabCoordinator {
                         await send(.dmsTabbar(.parentAction(.getWorkSpaceId(id))))
                     }
                 } else {
-                    return .run { send in
-                        await send(.noWorkSpaceTrigger)
-                    }
+                    
+//                    return .run { send in
+//                        await send(.noWorkSpaceTrigger)
+//                    }
                 }
                 
            
