@@ -62,6 +62,8 @@ struct WorkSpaceTabCoordinator {
         
         var sideMenuState: WorkSpaceSideFeature.State?
         
+        
+        
         // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
         @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
         var currentCount = 0
@@ -213,6 +215,12 @@ struct WorkSpaceTabCoordinator {
                     state.makeWorkSpaceState = nil
                 }
                 
+            case .sendWorkSpaceMakeAction(.presented(.realmRegSuccess(let id))):
+                return .run { send in
+                    await send(.workSpaceRegSuccess(id: id))
+                    await send(.makeWorkSpaceStart(false))
+                }
+                
                
             case .sidebar(.goBackToRoot):
                 return .run{ send in
@@ -241,10 +249,7 @@ struct WorkSpaceTabCoordinator {
                     }
                 }
                 
-            case .sendWorkSpaceMakeAction(.presented(.realmRegSuccess(let id))):
-                return .run { send in
-                    await send(.workSpaceRegSuccess(id: id))
-                }
+           
             case .workSpaceRegSuccess(let id):
                 UserDefaultsManager.workSpaceSelectedID = id
                 
@@ -317,6 +322,7 @@ struct WorkSpaceTabCoordinator {
                 return .run { send in
                     await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
                 }
+                
                 
             default:
                 break

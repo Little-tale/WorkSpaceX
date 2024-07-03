@@ -88,7 +88,8 @@ struct RootFeature {
                 
             case .sendToWorkSpaceTab(.noWorkSpaceTrigger) :
                 
-                return .run { send in await send(.onAppear) }
+                return .run { send in await send(.onAppear)
+                }
                 
             case .sendToWorkSpaceStart:
                 
@@ -120,8 +121,9 @@ struct RootFeature {
                 return .none
     
             case .alert(.presented(.refreshTokkenDead)):
-                
+               
                 state.OnboardingViewState = OnboardingFeature.State()
+                
                 state.currentLoginState = .logout
                 
 //                return .run { send in

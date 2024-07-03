@@ -15,13 +15,17 @@ struct WorkSpaceInitalFeature {
     struct State: Equatable {
         var imagePick = CustomImagePickPeature.State()
         var showImagePicker = false
+        
         var workSpaceName = ""
         var workSpaceIntroduce = ""
         var regButtonState = false
         var image: Data? = nil
+        
         var errorMessage: String? = nil
         var successMessage: String? = nil
+        
         var showPrograssView = false
+        
         var logOutAlertState: AlertState<Action.Alert>?
     }
     
@@ -122,7 +126,6 @@ struct WorkSpaceInitalFeature {
                     let result = try await repository.regWorkSpaceReqeust(request)
                     UserDefaultsManager.workSpaceSelectedID = result.workSpaceID
                     await send(.regSuccess(result))
-                    await self.dismiss()
                     
                 } catch : { error, send in
                     if let error = error as? MakeWorkSpaceAPIError {
