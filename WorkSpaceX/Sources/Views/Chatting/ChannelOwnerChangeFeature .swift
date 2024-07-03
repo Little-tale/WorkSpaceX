@@ -133,9 +133,7 @@ struct ChannelOwnerChangeFeature {
                         await send(.realmUpsert(result))
                     } catch: { error, send in
                         if let error = error as? ChannelOwnerChangedAPIError {
-                            if error.ifReFreshDead {
-                                RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                            } else if !error.ifDevelopError {
+                            if !error.ifDevelopError {
                                 await send(.alertAction(.error(message: error.message)))
                             } else {
                                 print(error)

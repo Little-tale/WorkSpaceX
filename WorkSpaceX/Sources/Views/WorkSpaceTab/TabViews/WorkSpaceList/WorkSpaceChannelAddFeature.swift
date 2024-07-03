@@ -105,10 +105,6 @@ struct WorkSpaceChannelAddFeature {
                     
                 } catch: { error, send in
                     if let error = error as? WorkSpaceMakeChannelAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                            return
-                        }
                         if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
                         } else { print(error) }

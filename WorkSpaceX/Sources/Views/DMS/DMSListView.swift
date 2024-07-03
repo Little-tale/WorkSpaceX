@@ -26,7 +26,9 @@ struct DMSListView: View {
                 case .members:
                     List {
                         memberListView()
+                            .listRowSeparator(.visible)
                         chatsView()
+                            .listRowSeparator(.hidden)
                     }
                     .listStyle(.plain)
                 }
@@ -40,6 +42,9 @@ struct DMSListView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     navigationTrailingView()
+                        .onTapGesture {
+                            store.send(.selectedMeProfile)
+                        }
                 }
             }
         }
@@ -81,15 +86,20 @@ extension DMSListView {
     
 }
 extension DMSListView {
+    @ViewBuilder
     private func chatsView() -> some View {
-        LazyVStack {
-            ForEach(store.roomList, id: \.roomId) { model in
-                chatView(model)
-                    .onTapGesture {
-                        store.send(.selectedChatRoom(model))
-                    }
-                    .padding(.vertical, 6)
-                    .padding(.horizontal,4)
+        if store.roomList.count <= 0 {
+            EmptyView()
+        } else {
+            LazyVStack {
+                ForEach(store.roomList, id: \.roomId) { model in
+                    chatView(model)
+                        .onTapGesture {
+                            store.send(.selectedChatRoom(model))
+                        }
+                        .padding(.vertical, 6)
+                        .padding(.horizontal,4)
+                }
             }
         }
     }

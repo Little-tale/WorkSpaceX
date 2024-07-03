@@ -124,9 +124,7 @@ struct ChannelEditFeature {
                     await send(.realmRegStart(result))
                 } catch: { error, send in
                     if let error = error as? ChannelEditAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
                         } else {
                             print(error)

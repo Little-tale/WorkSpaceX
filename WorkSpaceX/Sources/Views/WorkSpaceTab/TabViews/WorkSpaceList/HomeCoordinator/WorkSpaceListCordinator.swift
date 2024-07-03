@@ -248,7 +248,11 @@ struct WorkSpaceListCordinator {
                 state.identeRoutes.dismiss()
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
+                let id = WorkSpaceListCordinator.State.uuid
                 state.identeRoutes.dismiss()
+                return .run { send in
+                    await send(.router(.routeAction(id: id, action: .rootScreen(.parentToAction(.needToMemberUpdate)))))
+                }
                 
             default:
                 break

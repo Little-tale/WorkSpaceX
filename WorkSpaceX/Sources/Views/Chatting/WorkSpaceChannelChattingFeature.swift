@@ -155,9 +155,8 @@ struct WorkSpaceChannelChattingFeature {
                         await send(.socketConnected)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
-                            if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
-                            else if error.errorCode == "E13" {
-                                print("존재하지 않는 워크 스페이스..?")
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
                             }
                         } else {
                             print(error)
@@ -180,9 +179,8 @@ struct WorkSpaceChannelChattingFeature {
                         await send(.socketConnected)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
-                            if error.ifReFreshDead { RefreshTokkenDeadReciver.shared.postRefreshTokenDead() }
-                            else if error.errorCode == "E13" {
-                                print("존재하지 않는 워크 스페이스..?")
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
                             }
                         } else {
                             print(error)
@@ -209,10 +207,8 @@ struct WorkSpaceChannelChattingFeature {
                     
                 } catch: { error, send in
                     if let error = error as? WorkSpaceChannelListAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else {
-                            print("체널 에러 발생 이긴함. ",error)
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
                         }
                     } else {
                         print("체널 에러 발생 이긴함. ",error)
@@ -279,9 +275,7 @@ struct WorkSpaceChannelChattingFeature {
                     print("전송은 성공 : ",result)
                 } catch: { error, send in
                     if let error = error as? WorkSpaceChatSendAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
                         } else {
                             print(error)

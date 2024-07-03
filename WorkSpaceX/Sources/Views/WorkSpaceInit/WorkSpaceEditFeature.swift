@@ -119,14 +119,10 @@ struct WorkSpaceEditFeature {
                     
                 } catch: { error, send in
                     if let error = error as? WorkSpaceEditAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                            
-                        } else {
-                            if !error.ifDevelopError {
-                                await send(.errorMessage(error.message))
-                            } else { print(error) }
-                        }
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else { print(error) }
+                    
                     } else {
                         print(error)
                     }

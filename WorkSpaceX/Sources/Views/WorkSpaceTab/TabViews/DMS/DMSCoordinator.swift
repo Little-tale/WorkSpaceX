@@ -13,6 +13,7 @@ import ComposableArchitecture
 enum DMSListScreens {
     case dmHome(DMSListFeature)
     case dmChat(DMSChatFeature)
+    case profileInfo(ProfileInfoFeature)
     // sheet
     case memberAdd(AddMemberFeature)
 }
@@ -23,6 +24,9 @@ struct DMSCoordinator {
     @ObservableState
     struct State: Equatable {
         static let uuid = UUID()
+        
+        let profileView = UUID()
+        
         var currentWorkSpaceId: String?
         var identeRoutes: IdentifiedArrayOf<Route<DMSListScreens.State>>
         
@@ -57,6 +61,20 @@ struct DMSCoordinator {
                 if let id = state.currentWorkSpaceId {
                     state.identeRoutes.presentSheet(.memberAdd(AddMemberFeature.State( currentWorkSpaceID: id)), embedInNavigationView: true)
                 }
+                
+            case .router(.routeAction(id: _, action: .dmHome(.delegate(.moveToProfileView)))):
+                let uuid = state.profileView
+                if let id = UserDefaultsManager.userID {
+                    state.identeRoutes.push(
+                        .profileInfo(
+                            ProfileInfoFeature.State(
+                                id: uuid,
+                                userType: .me(userID: id)
+                            )
+                        )
+                    )
+                }
+                print("액션 전달 받음")
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 

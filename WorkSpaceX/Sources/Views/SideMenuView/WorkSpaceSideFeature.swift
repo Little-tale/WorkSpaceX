@@ -199,14 +199,12 @@ struct WorkSpaceSideFeature {
                            
                     } catch: { error, send in
                         if let error = error as? WorkSpaceRemoveAPIError {
-                            if error.ifReFreshDead {
-                                RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                            } else if !error.ifDevelopError {
+                            if !error.ifDevelopError {
                                 await send(.errorMessage(error.message))
                             } else {
                                 print(error)
                             }
-                        }
+                        } else { print(error) }
                     }
                 }
                 

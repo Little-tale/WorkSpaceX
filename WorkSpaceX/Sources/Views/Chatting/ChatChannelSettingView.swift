@@ -82,7 +82,7 @@ struct ChatChannelSettingView: View {
                     .autohideIn(2)
             }
             .navigationTitle("채널 설정")
-            .toolbar(.hidden, for: .bottomBar)
+            .toolbar(.hidden, for: .tabBar)
             .onAppear {
                 store.send(.onAppear)
             }

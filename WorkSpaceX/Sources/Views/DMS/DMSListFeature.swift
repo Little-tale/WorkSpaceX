@@ -50,11 +50,12 @@ struct DMSListFeature {
         case users([WorkSpaceMembersEntity])
         case dmsListReqeust(WorkSpaceID: String)
         
-//        case unReadReqeust([DMSRoomEntity])
-//        case unReadResults([DMSUnReadEntity])
         
         // 타 사용자 클릭시
         case selectedOtherUser(WorkSpaceMembersEntity)
+        // 본인 프로필 클릭시(네비게이션)
+        case selectedMeProfile
+        
         // 채팅방 클릭시
         case selectedChatRoom(DMSRoomEntity)
         enum ParentAction {
@@ -64,6 +65,7 @@ struct DMSListFeature {
             case clickedAddMember
             case moveToDMS(model: WorkSpaceMembersEntity, workSpaceID: String)
             case moveToDMSForRoom(model: DMSRoomEntity,workSpaceID: String )
+            case moveToProfileView
         }
         case clickedAddMember
         case errorMessage(String?)
@@ -282,10 +284,14 @@ struct DMSListFeature {
                     }
                 }
                 
-         
-                
             case let .roomEntityShow(models):
                 state.roomList = models
+                
+                /// 네비게이션 자신의 프로필 선택시
+            case .selectedMeProfile:
+                return .run { send in
+                    await send(.delegate(.moveToProfileView))
+                }
                 
             default:
                 break

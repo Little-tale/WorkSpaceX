@@ -169,9 +169,7 @@ struct ChatChannelSettingFeature {
                     await send(.netWorkResult(result))
                 } catch: { error, send in
                     if let error = error as? WorkSpaceChannelListAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
                         } else {
                             print(error)
@@ -237,12 +235,10 @@ struct ChatChannelSettingFeature {
                     await send(.realmChannelsUpdate(results))
                 } catch: { error, send in
                     if let error = error as? WorkSpaceExitChannelAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
-                            await send(.alertAction(.errorEvent(error.message)))
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
                         } else {
-                            print("에러 ->",error)
+                            print(error)
                         }
                     } else {
                         print("에러 ->",error)
@@ -298,9 +294,7 @@ struct ChatChannelSettingFeature {
                     
                 } catch: { error, send in
                     if let error = error as? ChannelDeleteAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
                         } else {
                             print(error)

@@ -76,6 +76,7 @@ struct WorkSpaceListFeature {
         case selectedRoom(DMSRoomEntity)
         case selectedNewChannel
         
+        // inNeed
         
         @CasePathable
         enum actionSheetAction {
@@ -90,6 +91,7 @@ struct WorkSpaceListFeature {
             case reload
             case selectedChannel(workSpaceID: String, channel: WorkSpaceChannelEntity)
             case moveToDirectedMessage(WorkSpaceID: String)
+            case needToMemberUpdate
         }
     }
     
@@ -102,7 +104,7 @@ struct WorkSpaceListFeature {
                 guard let workSpaceID = state.currentWorkSpaceId else {
                     break
                 }
-                let bool = state.appearTrigger
+               
                 
                 return .run { send in
                     await send(.firstRealm(workSpaceID))
@@ -168,9 +170,7 @@ struct WorkSpaceListFeature {
                     try await realmRepo.upsertWorkSpaceInMembers(responses: result, workSpaceID: id)
                 } catch: { error, send in
                     if let error = error as? WorkSpaceMembersAPIError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.alertErrorMessage(error.message))
                         } else {
                             print(error)
@@ -190,9 +190,7 @@ struct WorkSpaceListFeature {
                     
                 } catch: { error, send in
                     if let error = error as? WorkSpaceMyChannelError {
-                        if error.ifReFreshDead {
-                            RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.alertErrorMessage(error.message))
                         } else {
                             print(error)
@@ -280,6 +278,13 @@ struct WorkSpaceListFeature {
                         await send(.parentToAction(.moveToDirectedMessage(WorkSpaceID: workSpaceId)))
                     }
                 }
+            case .parentToAction(.needToMemberUpdate):
+                break
+                /*
+                 await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
+                 await send(.observerStart(workSpaceID))
+                 */
+            
             default :
                 break
             }

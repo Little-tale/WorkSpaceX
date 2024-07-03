@@ -137,6 +137,8 @@
 		7B7EB8522C33C6B700D22362 /* DMSChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */; };
 		7B7EB8542C33CD3700D22362 /* DMChatRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */; };
 		7B7EB8562C33F1C100D22362 /* UserInfoReqeustAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */; };
+		7B7EB8592C35435A00D22362 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */; };
+		7B7EB85B2C3543CB00D22362 /* ProfileInfoFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -368,6 +370,8 @@
 		7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatEntity.swift; sourceTree = "<group>"; };
 		7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatRealmModel.swift; sourceTree = "<group>"; };
 		7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoReqeustAPIError.swift; sourceTree = "<group>"; };
+		7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
+		7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoFeature.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -752,6 +756,7 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B7EB8572C35434600D22362 /* Profile */,
 				7B7EB8322C3288C700D22362 /* DMS */,
 				7BF9D72D2C2593410021D043 /* Chatting */,
 				7B8FD6242C1AA49000948E7C /* SideMenuView */,
@@ -920,6 +925,15 @@
 				7B7EB8432C33A81E00D22362 /* DMSChatView.swift */,
 			);
 			path = DMS;
+			sourceTree = "<group>";
+		};
+		7B7EB8572C35434600D22362 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */,
+				7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		7B8FD5FD2C19725800948E7C /* WorkSpaceTab */ = {
@@ -1358,6 +1372,7 @@
 				7B8FD6232C1AA2CA00948E7C /* ExText.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,
 				7BF9D7162C23F7B80021D043 /* AddMemberFeature.swift in Sources */,
+				7B7EB85B2C3543CB00D22362 /* ProfileInfoFeature.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
 				7B10A9A02C296B680035C3C8 /* ChatMultipart.swift in Sources */,
 				7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */,
@@ -1419,6 +1434,7 @@
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */,
 				7B7EB82D2C3286CD00D22362 /* DMSCoordinator.swift in Sources */,
+				7B7EB8592C35435A00D22362 /* ProfileInfoView.swift in Sources */,
 				7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */,
 				7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */,
 				7B26D1F62C20200D00BC9912 /* WorkSpaceReader.swift in Sources */,
