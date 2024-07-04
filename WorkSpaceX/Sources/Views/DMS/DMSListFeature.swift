@@ -197,45 +197,30 @@ struct DMSListFeature {
                         for model in models {
                             group.addTask {
                                 do {
-                                    // 1. 렘 데이터에서 가장 마지막과 에서 전
-                                    let realmDate = try await realmRepo.findDMSChatLastAndPreviousDates(roomID: model.roomId)
-                    
+                                    // 방식을 수정합시다.
+                                    // 리스트를 불러오고 -> 렘에 반영 다만.
+                                    // 마지막으로 본 날짜를 저장.
+                                    // 마지막으로 본 날짜를 기준으로 그이후의 갯수를 반영
+                                    // 그렇게 하면. 읽지않은 쳇 숫자를 요청할 필요가 없어짐.
                                     
-                                    var dateString: String? = nil
-                                    var lastDateString: String? = nil
+                                    let realmDate = try await realmRepo.findDMSChatLastDate(roomID: model.roomId)
                                     
-                                    if let pre = realmDate.previousDate {
-                                        dateString = DateManager.shared.toDateISO(pre)
-                                    }
-                                    
-                                    if let last = realmDate.lastDate {
-                                        lastDateString = DateManager.shared.toDateISO(last)
+                                    var lastChatDateString: String? = nil
+
+                                    if let lastChatDate = realmDate {
+                                        lastChatDateString = DateManager.shared.toDateISO(lastChatDate)
                                     }
                                     
                                     let chatList = try await dmsRepo.dmsChatListRqeust(
                                         model.roomId,
                                         workSpaceId: id,
-                                        cursurDate: dateString
+                                        cursurDate: lastChatDateString
                                     )
                                     
-                                    // 이때 이미 본것이지만 1임.
-                                    let unreadCount = try await dmsRepo.dmRoomUnreadReqeust(id, roomID: model.roomId, date: lastDateString)
+                                    try await realmRepo.upsertToDMSChats(models: chatList, roomID: model.roomId)
                                     
-                                    var update = model
+                                    try await realmRepo.lastChatUpdatedToDMS(roomID: model.roomId)
                                     
-                                    if let lastChat = chatList.last {
-                                        update.lastChat = lastChat.content ?? lastChat.files?.first ?? "알수없음"
-                                        if let date = DateManager.shared.toDateISO(lastChat.createdAt) {
-                                            update.lasstChatDate = date
-                                        }
-                                        
-                                    }
-                                    update.unReadCount = unreadCount.count
-                                    
-                                    try await realmRepo.upsertDMSRoomEntityForRoomList(
-                                        update,
-                                        workSpaceID: id
-                                    )
                                 } catch {
                                     throw error
                                 }

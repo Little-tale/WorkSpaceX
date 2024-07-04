@@ -32,6 +32,8 @@ class DMSRoomRealmModel: Object {
     
     @Persisted var UnReadCount: Int = 0
     
+    @Persisted var lastChatWatchedTrigger = Date()
+    
     convenience
     init(
         roomId: String,

@@ -46,6 +46,8 @@ struct DMSChatFeature {
         var ownerID: String?
         
         var channelModel: ChanelEntity?
+        
+        var ifDeleteRoom: Bool = false
     }
     
     enum Action {
@@ -72,7 +74,7 @@ struct DMSChatFeature {
         case errorMessage(String?)
         // 전송
         case sendTapped
-        
+        case ifDeleteRoom(Bool)
         // 채팅들 액션
         
         case showChats([ChatModeEntity])
@@ -164,6 +166,9 @@ struct DMSChatFeature {
                             if !error.ifDevelopError {
                                 await send(.errorMessage(error.message))
                             }
+                            if error.ifDevelopError {
+                                await send(.ifDeleteRoom(true))
+                            }
                         } else {
                             print(error)
                         }
@@ -180,7 +185,7 @@ struct DMSChatFeature {
                     
                     let date = try await realmRepo.findDMSChatLastDate(roomID: roomID)
                     if let date {
-                        
+                        await send(.firstInit)
                         let date = DateManager.shared.toDateISO(date)
                         let result = try await dmsRepo.dmsChatListRqeust(
                             model.roomId,
@@ -202,6 +207,9 @@ struct DMSChatFeature {
                     if let error = error as? DMSListAPIError{
                         if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
+                            if error.ifDevelopError {
+                                await send(.ifDeleteRoom(true))
+                            }
                         } else {
                             print(error)
                         }
@@ -280,6 +288,10 @@ struct DMSChatFeature {
                     }
                 }
             case .sendTapped:
+                if state.ifDeleteRoom {
+                    break
+                }
+                
                 guard let roomId = state.roomID else { break }
                 let workSpaceID = state.workSpaceID
                 
@@ -443,9 +455,15 @@ struct DMSChatFeature {
             case .popClick:
                 if let roomID = state.roomID {
                     return .run { send in
+                        try await realmRepo.upsertToDMSDate(roomID:roomID)
                         await send(.delegate(.popClicked(roomID: roomID)))
+                    } catch: { error, send in
+                        print(error)
                     }
                 }
+                
+            case let .ifDeleteRoom(bool):
+                state.ifDeleteRoom = bool
                 
             default:
                 break

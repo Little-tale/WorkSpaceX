@@ -30,6 +30,10 @@ struct DMSRoomAPIError: WSXErrorType {
         return !thisErrorCodes.contains { $0 == errorCode }
     }
     
+    var ifDelete: Bool {
+        return errorCode == "E13"
+    }
+    
     static func makeErrorType(from customError: String) -> Self {
         return Self(errorCode: customError)
     }

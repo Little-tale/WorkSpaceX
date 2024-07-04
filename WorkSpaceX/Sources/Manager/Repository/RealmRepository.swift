@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 @MainActor
 struct RealmRepository {
-    
+    @Dependency(\.dmsMapper) var DMSmapper
     @MainActor
     func removeForID<M: Object>(_ modelId: String, type: M.Type) async throws -> Void {
         let realm = try await Realm(actor: MainActor.shared)
@@ -572,6 +572,50 @@ extension RealmRepository {
     }
     
     @MainActor
+    func unReadToDMSRoomCounteAndLastChat(roomID: String,_ ifRealm: Realm? = nil) async throws -> (room:DMSRoomRealmModel?, unRead: Int, Chat: DMChatRealmModel?) {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        guard let room = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID) else {
+            return (nil,0, nil)
+        }
+        let count = room.chatMessages.where { $0.createdAt > room.lastChatWatchedTrigger }.count
+        let last = room.chatMessages.sorted(by: \.createdAt, ascending: false).first
+
+        return (room,count,last)
+    }
+    @MainActor
+    func lastChatUpdatedToDMS(roomID: String) async throws {
+        let realm = try await Realm(actor: MainActor.shared)
+        let result = try await unReadToDMSRoomCounteAndLastChat(roomID: roomID, realm)
+        if let room = result.room {
+            try await realm.asyncWrite {
+                room.lastChatDate = result.Chat?.createdAt
+                room.lastChatText = result.Chat?.content ?? result.Chat?.files.first ?? "알수 없음"
+                room.UnReadCount = result.unRead
+            }
+        }
+    }
+    
+    @MainActor
+    func upsertToDMSDate(roomID: String) async throws {
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        guard let room = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID) else {
+            return
+        }
+        
+        try await realm.asyncWrite {
+            room.lastChatWatchedTrigger = Date()
+        }
+    }
+    
+    @MainActor /// WillDeplecated
     func findDMSChatLastAndPreviousDates(roomID: String) async throws -> (lastDate: Date?, previousDate: Date?) {
         let realm = try await Realm(actor: MainActor.shared)
         
@@ -647,6 +691,7 @@ extension RealmRepository {
             channel.chatMessages.append(objectsIn: chatModels)
         }
     }
+    
 }
 extension RealmRepository {
     
