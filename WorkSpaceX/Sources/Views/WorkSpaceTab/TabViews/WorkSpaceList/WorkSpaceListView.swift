@@ -193,6 +193,8 @@ struct WorkSpaceListView: View {
                 .foregroundStyle(WSXColor.black)
                 .padding(.horizontal, 4)
             
+            unReadCountView(num: model.unReadCount)
+            
             Spacer()
         }
         .frame(height: 30)
@@ -200,6 +202,23 @@ struct WorkSpaceListView: View {
             store.send(.selectedRoom(model))
         }
     }
+    
+    @ViewBuilder
+    private func unReadCountView(num: Int) -> some View {
+        if num != 0 {
+            Text(String(num))
+                .font(WSXFont.regu1)
+                .frame(height: 24)
+                .frame(minWidth: 20)
+                .padding(.horizontal, 4)
+                .background(WSXColor.green)
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .foregroundStyle(WSXColor.white)
+        } else {
+            EmptyView()
+        }
+    }
+    
     
     private func channelAddView() -> some View {
         HStack {

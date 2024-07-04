@@ -59,7 +59,7 @@ struct WorkSpaceListFeature {
         case addMemberClicked
         // 알렛
         case alertErrorMessage(String?)
-        
+        case listDMSInfoObserver(wrokSpaceID: String)
         // 상위뷰 관찰
         case openSideMenu
         case chnnelAddClicked
@@ -105,11 +105,9 @@ struct WorkSpaceListFeature {
                 guard let workSpaceID = state.currentWorkSpaceId else {
                     break
                 }
-               
-                
                 return .run { send in
                     await send(.firstRealm(workSpaceID))
-                    
+                    await send(.listDMSInfoObserver(wrokSpaceID: workSpaceID))
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
                     await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
                     await send(.dmRoomListReqeust(wrokSpaceID: workSpaceID))
@@ -202,12 +200,50 @@ struct WorkSpaceListFeature {
                 }
                 // DMS Room List 요청단
             case let .dmRoomListReqeust(workSpaceID):
+               
                 return .run { send in
-                    let result = try await dmsRepository.dmRoomListReqeust(
-                        workSpaceID
-                    )
-                    print("가져오기 성공 \(result)")
-                    await send(.updateDMSRooms(DMSRoomSectionEntity(items: result)))
+                    let result = try await dmsRepository.dmRoomListReqeust(workSpaceID)
+                    await withThrowingTaskGroup(of: Void.self) { group in
+                        for model in result {
+                            group.addTask {
+                                do {
+                                    let realmDate = try await realmRepo.findDMSChatLastDate(roomID: model.roomId)
+                                    
+                                    var lastChatDateString: String? = nil
+
+                                    if let lastChatDate = realmDate {
+                                        lastChatDateString = DateManager.shared.toDateISO(lastChatDate)
+                                    }
+                                    
+                                    let chatList = try await dmsRepository.dmsChatListRqeust(
+                                        model.roomId,
+                                        workSpaceId: workSpaceID,
+                                        cursurDate: lastChatDateString
+                                    )
+                                    
+                                    try await realmRepo.upsertToDMSChats(models: chatList, roomID: model.roomId)
+                                    
+                                    try await realmRepo.lastChatUpdatedToDMS(roomID: model.roomId)
+                                    
+                                } catch {
+                                    throw error
+                                }
+                            }
+                        }
+                        do {
+                            try await group.waitForAll()
+                        } catch {
+                            if let dmsError = error as? DMSListAPIError {
+                                if !dmsError.ifDevelopError {
+                                    await send(.alertErrorMessage(dmsError.message))
+                                } else {
+                                    print(error)
+                                }
+                            } else {
+                                print(error)
+                            }
+                        }
+                    }
                 } catch: { error, send in
                     if let error = error as? DMSListAPIError {
                         if error.ifReFreshDead {
@@ -221,6 +257,20 @@ struct WorkSpaceListFeature {
                         print("설마...?",error)
                     }
                 }
+                
+                // 이걸 가장 마지막에 바라보게 해야함....
+            case let .listDMSInfoObserver(workSpaceID):
+                return .run { @MainActor send in
+                    for await currentModel in workSpaceReader.observerToDMSRoom(workSpaceID: workSpaceID) {
+                        let models = dmsRepository.dmsRealmToEntity(currentModel)
+                        let model = DMSRoomSectionEntity(
+                            items: models
+                        )
+
+                        send(.updateDMSRooms(model))
+                    }
+                }
+                
             case let .updateDMSRooms(model):
                 state.dmsRoomSection = model
                 // 렘에도 등록해야함

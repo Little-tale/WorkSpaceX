@@ -197,12 +197,6 @@ struct DMSListFeature {
                         for model in models {
                             group.addTask {
                                 do {
-                                    // 방식을 수정합시다.
-                                    // 리스트를 불러오고 -> 렘에 반영 다만.
-                                    // 마지막으로 본 날짜를 저장.
-                                    // 마지막으로 본 날짜를 기준으로 그이후의 갯수를 반영
-                                    // 그렇게 하면. 읽지않은 쳇 숫자를 요청할 필요가 없어짐.
-                                    
                                     let realmDate = try await realmRepo.findDMSChatLastDate(roomID: model.roomId)
                                     
                                     var lastChatDateString: String? = nil
