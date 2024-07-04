@@ -117,7 +117,7 @@ extension WorkSpaceReader {
         ascending: Bool = true
     ) -> AsyncStream<[WorkSpaceChannelRealmModel]> {
         return AsyncStream { contin in
-            Task {
+            Task { @MainActor in
                 do {
                     let realm = try await Realm(actor: MainActor.shared)
                     guard let workSpace = realm.object(ofType: WorkSpaceRealmModel.self, forPrimaryKey: workSpaceId) else {

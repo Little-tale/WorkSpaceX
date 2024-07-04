@@ -150,6 +150,10 @@ struct WorkSpaceListView: View {
                 .padding(.horizontal, 4)
             
             Spacer()
+            
+            unReadCountView(num: model.didNotReadCount)
+                .padding(.trailing, 5)
+            
         }
         .frame(height: 30)
         .asButton {
@@ -194,7 +198,7 @@ struct WorkSpaceListView: View {
                 .padding(.horizontal, 4)
             
             unReadCountView(num: model.unReadCount)
-            
+                .padding(.trailing, 5)
             Spacer()
         }
         .frame(height: 30)

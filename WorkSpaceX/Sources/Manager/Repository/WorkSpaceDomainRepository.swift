@@ -245,6 +245,22 @@ extension WorkSpaceDomainRepository: DependencyKey {
         return mapping
     }
     
+    func toChannelSection(models: [WorkSpaceChannelRealmModel]) -> WorkSpaceChannelsEntity {
+        var results: [WorkSpaceChannelEntity] = []
+        for model in models {
+            results.append(WorkSpaceChannelEntity(
+                channelID: model.channelID,
+                name: model.name,
+                introduce: model.introduce,
+                ownerID: model.ownerID,
+                didNotReadCount: model.didNotReadCount
+            )
+            )
+        }
+        
+        return WorkSpaceChannelsEntity(items: results)
+    }
+    
 }
 
 extension DependencyValues {

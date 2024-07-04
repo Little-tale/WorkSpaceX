@@ -60,6 +60,7 @@ struct WorkSpaceListFeature {
         // 알렛
         case alertErrorMessage(String?)
         case listDMSInfoObserver(wrokSpaceID: String)
+        case channelInfoObserver(workSpaceID: String)
         // 상위뷰 관찰
         case openSideMenu
         case chnnelAddClicked
@@ -108,6 +109,7 @@ struct WorkSpaceListFeature {
                 return .run { send in
                     await send(.firstRealm(workSpaceID))
                     await send(.listDMSInfoObserver(wrokSpaceID: workSpaceID))
+                    await send(.channelInfoObserver(workSpaceID: workSpaceID))
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
                     await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
                     
@@ -260,8 +262,6 @@ struct WorkSpaceListFeature {
                         for model in result {
                             group.addTask {
                                 do {
-                                    
-                                    
                                     let realmDate = try await realmRepo.findDMSChatLastDate(roomID: model.roomId)
                                     
                                     var lastChatDateString: String? = nil
@@ -321,6 +321,15 @@ struct WorkSpaceListFeature {
                         )
 
                         send(.updateDMSRooms(model))
+                    }
+                }
+            case let .channelInfoObserver(workSpaceID):
+                return .run { @MainActor send in
+                    for await currentModel in workSpaceReader.observeChaeelsForWorkSpace(
+                        workSpaceId: workSpaceID
+                    ) {
+                        let models =  workSpaceRepo.toChannelSection(models: currentModel)
+                        send(.updateChannels(models))
                     }
                 }
                 
