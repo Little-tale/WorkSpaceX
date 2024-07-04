@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 struct ProfileInfoEditView: View {
     
@@ -42,11 +43,38 @@ struct ProfileInfoEditView: View {
                         store.send(.regButtonTapped)
                     }
                     .disabled(!store.buttonState)
+                
             }
             .onAppear {
                 store.send(.onAppear)
             }
             .navigationTitle(store.editType.navigationTitle)
+            .alert(item: $store.errorMessage.sending(\.errorMessage)) { _ in
+                Text("에러")
+            } actions: { _ in
+                Text("확인")
+                    .asButton {
+                        store.send(.errorMessage(nil))
+                    }
+            } message: { item in
+                Text(item)
+            }
+            .popup(isPresented: $store.successTrigger.sending(\.successTrigger)) {
+                PopupVIewSmallToColor(
+                    text: "등록이 완료되었습니다.",
+                    color: WSXColor.lightGreen
+                )
+            } customize: {
+                $0
+                    .type(.floater())
+                    .position(.bottom)
+                    .animation(.spring())
+                    .autohideIn(1.2)
+                    .closeOnTap(false)
+                    .dismissCallback {
+                        store.send(.lastTrigger)
+                    }
+            }
         }
     }
 }

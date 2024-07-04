@@ -91,6 +91,11 @@ struct DMSCoordinator {
                     model: model
                 )))
                 
+                // 등록이 완료될경우 
+            case .router(.routeAction(id: _, action: .profileEdit(.delegate(.regSuccess)))):
+                
+                state.identeRoutes.pop()
+                
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 

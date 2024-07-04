@@ -18,6 +18,9 @@ struct ProfileInfoEditFeature {
         var model: UserInfoEntity
         var currentText: String = ""
         var buttonState = false
+        
+        var errorMessage: String? = nil
+        var successTrigger: Bool = false
     }
     
     enum Action {
@@ -28,8 +31,15 @@ struct ProfileInfoEditFeature {
         case textTester
         case regButtonTapped
         
+        case updateRealm(UserEntity)
+        
+        case regSuccess
+        case lastTrigger
+        
+        case errorMessage(String?)
+        case successTrigger(Bool)
         enum Delegate {
-            
+            case regSuccess
         }
     }
     
@@ -84,24 +94,26 @@ struct ProfileInfoEditFeature {
                 
             case .textTester:
                 let text = state.currentText
-                
+                var bool: Bool
                 switch state.editType {
                 case .nickName:
                     let result = TextValid.TextValidate(text, caseOf: .nickName)
-                    let bool = result == .match
+                    bool = result == .match
                     state.buttonState = bool
                     
                 case .contact:
                     let clean = text.filter { $0.isNumber }
                     let result = TextValid.TextValidate(clean, caseOf: .phoneNumber)
                     state.currentText = clean.formatPhoneNumber
-                    let bool = result == .match
+                    bool = result == .match
                     state.buttonState = bool
                 }
-                return .run { send in
-                    await send(.duplicateTester)
+                if bool {
+                    return .run { send in
+                        await send(.duplicateTester)
+                    }
                 }
-                
+    
             case .duplicateTester:
                 switch state.editType {
                 case .nickName:
@@ -112,6 +124,67 @@ struct ProfileInfoEditFeature {
                     let contact = state.model.phone ?? ""
                     state.buttonState = contact != state.currentText
                 }
+            case .regButtonTapped:
+                let current = state.currentText
+                let model = state.model
+                state.buttonState = false
+                switch state.editType {
+                case .nickName:
+                    return .run { send in
+                        let result = try await userRepo.profileInfoEdit(current, model.phone ?? "")
+                        await send(.updateRealm(result))
+                    } catch: { error, send in
+                        if let error = error as? UserEditAPIError {
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
+                            } else {
+                                print(error)
+                            }
+                        } else {
+                            print(error)
+                        }
+                    }
+                case .contact:
+                    return .run { send in
+                        let result = try await userRepo.profileInfoEdit(model.nickname, current)
+                        await send(.updateRealm(result))
+                    } catch: { error, send in
+                        if let error = error as? UserEditAPIError {
+                            if !error.ifDevelopError {
+                                await send(.errorMessage(error.message))
+                            } else {
+                                print(error)
+                            }
+                        } else {
+                            print(error)
+                        }
+                    }
+                }
+                
+            case let .updateRealm(model):
+                return .run { @MainActor send in
+                    let result = try await  realmRepo.upsertUserModel(response: model)
+                    if result != nil {
+                        send(.regSuccess)
+                    } else {
+                        send(.errorMessage("저장중 문제가 발생했어요"))
+                    }
+                }
+            case .regSuccess:
+                state.buttonState = false
+                return .run { send in
+                    await send(.successTrigger(true))
+                }
+            case let .successTrigger(bool):
+                state.successTrigger = bool
+                
+            case .lastTrigger:
+                return .run { send in
+                    await send(.delegate(.regSuccess))
+                }
+            case let .errorMessage(message):
+                state.buttonState = message == nil
+                state.errorMessage = message
                 
             default:
                 break
