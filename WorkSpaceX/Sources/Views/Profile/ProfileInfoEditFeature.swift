@@ -23,10 +23,11 @@ struct ProfileInfoEditFeature {
     enum Action {
         case onAppear
         case delegate(Delegate)
-        
+        case duplicateTester
         case currentText(String)
         case textTester
         case regButtonTapped
+        
         enum Delegate {
             
         }
@@ -55,8 +56,8 @@ struct ProfileInfoEditFeature {
         }
     }
     
-    @Dependency(\.textValidtor) var textValid
-    
+    @Dependency(\.userDomainRepository) var userRepo
+    @Dependency(\.realmRepository) var realmRepo
     var body: some ReducerOf<Self> {
     
         
@@ -80,6 +81,7 @@ struct ProfileInfoEditFeature {
                 return .run { send in
                     await send(.textTester)
                 }
+                
             case .textTester:
                 let text = state.currentText
                 
@@ -96,6 +98,21 @@ struct ProfileInfoEditFeature {
                     let bool = result == .match
                     state.buttonState = bool
                 }
+                return .run { send in
+                    await send(.duplicateTester)
+                }
+                
+            case .duplicateTester:
+                switch state.editType {
+                case .nickName:
+                    let nickName = state.model.nickname
+                    
+                    state.buttonState = nickName != state.currentText
+                case .contact:
+                    let contact = state.model.phone ?? ""
+                    state.buttonState = contact != state.currentText
+                }
+                
             default:
                 break
             }

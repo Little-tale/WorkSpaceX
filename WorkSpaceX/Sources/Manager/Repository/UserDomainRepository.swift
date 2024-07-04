@@ -21,6 +21,8 @@ struct UserDomainRepository {
     var appleLoginRequest: () async throws -> UserEntity
     
     var myProfile: () async throws -> UserInfoEntity
+    
+    var profileInfoEdit: (_ nickname: String,_ contact: String) async throws -> UserEntity
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -137,6 +139,17 @@ extension UserDomainRepository: DependencyKey {
             let profileDTO = try await NetworkManager.shared.requestDto(UserProfileDTO.self, router: UserDomainRouter.myProfile, errorType: MyProfileAPIError.self)
             
             let mapping = mapper.toEntityProfile(profileDTO)
+            
+            return mapping
+        }, profileInfoEdit: { nickname, contact in
+            
+            let reqeustModle = UserInfoEditReqeustDTO(
+                nickname: nickname,
+                phone: contact
+            )
+            let result = try await NetworkManager.shared
+                .requestDto(UserEditDTO.self, router: UserDomainRouter.editUserInfo(reqeustModle), errorType: UserEditAPIError.self)
+            let mapping = mapper.toEntity(result)
             
             return mapping
         }

@@ -142,6 +142,9 @@
 		7B7EB85F2C357D3700D22362 /* UserInfoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */; };
 		7B7EB8612C362EC400D22362 /* ProfileInfoEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */; };
 		7B7EB8632C36305300D22362 /* ProfileInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */; };
+		7B7EB8652C36431A00D22362 /* UserInfoEditReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8642C36431A00D22362 /* UserInfoEditReqeustDTO.swift */; };
+		7B7EB8672C36445400D22362 /* UserEditDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8662C36445400D22362 /* UserEditDTO.swift */; };
+		7B7EB8692C36453800D22362 /* UserEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8682C36453800D22362 /* UserEditAPIError.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -378,6 +381,9 @@
 		7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEntity.swift; sourceTree = "<group>"; };
 		7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEditFeature.swift; sourceTree = "<group>"; };
 		7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEditView.swift; sourceTree = "<group>"; };
+		7B7EB8642C36431A00D22362 /* UserInfoEditReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEditReqeustDTO.swift; sourceTree = "<group>"; };
+		7B7EB8662C36445400D22362 /* UserEditDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditDTO.swift; sourceTree = "<group>"; };
+		7B7EB8682C36453800D22362 /* UserEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditAPIError.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -596,6 +602,8 @@
 				7B2EEE432C12C4A00024853C /* TokenDTO.swift */,
 				7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */,
 				7B8FD61E2C1A901500948E7C /* UserProfileDTO.swift */,
+				7B7EB8642C36431A00D22362 /* UserInfoEditReqeustDTO.swift */,
+				7B7EB8662C36445400D22362 /* UserEditDTO.swift */,
 			);
 			path = UserDomain;
 			sourceTree = "<group>";
@@ -610,6 +618,7 @@
 				7B8FD6122C19B9C800948E7C /* EmailLoginAPIError.swift */,
 				7B8FD6142C19C19300948E7C /* UserRegAPIError.swift */,
 				7B8FD61C2C1A8EED00948E7C /* MyProfileAPIError.swift */,
+				7B7EB8682C36453800D22362 /* UserEditAPIError.swift */,
 			);
 			path = UserError;
 			sourceTree = "<group>";
@@ -1317,6 +1326,7 @@
 				7B26D1F82C2120C500BC9912 /* WorkSpaceEditView.swift in Sources */,
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
+				7B7EB8652C36431A00D22362 /* UserInfoEditReqeustDTO.swift in Sources */,
 				7B23ADCE2C2ADA4500A9E499 /* WSXSocketManager.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
 				7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */,
@@ -1394,6 +1404,7 @@
 				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,
 				7BF9D7312C2593940021D043 /* WorkSpaceChannelChattingFeature.swift in Sources */,
 				7B2EEE1E2C1190520024853C /* CommonError.swift in Sources */,
+				7B7EB8692C36453800D22362 /* UserEditAPIError.swift in Sources */,
 				7B8FD6172C19CEE600948E7C /* WorkSpaceMeError.swift in Sources */,
 				7B7EB8102C2FF01100D22362 /* ChannelOwnerChangeView.swift in Sources */,
 				7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */,
@@ -1405,6 +1416,7 @@
 				7B10A9902C282EAF0035C3C8 /* ChatModeEntity.swift in Sources */,
 				7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */,
 				7B2EEE202C1190EE0024853C /* APIError.swift in Sources */,
+				7B7EB8672C36445400D22362 /* UserEditDTO.swift in Sources */,
 				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,
 				7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */,
 				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,

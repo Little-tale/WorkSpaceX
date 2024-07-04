@@ -11,7 +11,7 @@ struct UserEntity: Entity {
     let userID: String
     let email: String
     let nickname: String
-    let profileImage: String?
+    let profileImage: String? 
     let phone: String?
     let provider: String?
     let createdAt: Date?

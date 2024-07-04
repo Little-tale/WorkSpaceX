@@ -46,6 +46,19 @@ struct UserRegMapper: Mapper {
         return entity
     }
     
+    func toEntity(_ dto: UserEditDTO) -> UserEntity {
+        return UserEntity(
+            userID: dto.user_id,
+            email: dto.email,
+            nickname: dto.nickname,
+            profileImage: dto.profileImage,
+            phone: dto.phone,
+            provider: dto.provider,
+            createdAt: dto.createdAt.toDate,
+            token: nil
+        )
+    }
+    
 }
 
 extension UserRegMapper {
