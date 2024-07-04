@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 struct ProfileInfoView: View {
     
@@ -26,6 +27,17 @@ struct ProfileInfoView: View {
                 store.send(.onAppaer)
             }
             .toolbar(.hidden, for: .tabBar)
+            .popup(item: $store.popUpViewState.sending(\.popUpViewState)) { text in
+                PopupVIewSmallToColor(text: text, color: WSXColor.lightGreen)
+            } customize: {
+                $0
+                    .type(.floater())
+                    .position(.bottom)
+                    .animation(.spring())
+                    .autohideIn(1)
+                    .closeOnTap(true)
+            }
+
         }
     }
 }

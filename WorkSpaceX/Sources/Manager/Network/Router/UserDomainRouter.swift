@@ -17,6 +17,7 @@ enum UserDomainRouter: Router {
     case myProfile
     
     case editUserInfo(UserInfoEditReqeustDTO)
+    case editUserProfileImage(image: Data, boundary: String)
 }
 extension UserDomainRouter {
     
@@ -26,7 +27,7 @@ extension UserDomainRouter {
             return .post
         case .myProfile:
             return .get
-        case .editUserInfo:
+        case .editUserInfo, .editUserProfileImage:
             return .put
         }
     }
@@ -53,6 +54,9 @@ extension UserDomainRouter {
             
         case .editUserInfo:
             return APIKey.version + "/users/me"
+            
+        case .editUserProfileImage:
+            return APIKey.version + "/users/me/image"
         }
     }
     
@@ -60,12 +64,15 @@ extension UserDomainRouter {
         switch self {
         case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister, .myProfile, .editUserInfo:
             return nil
+        case .editUserProfileImage(_, boundary: let boundary):
+            let multipartFormData = MultipartFormData()
+            return multipartFormData.headers(boundary: boundary)
         }
     }
     
     var parameters: Parameters? {
         switch self {
-        case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister, .myProfile, .editUserInfo:
+        case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister, .myProfile, .editUserInfo, .editUserProfileImage:
             return nil
         }
     }
@@ -92,6 +99,11 @@ extension UserDomainRouter {
             return requestToBody(model)
         case .myProfile:
             return nil
+        case .editUserProfileImage(image: let image, boundary: let boundary):
+            return makeProfileImageMultipartData(
+                image,
+                boundary: boundary
+            )
         }
     }
     
@@ -101,6 +113,25 @@ extension UserDomainRouter {
             return .json
         case .myProfile:
             return .url
+        case .editUserProfileImage:
+            return .multiPart
         }
+    }
+}
+extension UserDomainRouter {
+    
+    private func makeProfileImageMultipartData(_ image: Data, boundary: String) -> Data {
+        
+        let multiPart = MultipartFormData()
+        
+        multiPart.append(
+            image,
+            withName: "image",
+            fileName: "WorkSpace_\(UUID()).jpeg",
+            mimeType: MimeType.image.rawValue,
+            boundary: boundary
+        )
+        
+        return multiPart.finalize(boundary: boundary)
     }
 }

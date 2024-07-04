@@ -23,6 +23,8 @@ struct UserDomainRepository {
     var myProfile: () async throws -> UserInfoEntity
     
     var profileInfoEdit: (_ nickname: String,_ contact: String) async throws -> UserEntity
+    
+    var profileImageEdit: (_ data: Data) async throws -> UserEntity
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -151,6 +153,13 @@ extension UserDomainRepository: DependencyKey {
                 .requestDto(UserEditDTO.self, router: UserDomainRouter.editUserInfo(reqeustModle), errorType: UserEditAPIError.self)
             let mapping = mapper.toEntity(result)
             
+            return mapping
+        }, profileImageEdit: { data in
+            let result = try await NetworkManager.shared.requestDto(UserEditDTO.self, router: UserDomainRouter.editUserProfileImage(
+                image: data,
+                boundary: MultipartFormData.randomBoundary()
+            ), errorType: UserEditAPIError.self)
+            let mapping = mapper.toEntity(result)
             return mapping
         }
     )

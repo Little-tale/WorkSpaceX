@@ -21,7 +21,7 @@ struct ProfileInfoFeature {
         var showImagePicker = false
         
         var image: Data? = nil
-        
+        var popUpViewState: String? = nil
     }
     
     enum UserType: Equatable {
@@ -38,6 +38,8 @@ struct ProfileInfoFeature {
         case imagePick(Bool)
         
         case imagePickerData(Data?)
+        case imageRegRequest(Data)
+        case realmUpdate(UserEntity)
         
         case profilInfoReqeustMe(userID: String)
         
@@ -48,7 +50,7 @@ struct ProfileInfoFeature {
         case errorMessage(String?)
         
         case selectedMECase(MyProfileViewType)
-        
+        case popUpViewState(String?)
         enum Delegate {
             case moveToNickNameChange(UserInfoEntity)
             case moveToContackChange(UserInfoEntity)
@@ -58,6 +60,8 @@ struct ProfileInfoFeature {
     @Dependency(\.workspaceDomainRepository) var workRepo
     
     @Dependency(\.userDomainRepository) var userRepo
+    
+    @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
         
@@ -98,7 +102,7 @@ struct ProfileInfoFeature {
                 state.userEntity = model
                 if let image = model.profileImage {
                     return .run { send in
-                        await send(.imagePickFeature(.ifURL(URL(string:image))))
+                        await send(.imagePickFeature(.ifURLString(image)))
                     }
                 }
     
@@ -114,10 +118,7 @@ struct ProfileInfoFeature {
                     state.image = data
                     return .run { send in
                         await send(.imagePickFeature(.success(data)))
-                    }
-                } else {
-                    return .run { send in
-                        await send(.imagePickFeature(.profileEmpty))
+                        await send(.imageRegRequest(data))
                     }
                 }
                 
@@ -144,6 +145,37 @@ struct ProfileInfoFeature {
                     break // 선택되지 않습니다.
                 case .logout:
                     break // 로그아웃 기능 구현해야함
+                }
+                
+            case let .imageRegRequest(data):
+                return .run { send in
+                    let result = try await userRepo.profileImageEdit(
+                        data
+                    )
+                    await send(.realmUpdate(result))
+                } catch: { error, send in
+                    if let error = error as? UserEditAPIError{
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                            await send(.imagePickFeature(.profileEmpty))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
+                
+            case let .realmUpdate(model):
+                let image = model.profileImage
+                return .run { send in
+                    if let image {
+                        await send(.imagePickFeature(.ifURLString(image)))
+                    }
+                    try await realmRepo.upsertUserModel(response: model)
+                    await send(.popUpViewState("이미지가 변경 되었어요!"))
+                } catch: { error, _ in
+                    print(error)
                 }
                 
             default:

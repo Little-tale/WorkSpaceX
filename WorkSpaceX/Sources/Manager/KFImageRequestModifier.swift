@@ -22,27 +22,29 @@ final class KFImageRequestModifier: ImageDownloadRequestModifier {
     
     func modified(for request: URLRequest) -> URLRequest? {
         
-        guard let accessTokken = UserDefaultsManager.accessToken else {
+        guard let accessToken = UserDefaultsManager.accessToken else {
             return nil
         }
-//        let str = baseURL + version
-//        print("??? dd",str)
-        var components = URLComponents(string: baseURL )
-        components?.path.append(version)
-        if #available(iOS 16.0, *) {
-            components?.path.append(contentsOf: (request.url?.path() ?? ""))
-        } else {
-            components?.path.append(contentsOf: (request.url?.path() ?? ""))
-        }
         
-        guard let url = components?.url else {
+        guard var urlComponents = URLComponents(url: request.url!, resolvingAgainstBaseURL: false) else {
             return nil
         }
-        print("이미지 요청 URL: ",url)
-        var urlRequest = URLRequest(url: url)
         
-        urlRequest.addValue(accessTokken, forHTTPHeaderField: WSXHeader.Key.authorization)
+        if !urlComponents.path.contains(version) {
+            urlComponents.path = version + urlComponents.path
+        }
         
+        if let baseURLComponents = URLComponents(string: baseURL) {
+            urlComponents.scheme = baseURLComponents.scheme
+            urlComponents.host = baseURLComponents.host
+            urlComponents.port = baseURLComponents.port
+        }
+        guard let modifiedURL = urlComponents.url else {
+            return nil
+        }
+        var urlRequest = URLRequest(url: modifiedURL)
+        
+        urlRequest.addValue(accessToken, forHTTPHeaderField: WSXHeader.Key.authorization)
         urlRequest.addValue(APIKey.secretKey, forHTTPHeaderField: WSXHeader.Key.sesacKey)
         
         return urlRequest
