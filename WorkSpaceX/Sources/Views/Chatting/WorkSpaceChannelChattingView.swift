@@ -62,7 +62,7 @@ struct WorkSpaceChannelChattingView: View {
                         .frame(width: 30, height: 30)
                         .foregroundStyle(WSXColor.black)
                         .asButton {
-                            store.send(.popClicked)
+                            store.send(.popClientClicked)
                         }
                 }
                 ToolbarItem(placement: .principal) {

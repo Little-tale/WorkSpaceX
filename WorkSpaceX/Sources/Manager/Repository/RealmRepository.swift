@@ -656,6 +656,18 @@ extension RealmRepository {
         }
     }
     
+    @MainActor
+    func upsertToChatDate(channelID: String) async throws {
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        guard let room = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelID) else {
+            return
+        }
+        try await realm.asyncWrite {
+            room.lastWatchedTrigger = Date()
+        }
+    }
+    
     @MainActor /// WillDeplecated
     func findDMSChatLastAndPreviousDates(roomID: String) async throws -> (lastDate: Date?, previousDate: Date?) {
         let realm = try await Realm(actor: MainActor.shared)

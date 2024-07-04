@@ -66,6 +66,7 @@ struct WorkSpaceChannelChattingFeature {
         case navigationMemberCount(Int)
         
         case onAppear
+        case popClientClicked
         case userFeildText(String)
         
         case realmobserberStart
@@ -434,6 +435,15 @@ struct WorkSpaceChannelChattingFeature {
                 }
             case let .navigationMemberCount(count):
                 state.navigationMemberCount = String(count)
+                
+            case .popClientClicked:
+                let channelID = state.channelID
+                return .run { send in
+                    try await realmRepo.upsertToChatDate(channelID: channelID)
+                    await send(.popClicked)
+                } catch: { error, _ in
+                    print(error)
+                }
                 
             default:
                 break
