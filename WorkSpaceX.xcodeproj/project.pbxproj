@@ -146,6 +146,7 @@
 		7B7EB8672C36445400D22362 /* UserEditDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8662C36445400D22362 /* UserEditDTO.swift */; };
 		7B7EB8692C36453800D22362 /* UserEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8682C36453800D22362 /* UserEditAPIError.swift */; };
 		7B7EB86B2C36562C00D22362 /* PopupVIewSmallToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */; };
+		7B7EB86D2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -386,6 +387,7 @@
 		7B7EB8662C36445400D22362 /* UserEditDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditDTO.swift; sourceTree = "<group>"; };
 		7B7EB8682C36453800D22362 /* UserEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditAPIError.swift; sourceTree = "<group>"; };
 		7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVIewSmallToColor.swift; sourceTree = "<group>"; };
+		7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewWithPopUpView.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -1077,6 +1079,7 @@
 				7BEC45D02C16AACE00576ECA /* CustomImagePickPeature.swift */,
 				7BEC45D42C16C7DE00576ECA /* CustomeImagePickView.swift */,
 				7B8FD6472C1AF22D00948E7C /* DownSamplingImageView.swift */,
+				7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -1403,6 +1406,7 @@
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
 				7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */,
 				7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */,
+				7B7EB86D2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift in Sources */,
 				7BF9D71F2C2407810021D043 /* WorkSpaceAddMemberAPIError.swift in Sources */,
 				7B2EEE092C10C50B0024853C /* UserRegMapper.swift in Sources */,
 				7B2EEE442C12C4A00024853C /* TokenDTO.swift in Sources */,

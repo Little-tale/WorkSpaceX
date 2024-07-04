@@ -71,6 +71,8 @@ struct WorkSpaceTabCoordinator {
         
         // Refresh
         var refreshAlert: Bool = false
+        
+
     }
     enum viewStateCase {
         case loading
@@ -107,6 +109,12 @@ struct WorkSpaceTabCoordinator {
         case currentModelCatch([WorkSpaceRealmModel])
         
         case noWorkSpaceTrigger
+        
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case moveToOnBoardingView
+        }
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
@@ -334,6 +342,12 @@ struct WorkSpaceTabCoordinator {
                 
                 return .run { send in
                     await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
+                }
+                
+            case .homeTabbar(.delegate(.moveToOnBoardingView)):
+                
+                return .run { send in
+                    await send(.delegate(.moveToOnBoardingView))
                 }
                 
                 

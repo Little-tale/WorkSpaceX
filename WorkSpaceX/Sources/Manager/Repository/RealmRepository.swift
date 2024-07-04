@@ -1135,6 +1135,27 @@ extension RealmRepository {
     
 }
 
+extension RealmRepository {
+    
+    func logout() async throws {
+        
+        let realm = try await Realm(actor: MainActor.shared)
+        
+        UserDefaultsManager.accessToken = nil
+        UserDefaultsManager.ifEmailLogin = false
+        UserDefaultsManager.refreshToken = nil
+        UserDefaultsManager.userID = nil
+        UserDefaultsManager.workSpaceSelectedID = ""
+        
+        let chatMessage = realm.objects(ChatRealmModel.self)
+    
+        try await realm.asyncWrite {
+            realm.delete(chatMessage)
+        }
+        
+    }
+}
+
 extension RealmRepository: DependencyKey {
     static var liveValue: RealmRepository = Self()
 }

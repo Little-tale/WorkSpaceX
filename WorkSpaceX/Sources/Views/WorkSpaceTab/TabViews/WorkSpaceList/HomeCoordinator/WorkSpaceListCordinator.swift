@@ -65,6 +65,7 @@ struct WorkSpaceListCordinator {
         enum Delegate {
             case openSideMenu
             case moveToDirect(workSpaceID: String)
+            case moveToOnBoardingView
         }
     }
     //currentWorkSpaceIdCatch
@@ -128,6 +129,11 @@ struct WorkSpaceListCordinator {
                     editType: .contact,
                     model: model
                 )))
+                
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToOnBoardingView)))):
+                return .run { send in
+                    await send(.delegate(.moveToOnBoardingView))
+                }
                 
                 // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):

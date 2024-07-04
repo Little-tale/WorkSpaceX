@@ -22,11 +22,20 @@ struct ProfileInfoFeature {
         
         var image: Data? = nil
         var popUpViewState: String? = nil
+        var logOutViewState: logOutState? = nil
+        var progress: Bool = false
     }
     
     enum UserType: Equatable {
         case me(userID: String)
         case other(userID: String)
+    }
+    
+    struct logOutState: Equatable {
+        let title = "로그아웃"
+        let message = "로그아웃시 메시지 기록은 삭제됩니다."
+        let cancel = "취소"
+        let action = "로그아웃"
     }
     
     enum Action {
@@ -51,9 +60,13 @@ struct ProfileInfoFeature {
         
         case selectedMECase(MyProfileViewType)
         case popUpViewState(String?)
+        case logOutViewState(logOutState?)
+        case logOutConfirm
+        
         enum Delegate {
             case moveToNickNameChange(UserInfoEntity)
             case moveToContackChange(UserInfoEntity)
+            case moveToOnBoardingView
         }
     }
     
@@ -144,8 +157,14 @@ struct ProfileInfoFeature {
                 case .connectedSocial:
                     break // 선택되지 않습니다.
                 case .logout:
-                    break // 로그아웃 기능 구현해야함
+                    return .run { send in
+                        await send(.logOutViewState(.init()))
+                    }
+                    // 로그아웃 기능 구현해야함
                 }
+                
+            case let .logOutViewState(model):
+                state.logOutViewState = model
                 
             case let .imageRegRequest(data):
                 return .run { send in
@@ -175,6 +194,20 @@ struct ProfileInfoFeature {
                     try await realmRepo.upsertUserModel(response: model)
                     await send(.popUpViewState("이미지가 변경 되었어요!"))
                 } catch: { error, _ in
+                    print(error)
+                }
+                
+            case .logOutConfirm :
+                state.logOutViewState = nil
+                state.progress = true
+                return .run { send in
+                    
+                    try await Task.sleep(for: .seconds(1))
+                    
+                    try await realmRepo.logout()
+                    
+                    await send(.delegate(.moveToOnBoardingView))
+                } catch: {error, _ in
                     print(error)
                 }
                 

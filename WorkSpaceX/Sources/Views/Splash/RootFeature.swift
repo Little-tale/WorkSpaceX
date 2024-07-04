@@ -98,6 +98,10 @@ struct RootFeature {
             case .binding:
                 
                 return .none
+            case .sendToWorkSpaceTab(.delegate(.moveToOnBoardingView)):
+                state.currentLoginState = .logout
+                return .none
+                
             case .sendToOnboardingView:
                 
                 return .none
@@ -128,7 +132,8 @@ struct RootFeature {
                 
 //                return .run { send in
 //                    await send(.onAppear)
-//                }
+//
+                
                 return .none
             }
         }

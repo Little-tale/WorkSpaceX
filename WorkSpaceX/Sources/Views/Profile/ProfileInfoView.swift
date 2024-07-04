@@ -15,27 +15,57 @@ struct ProfileInfoView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack {
-                switch store.state.userType {
-                case .me:
-                    meProfileView()
-                case .other:
-                    EmptyView()
+            ZStack {
+                VStack {
+                    switch store.state.userType {
+                    case .me:
+                        meProfileView()
+                    case .other:
+                        EmptyView()
+                    }
                 }
-            }
-            .onAppear {
-                store.send(.onAppaer)
-            }
-            .toolbar(.hidden, for: .tabBar)
-            .popup(item: $store.popUpViewState.sending(\.popUpViewState)) { text in
-                PopupVIewSmallToColor(text: text, color: WSXColor.lightGreen)
-            } customize: {
-                $0
-                    .type(.floater())
-                    .position(.bottom)
-                    .animation(.spring())
-                    .autohideIn(1)
-                    .closeOnTap(true)
+                .onAppear {
+                    store.send(.onAppaer)
+                }
+                .toolbar(.hidden, for: .tabBar)
+                .popup(item: $store.popUpViewState.sending(\.popUpViewState)) { text in
+                    PopupVIewSmallToColor(text: text, color: WSXColor.lightGreen)
+                } customize: {
+                    $0
+                        .type(.floater())
+                        .position(.bottom)
+                        .animation(.spring())
+                        .autohideIn(1)
+                        .closeOnTap(true)
+                }
+                .popup(item: $store.logOutViewState.sending(\.logOutViewState)) { model in
+                    CustomAlertViewWithPopUpView(
+                        alertMode: .cancelWith,
+                        title: model.title,
+                        message: model.message,
+                        onCancel: {
+                            store.send(.logOutViewState(nil))
+                        },
+                        onAction: {
+                            store.send(.logOutConfirm)
+                        },
+                        actionTitle: model.action
+                    )
+                    .padding(.horizontal, 20)
+                } customize: {
+                    $0
+                        .appearFrom(.centerScale)
+                        .animation(.easeInOut)
+                        .position(.center)
+                        .closeOnTap(false)
+                        .backgroundColor(.black.opacity(0.4))
+                }
+                
+                if store.progress {
+                    ProgressView()
+                        .frame(width: 70, height: 70)
+                }
+                
             }
         }
     }
