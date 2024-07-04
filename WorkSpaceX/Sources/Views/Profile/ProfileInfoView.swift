@@ -54,7 +54,6 @@ extension ProfileInfoView {
     }
     private func meProfileView(model: UserInfoEntity) -> some View {
         VStack {
-            imagePickView()
             myListView(model: model)
             Spacer()
         }
@@ -72,67 +71,24 @@ extension ProfileInfoView {
     
     private func myListView(model: UserInfoEntity) -> some View {
         List {
-            Section {
-                ForEach(ProfileInfoFeature.MyProfileViewType.topSectionCases, id: \.self) { item in
-                    HStack {
-                        Text(item.title)
-                            .font(WSXFont.title2)
-                        if item == .myCoinInfo {
-                            Text(item.detail(from: model) ?? "")
-                                .foregroundStyle(WSXColor.green)
-                            Spacer()
-                            Text("충전하기")
-                                .foregroundStyle(WSXColor.black.opacity(0.8))
-                                .font(WSXFont.regu1)
-                        } else {
-                            Spacer()
-                            Text(item.detail(from: model) ?? "")
-                                .foregroundStyle(WSXColor.black.opacity(0.8))
-                                .font(WSXFont.regu1)
-                        }
-                        Image(systemName: "chevron.right")
-                            .foregroundStyle(WSXColor.gray)
-                    }
-                    .asButton {
-                        store.send(.selectedMECase(item))
-                    }
-                }
+            HStack {
+                Spacer()
+                imagePickView()
+                Spacer()
             }
-            
+            .listRowBackground(Color.clear)
             Section {
-                if !UserDefaultsManager.ifEmailLogin {
-                    ForEach(ProfileInfoFeature.MyProfileViewType.bottomSectionCases, id: \.self) { item in
-                        Group {
-                            HStack {
-                                Text(item.title)
-                                Spacer()
-                                Text(item.detail(from: model) ?? "")
-                            }
-                        }
-                        .asButton {
-                            store.send(.selectedMECase(item))
-                        }
-                    }
-                } else {
-                    ForEach(ProfileInfoFeature.MyProfileViewType.emalilLogginBottomSection, id: \.self) { item in
-                        Group {
-                            HStack {
-                                Text(item.title)
-                                Spacer()
-                                Text(item.detail(from: model) ?? "")
-                            }
-                        }
-                        .asButton {
-                            store.send(.selectedMECase(item))
-                        }
-                    }
-                }
+                topSectionView(model)
+            }
+            Section {
+                bottomSectionView(model)
             }
         }
+        .scrollDisabled(true)
     }
     
     private func imagePickView() -> some View {
-        ZStack (alignment: .bottomTrailing) {
+        ZStack(alignment: .bottomTrailing) {
             CustomeImagePickView(
                 store: store.scope(state: \.imagePick, action: \.imagePickFeature)
             )
@@ -143,6 +99,65 @@ extension ProfileInfoView {
             WSXImage.subCamera
                 .resizable()
                 .frame(width: 25, height: 25)
+        }
+    }
+}
+
+extension ProfileInfoView {
+    private func topSectionView(_ model: UserInfoEntity) -> some View {
+        ForEach(ProfileInfoFeature.MyProfileViewType.topSectionCases, id: \.self) { item in
+            HStack {
+                Text(item.title)
+                    .font(WSXFont.title2)
+                if item == .myCoinInfo {
+                    Text(item.detail(from: model) ?? "")
+                        .foregroundStyle(WSXColor.green)
+                    Spacer()
+                    Text("충전하기")
+                        .foregroundStyle(WSXColor.black.opacity(0.8))
+                        .font(WSXFont.regu1)
+                } else {
+                    Spacer()
+                    Text(item.detail(from: model) ?? "")
+                        .foregroundStyle(WSXColor.black.opacity(0.8))
+                        .font(WSXFont.regu1)
+                }
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(WSXColor.gray)
+            }
+            .asButton {
+                store.send(.selectedMECase(item))
+            }
+        }
+    }
+    @ViewBuilder
+    private func bottomSectionView(_ model: UserInfoEntity) -> some View {
+        if !UserDefaultsManager.ifEmailLogin {
+            ForEach(ProfileInfoFeature.MyProfileViewType.bottomSectionCases, id: \.self) { item in
+                Group {
+                    HStack {
+                        Text(item.title)
+                        Spacer()
+                        Text(item.detail(from: model) ?? "")
+                    }
+                }
+                .asButton {
+                    store.send(.selectedMECase(item))
+                }
+            }
+        } else {
+            ForEach(ProfileInfoFeature.MyProfileViewType.emalilLogginBottomSection, id: \.self) { item in
+                Group {
+                    HStack {
+                        Text(item.title)
+                        Spacer()
+                        Text(item.detail(from: model) ?? "")
+                    }
+                }
+                .asButton {
+                    store.send(.selectedMECase(item))
+                }
+            }
         }
     }
 }

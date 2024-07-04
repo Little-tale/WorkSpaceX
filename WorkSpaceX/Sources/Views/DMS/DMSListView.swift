@@ -221,6 +221,7 @@ extension DMSListView {
             
             let url = URL(string: image)
             DownSamplingImageView(url: url, size: CGSize(width: 30, height: 30))
+                .frame(width: 30, height: 30)
                 .clipShape(Circle())
         } else {
             WSXImage.profileEmpty1
