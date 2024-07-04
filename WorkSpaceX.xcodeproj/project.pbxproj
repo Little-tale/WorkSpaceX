@@ -140,6 +140,8 @@
 		7B7EB8592C35435A00D22362 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */; };
 		7B7EB85B2C3543CB00D22362 /* ProfileInfoFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */; };
 		7B7EB85F2C357D3700D22362 /* UserInfoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */; };
+		7B7EB8612C362EC400D22362 /* ProfileInfoEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */; };
+		7B7EB8632C36305300D22362 /* ProfileInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
 		7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */; };
@@ -374,6 +376,8 @@
 		7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoFeature.swift; sourceTree = "<group>"; };
 		7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEntity.swift; sourceTree = "<group>"; };
+		7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEditFeature.swift; sourceTree = "<group>"; };
+		7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEditView.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
 		7B8FD6012C19768D00948E7C /* WorkSpaceXTabFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceXTabFeature.swift; sourceTree = "<group>"; };
@@ -935,6 +939,8 @@
 			children = (
 				7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */,
 				7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */,
+				7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */,
+				7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1359,6 +1365,7 @@
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
 				7B7EB83A2C32D4D900D22362 /* DMSRoomRealmModel.swift in Sources */,
+				7B7EB8612C362EC400D22362 /* ProfileInfoEditFeature.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
 				7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */,
 				7BF9D7442C2708F50021D043 /* ShadowModifier.swift in Sources */,
@@ -1391,6 +1398,7 @@
 				7B7EB8102C2FF01100D22362 /* ChannelOwnerChangeView.swift in Sources */,
 				7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */,
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
+				7B7EB8632C36305300D22362 /* ProfileInfoEditView.swift in Sources */,
 				7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */,
 				7BF9D71B2C2406A40021D043 /* WorkSpaceMemberEntity.swift in Sources */,
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,

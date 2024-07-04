@@ -14,6 +14,7 @@ enum DMSListScreens {
     case dmHome(DMSListFeature)
     case dmChat(DMSChatFeature)
     case profileInfo(ProfileInfoFeature)
+    case profileEdit(ProfileInfoEditFeature)
     // sheet
     case memberAdd(AddMemberFeature)
 }
@@ -77,13 +78,19 @@ struct DMSCoordinator {
                 }
                /// 닉네임 수정으로 전환
             case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToNickNameChange(let model))))):
+                state.identeRoutes.push(.profileEdit(ProfileInfoEditFeature.State(
+                    editType: .nickName,
+                    model: model
+                )))
                 
-                break
                 
                 /// 연락처 수정으로 전환
             case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToContackChange(let model))))):
+                state.identeRoutes.push(.profileEdit(ProfileInfoEditFeature.State(
+                    editType: .contact,
+                    model: model
+                )))
                 
-                break
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 

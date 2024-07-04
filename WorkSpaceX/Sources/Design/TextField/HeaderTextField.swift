@@ -21,9 +21,13 @@ struct HeaderTextField: View {
     
     var body: some View {
         VStack (alignment: .leading) {
-            HStack {
-                Text(headerTitle)
-                    .foregroundStyle(scopeColor ? WSXColor.errorRed : WSXColor.black)
+            if headerTitle == "" {
+                EmptyView()
+            } else {
+                HStack {
+                    Text(headerTitle)
+                        .foregroundStyle(scopeColor ? WSXColor.errorRed : WSXColor.black)
+                }
             }
             Group{
                 if isSecure {
