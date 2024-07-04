@@ -25,6 +25,7 @@ struct ProfileInfoEditFeature {
         case delegate(Delegate)
         
         case currentText(String)
+        case textTester
         case regButtonTapped
         enum Delegate {
             
@@ -54,7 +55,11 @@ struct ProfileInfoEditFeature {
         }
     }
     
+    @Dependency(\.textValidtor) var textValid
+    
     var body: some ReducerOf<Self> {
+    
+        
         Reduce { state, action in
             switch action {
                 
@@ -66,14 +71,35 @@ struct ProfileInfoEditFeature {
                 case .contact:
                     state.currentText = model.phone ?? ""
                 }
+                return .run { send in
+                    await send(.textTester)
+                }
                 
             case let .currentText(text):
                 state.currentText = text
+                return .run { send in
+                    await send(.textTester)
+                }
+            case .textTester:
+                let text = state.currentText
+                
+                switch state.editType {
+                case .nickName:
+                    let result = TextValid.TextValidate(text, caseOf: .nickName)
+                    let bool = result == .match
+                    state.buttonState = bool
+                    
+                case .contact:
+                    let clean = text.filter { $0.isNumber }
+                    let result = TextValid.TextValidate(clean, caseOf: .phoneNumber)
+                    state.currentText = clean.formatPhoneNumber
+                    let bool = result == .match
+                    state.buttonState = bool
+                }
             default:
                 break
             }
             return .none
         }
     }
-    
 }

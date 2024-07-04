@@ -153,7 +153,7 @@ struct SignUpFeature {
                 
                 state.contactValid = result
                 
-                state.user.contact = formatPhoneNumber(clean)
+                state.user.contact = clean.formatPhoneNumber
                 
                 return .run { send in
                     await send(.lastButtonState)
@@ -300,28 +300,5 @@ struct SignUpFeature {
                 return .none
             }
         }
-    }
-}
-
-extension SignUpFeature {
-    
-    private func formatPhoneNumber(_ number: String) -> String {
-        var result = ""
-        var mask = "XXX-XXX-XXXX"
-        if number.count == 11 {
-            mask = "XXX-XXXX-XXXX"
-        }
-        var index = number.startIndex
-        
-        for change in mask where index < number.endIndex {
-            if change == "X" {
-                result.append(number[index])
-                index = number.index(after: index)
-            } else {
-                result.append(change)
-            }
-        }
-        print(result)
-        return result
     }
 }
