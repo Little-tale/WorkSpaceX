@@ -117,8 +117,6 @@ extension RealmRepository {
     @MainActor
     func syncWorkSpace(with responses: [WorkSpaceDetailEntity]) async throws {
         let realm = try await Realm(actor: MainActor.shared)
-        print(Realm.Configuration.defaultConfiguration.fileURL)
-        
         print("동기화 .... ")
         
         try await removeForCleantoWorkSpace(
@@ -559,6 +557,18 @@ extension RealmRepository {
     }
     
     @MainActor
+    func findChannelChatLastDate(channelID: String) async throws -> Date? {
+        let realm = try await Realm(actor: MainActor.shared)
+        guard let channelMessage = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelID)?.chatMessages else {
+            return nil
+        }
+        if let lastChat = channelMessage.sorted(by: \.createdAt, ascending: false).first {
+            return lastChat.createdAt
+        }
+        return nil
+    }
+    
+    @MainActor
     func findDMSChatLastDate(roomID: String) async throws -> Date? {
         let realm = try await Realm(actor: MainActor.shared)
         
@@ -600,6 +610,37 @@ extension RealmRepository {
                 room.UnReadCount = result.unRead
             }
         }
+    }
+    
+    @MainActor
+    func lastChatUpdateToChannel(channelID: String) async throws {
+        let realm = try await Realm(actor: MainActor.shared)
+        let result = try await unReadToChannelCounteAndLastChat(channelID: channelID, realm)
+        
+        if let channel = result.room {
+            try await realm.asyncWrite {
+                channel.didNotReadCount = result.unRead
+            }
+        }
+    }
+    
+    @MainActor
+    func unReadToChannelCounteAndLastChat(channelID: String,_ ifRealm: Realm? = nil) async throws -> (room:WorkSpaceChannelRealmModel?, unRead: Int, Chat: ChatRealmModel?) {
+        var realm: Realm
+        
+        if let ifRealm {
+            realm = ifRealm
+        } else {
+            realm = try await Realm(actor: MainActor.shared)
+        }
+        
+        guard let room = realm.object(ofType: WorkSpaceChannelRealmModel.self, forPrimaryKey: channelID) else {
+            return (nil,0, nil)
+        }
+        let count = room.chatMessages.where { $0.createdAt > room.lastWatchedTrigger }.count
+        let last = room.chatMessages.sorted(by: \.createdAt, ascending: false).first
+
+        return (room,count,last)
     }
     
     @MainActor

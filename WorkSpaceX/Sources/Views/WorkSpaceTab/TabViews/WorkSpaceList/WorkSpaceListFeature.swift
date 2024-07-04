@@ -54,7 +54,7 @@ struct WorkSpaceListFeature {
         case workSpaceChnnelUpdate(workSpaceID: String)
         // 워크 스페이스 DMRoomList 요청
         case dmRoomListReqeust(wrokSpaceID: String)
-        
+        case channelListRequest(wrokSpaceID: String)
         // 팀원 추가
         case addMemberClicked
         // 알렛
@@ -110,6 +110,8 @@ struct WorkSpaceListFeature {
                     await send(.listDMSInfoObserver(wrokSpaceID: workSpaceID))
                     await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
                     await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
+                    
+                    await send(.channelListRequest(wrokSpaceID: workSpaceID))
                     await send(.dmRoomListReqeust(wrokSpaceID: workSpaceID))
                 }
                 
@@ -198,15 +200,68 @@ struct WorkSpaceListFeature {
                         print(error)
                     }
                 }
+                
+            case let .channelListRequest(workSpaceID):
+                return .run { send in
+                    let result = try await workSpaceRepo.workSpaceSearchingToChannel(workSpaceID)
+                    await withThrowingTaskGroup(of: Void.self) { group in
+                        for model in result {
+                            group.addTask {
+                                do {
+                                    let realmDate = try await realmRepo.findChannelChatLastDate(channelID: model.channelId)
+                                    
+                                    let chatList = try await workSpaceRepo.workSpaceChattingList(
+                                        workSpaceID,
+                                        model.channelId,
+                                        realmDate
+                                    )
+                                    
+                                    try await realmRepo.upsertToChatInChannel(
+                                        models: chatList
+                                    )
+                                    
+                                    try await realmRepo.lastChatUpdateToChannel(channelID: model.channelId)
+                                } catch {
+                                    print(error)
+                                }
+                            }
+                        }
+                        do {
+                            try await group.waitForAll()
+                        } catch {
+                            if let dmsError = error as? WorkSpaceChannelListAPIError {
+                                if !dmsError.ifDevelopError {
+                                    await send(.alertErrorMessage(dmsError.message))
+                                } else {
+                                    print(error)
+                                }
+                            } else {
+                                print(error)
+                            }
+                        }
+                    }
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceChannelListAPIError {
+                        if !error.ifDevelopError {
+                            await send(.alertErrorMessage(error.message))
+                        }
+                    }
+                    print(error)
+                }
+                
                 // DMS Room List 요청단
             case let .dmRoomListReqeust(workSpaceID):
                
                 return .run { send in
                     let result = try await dmsRepository.dmRoomListReqeust(workSpaceID)
+                    try await realmRepo.upsertDMSRoomEntity(result, workSpaceID: workSpaceID, nil)
+                    
                     await withThrowingTaskGroup(of: Void.self) { group in
                         for model in result {
                             group.addTask {
                                 do {
+                                    
+                                    
                                     let realmDate = try await realmRepo.findDMSChatLastDate(roomID: model.roomId)
                                     
                                     var lastChatDateString: String? = nil
@@ -246,9 +301,7 @@ struct WorkSpaceListFeature {
                     }
                 } catch: { error, send in
                     if let error = error as? DMSListAPIError {
-                        if error.ifReFreshDead {
-        
-                        } else if !error.ifDevelopError {
+                        if !error.ifDevelopError {
                             await send(.alertErrorMessage(error.message))
                         } else {
                             print("설마...?",error)

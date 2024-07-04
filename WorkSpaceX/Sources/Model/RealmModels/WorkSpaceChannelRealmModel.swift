@@ -26,6 +26,8 @@ class WorkSpaceChannelRealmModel: Object {
     
     @Persisted var chatMessages = List<ChatRealmModel>()
     
+    @Persisted var lastWatchedTrigger = Date()
+    
     convenience
     init(channelID: String, name: String, introduce: String, coverImage: String? = nil, ownerID: String, createdAt: Date? = nil) {
         self.init()
