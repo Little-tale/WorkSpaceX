@@ -64,6 +64,7 @@ struct WorkSpaceListFeature {
         case openSideMenu
         case chnnelAddClicked
         case channelSerching
+        case selectedProfileImageView
         
         // 채널 생성과 탐색을 분리를 위함.
         case showAlertSheet

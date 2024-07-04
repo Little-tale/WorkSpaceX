@@ -94,20 +94,29 @@ struct WorkSpaceListView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    if let userProfile = userProfile.first,
-                       let image = userProfile.profileImage {
-                        
-                        let url = URL(string: image)
-                        DownSamplingImageView(url: url, size: CGSize(width: 30, height: 30))
-                            .clipShape(Circle())
-                    } else {
-                        WSXImage.profileEmpty1
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(Circle())
-                    }
+                    navigationTrailingView()
+                        .asButton {
+                            store.send(.selectedProfileImageView)
+                        }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    @ViewBuilder
+    func navigationTrailingView() -> some View {
+        if let userProfile = userProfile.first,
+           let image = userProfile.profileImage {
+            
+            let url = URL(string: image)
+            DownSamplingImageView(url: url, size: CGSize(width: 30, height: 30))
+                .frame(width: 30, height: 30)
+                .clipShape(Circle())
+        } else {
+            WSXImage.profileEmpty1
+                .resizable()
+                .frame(width: 30, height: 30)
+                .clipShape(Circle())
         }
     }
     

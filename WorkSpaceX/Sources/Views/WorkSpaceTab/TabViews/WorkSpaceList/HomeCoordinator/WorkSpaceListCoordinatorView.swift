@@ -41,6 +41,12 @@ struct WorkSpaceListCoordinatorView: View {
                     
                 case let .ChannelOwnerChange(store):
                     ChannelOwnerChangeView(store: store)
+                    
+                case let .profileInfo(store):
+                    ProfileInfoView(store: store)
+    
+                case let .profileEdit(store):
+                    ProfileInfoEditView(store: store)
                 }
             }
         }
@@ -65,6 +71,10 @@ extension WorkSpaceListScreens.State: Identifiable {
         case let .chatnnelEdit(state):
             return state.id
         case let .ChannelOwnerChange(state):
+            return state.id
+        case let .profileInfo(state):
+            return state.id
+        case let .profileEdit(state):
             return state.id
         }
     }

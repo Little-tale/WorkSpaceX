@@ -37,7 +37,6 @@ struct ProfileInfoView: View {
                     .autohideIn(1)
                     .closeOnTap(true)
             }
-
         }
     }
 }
@@ -51,6 +50,7 @@ extension ProfileInfoView {
                 ProgressView()
             }
         }
+        .navigationTitle("내 정보 수정")
     }
     private func meProfileView(model: UserInfoEntity) -> some View {
         VStack {
@@ -67,6 +67,7 @@ extension ProfileInfoView {
                     store.send(.imagePickerData(datas.first))
                 })
         }
+        
     }
     
     private func myListView(model: UserInfoEntity) -> some View {

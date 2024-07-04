@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import TCACoordinators
-
+// selectedProfileImageView
 @Reducer(state: .equatable)
 enum WorkSpaceListScreens {
     case rootScreen(WorkSpaceListFeature)
@@ -18,6 +18,10 @@ enum WorkSpaceListScreens {
     case chattingView(WorkSpaceChannelChattingFeature)
     case chatnnelEdit(ChannelEditFeature)
     case ChannelOwnerChange(ChannelOwnerChangeFeature)
+    
+    // Profile
+    case profileInfo(ProfileInfoFeature)
+    case profileEdit(ProfileInfoEditFeature)
     
     // setting
     case chatChannelSettingView(ChatChannelSettingFeature)
@@ -40,6 +44,8 @@ struct WorkSpaceListCordinator {
         let ChannelListID = UUID()
         
         let channelEditID = UUID()
+        
+        let profileView = UUID()
         
         static let initialState = State(
             identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State(id: uuid)), embedInNavigationView: true)]
@@ -95,6 +101,33 @@ struct WorkSpaceListCordinator {
                             workSpaceID: id
                         )))
                 }
+                // 프로필
+            case .router(.routeAction(id: _, action: .rootScreen(.selectedProfileImageView))):
+                let uuid = state.profileView
+                if let id = UserDefaultsManager.userID {
+                    state.identeRoutes.push(
+                        .profileInfo(
+                            ProfileInfoFeature.State(
+                                id: uuid,
+                                userType: .me(userID: id)
+                            )
+                        )
+                    )
+                }
+                // 닉네임 수정으로 전환
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToNickNameChange(let model))))):
+                state.identeRoutes.push(.profileEdit(ProfileInfoEditFeature.State(
+                    editType: .nickName,
+                    model: model
+                )))
+                
+                
+                /// 연락처 수정으로 전환
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToContackChange(let model))))):
+                state.identeRoutes.push(.profileEdit(ProfileInfoEditFeature.State(
+                    editType: .contact,
+                    model: model
+                )))
                 
                 // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):

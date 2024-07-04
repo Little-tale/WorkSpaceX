@@ -47,6 +47,7 @@ struct DMSListView: View {
                         }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -190,7 +191,7 @@ extension DMSListView {
     
 }
 
-// NAVIGATION
+// MARK: NAVIGATION
 extension DMSListView {
     
     private func navigationLeftView() -> some View {
