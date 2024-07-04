@@ -198,16 +198,18 @@ struct WorkSpaceListCordinator {
                 // 채널 나가기 완료 시
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.exitConfirm)))):
                 print("채널 나옴으로 처음으로 돌아갑니다.")
+                
                 WSXSocketManager.shared.stopAndRemoveSocket()
+                
                 if let workID =  state.currentWorkSpaceId {
-                    state.identeRoutes.popToCurrentNavigationRoot()
+                    state.identeRoutes.goBackTo(\.rootScreen)
                 }
                 // 채널 삭제시..parentToAction
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelDeleteConfirm)))):
 
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 
-                state.identeRoutes.popToCurrentNavigationRoot()
+                state.identeRoutes.goBackTo(\.rootScreen)
                 
                 // 채널 편집뷰로 이동
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model, let workSpaceId))))):
