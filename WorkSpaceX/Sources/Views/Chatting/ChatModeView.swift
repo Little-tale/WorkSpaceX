@@ -136,12 +136,11 @@ struct ChatModeView: View {
     }
     
     private func otherProfileView(model: WorkSpaceMemberEntity) -> some View {
-//        WithPerceptionTracking {
-//
-//        }
         HStack {
             if let image = model.profileImage {
                 DownSamplingImageView(url: URL(string: image), size: CGSize(width: 100, height: 100))
+                    .frame(width: 40, height: 40)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             } else {
                 WSXImage.profileEmpty1
                     .resizable()
