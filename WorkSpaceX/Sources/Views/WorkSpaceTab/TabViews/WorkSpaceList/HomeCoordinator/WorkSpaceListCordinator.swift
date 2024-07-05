@@ -186,8 +186,7 @@ struct WorkSpaceListCordinator {
             case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
                 
                 WSXSocketManager.shared.stopAndRemoveSocket()
-                let count = state.identeRoutes.count
-                state.identeRoutes.remove(at: count - 1)
+                
                 state.identeRoutes.popToCurrentNavigationRoot()
                 
                 // 쳇 세팅 이동.

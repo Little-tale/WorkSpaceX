@@ -19,6 +19,16 @@ struct SearchCoordinatorView: View {
                 switch viewCase.case {
                 case let .home(store):
                     SearchView(store: store)
+                case let .channelChatView(store):
+                    WorkSpaceChannelChattingView(store: store)
+                case let .otherProfileView(store):
+                    ProfileInfoView(store: store)
+                case let .chatChannelSettingView(store):
+                    ChatChannelSettingView(store: store)
+                case let .chatnnelEdit(store):
+                    ChannelEditView(store: store)
+                case let .ChannelOwnerChange(store):
+                    ChannelOwnerChangeView(store: store)
                 }
             }
         }
@@ -28,7 +38,17 @@ struct SearchCoordinatorView: View {
 extension SearchListScreens.State: Identifiable {
     var id: UUID {
         switch self {
-        case .home(let state):
+        case let .home(state):
+            return state.id
+        case let .channelChatView(state):
+            return state.id
+        case let .otherProfileView(state):
+            return state.id
+        case let .chatChannelSettingView(state):
+            return state.id
+        case let .chatnnelEdit(state):
+            return state.id
+        case let .ChannelOwnerChange(state):
             return state.id
         }
     }

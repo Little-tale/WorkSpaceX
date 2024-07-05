@@ -78,7 +78,8 @@ struct SerachFeature {
             case sendToWorkSpaceID(String)
         }
         enum Delegate {
-            
+            case moveToOtherUserProfileView(WorkSpaceMembersEntity)
+            case moveToChannelChatView(WorkSpaceChannelEntity)
         }
     }
     enum SearchViewCase {
@@ -147,6 +148,16 @@ struct SerachFeature {
                 
             case .searchTextOnSubmit:
                 print("이게 됨 ??? ",state.searchText)
+                
+            case let .selectedMember(model):
+                return .run { send in
+                    await send(.delegate(.moveToOtherUserProfileView(model)))
+                }
+                
+            case let .selectedChannel(model):
+                return .run { send in
+                    await send(.delegate(.moveToChannelChatView(model)))
+                }
                 
             default:
                 break

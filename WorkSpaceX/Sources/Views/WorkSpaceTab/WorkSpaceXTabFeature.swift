@@ -314,6 +314,7 @@ struct WorkSpaceTabCoordinator {
                         = first.workSpaceID
                         await send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
                         await send(.dmsTabbar(.parentAction(.getWorkSpaceId(first.workSpaceID))))
+                        await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(first.workSpaceID))))
                     }
                     
                     for await models in await workSpaceReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
