@@ -186,6 +186,12 @@
 		7BC09C3B2C37DD1D00F0ABDC /* SearchResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3A2C37DD1D00F0ABDC /* SearchResultDTO.swift */; };
 		7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */; };
 		7BC09C3F2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */; };
+		7BC09C422C383AB600F0ABDC /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC09C412C383AB600F0ABDC /* iamport-ios */; };
+		7BC09C452C383B6E00F0ABDC /* StoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C442C383B6E00F0ABDC /* StoreRouter.swift */; };
+		7BC09C482C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */; };
+		7BC09C4A2C383C7300F0ABDC /* StoreVaildateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */; };
+		7BC09C4C2C383D1500F0ABDC /* StoreItemListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C4B2C383D1500F0ABDC /* StoreItemListDTO.swift */; };
+		7BC09C4E2C383D1E00F0ABDC /* StoreItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C4D2C383D1E00F0ABDC /* StoreItemDTO.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -430,6 +436,11 @@
 		7BC09C3A2C37DD1D00F0ABDC /* SearchResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDTO.swift; sourceTree = "<group>"; };
 		7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChannelDTO.swift; sourceTree = "<group>"; };
 		7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSearchToListAPIError.swift; sourceTree = "<group>"; };
+		7BC09C442C383B6E00F0ABDC /* StoreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRouter.swift; sourceTree = "<group>"; };
+		7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreValidationReqeustDTO.swift; sourceTree = "<group>"; };
+		7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreVaildateDTO.swift; sourceTree = "<group>"; };
+		7BC09C4B2C383D1500F0ABDC /* StoreItemListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemListDTO.swift; sourceTree = "<group>"; };
+		7BC09C4D2C383D1E00F0ABDC /* StoreItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemDTO.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -510,6 +521,7 @@
 				7BEC45B12C130EB700576ECA /* KakaoSDKCommon in Frameworks */,
 				7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */,
 				7BEC45AF2C130EB700576ECA /* KakaoSDKAuth in Frameworks */,
+				7BC09C422C383AB600F0ABDC /* iamport-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +576,7 @@
 		7B2EEE0A2C117A7D0024853C /* DTOModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BC09C462C383BAF00F0ABDC /* Store */,
 				7B7EB81D2C32636C00D22362 /* DMS */,
 				7BF9D7172C2404E10021D043 /* Channel */,
 				7BEC45D92C16E1E000576ECA /* WorkSpace */,
@@ -581,6 +594,7 @@
 				7BEC45A32C12E53400576ECA /* AuthRouter.swift */,
 				7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */,
 				7B7EB81B2C325DA700D22362 /* DMSRouter.swift */,
+				7BC09C442C383B6E00F0ABDC /* StoreRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1048,6 +1062,17 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		7BC09C462C383BAF00F0ABDC /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */,
+				7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */,
+				7BC09C4B2C383D1500F0ABDC /* StoreItemListDTO.swift */,
+				7BC09C4D2C383D1E00F0ABDC /* StoreItemDTO.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
 			isa = PBXGroup;
 			children = (
@@ -1291,6 +1316,7 @@
 				7B8FD6582C1BFCAB00948E7C /* ComposableArchitecture */,
 				7B26D1922C1C4EF300BC9912 /* TCACoordinators */,
 				7B23ADD02C2ADB1E00A9E499 /* SocketIO */,
+				7BC09C412C383AB600F0ABDC /* iamport-ios */,
 			);
 			productName = WorkSpaceX;
 			productReference = 7B592E812C0E251F00E47797 /* WorkSpaceX.app */;
@@ -1328,6 +1354,7 @@
 				7B8FD6572C1BFCAB00948E7C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */,
+				7BC09C402C383AB600F0ABDC /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 7B592E822C0E251F00E47797 /* Products */;
 			projectDirPath = "";
@@ -1359,6 +1386,7 @@
 			files = (
 				7BEC45F02C1802F200576ECA /* WorkSpaceDomainMapper.swift in Sources */,
 				7B26D1F82C2120C500BC9912 /* WorkSpaceEditView.swift in Sources */,
+				7BC09C452C383B6E00F0ABDC /* StoreRouter.swift in Sources */,
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
 				7B7EB8652C36431A00D22362 /* UserInfoEditReqeustDTO.swift in Sources */,
@@ -1431,6 +1459,7 @@
 				7BF9D7162C23F7B80021D043 /* AddMemberFeature.swift in Sources */,
 				7B7EB85B2C3543CB00D22362 /* ProfileInfoFeature.swift in Sources */,
 				7B2EEE412C12C4640024853C /* UserDTO.swift in Sources */,
+				7BC09C4A2C383C7300F0ABDC /* StoreVaildateDTO.swift in Sources */,
 				7B10A9A02C296B680035C3C8 /* ChatMultipart.swift in Sources */,
 				7BF9D73F2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift in Sources */,
 				7B8FD6022C19768D00948E7C /* WorkSpaceXTabFeature.swift in Sources */,
@@ -1459,6 +1488,7 @@
 				7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */,
 				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,
 				7BEC45FB2C18184800576ECA /* MultipartFormData.swift in Sources */,
+				7BC09C4E2C383D1E00F0ABDC /* StoreItemDTO.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,
 				7B2EEE3F2C129F6F0024853C /* ExView.swift in Sources */,
@@ -1531,6 +1561,7 @@
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
 				7BEC45F32C18074D00576ECA /* NewWorkSpaceRequest.swift in Sources */,
+				7BC09C482C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift in Sources */,
 				7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */,
 				7B8FD6132C19B9C800948E7C /* EmailLoginAPIError.swift in Sources */,
 				7B7EB81F2C32638400D22362 /* DMSRoomDTO.swift in Sources */,
@@ -1540,6 +1571,7 @@
 				7BEC45E32C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift in Sources */,
 				7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */,
 				7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */,
+				7BC09C4C2C383D1500F0ABDC /* StoreItemListDTO.swift in Sources */,
 				7B26D2272C228C3300BC9912 /* WorkSpaceChannelListDTO.swift in Sources */,
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
@@ -1857,6 +1889,14 @@
 				version = 1.10.4;
 			};
 		};
+		7BC09C402C383AB600F0ABDC /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
 		7BEC45AD2C130EB700576ECA /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -1902,6 +1942,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B8FD6572C1BFCAB00948E7C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		7BC09C412C383AB600F0ABDC /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BC09C402C383AB600F0ABDC /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
 		};
 		7BEC45AE2C130EB700576ECA /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -163,6 +163,7 @@ struct ProfileInfoFeature {
                 switch meCaseOf {
                 case .myCoinInfo:
                    break // 코인 결제 기능 추가하여야 함.
+                    
                 case .nickName:
                     return .run { send in
                         await send(.delegate(.moveToNickNameChange(user)))
@@ -171,15 +172,17 @@ struct ProfileInfoFeature {
                     return .run { send in
                         await send(.delegate(.moveToContackChange(user)))
                     }
+                    
                 case .email:
                     break // 선택되지 않습니다.
+                    
                 case .connectedSocial:
                     break // 선택되지 않습니다.
+                    
                 case .logout:
                     return .run { send in
                         await send(.logOutViewState(.init()))
                     }
-                    // 로그아웃 기능 구현해야함
                 }
                 
             case let .logOutViewState(model):

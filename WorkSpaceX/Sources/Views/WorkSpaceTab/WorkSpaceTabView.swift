@@ -41,7 +41,6 @@ struct WorkSpaceTabView: View {
                             VStack {
                                 WSXImage.homeImage
                                     .resizable()
-                                    .renderingMode(.template)
                                     .frame(width: 12, height: 12)
                                 Text(WorkSpaceTabCoordinator.Tab.home.title)
                             }
@@ -51,8 +50,8 @@ struct WorkSpaceTabView: View {
                             .tag(WorkSpaceTabCoordinator.Tab.dm)
                             .tabItem {
                                 VStack {
-                                    WSXImage.dmsTab.resizable()
-                                        .renderingMode(.template)
+                                    WSXImage.dmsTab
+                                        .resizable()
                                         .frame(width: 12, height: 12)
                                     Text(WorkSpaceTabCoordinator.Tab.dm.title)
                                 }
