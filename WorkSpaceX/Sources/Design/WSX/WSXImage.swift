@@ -58,4 +58,8 @@ extension WSXImage {
     static let dmsTab = Image(.dmsTab)
     
     static let searchImage = Image(systemName: "magnifyingglass")
+    
+    static let searchEmpty = Image(.searchEmpty)
+    
+    static let searchResultEmpty = Image(.serachResultEmpty)
 }

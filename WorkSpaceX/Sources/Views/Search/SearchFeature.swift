@@ -19,6 +19,7 @@ struct SerachFeature {
         var navigationTitle = "검색"
         var searchViewPlaceMent = "검색어를 입력해 주세요"
         var searchText: String = ""
+        var viewCase: SearchViewCase = .empty
         var alertCase: AlertCase? = nil
         
         var channels: [WorkSpaceChannelEntity] = []
@@ -80,6 +81,12 @@ struct SerachFeature {
             
         }
     }
+    enum SearchViewCase {
+        case empty
+        case show
+        case searchResultEmpty
+    }
+    
     enum ID: Hashable {
         case debounce
     }
@@ -103,6 +110,8 @@ struct SerachFeature {
                               for: 0.5,
                               scheduler: RunLoop.main
                     )
+                } else {
+                    state.viewCase = .empty
                 }
             case let .catchToText(text):
                 guard let workSpaceId = state.currentWorkSpaceID else {
@@ -110,6 +119,7 @@ struct SerachFeature {
                 }
                 guard state.searchText != "" else { break }
                 print("쓰로틀 ",text)
+                state.currentTextFilterText = text
                 return .run { send in
                     let result = try await workSpaceRepo.workSpaceKeywordSearching(
                         workSpaceId,
@@ -129,9 +139,11 @@ struct SerachFeature {
             case let .catchResults(channel,member):
                 state.channels = channel
                 state.members = member
-                
-                dump(channel)
-                dump(member)
+                if channel.isEmpty && member.isEmpty {
+                    state.viewCase = .searchResultEmpty
+                } else {
+                    state.viewCase = .show
+                }
                 
             case .searchTextOnSubmit:
                 print("이게 됨 ??? ",state.searchText)

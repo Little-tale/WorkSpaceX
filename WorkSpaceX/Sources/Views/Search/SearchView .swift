@@ -15,7 +15,17 @@ struct SearchView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                searchResultView()
+                switch store.viewCase {
+                case .empty:
+                    emptyView()
+                    
+                case .show:
+                    searchResultView()
+                    
+                case .searchResultEmpty:
+                    searchResultEmptyView()
+                    
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(store.navigationTitle)
@@ -104,10 +114,14 @@ extension SearchView {
             }
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(.vertical, 4)
-            
-            Text(model.name)
-                .font(WSXFont.title2)
-                .frame(maxWidth: 78)
+               
+            Text(attributeString(
+                text: model.name,
+                filter: store.currentTextFilterText,
+                font: WSXFont.title2,
+                backColor: WSXColor.lightGray
+            ))
+            .frame(maxWidth: 78)
         }
     }
     
@@ -130,14 +144,80 @@ extension SearchView {
             .padding(.vertical, 4)
             
             VStack(alignment: .leading) {
-                Text(model.nickname)
-                    .font(WSXFont.title2)
-                    
-                Text(model.email)
-                    .font(WSXFont.regu1)
+                Text(attributeString(
+                    text: model.nickname,
+                    filter: store.currentTextFilterText,
+                    font: WSXFont.title2,
+                    backColor: WSXColor.lightGray
+                ))
+    
+                Text(attributeString(
+                    text: model.email,
+                    filter: store.currentTextFilterText,
+                    font: WSXFont.regu1,
+                    backColor: WSXColor.lightGray
+                ))
             }
             Spacer()
         }
     }
 }
 
+extension SearchView {
+    
+    func attributeString(
+        text: String,
+        filter: String,
+        font: Font,
+        backColor: Color
+    ) -> AttributedString {
+        var string = AttributedString(text)
+        if let text = string.range(of: filter) {
+            string[text].font = font
+            string[text].backgroundColor = backColor
+        }
+        return string
+    }
+}
+
+extension SearchView {
+    
+    private func emptyView() -> some View {
+        VStack {
+            Spacer()
+            
+            Text("채널과 멤버를\n검색해 보세요!")
+                .font(WSXFont.title0)
+                .foregroundStyle(WSXColor.black)
+                .padding(.bottom, 15)
+            
+            WSXImage.searchResultEmpty
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 20)
+            
+            Spacer()
+        }
+    }
+    
+    private func searchResultEmptyView() -> some View {
+        VStack {
+            Spacer()
+            
+            Text("검색 결과가 없어요")
+                .font(WSXFont.title0)
+                .foregroundStyle(WSXColor.black)
+                .padding(.bottom, 15)
+            
+            WSXImage.searchEmpty
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 20)
+            
+            Spacer()
+        }
+    }
+    
+}
