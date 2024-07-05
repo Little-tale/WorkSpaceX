@@ -24,6 +24,8 @@ struct ProfileInfoFeature {
         var popUpViewState: String? = nil
         var logOutViewState: logOutState? = nil
         var progress: Bool = false
+        
+        var ifNeedOnAppear: Bool = true
     }
     
     enum UserType: Equatable {
@@ -85,17 +87,20 @@ struct ProfileInfoFeature {
         Reduce { state, action in
             switch action {
             case .onAppaer:
+                let ifNeed = state.ifNeedOnAppear
                 switch state.userType {
                 case let .me(userID):
                     return .run { send in
-                        await send(.imagePickFeature(.profileEmpty))
-                        
+                        if ifNeed {
+                            await send(.imagePickFeature(.profileEmpty))
+                        }
                         await send(.profilInfoReqeustMe(userID: userID))
                     }
                 case let .other(userID):
                     break
                 }
             case .profilInfoReqeustMe(_):
+                state.ifNeedOnAppear = false
                 return .run { send in
                     let result = try await userRepo.myProfile()
                     
