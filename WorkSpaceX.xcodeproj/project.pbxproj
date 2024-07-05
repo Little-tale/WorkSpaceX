@@ -179,6 +179,10 @@
 		7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6502C1BEF3500948E7C /* WorkSpaceSideFeature.swift */; };
 		7B8FD6532C1BF77A00948E7C /* WorkSpaceRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */; };
 		7B8FD6592C1BFCAB00948E7C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8FD6582C1BFCAB00948E7C /* ComposableArchitecture */; };
+		7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */; };
+		7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C342C37B02100F0ABDC /* SearchView .swift */; };
+		7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */; };
+		7BC09C392C37B14700F0ABDC /* SearchCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C382C37B14700F0ABDC /* SearchCoordinatorView.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -416,6 +420,10 @@
 		7B8FD64E2C1BEB9900948E7C /* WorkSpaceSideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSideView.swift; sourceTree = "<group>"; };
 		7B8FD6502C1BEF3500948E7C /* WorkSpaceSideFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSideFeature.swift; sourceTree = "<group>"; };
 		7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRealmModel.swift; sourceTree = "<group>"; };
+		7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
+		7BC09C342C37B02100F0ABDC /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
+		7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		7BC09C382C37B14700F0ABDC /* SearchCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorView.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -776,6 +784,7 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7BC09C312C37AFB800F0ABDC /* Search */,
 				7B7EB8572C35434600D22362 /* Profile */,
 				7B7EB8322C3288C700D22362 /* DMS */,
 				7BF9D72D2C2593410021D043 /* Chatting */,
@@ -1020,6 +1029,17 @@
 				7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */,
 			);
 			path = RealmModels;
+			sourceTree = "<group>";
+		};
+		7BC09C312C37AFB800F0ABDC /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */,
+				7BC09C342C37B02100F0ABDC /* SearchView .swift */,
+				7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */,
+				7BC09C382C37B14700F0ABDC /* SearchCoordinatorView.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
@@ -1343,6 +1363,7 @@
 				7BEC45BC2C142E1300576ECA /* EmailLoginFeature.swift in Sources */,
 				7BF9D72A2C255A8B0021D043 /* WorkSpaceChannelListFeature.swift in Sources */,
 				7B8FD6152C19C19300948E7C /* UserRegAPIError.swift in Sources */,
+				7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */,
 				7BEC45E92C16FEDE00576ECA /* RootFeature.swift in Sources */,
 				7B7EB82A2C326ED600D22362 /* DMSRoomSectionEntity.swift in Sources */,
 				7B2EEE362C11EA570024853C /* WSXErrorType.swift in Sources */,
@@ -1442,6 +1463,7 @@
 				7B7EB80A2C2E9D9B00D22362 /* ChannelEditView.swift in Sources */,
 				7B10A9A42C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift in Sources */,
 				7B7EB8232C32657200D22362 /* DMSListAPIError.swift in Sources */,
+				7BC09C392C37B14700F0ABDC /* SearchCoordinatorView.swift in Sources */,
 				7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */,
 				7B7EB83C2C3399BE00D22362 /* DMSRoomUnReadDTO.swift in Sources */,
 				7B7EB8402C33A73D00D22362 /* DMSChatFeature.swift in Sources */,
@@ -1535,6 +1557,7 @@
 				7B7EB8542C33CD3700D22362 /* DMChatRealmModel.swift in Sources */,
 				7B26D2232C2282E200BC9912 /* WorkSpaceUserRealmModel.swift in Sources */,
 				7B7EB8252C3267B700D22362 /* DMSMapper.swift in Sources */,
+				7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */,
 				7BEC45EB2C1703C100576ECA /* WorkSpaceFirstStartView.swift in Sources */,
 				7B2EEE392C120ECC0024853C /* NotificationService.swift in Sources */,
 				7BF9D70D2C22C96B0021D043 /* WorkSpaceChannelAddFeature.swift in Sources */,
@@ -1546,6 +1569,7 @@
 				7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */,
 				7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */,
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
+				7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */,
 				7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */,
 				7B7EB8522C33C6B700D22362 /* DMSChatEntity.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,

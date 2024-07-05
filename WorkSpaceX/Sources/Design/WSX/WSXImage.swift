@@ -56,4 +56,6 @@ extension WSXImage {
     static let hambergerList = Image(systemName: "list.bullet")
     
     static let dmsTab = Image(.dmsTab)
+    
+    static let searchImage = Image(systemName: "magnifyingglass")
 }

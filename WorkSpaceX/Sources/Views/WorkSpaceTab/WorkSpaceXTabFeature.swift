@@ -36,11 +36,11 @@ struct WorkSpaceTabCoordinator {
     struct State: Equatable {
         static let homeCoordiID = UUID()
         
-        
         static let initalState = State(
             selectedTab: .home,
             homeState: WorkSpaceListCordinator.State.initialState,
-            dmHomeState: DMSCoordinator.State.initialState
+            dmHomeState: DMSCoordinator.State.initialState,
+            searchState: SearchCoordinator.State.initialState
         )
         
         var selectedTab: Tab
@@ -52,6 +52,8 @@ struct WorkSpaceTabCoordinator {
         var homeState: WorkSpaceListCordinator.State
         // DM State
         var dmHomeState: DMSCoordinator.State
+        // searchTab State
+        var searchState: SearchCoordinator.State
         
         var ifNoneSpace: viewStateCase = .loading
         
@@ -86,6 +88,7 @@ struct WorkSpaceTabCoordinator {
         
         case homeTabbar(WorkSpaceListCordinator.Action)
         case dmsTabbar(DMSCoordinator.Action)
+        case searchTabbar(SearchCoordinator.Action)
         
         case tabSelected(Tab)
         case onAppear
@@ -131,13 +134,19 @@ struct WorkSpaceTabCoordinator {
             WorkSpaceEmptyListFeature()
         }
         
-        //        // 홈 탭바의 스태이트
+        // 홈 탭바의 State
         Scope(state: \.homeState, action: \.homeTabbar) {
             WorkSpaceListCordinator()
         }
-        // DMS 탭 바의 스테이트
+        
+        // DMS 탭 바의 State
         Scope(state: \.dmHomeState, action: \.dmsTabbar) {
             DMSCoordinator()
+        }
+        
+        // 검색 탭바의 State
+        Scope(state: \.searchState, action: \.searchTabbar) {
+            SearchCoordinator()
         }
         
         Reduce { state, action in
@@ -297,6 +306,9 @@ struct WorkSpaceTabCoordinator {
                     if workSpaceID != "" {
                         await send(.homeTabbar(.sendToRootWorkSpaceID(workSpaceID)))
                         await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
+                        
+                        await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(workSpaceID))))
+                        
                     } else if let first = result.first {
                         UserDefaultsManager.workSpaceSelectedID
                         = first.workSpaceID

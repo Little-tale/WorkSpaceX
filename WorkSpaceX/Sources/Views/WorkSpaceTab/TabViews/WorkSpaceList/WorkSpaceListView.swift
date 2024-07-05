@@ -182,13 +182,13 @@ struct WorkSpaceListView: View {
         HStack {
             if let userProfile = model.user.profileImage {
                 DownSamplingImageView(url: URL(string: userProfile), size: CGSize(width: 50 , height: 50))
-                    .frame(width: 14, height: 14)
+                    .frame(width: 20, height: 20)
                     .padding(.leading, 10)
             } else {
                 WSXImage.profileEmpty1
                     .resizable()
                     .foregroundStyle(WSXColor.gray)
-                    .frame(width: 14, height: 14)
+                    .frame(width: 20, height: 20)
                     .padding(.leading, 10)
             }
             

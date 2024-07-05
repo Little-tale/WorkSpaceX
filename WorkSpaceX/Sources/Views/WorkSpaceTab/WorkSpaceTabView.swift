@@ -38,21 +38,37 @@ struct WorkSpaceTabView: View {
                         )
                         .tag(WorkSpaceTabCoordinator.Tab.home)
                         .tabItem {
-                            WSXImage.homeImage
-                                .resizable()
-                                .renderingMode(.template)
-                                .frame(width: 12, height: 12)
-                            Text(WorkSpaceTabCoordinator.Tab.home.title)
+                            VStack {
+                                WSXImage.homeImage
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .frame(width: 12, height: 12)
+                                Text(WorkSpaceTabCoordinator.Tab.home.title)
+                            }
                         }
                         
                         DMSCoordinatorView(store: store.scope(state: \.dmHomeState, action: \.dmsTabbar))
                             .tag(WorkSpaceTabCoordinator.Tab.dm)
                             .tabItem {
-                                WSXImage.dmsTab.resizable()
-                                    .renderingMode(.template)
-                                    .frame(width: 12, height: 12)
-                                Text(WorkSpaceTabCoordinator.Tab.dm.title)
+                                VStack {
+                                    WSXImage.dmsTab.resizable()
+                                        .renderingMode(.template)
+                                        .frame(width: 12, height: 12)
+                                    Text(WorkSpaceTabCoordinator.Tab.dm.title)
+                                }
                             }
+                        
+                        SearchCoordinatorView(store: store.scope(state: \.searchState, action: \.searchTabbar))
+                            .tag(WorkSpaceTabCoordinator.Tab.search)
+                            .tabItem {
+                                VStack {
+                                    WSXImage.searchImage
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                    Text(WorkSpaceTabCoordinator.Tab.search.title)
+                                }
+                            }
+                        
                         //                            Text("search")
                         //                                .tabItem {
                         //                                    Text(WorkSpaceXTabFeature.Tab.search.title) }.tag(WorkSpaceXTabFeature.Tab.search)
