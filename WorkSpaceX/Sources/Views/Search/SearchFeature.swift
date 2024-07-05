@@ -98,6 +98,12 @@ struct SerachFeature {
         Reduce { state, action in
             switch action {
              
+            case .onAppear:
+                let text = state.currentTextFilterText
+                return .run { send in
+                    await send(.catchToText(text))
+                }
+                
             case let .parentAction(.sendToWorkSpaceID(workSpaceID)):
                 state.currentWorkSpaceID = workSpaceID
                 

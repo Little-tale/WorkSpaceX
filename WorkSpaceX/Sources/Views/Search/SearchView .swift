@@ -27,6 +27,9 @@ struct SearchView: View {
                     
                 }
             }
+            .onAppear {
+                store.send(.onAppear)
+            }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(store.navigationTitle)
             .searchable(
