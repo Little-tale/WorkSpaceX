@@ -34,7 +34,7 @@ struct SearchView: View {
             .navigationTitle(store.navigationTitle)
             .searchable(
                 text: $store.searchText.sending(\.searchText),
-                prompt: store.searchText
+                prompt: store.searchViewPlaceMent
             )
             .alert(
                 item: $store.alertCase.sending(\.alertCase)) { item in
