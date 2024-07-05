@@ -344,12 +344,15 @@ struct WorkSpaceTabCoordinator {
                     await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
                 }
                 
+                // MARK: 로그아웃 발생시
             case .homeTabbar(.delegate(.moveToOnBoardingView)):
-                
                 return .run { send in
                     await send(.delegate(.moveToOnBoardingView))
                 }
-                
+            case .dmsTabbar(.delegate(.moveToOnBoardingView)):
+                return .run { send in
+                    await send(.delegate(.moveToOnBoardingView))
+                }
                 
             default:
                 break

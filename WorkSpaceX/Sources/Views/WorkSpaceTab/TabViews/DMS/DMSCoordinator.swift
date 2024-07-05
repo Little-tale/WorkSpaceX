@@ -41,8 +41,14 @@ struct DMSCoordinator {
         
         case parentAction(ParentAction)
         
+        case delegate(Delegate)
+        
         enum ParentAction {
             case getWorkSpaceId(String)
+        }
+        
+        enum Delegate {
+            case moveToOnBoardingView
         }
     }
     
@@ -96,6 +102,11 @@ struct DMSCoordinator {
                 
                 state.identeRoutes.pop()
                 
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToOnBoardingView)))):
+                
+                return .run { send in
+                    await send(.delegate(.moveToOnBoardingView))
+                }
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 

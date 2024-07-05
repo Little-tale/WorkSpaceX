@@ -129,6 +129,9 @@ struct WorkSpaceListCordinator {
                     editType: .contact,
                     model: model
                 )))
+                // 수정 완료 될시 뒤로가기 연결
+            case .router(.routeAction(id: _, action: .profileEdit(.delegate(.regSuccess)))):
+                state.identeRoutes.pop()
                 
             case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToOnBoardingView)))):
                 return .run { send in
