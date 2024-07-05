@@ -552,7 +552,7 @@ extension RealmRepository {
         
         guard let model else { return [] }
         
-        print("//??",model)
+        print("해당 문제? 4 \(model.count)")
         return Array(model)
     }
     
@@ -918,12 +918,14 @@ extension RealmRepository {
     
     func toChat(_ models: [DMChatRealmModel], userID: String)  async throws -> [ChatModeEntity] {
         var wait = [ChatModeEntity] ()
+        print("해당 문제? 3 : \(models.count)")
         for model in models {
             let result = try await toChat(model, userID: userID)
             if let result {
                 wait.append(result)
             }
         }
+        print("해당 문제? 2 : \(wait.count)")
         return wait
     }
     

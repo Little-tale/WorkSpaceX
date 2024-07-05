@@ -292,10 +292,7 @@ struct WorkSpaceChannelChattingFeature {
                 return .run { @MainActor send in
                     
                     for await model in  reader.observeNewMessage(channelID: channelID) {
-                        
-//                        let result = model.compactMap { @MainActor model in
-//                            realmRepo.toChat(model, userID: userID)
-//                        }
+
                         let result = try await realmRepo.toChat(model, userID: userID)
                         send(.appendChat(result))
                     }

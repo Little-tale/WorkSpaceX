@@ -108,13 +108,20 @@ struct WorkSpaceListFeature {
                 }
                 return .run { send in
                     await send(.firstRealm(workSpaceID))
+                    
                     await send(.listDMSInfoObserver(wrokSpaceID: workSpaceID))
+                    
                     await send(.channelInfoObserver(workSpaceID: workSpaceID))
-                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
-                    await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
                     
                     await send(.channelListRequest(wrokSpaceID: workSpaceID))
+                    
                     await send(.dmRoomListReqeust(wrokSpaceID: workSpaceID))
+                    
+                    
+                    await send(.workSpaceChnnelUpdate(workSpaceID: workSpaceID))
+                    
+                    await send(.workSpaceMembersUpdate(workSpaceID: workSpaceID))
+                    
                 }
                 
             case let .currentWorkSpaceIdCatch(workSpaceId):

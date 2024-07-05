@@ -23,7 +23,7 @@ struct DMSChatView: View {
                         ScrollView {
                             LazyVStack {
                                 
-                                ForEach(store.currentModels, id: \.testID) { send in
+                                ForEach(store.currentModels, id: \.chatID) { send in
                                     ChatModeView(
                                         setModel: send,
                                         profileClicked: { reModel in

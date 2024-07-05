@@ -201,6 +201,7 @@ struct DMSChatFeature {
                             cursurDate: nil
                         )
                         await send(.networkResult(result))
+                        await send(.firstInit)
                         await send(.socketConnected)
                     }
                 } catch: { error, send in
@@ -224,7 +225,7 @@ struct DMSChatFeature {
                             models: results,
                             roomID: roomID
                         )
-                        await send(.firstInit)
+                        
                     } catch: { error, send in
                         print(error)
                     }
@@ -328,7 +329,7 @@ struct DMSChatFeature {
                 state.currentModels.append(contentsOf: models)
                 
             case let .showChats(models):
-                dump(models)
+                print("해당 문제? \(models),갯수:::: \(models.count)")
                 state.currentModels = models
                 
             case let .userFeildText(text):
