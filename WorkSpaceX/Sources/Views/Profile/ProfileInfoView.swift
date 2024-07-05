@@ -198,11 +198,12 @@ extension ProfileInfoView {
         VStack {
             if let model = store.otherEntity {
                 otherProfileView(model: model)
+                    .navigationTitle(model.nickName)
             } else {
                 ProgressView()
             }
         }
-        .navigationTitle("내 정보 수정")
+       
     }
     
     private func otherProfileView(model: WorkSpaceMemberEntity) -> some View {

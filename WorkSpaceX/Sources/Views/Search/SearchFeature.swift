@@ -145,7 +145,12 @@ struct SerachFeature {
                 
             case let .catchResults(channel,member):
                 state.channels = channel
-                state.members = member
+                if let userID = UserDefaultsManager.userID{
+                    state.members = member.filter { $0.userID != userID }
+                } else {
+                    state.members = member
+                }
+                
                 if channel.isEmpty && member.isEmpty {
                     state.viewCase = .searchResultEmpty
                 } else {

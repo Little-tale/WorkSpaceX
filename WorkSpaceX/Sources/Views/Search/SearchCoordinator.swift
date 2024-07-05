@@ -32,6 +32,8 @@ struct SearchCoordinator {
         
         let channelEditID = UUID()
         
+        let otherProfileView = UUID()
+        
         var currentWorkSpaceID: String?
         
         var identeRoutes: IdentifiedArrayOf<Route<SearchListScreens.State>>
@@ -64,6 +66,17 @@ struct SearchCoordinator {
                 return .run { send in
                     await send(.router(.routeAction(id: homeID, action: .home(.parentAction(.sendToWorkSpaceID(id))))))
                 }
+                // 다른 사용자 뷰 설정
+            case let .router(.routeAction(id: _, action: .home(.delegate(.moveToOtherUserProfileView(model))))):
+                
+                let id = state.otherProfileView
+                
+                state.identeRoutes.push(.otherProfileView(ProfileInfoFeature.State(
+                    id: id,
+                    userType: .other(userID: model.userID)
+                )))
+                
+                
                 // 채널 챗뷰 연결
             case let .router(.routeAction(id: _, action: .home(.delegate(.moveToChannelChatView(model))))):
                 let channelID = model.channelID
