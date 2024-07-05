@@ -23,6 +23,8 @@ struct SerachFeature {
         
         var channels: [WorkSpaceChannelEntity] = []
         var members: [WorkSpaceMembersEntity] = []
+        
+        var currentTextFilterText = ""
     }
     
     enum AlertCase: Equatable {
@@ -62,6 +64,9 @@ struct SerachFeature {
         case searchText(String)
         
         case alertCase(AlertCase?)
+        
+        case selectedChannel(WorkSpaceChannelEntity)
+        case selectedMember(WorkSpaceMembersEntity)
         
         case catchResults(
             Channel: [WorkSpaceChannelEntity],
@@ -124,6 +129,9 @@ struct SerachFeature {
             case let .catchResults(channel,member):
                 state.channels = channel
                 state.members = member
+                
+                dump(channel)
+                dump(member)
                 
             case .searchTextOnSubmit:
                 print("이게 됨 ??? ",state.searchText)
