@@ -36,6 +36,8 @@ enum WorkSpaceRouter: Router {
     case channelDelete(workSpaceID: String, channelID: String)
     
     case reqeustUser(userID: String)
+    
+    case searchKeywork(workSpaceID: String, keyword: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -47,7 +49,8 @@ extension WorkSpaceRouter {
                 .workSpaceChatRequest,
                 .channelInfoReqesut,
                 .exitChannel,
-                .reqeustUser :
+                .reqeustUser,
+                .searchKeywork :
             return .get
         case .makeWorkSpace, .createChannel, .workSpaceAddMember, .sendChat:
             return .post
@@ -113,6 +116,9 @@ extension WorkSpaceRouter {
             
         case let .reqeustUser(userID):
             return APIKey.version + "/users/\(userID)"
+            
+        case let .searchKeywork(workSpaceID, keyword):
+            return APIKey.version + "/workspaces/\(workSpaceID)/search"
         }
     }
     
@@ -128,7 +134,8 @@ extension WorkSpaceRouter {
                 .exitChannel,
                 .channelOwnerChanged,
                 .channelDelete,
-                .reqeustUser :
+                .reqeustUser,
+                .searchKeywork :
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -174,6 +181,9 @@ extension WorkSpaceRouter {
             } else {
                 return nil
             }
+            
+        case let .searchKeywork(_,keyword):
+            return ["keyword": keyword]
         }
     }
     
@@ -188,7 +198,8 @@ extension WorkSpaceRouter {
                 .channelInfoReqesut,
                 .exitChannel,
                 .channelDelete,
-                .reqeustUser :
+                .reqeustUser,
+                .searchKeywork :
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -222,7 +233,8 @@ extension WorkSpaceRouter {
                 .channelInfoReqesut,
                 .exitChannel,
                 .channelDelete,
-                .reqeustUser :
+                .reqeustUser,
+                .searchKeywork:
             return .url
             
         case .makeWorkSpace :

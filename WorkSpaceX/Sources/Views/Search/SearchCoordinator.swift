@@ -64,5 +64,6 @@ struct SearchCoordinator {
             
             return .none
         }
+        .forEachRoute(\.identeRoutes, action: \.router)
     }
 }

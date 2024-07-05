@@ -40,6 +40,8 @@ struct WorkSpaceDomainRepository {
     var channelOWnerChanged: (_ workSpaceID: String, _ ChannelID: String, _ changedID: String) async throws -> ChanelEntity
     
     var channelDeleteReqeust: (_ workSpaceID: String, _ channelID: String) async throws -> Void
+    
+    var workSpaceKeywordSearching: (_ workSpaceID: String, _ Keyword: String) async throws -> (Channel: [WorkSpaceChannelEntity], Member: [WorkSpaceMembersEntity])
 }
 
 extension WorkSpaceDomainRepository: DependencyKey {
@@ -227,6 +229,18 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 errorType: ChannelDeleteAPIError.self
             )
             return 
+        }, workSpaceKeywordSearching: { workSpaceID, keyword in
+            let result = try await NetworkManager.shared.requestDto(
+                SearchResultDTO.self,
+                router: WorkSpaceRouter.searchKeywork(
+                    workSpaceID: workSpaceID,
+                    keyword: keyword
+                ),
+                errorType: WorkSpaceSearchToListAPIError.self
+            )
+            let mapping = workSpaceMapper.toEntity(result)
+            
+            return mapping
         }
     )
     

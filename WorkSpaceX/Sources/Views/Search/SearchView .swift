@@ -17,9 +17,39 @@ struct SearchView: View {
             VStack {
                 
             }
-            .navigationTitle(store.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
-            
+            .navigationTitle(store.navigationTitle)
+            .searchable(
+                text: $store.searchText.sending(\.searchText),
+                prompt: store.searchText
+            )
+            .alert(
+                item: $store.alertCase.sending(\.alertCase)) { item in
+                    Text(item.title)
+                } actions: { item in
+                    Text(item.actionTitle)
+                        .asButton {
+                            store.send(.alertCase(nil))
+                        }
+                } message: { item in
+                    Text(item.message)
+                }
         }
     }
+}
+
+
+extension SearchView {
+    
+    private func searchResultView() -> some View {
+        List {
+            if !store.channels.isEmpty {
+                
+            }
+            if !store.members.isEmpty {
+                
+            }
+        }
+    }
+    
 }

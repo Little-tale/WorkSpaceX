@@ -183,6 +183,9 @@
 		7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C342C37B02100F0ABDC /* SearchView .swift */; };
 		7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */; };
 		7BC09C392C37B14700F0ABDC /* SearchCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C382C37B14700F0ABDC /* SearchCoordinatorView.swift */; };
+		7BC09C3B2C37DD1D00F0ABDC /* SearchResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3A2C37DD1D00F0ABDC /* SearchResultDTO.swift */; };
+		7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */; };
+		7BC09C3F2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -424,6 +427,9 @@
 		7BC09C342C37B02100F0ABDC /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
 		7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		7BC09C382C37B14700F0ABDC /* SearchCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorView.swift; sourceTree = "<group>"; };
+		7BC09C3A2C37DD1D00F0ABDC /* SearchResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultDTO.swift; sourceTree = "<group>"; };
+		7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChannelDTO.swift; sourceTree = "<group>"; };
+		7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSearchToListAPIError.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -1118,6 +1124,8 @@
 				7BF9D7362C2697DB0021D043 /* WorkSpaceChatDTO.swift */,
 				7BF9D7382C26985F0021D043 /* WorkSpaceChatListDTO.swift */,
 				7BF9D73E2C26D2360021D043 /* WorkSpaceChanelInfoDTO.swift */,
+				7BC09C3A2C37DD1D00F0ABDC /* SearchResultDTO.swift */,
+				7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */,
 			);
 			path = WorkSpace;
 			sourceTree = "<group>";
@@ -1143,6 +1151,7 @@
 				7B7EB8222C32657200D22362 /* DMSListAPIError.swift */,
 				7B7EB8492C33B8EB00D22362 /* DMSRoomAPIError.swift */,
 				7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */,
+				7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1472,6 +1481,7 @@
 				7B7EB8482C33B5F700D22362 /* DMSRoomRequestDTO.swift in Sources */,
 				7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */,
 				7BF9D7372C2697DB0021D043 /* WorkSpaceChatDTO.swift in Sources */,
+				7BC09C3F2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift in Sources */,
 				7B2EEE112C117D010024853C /* HTTPMethod.swift in Sources */,
 				7B8FD6042C1980E400948E7C /* WorkSpaceListView.swift in Sources */,
 				7B7EB84A2C33B8EB00D22362 /* DMSRoomAPIError.swift in Sources */,
@@ -1487,6 +1497,7 @@
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,
 				7BF9D73D2C26A52E0021D043 /* ChattingReqeustDTO.swift in Sources */,
 				7B7EB82D2C3286CD00D22362 /* DMSCoordinator.swift in Sources */,
+				7BC09C3B2C37DD1D00F0ABDC /* SearchResultDTO.swift in Sources */,
 				7B7EB8592C35435A00D22362 /* ProfileInfoView.swift in Sources */,
 				7B26D1F22C1FED5400BC9912 /* CustomAlertWindow.swift in Sources */,
 				7BF9D7142C23F68A0021D043 /* AddMemberView.swift in Sources */,
@@ -1528,6 +1539,7 @@
 				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */,
 				7BEC45E32C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift in Sources */,
 				7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */,
+				7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */,
 				7B26D2272C228C3300BC9912 /* WorkSpaceChannelListDTO.swift in Sources */,
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,

@@ -140,3 +140,32 @@ extension WorkSpaceDomainMapper {
     }
     
 }
+
+extension WorkSpaceDomainMapper {
+    
+    func toEntity(_ dto:  SearchResultDTO) -> (Channel: [WorkSpaceChannelEntity], Member: [WorkSpaceMembersEntity]) {
+        
+        let channel = dto.channels.map { toEntity($0) }
+        let members = dto.workspaceMembers.map { workSpaceAddMemberDTOToEntity(dto: $0) }
+        
+        return (channel,members)
+    }
+    
+    func toEntity(_ dtos: [SearchChannelDTO]) -> [WorkSpaceChannelEntity] {
+        return dtos.map { toEntity($0) }
+    }
+    
+    func toEntity(_ dto: SearchChannelDTO) -> WorkSpaceChannelEntity {
+        return WorkSpaceChannelEntity(
+            channelID: dto.channel_id,
+            name: dto.name,
+            introduce: dto.description ?? "",
+            coverImage: dto.coverImage,
+            ownerID: dto.owner_id,
+            createdAt: dto.createdAt.toDate,
+            didNotReadCount: 0
+        )
+    }
+
+    
+}
