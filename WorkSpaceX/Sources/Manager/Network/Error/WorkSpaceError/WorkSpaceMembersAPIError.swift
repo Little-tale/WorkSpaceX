@@ -17,7 +17,7 @@ struct WorkSpaceMembersAPIError: WSXErrorType {
     
     var message: String {
         if errorCode == "E13" {
-            return "존재하지 않는 워크스페이스 입니다."
+            return "존재하지 않는 워크스페이스 혹은 유저 입니다."
         } else {
             return ""
         }

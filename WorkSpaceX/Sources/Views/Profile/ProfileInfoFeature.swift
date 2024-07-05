@@ -16,7 +16,10 @@ struct ProfileInfoFeature {
         var id: UUID
         var userType: UserType
         var errorMessage: String? = nil
+        
         var userEntity: UserInfoEntity? = nil
+        var otherEntity: WorkSpaceMemberEntity? = nil
+        
         var imagePick = CustomImagePickPeature.State()
         var showImagePicker = false
         
@@ -57,6 +60,7 @@ struct ProfileInfoFeature {
         case profilInfoRequestOther(userID: String)
         
         case resultToMe(UserInfoEntity)
+        case resultToOther(WorkSpaceMemberEntity)
         
         case errorMessage(String?)
         
@@ -97,7 +101,9 @@ struct ProfileInfoFeature {
                         await send(.profilInfoReqeustMe(userID: userID))
                     }
                 case let .other(userID):
-                    break
+                    return .run { send in
+                        await send(.profilInfoRequestOther(userID: userID))
+                    }
                 }
             case .profilInfoReqeustMe(_):
                 state.ifNeedOnAppear = false
@@ -115,6 +121,11 @@ struct ProfileInfoFeature {
                         print(error)
                     }
                 }
+            case let .profilInfoRequestOther(userID):
+                return .run { send in
+                    let result = try await userRepo.otherUserProfileReqeust(userID)
+                    await send(.resultToOther(result))
+                }
                 
             case let .resultToMe(model):
                 state.userEntity = model
@@ -123,6 +134,9 @@ struct ProfileInfoFeature {
                         await send(.imagePickFeature(.ifURLString(image)))
                     }
                 }
+                
+            case let .resultToOther(model):
+                state.otherEntity = model
     
             case let .imagePick(bool):
                 state.showImagePicker = bool
@@ -280,6 +294,37 @@ extension ProfileInfoFeature {
         
         static var emalilLogginBottomSection: [MyProfileViewType] {
             return [.email, .logout]
+        }
+    }
+    
+}
+
+extension ProfileInfoFeature {
+    
+    enum OtherViewType {
+        case nickName
+        case email
+        
+        var title: String {
+            switch self {
+            case .nickName:
+                return "닉네임"
+            case .email:
+                return "이메일"
+            }
+        }
+        
+        func detail(_ model: WorkSpaceMemberEntity) -> String {
+            switch self {
+            case .nickName:
+                return model.nickName
+            case .email:
+                return model.email
+            }
+        }
+        
+        static var section: [OtherViewType] {
+            return [.nickName, .email]
         }
     }
     

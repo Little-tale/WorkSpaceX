@@ -25,6 +25,8 @@ struct UserDomainRepository {
     var profileInfoEdit: (_ nickname: String,_ contact: String) async throws -> UserEntity
     
     var profileImageEdit: (_ data: Data) async throws -> UserEntity
+    
+    var otherUserProfileReqeust: (_ userID: String) async throws -> WorkSpaceMemberEntity
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -159,6 +161,16 @@ extension UserDomainRepository: DependencyKey {
                 image: data,
                 boundary: MultipartFormData.randomBoundary()
             ), errorType: UserEditAPIError.self)
+            let mapping = mapper.toEntity(result)
+            return mapping
+        }, otherUserProfileReqeust: { otherUser in
+            
+            let result = try await NetworkManager.shared.requestDto(
+                WorkSpaceAddMemberDTO.self,
+                router: WorkSpaceRouter.reqeustUser(userID: otherUser),
+                errorType: WorkSpaceMembersAPIError.self
+            )
+            
             let mapping = mapper.toEntity(result)
             return mapping
         }

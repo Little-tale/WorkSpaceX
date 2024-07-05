@@ -59,6 +59,16 @@ struct UserRegMapper: Mapper {
         )
     }
     
+    func toEntity(_ dto: WorkSpaceAddMemberDTO) -> WorkSpaceMemberEntity {
+        
+        return WorkSpaceMemberEntity(
+            userID: dto.user_id,
+            email: dto.email,
+            nickName: dto.nickname,
+            profileImage: dto.profileImage
+        )
+    }
+    
 }
 
 extension UserRegMapper {

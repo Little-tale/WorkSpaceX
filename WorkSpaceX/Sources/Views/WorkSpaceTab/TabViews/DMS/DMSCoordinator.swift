@@ -102,6 +102,17 @@ struct DMSCoordinator {
                 
                 state.identeRoutes.pop()
                 
+                // 다른 사용자 프로필로 이동할 경우
+            case .router(.routeAction(id: _, action: .dmChat(.delegate(.otehrUserProfile(userID: let userID))))):
+                let uuid = state.profileView
+                
+                state.identeRoutes.push(
+                    .profileInfo(ProfileInfoFeature.State(
+                        id: uuid,
+                        userType: .other(userID: userID)
+                    ))
+                )
+                
             case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToOnBoardingView)))):
                 
                 return .run { send in

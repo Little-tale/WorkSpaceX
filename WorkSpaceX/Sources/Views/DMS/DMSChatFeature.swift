@@ -104,8 +104,11 @@ struct DMSChatFeature {
         
         case delegate(Delegate)
         
+        case profileImageClikced(ChatModeEntity)
+        
         enum Delegate {
             case popClicked(roomID: String)
+            case otehrUserProfile(userID: String)
         }
     }
     @Dependency(\.workspaceDomainRepository) var workRepo
@@ -465,6 +468,16 @@ struct DMSChatFeature {
                 
             case let .ifDeleteRoom(bool):
                 state.ifDeleteRoom = bool
+                
+            case let .profileImageClikced(model):
+                
+                guard case let .other(member) = model.isMe else {
+                    break
+                }
+                
+                return .run { send in
+                    await send(.delegate(.otehrUserProfile(userID: member.userID)))
+                }
                 
             default:
                 break

@@ -21,7 +21,7 @@ struct ProfileInfoView: View {
                     case .me:
                         meProfileView()
                     case .other:
-                        EmptyView()
+                        otherProfileView()
                     }
                 }
                 .onAppear {
@@ -194,5 +194,59 @@ extension ProfileInfoView {
 }
 /// 본인이 아닐 경우의 뷰
 extension ProfileInfoView {
+    private func otherProfileView() -> some View {
+        VStack {
+            if let model = store.otherEntity {
+                otherProfileView(model: model)
+            } else {
+                ProgressView()
+            }
+        }
+        .navigationTitle("내 정보 수정")
+    }
     
+    private func otherProfileView(model: WorkSpaceMemberEntity) -> some View {
+        List {
+            HStack {
+                Spacer()
+                otherProfileImageView(model)
+                Spacer()
+            }
+            .listRowBackground(Color.clear)
+            Section {
+                otherProfileSectionView(model)
+            }
+        }
+        .scrollDisabled(true)
+    }
+    
+    private func otherProfileImageView(_ model: WorkSpaceMemberEntity) -> some View {
+        Group {
+            if let image = model.profileImage {
+                DownSamplingImageView(
+                    url: URL(string: image),
+                    size: CGSize(width: 150, height: 150)
+                )
+                .frame(width: 150, height: 150)
+            } else {
+                WSXImage.profileEmpty1
+                    .resizable()
+                    .frame(width: 100, height: 100)
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+   
+    private func otherProfileSectionView(_ model: WorkSpaceMemberEntity) -> some View {
+        ForEach(ProfileInfoFeature.OtherViewType.section, id: \.self) { caseOf in
+            HStack {
+                Text(caseOf.title)
+                    .font(WSXFont.title2)
+                Spacer()
+                Text(caseOf.detail(model))
+                    .font(WSXFont.regu1)
+                    .foregroundStyle(WSXColor.black.opacity(0.8))
+            }
+        }
+    }
 }

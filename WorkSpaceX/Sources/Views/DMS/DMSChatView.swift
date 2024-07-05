@@ -27,7 +27,7 @@ struct DMSChatView: View {
                                     ChatModeView(
                                         setModel: send,
                                         profileClicked: { reModel in
-                                            
+                                            store.send(.profileImageClikced(reModel))
                                         },
                                         fileClicked: { urlString in
                                             
