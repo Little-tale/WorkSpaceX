@@ -27,6 +27,8 @@ struct DMSCoordinatorView: View {
                     ProfileInfoView(store: store)
                 case let .profileEdit(store):
                     ProfileInfoEditView(store: store)
+                case let .storeListView(store):
+                    StoreListView(store: store)
                 }
             }
         }
@@ -46,6 +48,8 @@ extension DMSListScreens.State: Identifiable {
         case let .profileInfo(state):
             return state.id
         case let .profileEdit(state):
+            return state.id
+        case let .storeListView(state):
             return state.id
         }
     }

@@ -17,6 +17,9 @@ enum DMSListScreens {
     case profileEdit(ProfileInfoEditFeature)
     // sheet
     case memberAdd(AddMemberFeature)
+    
+    // 결제
+    case storeListView(StoreListFeature)
 }
 
 @Reducer
@@ -27,6 +30,7 @@ struct DMSCoordinator {
         static let uuid = UUID()
         
         let profileView = UUID()
+        let storeView = UUID()
         
         var currentWorkSpaceId: String?
         var identeRoutes: IdentifiedArrayOf<Route<DMSListScreens.State>>
@@ -118,6 +122,12 @@ struct DMSCoordinator {
                 return .run { send in
                     await send(.delegate(.moveToOnBoardingView))
                 }
+                
+                /// 결제로 이동
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToCoinShop)))):
+                let uuid = state.storeView
+                
+                state.identeRoutes.push(.storeListView(StoreListFeature.State(id: uuid)))
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 

@@ -30,6 +30,10 @@ enum WorkSpaceListScreens {
     case channelAdd(WorkSpaceChannelAddFeature)
     case memberAdd(AddMemberFeature)
     
+    
+    // 결제
+    case storeListView(StoreListFeature)
+    
 }
 
 @Reducer
@@ -46,6 +50,8 @@ struct WorkSpaceListCordinator {
         let channelEditID = UUID()
         
         let profileView = UUID()
+        
+        let storeView = UUID()
         
         static let initialState = State(
             identeRoutes: [.root(.rootScreen(WorkSpaceListFeature.State(id: uuid)), embedInNavigationView: true)]
@@ -137,6 +143,11 @@ struct WorkSpaceListCordinator {
                 return .run { send in
                     await send(.delegate(.moveToOnBoardingView))
                 }
+                
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToCoinShop)))):
+                let uuid = state.storeView
+                
+                state.identeRoutes.push(.storeListView(StoreListFeature.State(id: uuid)))
                 
                 // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):
