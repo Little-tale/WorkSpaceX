@@ -15,8 +15,8 @@ struct StoreListFeature {
     struct State: Equatable {
         let id: UUID
         var currentCoinCount: Int
-        let storeViewStat: StoreViewState = .loading
-        
+        var storeViewState: StoreViewState = .loading
+        var currentCoinItems:  [StoreItemEntity] = []
         var explainState: ExplainState? = nil
     }
     enum StoreViewState {
@@ -35,6 +35,8 @@ struct StoreListFeature {
         case explinShow(Bool)
         case exPlainBind(ExplainState?)
         
+        case catchToCoinItems([StoreItemEntity])
+        
         enum Delegate {
             
         }
@@ -51,8 +53,7 @@ struct StoreListFeature {
             case .onAppear:
                 return .run { send in
                     let result = try await storeRepo.storeList()
-                    
-                    print("성공 \(result)")
+                    await send(.catchToCoinItems(result))
                 } catch: { error, send in
                     if let error = error as? StoreListApiError {
                         print(error)
@@ -69,6 +70,10 @@ struct StoreListFeature {
                     }
                     
                 }
+            case let .catchToCoinItems(items):
+                state.currentCoinItems = items
+                state.storeViewState = .show
+                
                 
             case let .exPlainBind(bind):
                 state.explainState = bind
