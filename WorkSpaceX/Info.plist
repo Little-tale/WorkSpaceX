@@ -12,6 +12,16 @@
 				<string>kakaofa8ea5a1aed0c5a5836274a023b0a7dd</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>slp.WorkSpaceX</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>WorkSpaceX</string>
+			</array>
+		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>

@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import iamport_ios
 
 @Reducer
 struct StoreListFeature {
@@ -19,6 +20,16 @@ struct StoreListFeature {
         var currentCoinItems:  [StoreItemEntity] = []
         var explainState: ExplainState? = nil
         let navigationTitle = "코인샵"
+        var paymentModel: IamportPayment? = nil
+        
+        var payMentBool: Bool = false
+        
+        
+        let userCode = APIKey.userCode
+        
+        static func == (lhs: StoreListFeature.State, rhs: StoreListFeature.State) -> Bool {
+            return lhs.id == rhs.id
+        }
     }
     enum StoreViewState {
         case loading
@@ -39,6 +50,9 @@ struct StoreListFeature {
         case catchToCoinItems([StoreItemEntity])
         case selectedItem(StoreItemEntity)
         
+        case paymentModel(IamportPayment?)
+        case paymentResponse(IamportResponse?)
+        case payMentBool(Bool)
         enum Delegate {
             
         }
@@ -76,10 +90,26 @@ struct StoreListFeature {
                 state.storeViewState = .show
                 
             case let .selectedItem(item):
-                break
+                let model = storeRepo.storeMapper.makeIamport(
+                    item
+                )
+                return .run { send in
+                    await send(.paymentModel(model))
+                }
                 
             case let .exPlainBind(bind):
                 state.explainState = bind
+                
+            case let .payMentBool(bool):
+                state.payMentBool = bool
+                
+            case let .paymentModel(model):
+                if model != nil {
+                    state.payMentBool = true
+                } else {
+                    state.payMentBool = false
+                }
+                state.paymentModel = model
                 
             default:
                 break

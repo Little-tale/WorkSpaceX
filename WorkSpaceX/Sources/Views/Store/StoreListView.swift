@@ -20,7 +20,6 @@ struct StoreListView: View {
             VStack {
                 List {
                     currentCoinView()
-                    
                     withAnimation {
                         Group {
                             switch store.storeViewState {
@@ -33,10 +32,21 @@ struct StoreListView: View {
                         }
                     }
                 }
+                if let model = store.paymentModel {
+                    CustomPaymentView(
+                        iamPort: model,
+                        userCode: store.userCode) { response in
+                            store.send(.paymentResponse(response))
+                        } onClose: {
+                            store.send(.payMentBool(false))
+                        }
+                        .frame(width: 0, height: 0).opacity(0)
+                }
             }
             .navigationTitle(store.navigationTitle)
             .onAppear {
                 store.send(.onAppear)
+                
             }
             .popup(item: $store.explainState.sending(\.exPlainBind)) { item in
                 CustomExPlainView( item: item ) {
@@ -83,6 +93,7 @@ extension StoreListView {
                 .onTapGesture {
                     store.send(.selectedItem(item))
                 }
+      
         }
     }
     
@@ -125,5 +136,11 @@ extension StoreListView {
                     }
             }
         }
+    }
+}
+
+extension IamportPayment: Identifiable {
+    public var id: UUID {
+        return UUID()
     }
 }

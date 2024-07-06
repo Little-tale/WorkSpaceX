@@ -199,6 +199,7 @@
 		7BC09C602C3846AF00F0ABDC /* StoreMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C5F2C3846AF00F0ABDC /* StoreMapper.swift */; };
 		7BC09C632C3847C900F0ABDC /* StoreListApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C622C3847C900F0ABDC /* StoreListApiError.swift */; };
 		7BC09C652C39173600F0ABDC /* CustomExPlainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C642C39173600F0ABDC /* CustomExPlainView.swift */; };
+		7BC09C672C39497400F0ABDC /* CustomPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C662C39497400F0ABDC /* CustomPaymentView.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -455,6 +456,7 @@
 		7BC09C5F2C3846AF00F0ABDC /* StoreMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMapper.swift; sourceTree = "<group>"; };
 		7BC09C622C3847C900F0ABDC /* StoreListApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreListApiError.swift; sourceTree = "<group>"; };
 		7BC09C642C39173600F0ABDC /* CustomExPlainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomExPlainView.swift; sourceTree = "<group>"; };
+		7BC09C662C39497400F0ABDC /* CustomPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaymentView.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -1174,6 +1176,7 @@
 				7B8FD6472C1AF22D00948E7C /* DownSamplingImageView.swift */,
 				7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */,
 				7BC09C642C39173600F0ABDC /* CustomExPlainView.swift */,
+				7BC09C662C39497400F0ABDC /* CustomPaymentView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -1639,6 +1642,7 @@
 				7BEC45D12C16AACE00576ECA /* CustomImagePickPeature.swift in Sources */,
 				7B26D1E22C1DB5E300BC9912 /* ExScreens.swift in Sources */,
 				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
+				7BC09C672C39497400F0ABDC /* CustomPaymentView.swift in Sources */,
 				7B26D2252C228B1800BC9912 /* WorkSpaceChanelsDTO.swift in Sources */,
 				7B7EB8382C328E6D00D22362 /* RefreshTokenManager.swift in Sources */,
 				7B7EB8362C32893C00D22362 /* DMSListFeature.swift in Sources */,

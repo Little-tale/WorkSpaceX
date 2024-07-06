@@ -9,6 +9,7 @@ import SwiftUI
 import UserNotifications
 import KakaoSDKCommon
 import KakaoSDKAuth
+import iamport_ios
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
@@ -77,4 +78,17 @@ extension AppDelegate {
             UIApplication.shared.open(settingUrl)
         }
     }
+}
+
+extension AppDelegate {
+    
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        Iamport.shared.receivedURL(url)
+        return true
+    }
+    
 }
