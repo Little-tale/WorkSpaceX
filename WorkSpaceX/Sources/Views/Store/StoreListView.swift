@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import PopupView
+import iamport_ios
 
 struct StoreListView: View {
     
@@ -33,6 +34,7 @@ struct StoreListView: View {
                     }
                 }
             }
+            .navigationTitle(store.navigationTitle)
             .onAppear {
                 store.send(.onAppear)
             }
@@ -70,7 +72,17 @@ extension StoreListView {
                 Spacer()
             }
             Text(item.item)
+                .font(WSXFont.title1)
+                
             Text(item.amount + " 원")
+                .font(WSXFont.title2)
+                .frame(width: 120, height: 40)
+                .background(WSXColor.green)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .foregroundStyle(WSXColor.white)
+                .onTapGesture {
+                    store.send(.selectedItem(item))
+                }
         }
     }
     

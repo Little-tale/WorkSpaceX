@@ -18,6 +18,7 @@ struct StoreListFeature {
         var storeViewState: StoreViewState = .loading
         var currentCoinItems:  [StoreItemEntity] = []
         var explainState: ExplainState? = nil
+        let navigationTitle = "코인샵"
     }
     enum StoreViewState {
         case loading
@@ -36,6 +37,7 @@ struct StoreListFeature {
         case exPlainBind(ExplainState?)
         
         case catchToCoinItems([StoreItemEntity])
+        case selectedItem(StoreItemEntity)
         
         enum Delegate {
             
@@ -68,12 +70,13 @@ struct StoreListFeature {
                     } else {
                         await send(.exPlainBind(nil))
                     }
-                    
                 }
             case let .catchToCoinItems(items):
                 state.currentCoinItems = items
                 state.storeViewState = .show
                 
+            case let .selectedItem(item):
+                break
                 
             case let .exPlainBind(bind):
                 state.explainState = bind

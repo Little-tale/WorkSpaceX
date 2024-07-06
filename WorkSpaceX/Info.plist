@@ -15,6 +15,27 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>supertoss</string>
+		<string>liivbank</string>
+		<string>lguthepay-xpay</string>
+		<string>lmslpay</string>
+		<string>com.wooricard.wcard</string>
+		<string>hyundaicardappcardid</string>
+		<string>kb-auth</string>
+		<string>payco</string>
+		<string>kakaotalk</string>
+		<string>citimobileapp</string>
+		<string>citispay</string>
+		<string>nhappcardansimclick</string>
+		<string>cloudpay</string>
+		<string>lotteappcard</string>
+		<string>lottesmartpay</string>
+		<string>ansimclickipcollect</string>
+		<string>ansimclickscard</string>
+		<string>mpocket.online.ansimclick</string>
+		<string>kb-acp</string>
+		<string>shinhan-sr-ansimclick</string>
+		<string>hdcardappcardansimclick</string>
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
 	</array>
