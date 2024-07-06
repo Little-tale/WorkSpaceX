@@ -144,10 +144,13 @@ struct WorkSpaceListCordinator {
                     await send(.delegate(.moveToOnBoardingView))
                 }
                 
-            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToCoinShop)))):
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToCoinShop(let coin))))):
                 let uuid = state.storeView
                 
-                state.identeRoutes.push(.storeListView(StoreListFeature.State(id: uuid)))
+                state.identeRoutes.push(.storeListView(StoreListFeature.State(
+                    id: uuid,
+                    currentCoinCount: coin)
+                ))
                 
                 // 채널 탐색
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.dismissTapped))):

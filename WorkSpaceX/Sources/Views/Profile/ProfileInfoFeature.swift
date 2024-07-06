@@ -73,7 +73,7 @@ struct ProfileInfoFeature {
             case moveToNickNameChange(UserInfoEntity)
             case moveToContackChange(UserInfoEntity)
             case moveToOnBoardingView
-            case moveToCoinShop
+            case moveToCoinShop(Int)
         }
     }
     
@@ -164,8 +164,11 @@ struct ProfileInfoFeature {
                 switch meCaseOf {
                 case .myCoinInfo:
                 // 코인 결제 기능 추가하여야 함.
-                    return .run { send in
-                        await send(.delegate(.moveToCoinShop))
+                    
+                    if let model = state.userEntity {
+                        return .run { send in
+                            await send(.delegate(.moveToCoinShop(model.sesacCoin)))
+                        }
                     }
                     
                 case .nickName:

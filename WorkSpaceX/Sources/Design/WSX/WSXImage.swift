@@ -62,4 +62,23 @@ extension WSXImage {
     static let searchEmpty = Image(.searchEmpty)
     
     static let searchResultEmpty = Image(.serachResultEmpty)
+    
+    
+    enum Coin {
+        case mini
+        case middel
+        case big
+        
+        var image: Image {
+            switch self {
+            case .mini:
+                return Image(.coinMini)
+            case .middel:
+                return Image(.coinMiddel)
+            case .big:
+                return Image(.coinBig)
+            }
+        }
+    }
+    
 }

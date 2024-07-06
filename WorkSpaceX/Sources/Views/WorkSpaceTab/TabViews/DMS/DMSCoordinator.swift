@@ -124,10 +124,13 @@ struct DMSCoordinator {
                 }
                 
                 /// 결제로 이동
-            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToCoinShop)))):
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToCoinShop(let coin))))):
                 let uuid = state.storeView
                 
-                state.identeRoutes.push(.storeListView(StoreListFeature.State(id: uuid)))
+                state.identeRoutes.push(.storeListView(StoreListFeature.State(
+                    id: uuid,
+                    currentCoinCount: coin))
+                )
                 
             case .router(.routeAction(id: _, action: .memberAdd(.alertSuccessTapped))):
                 
