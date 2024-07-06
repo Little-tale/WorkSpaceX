@@ -32,16 +32,15 @@ struct StoreListView: View {
                         }
                     }
                 }
-                if let model = store.paymentModel {
-                    CustomPaymentView(
-                        iamPort: model,
-                        userCode: store.userCode) { response in
-                            store.send(.paymentResponse(response))
-                        } onClose: {
-                            store.send(.payMentBool(false))
-                        }
-                        .frame(width: 0, height: 0).opacity(0)
-                }
+            }
+            .sheet(isPresented: $store.payMentBool.sending(\.payMentBool)) {
+                IamportPaymentView(
+                    iamPort: $store.paymentModel.sending(\.paymentModel),
+                    userCode: store.userCode) { response in
+                        store.send(.paymentResponse(response))
+                    } onClose: {
+                        store.send(.payMentBool(false))
+                    }
             }
             .navigationTitle(store.navigationTitle)
             .onAppear {

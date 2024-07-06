@@ -102,14 +102,17 @@ struct StoreListFeature {
                 
             case let .payMentBool(bool):
                 state.payMentBool = bool
+                if !bool { state.paymentModel = nil }
                 
             case let .paymentModel(model):
+                state.paymentModel = model
+                
                 if model != nil {
                     state.payMentBool = true
                 } else {
                     state.payMentBool = false
                 }
-                state.paymentModel = model
+                
                 
             default:
                 break

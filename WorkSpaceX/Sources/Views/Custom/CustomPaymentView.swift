@@ -6,34 +6,53 @@
 //
 
 import SwiftUI
-import WebKit
 import iamport_ios
 
-
-struct CustomPaymentView: UIViewControllerRepresentable {
-   
-    var iamPort: IamportPayment
-    var userCode: String
+struct IamportPaymentView: UIViewControllerRepresentable {
     
+    @Binding var iamPort: IamportPayment?
+    let userCode: String
     var result: (IamportResponse?) -> Void
     var onClose: () -> Void
     
-    func makeUIViewController(context: Context) -> UIViewController {
-        let view = PaymentViewController(
-            iamPort: iamPort,
-            userCode: userCode,
-            result: result,
-            onClose: onClose
-        )
-        return view
+    func makeUIViewController(context: Context) -> UINavigationController {
+        let viewController = IamportPaymentViewController(iamPort: iamPort!, userCode: userCode, result: result, onClose: onClose)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.delegate = context.coordinator
+        return navigationController
     }
-
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UINavigationControllerDelegate {
+        var parent: IamportPaymentView
+        var isFirstAppearance = true
+        
+        init(_ parent: IamportPaymentView) {
+            self.parent = parent
+        }
+        
+        func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+            if isFirstAppearance {
+                isFirstAppearance = false
+                return
+            }
+            
+            // 네비게이션 스택에 있는 뷰 컨트롤러들이 `viewController` 하나만 남아있을 때 감지
+            if navigationController.viewControllers.count == 1 {
+                parent.onClose()
+            }
+        }
     }
 }
 
-class PaymentViewController: UIViewController, WKNavigationDelegate {
-    
+class IamportPaymentViewController: UIViewController {
+
     var iamPort: IamportPayment
     var userCode: String
     var result: (IamportResponse?) -> Void
@@ -51,153 +70,17 @@ class PaymentViewController: UIViewController, WKNavigationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("PaymentView viewDidLoad")
-
-        view.backgroundColor = UIColor.white
+        // 결제 요청
+        Iamport.shared.payment(
+            navController: self.navigationController!,
+            userCode: userCode,
+            payment: iamPort,
+            paymentResultCallback: { [weak self] response in
+                self?.result(response)
+                self?.dismiss(animated: true, completion: nil)
+            }
+        )
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("PaymentView viewWillAppear")
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("PaymentView viewDidAppear")
-        requestPayment()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print("PaymentView viewWillDisappear")
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print("PaymentView viewDidDisappear")
-        onClose()
-    }
-
-
-    // 아임포트 SDK 결제 요청
-    func requestPayment() {
-        
-        let userCode = userCode
-        Iamport.shared.useNavigationButton(enable: true)
-        let payment = iamPort
-        Iamport.shared.payment(viewController: self,
-            userCode: userCode, payment: payment) { [weak self] response in
-            self?.result(response)
-        }
-    }
-
 }
-
-
-
-//struct CustomPaymentView: UIViewControllerRepresentable {
-//    
-//    @Binding var iamPort: IamportPayment?
-//    
-//    var result: (IamportResponse?) -> Void
-//    
-//    func makeUIViewController(context: Context) -> PaymentViewController {
-//        let viewController = PaymentViewController(
-//            iamPort: $iamPort,
-//            result: result
-//        )
-//        return viewController
-//    }
-//    
-//    func updateUIViewController(_ uiViewController: PaymentViewController, context: Context) {
-//        if iamPort == nil {
-//            uiViewController.dismiss(animated: true, completion: nil)
-//        }
-//    }
-//}
-//
-//class PaymentViewController: UIViewController, WKNavigationDelegate {
-//    
-//    @Binding var iamPort: IamportPayment?
-//    
-//    var result: (IamportResponse?) -> Void
-//    
-//    init(iamPort: Binding<IamportPayment?>, result: @escaping (IamportResponse?) -> Void) {
-//        self._iamPort = iamPort
-//        self.result = result
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    private lazy var wkWebView: WKWebView = {
-//        var view = WKWebView()
-//        view.backgroundColor = UIColor.clear
-//        view.navigationDelegate = self
-//        return view
-//    }()
-//    
-//    private func attachWebView() {
-//        view.addSubview(wkWebView)
-//        wkWebView.frame = view.frame
-//
-//        wkWebView.translatesAutoresizingMaskIntoConstraints = false
-//        wkWebView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-//        wkWebView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-//        wkWebView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        wkWebView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//    }
-//    
-//    private func removeWebView() {
-//        view.willRemoveSubview(wkWebView)
-//        wkWebView.stopLoading()
-//        wkWebView.removeFromSuperview()
-//        wkWebView.uiDelegate = nil
-//        wkWebView.navigationDelegate = nil
-//    }
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        print("viewDidLoad")
-//        view.backgroundColor = UIColor.white
-//    }
-//    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        print("viewDidAppear")
-//        attachWebView()
-//        requestPayment()
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        print("viewWillDisappear")
-//        removeWebView()
-//    }
-//    
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        print("viewDidDisappear")
-//        Iamport.shared.close()
-//        if iamPort != nil {
-//            iamPort = nil
-//        }
-//    }
-//    
-//    func requestPayment() {
-//        guard let iamPort = iamPort else { return }
-//    
-//        let userCode = APIKey.userCode
-//
-//        Iamport.shared.paymentWebView(webViewMode: wkWebView, userCode: userCode, payment: iamPort) { [weak self] iamportResponse in
-//            self?.result(iamportResponse)
-//            self?.iamPort = nil
-//        }
-//    }
-//}
