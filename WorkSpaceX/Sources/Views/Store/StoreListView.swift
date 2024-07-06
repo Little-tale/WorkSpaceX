@@ -45,8 +45,17 @@ struct StoreListView: View {
             .navigationTitle(store.navigationTitle)
             .onAppear {
                 store.send(.onAppear)
-                
             }
+            .alert(item: $store.alertCase.sending(\.alertCase), title: { model in
+                Text(model.title)
+            }, actions: { model in
+                Text("확인")
+                    .asButton {
+                        store.send(.alertCase(nil))
+                    }
+            }, message: { model in
+                Text(model.message)
+            })
             .popup(item: $store.explainState.sending(\.exPlainBind)) { item in
                 CustomExPlainView( item: item ) {
                     store.send(.explinShow(false))

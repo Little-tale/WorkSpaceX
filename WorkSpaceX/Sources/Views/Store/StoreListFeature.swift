@@ -24,8 +24,10 @@ struct StoreListFeature {
         
         var payMentBool: Bool = false
         
+        var alertCase: AlertCase? = nil
         
         let userCode = APIKey.userCode
+        
         
         static func == (lhs: StoreListFeature.State, rhs: StoreListFeature.State) -> Bool {
             return lhs.id == rhs.id
@@ -34,6 +36,28 @@ struct StoreListFeature {
     enum StoreViewState {
         case loading
         case show
+    }
+    
+    enum AlertCase:Equatable {
+        case error(String)
+        case scueess(String)
+        
+        var title: String {
+            switch self {
+            case .error:
+                return "에러"
+            case .scueess:
+                return "성공"
+            }
+        }
+        var message: String {
+            switch self {
+            case .error(let string):
+                return string
+            case .scueess(let string):
+                return string
+            }
+        }
     }
     
     @Dependency(\.storeRepository) var storeRepo
@@ -53,6 +77,11 @@ struct StoreListFeature {
         case paymentModel(IamportPayment?)
         case paymentResponse(IamportResponse?)
         case payMentBool(Bool)
+        
+        case alertCase(AlertCase?)
+        
+        case catchToStoreValidEntity(StoreValidEntity)
+        
         enum Delegate {
             
         }
@@ -61,6 +90,9 @@ struct StoreListFeature {
         }
     }
     
+    enum key: Hashable {
+        case throttle
+    }
     
     var body: some ReducerOf<Self> {
         
@@ -113,7 +145,39 @@ struct StoreListFeature {
                     state.payMentBool = false
                 }
                 
-                
+            case let .paymentResponse(model):
+                if let model{
+                    guard let impID = model.imp_uid,
+                          let merID = model.merchant_uid else {
+                        return .run { send in
+                            await send(.alertCase(.error("결제 실패: 결제 되었을시 담당자에게 연락 바랍니다.")))
+                        }
+                    }
+                    print(impID, merID)
+                    return .run { send in
+                        let result = try await storeRepo.requestValid(
+                            impUid: impID,
+                            merChantUID: merID
+                        )
+                        await send(.catchToStoreValidEntity(result))
+                    }
+                    catch: { error, send in
+                        if let error = error as? StoreValidApiError {
+                            if !error.ifDevelopError {
+                                await send(.alertCase(.error(error.message)))
+                            }
+                        } else {
+                            print(error)
+                        }
+                    }
+                }
+            case let .catchToStoreValidEntity(model):
+                state.currentCoinCount += model.sesacCoin
+                return .run { send in
+                    await send(.alertCase(.scueess("결제가 완료 되었습니다.")))
+                }
+            case let .alertCase(caseOf):
+                state.alertCase = caseOf
             default:
                 break
             }

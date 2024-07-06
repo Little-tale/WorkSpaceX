@@ -10,6 +10,12 @@ import ComposableArchitecture
 
 protocol StoreRepositoryType {
     func storeList() async throws -> [StoreItemEntity]
+    
+    func requestValid(
+        impUid: String,
+        merChantUID: String
+    ) async throws ->  StoreValidEntity
+    
 }
 
 struct StoreDomainRepository: StoreRepositoryType {
@@ -22,6 +28,23 @@ struct StoreDomainRepository: StoreRepositoryType {
             router: StoreRouter.storeItemList,
             errorType: StoreListApiError.self
         )
+        let mapping = storeMapper.toEntity(result)
+        
+        return mapping
+    }
+    
+    func requestValid(impUid: String, merChantUID: String) async throws ->  StoreValidEntity {
+        let reqeustDTO = StoreValidationReqeustDTO(
+            imp_uid: impUid,
+            merchant_uid: merChantUID
+        )
+        
+        let result = try await NetworkManager.shared.requestDto(
+            StoreVaildateDTO.self,
+            router: StoreRouter.storeValidation(request: reqeustDTO),
+            errorType: StoreValidApiError.self
+        )
+        
         let mapping = storeMapper.toEntity(result)
         
         return mapping
