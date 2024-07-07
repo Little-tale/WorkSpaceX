@@ -19,6 +19,8 @@ struct ProfileInfoFeature {
         var userType: UserType
         var errorMessage: String? = nil
         
+        var tabbarHidden: Bool
+        
         var userEntity: UserInfoEntity? = nil
         var otherEntity: WorkSpaceMemberEntity? = nil
         
@@ -31,6 +33,8 @@ struct ProfileInfoFeature {
         var progress: Bool = false
         
         var ifNeedOnAppear: Bool = true
+        
+        var navigationTitle: String = ""
     }
     
     enum UserType: Equatable {
@@ -82,6 +86,12 @@ struct ProfileInfoFeature {
             case moveToOnBoardingView
             case moveToCoinShop(Int)
         }
+        
+        case parentAction(ParentAction)
+        
+        enum ParentAction {
+            case updateID(UserType)
+        }
     }
     
     @Dependency(\.workspaceDomainRepository) var workRepo
@@ -99,6 +109,12 @@ struct ProfileInfoFeature {
         Reduce { state, action in
             switch action {
             case .onAppaer:
+                if !state.tabbarHidden {
+                    state.navigationTitle = "설정"
+                } else {
+                    state.navigationTitle = "내 정보 수정"
+                }
+                
                 let ifNeed = state.ifNeedOnAppear
                 switch state.userType {
                 case let .me(userID):
@@ -259,6 +275,9 @@ struct ProfileInfoFeature {
                 } catch: {error, _ in
                     print(error)
                 }
+                
+            case let .parentAction(.updateID(caseOf)):
+                state.userType = caseOf
                 
             default:
                 break

@@ -67,11 +67,16 @@ struct WorkSpaceTabView: View {
                                     Text(WorkSpaceTabCoordinator.Tab.search.title)
                                 }
                             }
-                        
-                        //                            Text("search")
-                        //                                .tabItem {
-                        //                                    Text(WorkSpaceXTabFeature.Tab.search.title) }.tag(WorkSpaceXTabFeature.Tab.search)
-                        //
+                        SettingCoordinatorView(store: store.scope(state: \.settingState, action: \.settingTabbar))
+                            .tag(WorkSpaceTabCoordinator.Tab.setting)
+                            .tabItem {
+                                VStack {
+                                    WSXImage.settingImage
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                    Text(WorkSpaceTabCoordinator.Tab.setting.title)
+                                }
+                            }
                         //                            Text("setting")
                         //                                .tabItem {
                         //                                    Text(WorkSpaceXTabFeature.Tab.setting.title) }.tag(WorkSpaceXTabFeature.Tab.setting)

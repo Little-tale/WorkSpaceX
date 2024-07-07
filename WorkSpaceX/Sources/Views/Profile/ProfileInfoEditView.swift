@@ -45,6 +45,7 @@ struct ProfileInfoEditView: View {
                     .disabled(!store.buttonState)
                 
             }
+            .toolbar(.hidden, for: .tabBar)
             .onAppear {
                 store.send(.onAppear)
             }

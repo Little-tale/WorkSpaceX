@@ -31,7 +31,7 @@ extension WSXImage {
     
     static let logoUIImage: UIImage = UIImage(resource: .workSpaceXLogo)
     
-    static let homeImage: Image = Image(.home)
+    static let homeImage: Image = Image(systemName: "house.fill")
     
     static let emptyImage: Image = Image(.empty)
     
@@ -55,9 +55,11 @@ extension WSXImage {
     
     static let hambergerList = Image(systemName: "list.bullet")
     
-    static let dmsTab = Image(.dmsTab)
+    static let dmsTab = Image(systemName: "paperplane.fill")
     
     static let searchImage = Image(systemName: "magnifyingglass")
+    
+    static let settingImage = Image(systemName: "person.crop.circle.fill")
     
     static let searchEmpty = Image(.searchEmpty)
     

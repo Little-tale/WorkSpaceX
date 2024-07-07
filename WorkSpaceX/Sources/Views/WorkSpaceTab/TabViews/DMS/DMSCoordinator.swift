@@ -81,7 +81,8 @@ struct DMSCoordinator {
                         .profileInfo(
                             ProfileInfoFeature.State(
                                 id: uuid,
-                                userType: .me(userID: id)
+                                userType: .me(userID: id),
+                                tabbarHidden: true
                             )
                         )
                     )
@@ -113,7 +114,8 @@ struct DMSCoordinator {
                 state.identeRoutes.push(
                     .profileInfo(ProfileInfoFeature.State(
                         id: uuid,
-                        userType: .other(userID: userID)
+                        userType: .other(userID: userID),
+                        tabbarHidden: true 
                     ))
                 )
                 

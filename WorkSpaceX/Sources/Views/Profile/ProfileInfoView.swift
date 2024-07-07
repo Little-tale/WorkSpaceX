@@ -25,10 +25,11 @@ struct ProfileInfoView: View {
                         otherProfileView()
                     }
                 }
+                .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
                     store.send(.onAppaer)
                 }
-                .toolbar(.hidden, for: .tabBar)
+                .toolbar(store.tabbarHidden ? .hidden : .visible, for: .tabBar)
                 .popup(item: $store.popUpViewState.sending(\.popUpViewState)) { text in
                     PopupVIewSmallToColor(text: text, color: WSXColor.lightGreen)
                 } customize: {
@@ -80,7 +81,7 @@ extension ProfileInfoView {
                 ProgressView()
             }
         }
-        .navigationTitle("내 정보 수정")
+        .navigationTitle(store.navigationTitle)
     }
     private func meProfileView(model: UserInfoEntity) -> some View {
         VStack {

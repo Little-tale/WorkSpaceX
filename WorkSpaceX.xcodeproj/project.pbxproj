@@ -203,6 +203,8 @@
 		7BC09C692C39725300F0ABDC /* StoreValidApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C682C39725300F0ABDC /* StoreValidApiError.swift */; };
 		7BC09C6B2C3973F700F0ABDC /* StoreValidEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C6A2C3973F700F0ABDC /* StoreValidEntity.swift */; };
 		7BC09C6D2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C6C2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift */; };
+		7BC09C722C3AD00100F0ABDC /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */; };
+		7BC09C792C3AD3FC00F0ABDC /* SettingCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -463,6 +465,8 @@
 		7BC09C682C39725300F0ABDC /* StoreValidApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreValidApiError.swift; sourceTree = "<group>"; };
 		7BC09C6A2C3973F700F0ABDC /* StoreValidEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreValidEntity.swift; sourceTree = "<group>"; };
 		7BC09C6C2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressLoadingSaveView.swift; sourceTree = "<group>"; };
+		7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
+		7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinatorView.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -1026,6 +1030,7 @@
 		7B8FD6002C19762000948E7C /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
+				7BC09C6E2C3ACFC900F0ABDC /* Setting */,
 				7B7EB82B2C3286BF00D22362 /* DMS */,
 				7BF9D7262C255A3B0021D043 /* Channel */,
 				7B8FD6052C19812400948E7C /* WorkSpaceList */,
@@ -1123,6 +1128,15 @@
 				7BC09C682C39725300F0ABDC /* StoreValidApiError.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		7BC09C6E2C3ACFC900F0ABDC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */,
+				7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
@@ -1470,6 +1484,7 @@
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
+				7BC09C722C3AD00100F0ABDC /* SettingCoordinator.swift in Sources */,
 				7BF9D7282C255A480021D043 /* WorkSpaceChannelListView.swift in Sources */,
 				7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */,
 				7BEC45F72C180F0600576ECA /* WorkSpaceEntity.swift in Sources */,
@@ -1550,6 +1565,7 @@
 				7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */,
 				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,
 				7BEC45FB2C18184800576ECA /* MultipartFormData.swift in Sources */,
+				7BC09C792C3AD3FC00F0ABDC /* SettingCoordinatorView.swift in Sources */,
 				7BC09C4E2C383D1E00F0ABDC /* StoreItemDTO.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
 				7B592EA82C0E28E700E47797 /* WSXFont.swift in Sources */,

@@ -40,7 +40,8 @@ struct WorkSpaceTabCoordinator {
             selectedTab: .home,
             homeState: WorkSpaceListCordinator.State.initialState,
             dmHomeState: DMSCoordinator.State.initialState,
-            searchState: SearchCoordinator.State.initialState
+            searchState: SearchCoordinator.State.initialState,
+            settingState: SettingCoordinator.State.initialState
         )
         
         var selectedTab: Tab
@@ -54,6 +55,8 @@ struct WorkSpaceTabCoordinator {
         var dmHomeState: DMSCoordinator.State
         // searchTab State
         var searchState: SearchCoordinator.State
+        // setting State
+        var settingState: SettingCoordinator.State
         
         var ifNoneSpace: viewStateCase = .loading
         
@@ -89,6 +92,7 @@ struct WorkSpaceTabCoordinator {
         case homeTabbar(WorkSpaceListCordinator.Action)
         case dmsTabbar(DMSCoordinator.Action)
         case searchTabbar(SearchCoordinator.Action)
+        case settingTabbar(SettingCoordinator.Action)
         
         case tabSelected(Tab)
         case onAppear
@@ -147,6 +151,11 @@ struct WorkSpaceTabCoordinator {
         // 검색 탭바의 State
         Scope(state: \.searchState, action: \.searchTabbar) {
             SearchCoordinator()
+        }
+        
+        // 세팅 탭바의 스테이트
+        Scope(state: \.settingState, action: \.settingTabbar) {
+            SettingCoordinator()
         }
         
         Reduce { state, action in
@@ -259,11 +268,15 @@ struct WorkSpaceTabCoordinator {
                 state.sideMenuOpen = false
                 print(model)
                
-                let worSpaceId = model.workSpaceID
+                let workSpaceId = model.workSpaceID
                 
                 return .run { send in
-                    await send(.homeTabbar(.sendToRootWorkSpaceID(worSpaceId)))
-                    await send(.dmsTabbar(.parentAction(.getWorkSpaceId(worSpaceId))))
+                    await send(.homeTabbar(.sendToRootWorkSpaceID(workSpaceId)))
+                    await send(.dmsTabbar(.parentAction(.getWorkSpaceId(workSpaceId))))
+                    
+                    await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(workSpaceId))))
+                    
+                    await send(.settingTabbar(.parentAction(.getWorkSpaceId(workSpaceId))))
                 }
                 
             case let .sidebar(.delegate(.changedWorkSpaceID(id))):
@@ -271,6 +284,10 @@ struct WorkSpaceTabCoordinator {
                     return .run { send in
                         await send(.homeTabbar(.sendToRootWorkSpaceID(id)))
                         await send(.dmsTabbar(.parentAction(.getWorkSpaceId(id))))
+                        
+                        await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(id))))
+                        
+                        await send(.settingTabbar(.parentAction(.getWorkSpaceId(id))))
                     }
                 } else {
                     
@@ -285,9 +302,12 @@ struct WorkSpaceTabCoordinator {
                 
                 return .run { send in
                      await send(.homeTabbar(.sendToRootWorkSpaceID(id)))
+                    
                     await send(.onAppear)
                     
                     await send(.dmsTabbar(.parentAction(.getWorkSpaceId(id))))
+                    await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(id))))
+                    await send(.settingTabbar(.parentAction(.getWorkSpaceId(id))))
                 }
                 
             case let .refreshDeadAlert(bool):
@@ -309,12 +329,16 @@ struct WorkSpaceTabCoordinator {
                         
                         await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(workSpaceID))))
                         
+                        await send(.settingTabbar(.parentAction(.getWorkSpaceId(workSpaceID))))
+                        
                     } else if let first = result.first {
                         UserDefaultsManager.workSpaceSelectedID
                         = first.workSpaceID
                         await send(.homeTabbar(.sendToRootWorkSpaceID(first.workSpaceID)))
                         await send(.dmsTabbar(.parentAction(.getWorkSpaceId(first.workSpaceID))))
                         await send(.searchTabbar(.parentAction(.sendToWorkSpaceID(first.workSpaceID))))
+                        
+                        await send(.settingTabbar(.parentAction(.getWorkSpaceId(first.workSpaceID))))
                     }
                     
                     for await models in await workSpaceReader.observeChanges(for: WorkSpaceRealmModel.self, sorted: "createdAt", ascending: true) {
@@ -363,6 +387,10 @@ struct WorkSpaceTabCoordinator {
                     await send(.delegate(.moveToOnBoardingView))
                 }
             case .dmsTabbar(.delegate(.moveToOnBoardingView)):
+                return .run { send in
+                    await send(.delegate(.moveToOnBoardingView))
+                }
+            case .settingTabbar(.delegate(.moveToOnBoardingView)):
                 return .run { send in
                     await send(.delegate(.moveToOnBoardingView))
                 }

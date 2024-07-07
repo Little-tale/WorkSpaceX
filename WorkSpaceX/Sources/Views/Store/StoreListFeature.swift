@@ -129,7 +129,7 @@ struct StoreListFeature {
                 )
                 return .run { send in
                     // 리프레시 토큰 죽을 가능성을 위해 한번 조회를 통해 무회
-                    try await userRepo.myProfile()
+                    let _ = try await userRepo.myProfile()
                     await send(.paymentModel(model))
                 } catch: { error, send in
                     print(error)

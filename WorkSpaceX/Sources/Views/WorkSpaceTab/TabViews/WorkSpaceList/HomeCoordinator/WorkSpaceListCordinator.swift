@@ -116,7 +116,8 @@ struct WorkSpaceListCordinator {
                         .profileInfo(
                             ProfileInfoFeature.State(
                                 id: uuid,
-                                userType: .me(userID: id)
+                                userType: .me(userID: id),
+                                tabbarHidden: true
                             )
                         )
                     )
