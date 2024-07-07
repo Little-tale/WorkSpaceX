@@ -205,6 +205,7 @@
 		7BC09C6D2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C6C2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift */; };
 		7BC09C722C3AD00100F0ABDC /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */; };
 		7BC09C792C3AD3FC00F0ABDC /* SettingCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */; };
+		7BC09C7C2C3AE31500F0ABDC /* NotificationStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -467,6 +468,7 @@
 		7BC09C6C2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressLoadingSaveView.swift; sourceTree = "<group>"; };
 		7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinatorView.swift; sourceTree = "<group>"; };
+		7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStateManager.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 			isa = PBXGroup;
 			children = (
 				7B2EEE382C120ECC0024853C /* NotificationService.swift */,
+				7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -1493,6 +1496,7 @@
 				7B8FD6192C19CF9300948E7C /* MakeWorkSpaceAPIError.swift in Sources */,
 				7B2EEE302C11D38C0024853C /* UserDomainRepository.swift in Sources */,
 				7B7EB8442C33A81E00D22362 /* DMSChatView.swift in Sources */,
+				7BC09C7C2C3AE31500F0ABDC /* NotificationStateManager.swift in Sources */,
 				7B592E9B2C0E274D00E47797 /* APIKey.swift in Sources */,
 				7B8FD60B2C198D9E00948E7C /* WorkSpaceEmptyListFeature.swift in Sources */,
 				7B7EB8142C3146CC00D22362 /* ChannelOwnerRequestDTO.swift in Sources */,

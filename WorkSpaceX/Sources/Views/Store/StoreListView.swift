@@ -43,6 +43,7 @@ struct StoreListView: View {
                     }
             }
             .navigationTitle(store.navigationTitle)
+            .toolbar(.hidden, for: .tabBar)
             .onAppear {
                 store.send(.onAppear)
             }

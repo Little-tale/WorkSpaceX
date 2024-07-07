@@ -7,6 +7,8 @@
 
 import Foundation
 import ComposableArchitecture
+import UserNotifications
+
 /*
  결제 처리 관련 수정 완료 -> 정상적으로 결제처리가 됩니다.
  */
@@ -74,7 +76,8 @@ struct ProfileInfoFeature {
         case popUpViewState(String?)
         case logOutViewState(logOutState?)
         case logOutConfirm
-        
+        case currentNotificationState
+        case catchToCurrentNoti(UNAuthorizationStatus)
         /// 딜레이
         case progressBool(Bool)
         
@@ -100,6 +103,8 @@ struct ProfileInfoFeature {
     
     @Dependency(\.realmRepository) var realmRepo
     
+    @Dependency(\.notificationStateManager) var notiManager
+    
     var body: some ReducerOf<Self> {
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
@@ -122,6 +127,7 @@ struct ProfileInfoFeature {
                         if ifNeed {
                             await send(.imagePickFeature(.profileEmpty))
                         }
+                        await send(.currentNotificationState)
                         await send(.profilInfoReqeustMe(userID: userID))
                     }
                 case let .other(userID):
@@ -278,6 +284,25 @@ struct ProfileInfoFeature {
                 
             case let .parentAction(.updateID(caseOf)):
                 state.userType = caseOf
+                
+            case .currentNotificationState:
+                return .run { send in
+                    for await result in await notiManager.notificationSettingsStream() {
+                        await send(.catchToCurrentNoti(result))
+                    }
+    
+                }
+            case let .catchToCurrentNoti(notiCase):
+                switch notiCase {
+                case .notDetermined: // 허용 하지 않음
+                    break
+                case .denied: // 거부
+                    break
+                case .authorized, .provisional, .ephemeral:
+                    break
+                @unknown default:
+                    break
+                }
                 
             default:
                 break

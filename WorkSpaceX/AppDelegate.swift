@@ -13,6 +13,8 @@ import iamport_ios
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         print("application Start")
         KakaoSDK.initSDK(appKey: APIKey.kakaoAPIKey)
@@ -35,6 +37,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         return true
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        checkNotification()
+    }
+    
+    func checkNotification() {
+        let center = UNUserNotificationCenter.current()
+       
+    }
+    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
