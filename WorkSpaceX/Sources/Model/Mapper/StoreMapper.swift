@@ -9,6 +9,13 @@ import Foundation
 import ComposableArchitecture
 import iamport_ios
 
+/*
+    현재 결제 부분에서 SDK 문제는 아닌것으로 확인 됨.
+    서버에서 잘못된 요청이라고 하지만,
+    잘못된 부분이 파악이 안됨.
+ */
+
+
 struct StoreMapper { }
 
 extension StoreMapper {
