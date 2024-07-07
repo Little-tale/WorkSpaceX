@@ -28,6 +28,7 @@ struct StoreListFeature {
         
         let userCode = APIKey.userCode
         
+        // 결제전 프로필 조회를 통해 리프레시 토큰이 죽을 확률을 제거
         
         static func == (lhs: StoreListFeature.State, rhs: StoreListFeature.State) -> Bool {
             return lhs.id == rhs.id
@@ -61,6 +62,7 @@ struct StoreListFeature {
     }
     
     @Dependency(\.storeRepository) var storeRepo
+    @Dependency(\.userDomainRepository) var userRepo
     
     enum Action {
         case onAppear
@@ -126,7 +128,11 @@ struct StoreListFeature {
                     item
                 )
                 return .run { send in
+                    // 리프레시 토큰 죽을 가능성을 위해 한번 조회를 통해 무회
+                    try await userRepo.myProfile()
                     await send(.paymentModel(model))
+                } catch: { error, send in
+                    print(error)
                 }
                 
             case let .exPlainBind(bind):
