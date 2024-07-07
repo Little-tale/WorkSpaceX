@@ -7,7 +7,9 @@
 
 import Foundation
 import ComposableArchitecture
-
+/*
+ 결제 처리 관련 수정 완료 -> 정상적으로 결제처리가 됩니다.
+ */
 @Reducer
 struct ProfileInfoFeature {
 
