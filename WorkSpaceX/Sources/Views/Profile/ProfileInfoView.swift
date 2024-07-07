@@ -20,6 +20,7 @@ struct ProfileInfoView: View {
                     switch store.state.userType {
                     case .me:
                         meProfileView()
+                           
                     case .other:
                         otherProfileView()
                     }
@@ -62,14 +63,13 @@ struct ProfileInfoView: View {
                 }
                 
                 if store.progress {
-                    ProgressView()
-                        .frame(width: 70, height: 70)
+                    ProgressLoadingSaveView()
                 }
-                
             }
         }
     }
 }
+
 /// 본인일 경우의 뷰
 extension ProfileInfoView {
     private func meProfileView() -> some View {

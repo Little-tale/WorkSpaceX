@@ -69,6 +69,11 @@ struct ProfileInfoFeature {
         case logOutViewState(logOutState?)
         case logOutConfirm
         
+        /// 딜레이
+        case progressBool(Bool)
+        
+        case showPrograssView(Bool)
+        
         enum Delegate {
             case moveToNickNameChange(UserInfoEntity)
             case moveToContackChange(UserInfoEntity)
@@ -150,8 +155,8 @@ struct ProfileInfoFeature {
                 if let data {
                     state.image = data
                     return .run { send in
-                        await send(.imagePickFeature(.success(data)))
                         await send(.imageRegRequest(data))
+                        await send(.imagePickFeature(.success(data)))
                     }
                 }
                 
@@ -197,10 +202,14 @@ struct ProfileInfoFeature {
                 
             case let .imageRegRequest(data):
                 return .run { send in
+                    await send(.showPrograssView(true))
+                    
                     let result = try await userRepo.profileImageEdit(
                         data
                     )
-                    await send(.realmUpdate(result))
+                    await send(.showPrograssView(false))
+                    
+                    await send(.realmUpdate(result)) // 프로필은 다른뷰에서도 업데이트 가능
                 } catch: { error, send in
                     if let error = error as? UserEditAPIError{
                         if !error.ifDevelopError {
@@ -213,6 +222,15 @@ struct ProfileInfoFeature {
                         print(error)
                     }
                 }
+            case let .showPrograssView(bool):
+                state.progress = bool
+//                return .run { send in
+//                    try await Task.sleep(for: .seconds(1))
+//                    await send(.progressBool(bool))
+//                }
+                
+            case let .progressBool(bool):
+                state.progress = bool
                 
             case let .realmUpdate(model):
                 let image = model.profileImage
