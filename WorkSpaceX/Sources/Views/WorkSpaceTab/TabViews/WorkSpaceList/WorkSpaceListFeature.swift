@@ -38,6 +38,10 @@ struct WorkSpaceListFeature {
         case notEmpty
     }
     
+    enum Event: Hashable {
+        case Throttle
+    }
+    
     enum Action {
         case onAppear
         
@@ -317,6 +321,7 @@ struct WorkSpaceListFeature {
                         print("설마...?",error)
                     }
                 }
+                    .throttle(id: Event.Throttle, for: 0.4, scheduler: RunLoop.main, latest: false)
                 
                 // 이걸 가장 마지막에 바라보게 해야함....
             case let .listDMSInfoObserver(workSpaceID):

@@ -750,8 +750,6 @@ extension RealmRepository {
     
     func upsertToDMSChats(models: [DMSChatEntity], roomID: String) async throws {
         
-        guard let first = models.first else { return }
-        
         let realm = try await Realm(actor: MainActor.shared)
         
         guard let dmsRoom = try await findDMSRoom(
