@@ -65,6 +65,7 @@ extension WSXImage {
     
     static let searchResultEmpty = Image(.serachResultEmpty)
     
+    static let memberEmpty = Image(.memberEmpty)
     
     enum Coin {
         case mini

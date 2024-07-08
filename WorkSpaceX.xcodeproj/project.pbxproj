@@ -212,6 +212,8 @@
 		7BC09C872C3BB6DE00F0ABDC /* DocumentFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */; };
 		7BC09C8B2C3BC54500F0ABDC /* WSXFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */; };
 		7BC09C8D2C3C0A2700F0ABDC /* WorkSpaceExitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */; };
+		7BC09C8F2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8E2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift */; };
+		7BC09C912C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -481,6 +483,8 @@
 		7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFeature.swift; sourceTree = "<group>"; };
 		7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXFileManager.swift; sourceTree = "<group>"; };
 		7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceExitError.swift; sourceTree = "<group>"; };
+		7BC09C8E2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceOwnerChangeView.swift; sourceTree = "<group>"; };
+		7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceOwnerChangeFeature.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -590,6 +594,8 @@
 			children = (
 				7B26D1EF2C1FE11D00BC9912 /* CustomAlertView.swift */,
 				7B26D1F12C1FED5400BC9912 /* CustomAlertWindow.swift */,
+				7BC09C8E2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift */,
+				7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1690,6 +1696,7 @@
 				7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */,
 				7BC09C4C2C383D1500F0ABDC /* StoreItemListDTO.swift in Sources */,
 				7B26D2272C228C3300BC9912 /* WorkSpaceChannelListDTO.swift in Sources */,
+				7BC09C912C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift in Sources */,
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
 				7B8FD64D2C1B421200948E7C /* RefreshTokkenDeadReciver.swift in Sources */,
@@ -1709,6 +1716,7 @@
 				7B7EB8382C328E6D00D22362 /* RefreshTokenManager.swift in Sources */,
 				7B7EB8362C32893C00D22362 /* DMSListFeature.swift in Sources */,
 				7B26D2292C228CDE00BC9912 /* WorkSpaceMyChannelError.swift in Sources */,
+				7BC09C8F2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift in Sources */,
 				7BEC45AA2C12E80F00576ECA /* reFreshError.swift in Sources */,
 				7B7EB8122C2FF09100D22362 /* ChannelOwnerChangeFeature .swift in Sources */,
 				7B8FD6412C1ABE1A00948E7C /* RealmError.swift in Sources */,

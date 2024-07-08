@@ -22,6 +22,7 @@ struct WorkSpaceSideFeature {
         var currentWorkSpaceID: String = "EMPTY"
         @Presents var alertSheet: ConfirmationDialogState<Action.actionSheetAction>?
         
+        
         var removeAlertBool = false
         
         var currentSheetSelectModel: WorkSpaceRealmModel? = nil
@@ -31,6 +32,8 @@ struct WorkSpaceSideFeature {
         var alertMessage = ""
         var errorMessage: String? = nil
         @Presents var workSpaceEdit: WorkSpaceEditFeature.State? = nil
+        
+        @Presents var workSpaceOwnerChange: WorkSpaceOwnerChangeFeature.State? = nil
     }
     
 //    static let realmRepo = RealmRepository()
@@ -56,6 +59,8 @@ struct WorkSpaceSideFeature {
         case alertSheetAction(PresentationAction<actionSheetAction>)
         
         case workSpaceEditAction(PresentationAction<WorkSpaceEditFeature.Action>)
+        
+        case workSpaceOwnerChange(PresentationAction<WorkSpaceOwnerChangeFeature.Action>)
         
         @CasePathable
         enum actionSheetAction {
@@ -216,8 +221,13 @@ struct WorkSpaceSideFeature {
                     return .send(.showWorkSpaceEditSheet(model))
                 }
                 
-//            case .alertSheetAction(.presented(.workSpaceOwnerChange)):
-//                state.
+            case .alertSheetAction(.presented(.workSpaceOwnerChange)):
+                if let model = state.currentSheetSelectModel {
+                    let id = model.workSpaceID
+                    state.workSpaceOwnerChange = WorkSpaceOwnerChangeFeature.State(
+                        workSpaceID: id
+                    )
+                }
                 
             case .alertSheetAction(.presented(.workSpaceOut)):
                 if let model = state.currentSheetSelectModel,
@@ -305,6 +315,11 @@ struct WorkSpaceSideFeature {
                     }
                 }
                 
+            case  .workSpaceOwnerChange(.presented(.delegate(.successForChanged))):
+                return .run { send in
+                    await send(.onAppear)
+                }
+                
             default:
                 break
             }
@@ -313,6 +328,9 @@ struct WorkSpaceSideFeature {
         .ifLet(\.$alertSheet, action: \.alertSheetAction)
         .ifLet(\.$workSpaceEdit, action: \.workSpaceEditAction) {
             WorkSpaceEditFeature()
+        }
+        .ifLet(\.$workSpaceOwnerChange, action: \.workSpaceOwnerChange) {
+            WorkSpaceOwnerChangeFeature()
         }
     }
 }

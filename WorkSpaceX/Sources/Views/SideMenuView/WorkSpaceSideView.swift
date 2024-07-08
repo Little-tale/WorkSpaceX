@@ -64,6 +64,9 @@ struct WorkSpaceSideView: View {
             .sheet(item: $store.scope(state: \.workSpaceEdit, action: \.workSpaceEditAction), content: { store in
                 WorkSpaceEditView(store: store)
             })
+            .sheet(item: $store.scope(state: \.workSpaceOwnerChange, action: \.workSpaceOwnerChange)) { store in
+                WorkSpaceOwnerChangeView(store: store)
+            }
             .onChange(of: store.removeAlertBool) { newValue in
                 if newValue {
                     CustomAlertWindow.shared.show {
