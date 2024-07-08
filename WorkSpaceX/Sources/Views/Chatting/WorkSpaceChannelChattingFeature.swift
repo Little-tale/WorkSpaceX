@@ -48,6 +48,12 @@ struct WorkSpaceChannelChattingFeature {
         var ownerID: String?
         
         var channelModel: ChanelEntity?
+        
+        var progressView: Bool = false
+        
+        var presentDoc: URL? = nil
+        
+        
     }
     
     enum Action {
@@ -102,11 +108,22 @@ struct WorkSpaceChannelChattingFeature {
         
         case socketConnected
         case listButtonTapped
+        
+        case profileImageClikced(ChatModeEntity)
+        case fileClicked(urlString: String)
+        case progressView(Bool)
+        case presentDoc(URL?)
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case otehrUserProfile(userID: String)
+        }
     }
     
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.workSpaceReader) var reader
+    @Dependency(\.fileManager) var fileManager
     
     var body: some ReducerOf<Self> {
         
@@ -441,6 +458,46 @@ struct WorkSpaceChannelChattingFeature {
                 } catch: { error, _ in
                     print(error)
                 }
+                
+            case let .profileImageClikced(model):
+                
+                guard case let .other(member) = model.isMe else {
+                    break
+                }
+                
+                return .run { send in
+                    await send(.delegate(.otehrUserProfile(userID: member.userID)))
+                }
+                
+            case let .fileClicked(string):
+                
+                return .run { send in
+                    await send(.progressView(true))
+                    do {
+                        guard let fileData = try await workSpaceRepo.fileDownload(urlString: string) else {
+                            await send(.progressView(false))
+                            return
+                        }
+                        guard let url = fileManager.fileSave(
+                            fileData,
+                            urlString: string
+                        ) else {
+                            await send(.progressView(false))
+                            return
+                        }
+                        await send(.progressView(false))
+                        await send(.presentDoc(url))
+                    } catch {
+                        await send(.progressView(false))
+                        print(error)
+                    }
+                }
+                
+            case let .progressView(bool):
+                state.progressView = bool
+                
+            case let .presentDoc(url):
+                state.presentDoc = url
                 
             default:
                 break

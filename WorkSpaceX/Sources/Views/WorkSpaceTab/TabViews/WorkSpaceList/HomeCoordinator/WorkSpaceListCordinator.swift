@@ -167,6 +167,18 @@ struct WorkSpaceListCordinator {
                         navigationTitle: channel.name))
                     )
                 }
+                
+            case .router(.routeAction(id: _, action: .chattingView(.delegate(.otehrUserProfile(userID: let id))))):
+                
+                let uuid = state.profileView
+                
+                state.identeRoutes.push(
+                    .profileInfo(ProfileInfoFeature.State(
+                        id: uuid,
+                        userType: .other(userID: id),
+                        tabbarHidden: true
+                    ))
+                )
             
                 // 채팅 넘어감.
             case .router(.routeAction(id: state.ChannelListID, action: .workSpaceChannelListView(.delegate(.lastConfirm(let model))))) :

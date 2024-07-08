@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import QuickLook
 
 /*
  proxy 이슈가 있음. 여전히 원인은 알수가 없음
@@ -21,36 +22,15 @@ struct WorkSpaceChannelChattingView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            
-            VStack {
-                ScrollViewReader { proxy in
-                    WithPerceptionTracking {
-                        ScrollView {
-                            LazyVStack {
-                                
-                                ForEach(store.currentModels, id: \.testID) { send in
-                                    ChatModeView(
-                                        setModel: send,
-                                        profileClicked: { reModel in
-                                            
-                                        },
-                                        fileClicked: { urlString in
-                                            
-                                        }
-                                    )
-                                }
-                            }
-                            .rotationEffect(.radians(.pi))
-                            .scaleEffect(x: -1, y: 1, anchor: .center)
-                        }
-                    }
-                    .rotationEffect(.radians(.pi))
-                    .scaleEffect(x: -1, y: 1, anchor: .center)
-                    
+            ZStack {
+                contentView()
+                if store.progressView {
+                    ProgressView()
+                        .padding(.all, 60)
+                        .background(WSXColor.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .foregroundStyle(WSXColor.black)
                 }
-                
-                Spacer()
-                chatTextField()
             }
             .onAppear {
                 store.send(.onAppear)
@@ -131,6 +111,40 @@ struct WorkSpaceChannelChattingView: View {
 }
 
 extension WorkSpaceChannelChattingView {
+    
+    func contentView() -> some View {
+        VStack {
+            ScrollViewReader { proxy in
+                WithPerceptionTracking {
+                    ScrollView {
+                        LazyVStack {
+                            
+                            ForEach(store.currentModels, id: \.testID) { send in
+                                ChatModeView(
+                                    setModel: send,
+                                    profileClicked: { reModel in
+                                        store.send(.profileImageClikced(reModel))
+                                    },
+                                    fileClicked: { urlString in
+                                        store.send(.fileClicked(urlString: urlString))
+                                    }
+                                )
+                            }
+                        }
+                        .rotationEffect(.radians(.pi))
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
+                    }
+                }
+                .rotationEffect(.radians(.pi))
+                .scaleEffect(x: -1, y: 1, anchor: .center)
+                
+            }
+            .quickLookPreview($store.presentDoc.sending(\.presentDoc))
+            Spacer()
+            chatTextField()
+        }
+    }
+    
     
     func chatTextField() -> some View {
         Group {

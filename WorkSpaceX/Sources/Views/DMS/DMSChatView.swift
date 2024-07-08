@@ -18,41 +18,13 @@ struct DMSChatView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                VStack {
-                    ScrollViewReader { proxy in
-                        WithPerceptionTracking {
-                            ScrollView {
-                                LazyVStack {
-                                    
-                                    ForEach(store.currentModels, id: \.chatID) { send in
-                                        ChatModeView(
-                                            setModel: send,
-                                            profileClicked: { reModel in
-                                                store.send(.profileImageClikced(reModel))
-                                            },
-                                            fileClicked: { urlString in
-                                                store.send(.fileClicked(urlString: urlString))
-                                            }
-                                        )
-                                    }
-                                }
-                                .rotationEffect(.radians(.pi))
-                                .scaleEffect(x: -1, y: 1, anchor: .center)
-                            }
-                        }
-                        .rotationEffect(.radians(.pi))
-                        .scaleEffect(x: -1, y: 1, anchor: .center)
-                        
-                    }
-                    
-                    Spacer()
-                    chatTextField()
-                }
+                contentView()
                 .quickLookPreview($store.presentDoc.sending(\.presentDoc))
                 if store.progressView {
                     ProgressView()
                         .padding(.all, 60)
                         .background(WSXColor.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                         .foregroundStyle(WSXColor.black)
                 }
             }
@@ -113,6 +85,39 @@ struct DMSChatView: View {
 }
 
 extension DMSChatView {
+    
+    func contentView() -> some View {
+        VStack {
+            ScrollViewReader { proxy in
+                WithPerceptionTracking {
+                    ScrollView {
+                        LazyVStack {
+                            
+                            ForEach(store.currentModels, id: \.chatID) { send in
+                                ChatModeView(
+                                    setModel: send,
+                                    profileClicked: { reModel in
+                                        store.send(.profileImageClikced(reModel))
+                                    },
+                                    fileClicked: { urlString in
+                                        store.send(.fileClicked(urlString: urlString))
+                                    }
+                                )
+                            }
+                        }
+                        .rotationEffect(.radians(.pi))
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
+                    }
+                }
+                .rotationEffect(.radians(.pi))
+                .scaleEffect(x: -1, y: 1, anchor: .center)
+                
+            }
+            
+            Spacer()
+            chatTextField()
+        }
+    }
     
     func chatTextField() -> some View {
         Group {
