@@ -20,6 +20,7 @@ struct ProfileInfoFeature {
         var id: UUID
         var userType: UserType
         var errorMessage: String? = nil
+        var notifiMessage: String? = nil
         
         var tabbarHidden: Bool
         
@@ -35,6 +36,8 @@ struct ProfileInfoFeature {
         var progress: Bool = false
         
         var ifNeedOnAppear: Bool = true
+        
+        var notificationBool: Bool = false
         
         var navigationTitle: String = ""
     }
@@ -82,6 +85,12 @@ struct ProfileInfoFeature {
         case progressBool(Bool)
         
         case showPrograssView(Bool)
+        
+        case notificationBool(Bool)
+        
+        case notifiMessage(String?)
+        
+        case notifiGoSetting
         
         enum Delegate {
             case moveToNickNameChange(UserInfoEntity)
@@ -174,6 +183,9 @@ struct ProfileInfoFeature {
             case .showImagePicker:
                 state.showImagePicker = true
                 
+            case let .notificationBool(bool):
+                state.notificationBool = bool
+                
             case let .imagePickerData(data):
                 
                 if let data {
@@ -214,6 +226,9 @@ struct ProfileInfoFeature {
                     
                 case .connectedSocial:
                     break // 선택되지 않습니다.
+                    
+                case .notificationState:
+                    break
                     
                 case .logout:
                     return .run { send in
@@ -295,11 +310,12 @@ struct ProfileInfoFeature {
             case let .catchToCurrentNoti(notiCase):
                 switch notiCase {
                 case .notDetermined: // 허용 하지 않음
+                    state.notificationBool = false
                     break
                 case .denied: // 거부
-                    break
-                case .authorized, .provisional, .ephemeral:
-                    break
+                    state.notificationBool = false
+                case .authorized, .provisional, .ephemeral: // 허용
+                    state.notificationBool = true
                 @unknown default:
                     break
                 }
@@ -322,6 +338,7 @@ extension ProfileInfoFeature {
         case contact
         case email
         case connectedSocial
+        case notificationState
         case logout
         
         var title: String {
@@ -336,6 +353,8 @@ extension ProfileInfoFeature {
                 return "이메일"
             case .connectedSocial:
                 return "연결된 소셜 계정"
+            case .notificationState:
+                return "알림 설정"
             case .logout:
                 return "로그아웃"
             }
@@ -353,13 +372,17 @@ extension ProfileInfoFeature {
                 return model.email
             case .connectedSocial:
                 return model.provider
-            case .logout:
+            case .logout, .notificationState:
                 return nil
             }
         }
         
         static var topSectionCases: [MyProfileViewType] {
             return [.myCoinInfo, .nickName, .contact]
+        }
+        
+        static var nototification: [MyProfileViewType] {
+            return [.notificationState]
         }
         
         static var bottomSectionCases: [MyProfileViewType] {

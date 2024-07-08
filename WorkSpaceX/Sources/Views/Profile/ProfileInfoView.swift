@@ -26,6 +26,17 @@ struct ProfileInfoView: View {
                     }
                 }
                 .navigationBarTitleDisplayMode(.inline)
+                .alert(item: $store.notifiMessage.sending(\.notifiMessage), title: { _ in
+                    Text("알림 설정")
+                }, actions: { _ in
+                    Text("Cancel")
+                    Text("이동")
+                        .asButton {
+                            store.send(.notifiGoSetting)
+                        }
+                }, message: { message in
+                    Text(message)
+                })
                 .onAppear {
                     store.send(.onAppaer)
                 }
@@ -113,6 +124,9 @@ extension ProfileInfoView {
                 topSectionView(model)
             }
             Section {
+                setticgCaseView()
+            }
+            Section {
                 bottomSectionView(model)
             }
         }
@@ -133,6 +147,15 @@ extension ProfileInfoView {
                 .frame(width: 25, height: 25)
         }
     }
+    
+    private func setticgCaseView() -> some View {
+        ForEach(ProfileInfoFeature.MyProfileViewType.nototification, id: \.self) { item in
+            HStack {
+                Toggle(item.title, isOn:$store.notificationBool.sending(\.notificationBool))
+            }
+        }
+    }
+    
 }
 
 extension ProfileInfoView {
