@@ -205,10 +205,10 @@ struct WorkSpaceListView: View {
                 .font(WSXFont.title2)
                 .foregroundStyle(WSXColor.black)
                 .padding(.horizontal, 4)
+            Spacer()
             
             unReadCountView(num: model.unReadCount)
                 .padding(.trailing, 5)
-            Spacer()
         }
         .frame(height: 30)
         .asButton {

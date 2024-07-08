@@ -81,7 +81,7 @@ extension DMSListView {
             
             Text(model.nickname)
                 .frame(maxWidth: 50)
-                .font(WSXFont.regu1)
+                .font(WSXFont.regu2)
         }
     }
     
@@ -106,36 +106,43 @@ extension DMSListView {
     }
     
     private func chatView(_ model: DMSRoomEntity) -> some View {
-        HStack (alignment: .top) {
-            HStack(alignment: .top) {
-                if let image = model.user.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
-                } else {
-                    WSXImage.profileEmpty1
-                        .resizable()
-                }
-            }
-            .frame(width: 45, height: 45)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            VStack {
-                HStack(alignment: .top) {
-                    Text(model.user.nickname)
-                        .font(WSXFont.reg05)
-                    Spacer()
-                    
-                    VStack {
-                        Text(DateManager.shared.dateToStringToRoomList(model.lasstChatDate))
-                            .font(WSXFont.regu1)
+        VStack {
+            Spacer()
+            HStack (alignment: .top) {
+               Group {
+                    if let image = model.user.profileImage {
+                        DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                    } else {
+                        WSXImage.profileEmpty1
+                            .resizable()
                     }
                 }
-                HStack(alignment: .top) {
-                    Text(model.lastChat)
-                        .lineLimit(2)
-                        .font(WSXFont.regu1)
+                .frame(width: 45, height: 45)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                
+                VStack(spacing: 2) {
+                    HStack(alignment: .top) {
+                        Text(model.user.nickname)
+                            .font(WSXFont.title15)
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text(DateManager.shared.dateToStringToRoomList(model.lasstChatDate))
+                                .font(WSXFont.regu1)
+                        }
+                    }
+                    HStack(alignment: .top) {
+                        Text(model.lastChat)
+                            .lineLimit(2)
+                            .font(WSXFont.regu1)
+                        Spacer()
+                        unReadCountView(num: model.unReadCount)
+                    }
                     Spacer()
-                    unReadCountView(num: model.unReadCount)
                 }
             }
+            .frame(height: 45)
         }
     }
 }
