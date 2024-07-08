@@ -66,7 +66,7 @@ extension WorkSpaceChannelListView {
     private func channelView(model: ChanelEntity) -> some View {
         HStack {
             if let image = model.coverImage {
-                DownSamplingImageView(url: URL(string: image), size: CGSize(width: 30, height: 30))
+                DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.small.size)
                     .frame(width: 30, height: 30)
             } else {
                 WSXImage.shapBold

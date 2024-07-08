@@ -80,7 +80,7 @@ struct WorkSpaceListView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack {
                         if let image = store.workSpaceCoverImage {
-                            DownSamplingImageView(url: image, size: CGSize(width: 40, height: 40))
+                            DownSamplingImageView(url: image, size: ImageResizingCase.small.size)
                                 .frame(width: 40, height: 40)
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
                         }
@@ -109,7 +109,7 @@ struct WorkSpaceListView: View {
            let image = userProfile.profileImage {
             
             let url = URL(string: image)
-            DownSamplingImageView(url: url, size: CGSize(width: 30, height: 30))
+            DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
                 .frame(width: 30, height: 30)
                 .clipShape(Circle())
         } else {
@@ -181,7 +181,7 @@ struct WorkSpaceListView: View {
         
         HStack {
             if let userProfile = model.user.profileImage {
-                DownSamplingImageView(url: URL(string: userProfile), size: CGSize(width: 50 , height: 50))
+                DownSamplingImageView(url: URL(string: userProfile), size: ImageResizingCase.small.size)
                     .frame(width: 20, height: 20)
                     .padding(.leading, 10)
             } else {

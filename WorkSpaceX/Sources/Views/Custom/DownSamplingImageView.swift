@@ -23,5 +23,6 @@ struct DownSamplingImageView: View {
             )
             .cacheOriginalImage()
             .resizable()
+            .aspectRatio(1, contentMode: .fill)
     }
 }

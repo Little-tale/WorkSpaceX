@@ -34,7 +34,7 @@ struct CustomeImagePickView: View {
                     WSXImage.logoImage.resizable()
                     
                 case let .urlImage(url):
-                    DownSamplingImageView(url: url, size: CGSize(width: 100, height: 100))
+                    DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
                 }
             }
             .alert(item: $store.errorMessage) { text in

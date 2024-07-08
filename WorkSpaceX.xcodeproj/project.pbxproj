@@ -206,6 +206,7 @@
 		7BC09C722C3AD00100F0ABDC /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */; };
 		7BC09C792C3AD3FC00F0ABDC /* SettingCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */; };
 		7BC09C7C2C3AE31500F0ABDC /* NotificationStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */; };
+		7BC09C7E2C3B8F7300F0ABDC /* ImageResizingCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -469,6 +470,7 @@
 		7BC09C712C3AD00100F0ABDC /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinatorView.swift; sourceTree = "<group>"; };
 		7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStateManager.swift; sourceTree = "<group>"; };
+		7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizingCase.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 				7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */,
 				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
 				7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */,
+				7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1563,6 +1566,7 @@
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,
 				7B10A9902C282EAF0035C3C8 /* ChatModeEntity.swift in Sources */,
 				7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */,
+				7BC09C7E2C3B8F7300F0ABDC /* ImageResizingCase.swift in Sources */,
 				7B2EEE202C1190EE0024853C /* APIError.swift in Sources */,
 				7B7EB8672C36445400D22362 /* UserEditDTO.swift in Sources */,
 				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,

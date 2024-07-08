@@ -127,7 +127,7 @@ extension WorkSpaceSideView {
             Group {
                 if let image = model.coverImage,
                    let url = URL(string: image) {
-                    DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
+                    DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 } else {
                     EmptyView()

@@ -65,7 +65,7 @@ struct WorkSpaceEmptyListView: View {
                            let image = userProfile.profileImage {
                             
                             let url = URL(string: image)
-                            DownSamplingImageView(url: url, size: CGSize(width: 50, height: 50))
+                            DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
                                 .clipShape(Circle())
                         } else {
                             WSXImage.profileEmpty1

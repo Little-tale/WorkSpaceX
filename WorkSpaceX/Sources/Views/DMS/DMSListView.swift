@@ -70,7 +70,7 @@ extension DMSListView {
         VStack {
             Group {
                 if let image = model.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: CGSize(width: 50, height: 50))
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
                 } else {
                     WSXImage.profileEmpty1
                         .resizable()
@@ -109,7 +109,7 @@ extension DMSListView {
         HStack (alignment: .top) {
             HStack(alignment: .top) {
                 if let image = model.user.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: CGSize(width: 50, height: 50))
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
                 } else {
                     WSXImage.profileEmpty1
                         .resizable()
@@ -198,10 +198,7 @@ extension DMSListView {
         HStack {
             Group {
                 if let image = store.navigationImage {
-                    DownSamplingImageView(url: URL(string: image), size: CGSize(
-                        width: 50,
-                        height: 50
-                    ))
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.small.size)
                 } else {
                     WSXImage.logoImage
                         .resizable()
@@ -221,7 +218,7 @@ extension DMSListView {
            let image = userProfile.profileImage {
             
             let url = URL(string: image)
-            DownSamplingImageView(url: url, size: CGSize(width: 30, height: 30))
+            DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
                 .frame(width: 30, height: 30)
                 .clipShape(Circle())
         } else {

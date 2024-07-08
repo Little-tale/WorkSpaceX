@@ -257,7 +257,7 @@ extension ProfileInfoView {
             if let image = model.profileImage {
                 DownSamplingImageView(
                     url: URL(string: image),
-                    size: CGSize(width: 150, height: 150)
+                    size: ImageResizingCase.middel.size
                 )
                 .frame(width: 150, height: 150)
             } else {

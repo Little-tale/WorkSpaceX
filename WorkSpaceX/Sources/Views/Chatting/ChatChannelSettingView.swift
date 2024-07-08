@@ -189,7 +189,7 @@ extension ChatChannelSettingView {
         WithPerceptionTracking {
             VStack(alignment: .center) {
                 if let imageString = member.profileImage {
-                    DownSamplingImageView(url: URL(string: imageString), size: CGSize(width: 50, height: 50)
+                    DownSamplingImageView(url: URL(string: imageString), size: ImageResizingCase.middel.size
                     )
                     .frame(width: 40, height: 40)
                 } else {

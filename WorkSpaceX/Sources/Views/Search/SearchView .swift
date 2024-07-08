@@ -104,10 +104,7 @@ extension SearchView {
         VStack {
             Group {
                 if let image = model.coverImage {
-                    DownSamplingImageView(url: URL(string: image), size: CGSize(
-                        width: 100,
-                        height: 100
-                    ))
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
                     .frame(width: 80, height: 80)
                 } else {
                     WSXImage.logoImage
@@ -132,10 +129,7 @@ extension SearchView {
         HStack {
             Group {
                 if let image = model.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: CGSize(
-                        width: 100,
-                        height: 100
-                    ))
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
                     .frame(width: 50, height: 50)
                 } else {
                     WSXImage.logoImage
