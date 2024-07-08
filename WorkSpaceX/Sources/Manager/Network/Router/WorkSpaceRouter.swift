@@ -40,6 +40,10 @@ enum WorkSpaceRouter: Router {
     case searchKeywork(workSpaceID: String, keyword: String)
     
     case fileDownload(fileString: String)
+    
+    case workSpaceOWnerChange(workSpaceID: String, owner: ChannelOwnerRequestDTO)
+    
+    case exitToWorkSpace(WorkSpaceID: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -53,13 +57,14 @@ extension WorkSpaceRouter {
                 .exitChannel,
                 .reqeustUser,
                 .searchKeywork,
-                .fileDownload :
+                .fileDownload,
+                .exitToWorkSpace :
             return .get
         case .makeWorkSpace, .createChannel, .workSpaceAddMember, .sendChat:
             return .post
         case .removeWorkSpace, .channelDelete:
             return .delete
-        case .modifyWorkSpace, .editToChannel, .channelOwnerChanged:
+        case .modifyWorkSpace, .editToChannel, .channelOwnerChanged, .workSpaceOWnerChange:
             return .put
             
         }
@@ -108,7 +113,7 @@ extension WorkSpaceRouter {
             print("나가기 시도 -> \(workSpaceID) -> \(channelID)")
             return APIKey.version + "/workspaces/\(workSpaceID)/channels/\(channelID)/exit"
             
-        case let .editToChannel(workSpaceID, channelID, _, randomBoundary):
+        case let .editToChannel(workSpaceID, channelID, _, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/channels/\(channelID)"
             
         case let .channelOwnerChanged(workSpace,channel,_):
@@ -125,6 +130,12 @@ extension WorkSpaceRouter {
             
         case let .fileDownload(fileString):
             return APIKey.version + fileString
+            
+        case let .workSpaceOWnerChange(work, _):
+            return APIKey.version + "/workspaces/\(work)/transfer/ownership"
+        case let .exitToWorkSpace(work):
+            return APIKey.version + "/workspaces/\(work)/exit"
+            
         }
     }
     
@@ -142,7 +153,9 @@ extension WorkSpaceRouter {
                 .channelDelete,
                 .reqeustUser,
                 .searchKeywork,
-                .fileDownload:
+                .fileDownload,
+                .workSpaceOWnerChange,
+                .exitToWorkSpace :
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -180,7 +193,9 @@ extension WorkSpaceRouter {
                 .channelOwnerChanged,
                 .channelDelete,
                 .reqeustUser,
-                .fileDownload:
+                .fileDownload,
+                .workSpaceOWnerChange,
+                .exitToWorkSpace :
             return nil
             
         case let .workSpaceChatRequest(_, _, date):
@@ -208,7 +223,8 @@ extension WorkSpaceRouter {
                 .channelDelete,
                 .reqeustUser,
                 .searchKeywork,
-                .fileDownload :
+                .fileDownload,
+                .exitToWorkSpace :
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -228,6 +244,9 @@ extension WorkSpaceRouter {
             return makeWorkSpaceMultipartData(model, boundary: boundary)
         case let .channelOwnerChanged(_,_,request):
             return requestToBody(request)
+            
+        case let .workSpaceOWnerChange(_, owner):
+            return requestToBody(owner)
         }
     }
     
@@ -244,7 +263,8 @@ extension WorkSpaceRouter {
                 .channelDelete,
                 .reqeustUser,
                 .searchKeywork,
-                .fileDownload :
+                .fileDownload,
+                .exitToWorkSpace:
             return .url
             
         case .makeWorkSpace :
@@ -262,7 +282,9 @@ extension WorkSpaceRouter {
         case .editToChannel:
             return .multiPart
             
-        case .workSpaceAddMember, .channelOwnerChanged:
+        case .workSpaceAddMember,
+                .channelOwnerChanged,
+                .workSpaceOWnerChange:
             return .json
         }
     }

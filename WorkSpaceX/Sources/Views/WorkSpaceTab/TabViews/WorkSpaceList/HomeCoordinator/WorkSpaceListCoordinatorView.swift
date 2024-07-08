@@ -50,6 +50,9 @@ struct WorkSpaceListCoordinatorView: View {
                     
                 case let .storeListView(store):
                     StoreListView(store: store)
+                    
+                case let .dmChat(store):
+                    DMSChatView(store: store)
                 }
             }
         }
@@ -81,6 +84,9 @@ extension WorkSpaceListScreens.State: Identifiable {
             return state.id
         case let .storeListView(state):
             return state.id
+        case let .dmChat(state):
+            return state.id
+            
         }
     }
 }

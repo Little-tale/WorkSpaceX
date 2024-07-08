@@ -283,6 +283,11 @@ extension WorkSpaceDomainRepository: DependencyKey {
         return result
     }
     
+    func workSpaceOWnerChange(workSpaceID: String, ownerID: String) async throws -> Void {
+        let reqeustDTO = ChannelOwnerRequestDTO(owner_id: ownerID)
+        
+    }
+    
 }
 
 extension DependencyValues {

@@ -213,6 +213,9 @@ struct WorkSpaceSideFeature {
                     return .send(.showWorkSpaceEditSheet(model))
                 }
                 
+            case .alertSheetAction(.presented(.workSpaceOwnerChange)):
+                state.
+                
             case let .showWorkSpaceEditSheet(model):
                 state.workSpaceEdit = WorkSpaceEditFeature.State()
                 return .send(.workSpaceEditAction(.presented(.getModel(model))))

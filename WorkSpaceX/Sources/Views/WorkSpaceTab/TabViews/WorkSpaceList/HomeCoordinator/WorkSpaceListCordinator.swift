@@ -16,6 +16,7 @@ enum WorkSpaceListScreens {
     // Middel
     case workSpaceChannelListView(WorkSpaceChannelListFeature)
     case chattingView(WorkSpaceChannelChattingFeature)
+    case dmChat(DMSChatFeature)
     case chatnnelEdit(ChannelEditFeature)
     case ChannelOwnerChange(ChannelOwnerChangeFeature)
     
@@ -93,7 +94,7 @@ struct WorkSpaceListCordinator {
                 }
                 
             case .router(.routeAction(id: _, action: .rootScreen(.chnnelAddClicked))) :
-                let uuid = WorkSpaceListCordinator.State.uuid
+                
                 if let id = state.currentWorkSpaceId {
                     state.identeRoutes.presentSheet(.channelAdd(WorkSpaceChannelAddFeature.State(id: state.sheetID, workSpaceId: id)), embedInNavigationView: true)
                 }
@@ -167,6 +168,36 @@ struct WorkSpaceListCordinator {
                         navigationTitle: channel.name))
                     )
                 }
+                
+            case let .router(.routeAction(id: _, action: .rootScreen(.selectedRoom(model)))):
+                let model = model
+                
+                if let userid = UserDefaultsManager.userID,
+                   let workSpaceID = state.currentWorkSpaceId {
+                    state.identeRoutes.push(.dmChat(DMSChatFeature.State(
+                        workSpaceID: workSpaceID,
+                        userID: userid,
+                        otherUserID: model.user.userID
+                    )))
+                }
+                
+                //otherUserID
+            case .router(.routeAction(id: _, action: .dmChat(.delegate(.popClicked(let roomID))))):
+                WorkSpaceReader.shared.observeDMSStop(roomID)
+                WSXSocketManager.shared.stopAndRemoveSocket()
+                // 소켓 연결시 해제 해주어야 함.
+                state.identeRoutes.pop()
+                
+            case .router(.routeAction(id: _, action: .dmChat(.delegate(.otehrUserProfile(userID: let userID))))):
+                let uuid = state.profileView
+                
+                state.identeRoutes.push(
+                    .profileInfo(ProfileInfoFeature.State(
+                        id: uuid,
+                        userType: .other(userID: userID),
+                        tabbarHidden: true
+                    ))
+                )
                 
             case .router(.routeAction(id: _, action: .chattingView(.delegate(.otehrUserProfile(userID: let id))))):
                 
