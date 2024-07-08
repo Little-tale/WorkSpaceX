@@ -210,7 +210,9 @@ extension WorkSpaceReader {
                   
                     let dmsRoom = realm.objects(DMSRoomRealmModel.self).where({ $0.workSpaceID == workSpaceID })
                     
-                    let token = dmsRoom.observe { change in
+                    let sorted = dmsRoom.sorted(by: \.lastChatDate)
+                    
+                    let token = sorted.observe { change in
                         Task { @MainActor in
                             switch change {
                             case .initial(let models):

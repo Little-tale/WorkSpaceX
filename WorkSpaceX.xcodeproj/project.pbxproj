@@ -207,6 +207,9 @@
 		7BC09C792C3AD3FC00F0ABDC /* SettingCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */; };
 		7BC09C7C2C3AE31500F0ABDC /* NotificationStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */; };
 		7BC09C7E2C3B8F7300F0ABDC /* ImageResizingCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */; };
+		7BC09C822C3BACF800F0ABDC /* CustomDocumentInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C812C3BACF800F0ABDC /* CustomDocumentInteractionController.swift */; };
+		7BC09C852C3BB64700F0ABDC /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C842C3BB64700F0ABDC /* DocumentView.swift */; };
+		7BC09C872C3BB6DE00F0ABDC /* DocumentFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -471,6 +474,9 @@
 		7BC09C782C3AD3FC00F0ABDC /* SettingCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinatorView.swift; sourceTree = "<group>"; };
 		7BC09C7B2C3AE31500F0ABDC /* NotificationStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStateManager.swift; sourceTree = "<group>"; };
 		7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizingCase.swift; sourceTree = "<group>"; };
+		7BC09C812C3BACF800F0ABDC /* CustomDocumentInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDocumentInteractionController.swift; sourceTree = "<group>"; };
+		7BC09C842C3BB64700F0ABDC /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFeature.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -838,6 +844,7 @@
 		7B592E9C2C0E27B300E47797 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7BC09C832C3BB63A00F0ABDC /* FIleView */,
 				7BC09C4F2C3841E800F0ABDC /* Store */,
 				7BC09C312C37AFB800F0ABDC /* Search */,
 				7B7EB8572C35434600D22362 /* Profile */,
@@ -1145,6 +1152,15 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		7BC09C832C3BB63A00F0ABDC /* FIleView */ = {
+			isa = PBXGroup;
+			children = (
+				7BC09C842C3BB64700F0ABDC /* DocumentView.swift */,
+				7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */,
+			);
+			path = FIleView;
+			sourceTree = "<group>";
+		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
 			isa = PBXGroup;
 			children = (
@@ -1206,6 +1222,7 @@
 				7BC09C642C39173600F0ABDC /* CustomExPlainView.swift */,
 				7BC09C662C39497400F0ABDC /* CustomPaymentView.swift */,
 				7BC09C6C2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift */,
+				7BC09C812C3BACF800F0ABDC /* CustomDocumentInteractionController.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -1489,6 +1506,7 @@
 				7B7EB8562C33F1C100D22362 /* UserInfoReqeustAPIError.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
+				7BC09C852C3BB64700F0ABDC /* DocumentView.swift in Sources */,
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
 				7BC09C722C3AD00100F0ABDC /* SettingCoordinator.swift in Sources */,
 				7BF9D7282C255A480021D043 /* WorkSpaceChannelListView.swift in Sources */,
@@ -1627,6 +1645,7 @@
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B23ADCC2C2A8DED00A9E499 /* CustomDataPicker.swift in Sources */,
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
+				7BC09C822C3BACF800F0ABDC /* CustomDocumentInteractionController.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
 				7BC09C572C38431800F0ABDC /* StoreListView.swift in Sources */,
 				7B7EB8312C32881600D22362 /* DMSCoordinatorView.swift in Sources */,
@@ -1704,6 +1723,7 @@
 				7B7EB8082C2E92F000D22362 /* ChannelEditFeature.swift in Sources */,
 				7BF9D7392C26985F0021D043 /* WorkSpaceChatListDTO.swift in Sources */,
 				7B10A9962C28345A0035C3C8 /* ChatModifier.swift in Sources */,
+				7BC09C872C3BB6DE00F0ABDC /* DocumentFeature.swift in Sources */,
 				7BEC45BA2C14264200576ECA /* EmailLoginView.swift in Sources */,
 				7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */,
 				7B26D1F42C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift in Sources */,

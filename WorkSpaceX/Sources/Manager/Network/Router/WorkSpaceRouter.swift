@@ -38,6 +38,8 @@ enum WorkSpaceRouter: Router {
     case reqeustUser(userID: String)
     
     case searchKeywork(workSpaceID: String, keyword: String)
+    
+    case fileDownload(fileString: String)
 }
 extension WorkSpaceRouter {
     var method: HTTPMethod {
@@ -50,7 +52,8 @@ extension WorkSpaceRouter {
                 .channelInfoReqesut,
                 .exitChannel,
                 .reqeustUser,
-                .searchKeywork :
+                .searchKeywork,
+                .fileDownload :
             return .get
         case .makeWorkSpace, .createChannel, .workSpaceAddMember, .sendChat:
             return .post
@@ -117,8 +120,11 @@ extension WorkSpaceRouter {
         case let .reqeustUser(userID):
             return APIKey.version + "/users/\(userID)"
             
-        case let .searchKeywork(workSpaceID, keyword):
+        case let .searchKeywork(workSpaceID, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/search"
+            
+        case let .fileDownload(fileString):
+            return APIKey.version + fileString
         }
     }
     
@@ -135,7 +141,8 @@ extension WorkSpaceRouter {
                 .channelOwnerChanged,
                 .channelDelete,
                 .reqeustUser,
-                .searchKeywork :
+                .searchKeywork,
+                .fileDownload:
             return nil
             
         case .makeWorkSpace(_,let boundary):
@@ -172,7 +179,8 @@ extension WorkSpaceRouter {
                 .editToChannel,
                 .channelOwnerChanged,
                 .channelDelete,
-                .reqeustUser :
+                .reqeustUser,
+                .fileDownload:
             return nil
             
         case let .workSpaceChatRequest(_, _, date):
@@ -199,7 +207,8 @@ extension WorkSpaceRouter {
                 .exitChannel,
                 .channelDelete,
                 .reqeustUser,
-                .searchKeywork :
+                .searchKeywork,
+                .fileDownload :
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
@@ -234,7 +243,8 @@ extension WorkSpaceRouter {
                 .exitChannel,
                 .channelDelete,
                 .reqeustUser,
-                .searchKeywork:
+                .searchKeywork,
+                .fileDownload :
             return .url
             
         case .makeWorkSpace :

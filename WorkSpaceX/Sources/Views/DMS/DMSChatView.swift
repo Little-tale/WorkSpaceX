@@ -30,7 +30,7 @@ struct DMSChatView: View {
                                             store.send(.profileImageClikced(reModel))
                                         },
                                         fileClicked: { urlString in
-                                            
+                                            store.send(.fileClicked(urlString: urlString))
                                         }
                                     )
                                 }

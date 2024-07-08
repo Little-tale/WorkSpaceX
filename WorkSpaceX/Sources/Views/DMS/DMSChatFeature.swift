@@ -106,6 +106,8 @@ struct DMSChatFeature {
         
         case profileImageClikced(ChatModeEntity)
         
+        case fileClicked(urlString: String)
+        
         enum Delegate {
             case popClicked(roomID: String)
             case otehrUserProfile(userID: String)
@@ -477,6 +479,18 @@ struct DMSChatFeature {
                 
                 return .run { send in
                     await send(.delegate(.otehrUserProfile(userID: member.userID)))
+                }
+                
+            case let .fileClicked(string):
+                
+                return .run { send in
+                    do {
+                        let fileData = try await workRepo.fileDownload(urlString: string)
+                        
+                        print(fileData)
+                    } catch {
+                        
+                    }
                 }
                 
             default:

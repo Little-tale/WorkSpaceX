@@ -20,6 +20,9 @@ enum DMSListScreens {
     
     // 결제
     case storeListView(StoreListFeature)
+    
+    // fileDocumnet
+    case document(DocumentFeature)
 }
 
 @Reducer

@@ -275,6 +275,13 @@ extension WorkSpaceDomainRepository: DependencyKey {
         return WorkSpaceChannelsEntity(items: results)
     }
     
+    func fileDownload(urlString: String) async throws -> Data? {
+        let result = try await NetworkManager.shared.request(WorkSpaceRouter.fileDownload(
+            fileString: urlString
+        ), errorType: MyProfileAPIError.self)
+        return result
+    }
+    
 }
 
 extension DependencyValues {
