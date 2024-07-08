@@ -151,7 +151,11 @@ extension ProfileInfoView {
     private func setticgCaseView() -> some View {
         ForEach(ProfileInfoFeature.MyProfileViewType.nototification, id: \.self) { item in
             HStack {
-                Toggle(item.title, isOn:$store.notificationBool.sending(\.notificationBool))
+                Toggle( isOn:$store.notificationBool.sending(\.notificationBool)) {
+                    Text(item.title)
+                        .font(WSXFont.title2)
+                }
+                .tint(WSXColor.green)
             }
         }
     }
@@ -167,6 +171,7 @@ extension ProfileInfoView {
                 if item == .myCoinInfo {
                     Text(item.detail(from: model) ?? "")
                         .foregroundStyle(WSXColor.green)
+                        .font(WSXFont.title2)
                     Spacer()
                     Text("충전하기")
                         .foregroundStyle(WSXColor.black.opacity(0.8))
@@ -192,6 +197,7 @@ extension ProfileInfoView {
                 Group {
                     HStack {
                         Text(item.title)
+                            .font(WSXFont.title2)
                         Spacer()
                         Text(item.detail(from: model) ?? "")
                     }
@@ -205,6 +211,7 @@ extension ProfileInfoView {
                 Group {
                     HStack {
                         Text(item.title)
+                            .font(WSXFont.title2)
                         Spacer()
                         Text(item.detail(from: model) ?? "")
                     }
