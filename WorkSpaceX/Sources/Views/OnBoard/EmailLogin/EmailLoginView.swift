@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PopupView
 
 struct EmailLoginView: View {
     
@@ -49,7 +50,6 @@ struct EmailLoginView: View {
                     }
                     .disabled(!store.buttonState)
             }
-          
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     WSXImage.xImage
@@ -58,6 +58,20 @@ struct EmailLoginView: View {
                         }
                         .foregroundStyle(WSXColor.black)
                 }
+            }
+            .popup(isPresented: $store.logining) {
+                ProgressView()
+                    .padding(.all, 60)
+                    .background(WSXColor.white)
+                    .foregroundStyle(WSXColor.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+            } customize: {
+                $0
+                    .closeOnTapOutside(false)
+                    .closeOnTap(false)
+                    .type(.default)
+                    .appearFrom(.centerScale)
+                    .animation(.spring)
             }
         }
     }

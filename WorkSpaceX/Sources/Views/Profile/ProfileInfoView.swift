@@ -138,8 +138,8 @@ extension ProfileInfoView {
             CustomeImagePickView(
                 store: store.scope(state: \.imagePick, action: \.imagePickFeature)
             )
-            .modifier(RoudProfileImageModifier(frame: CGSize(width: 80, height: 80)))
-            .asButton {
+            .modifier(RoudProfileImageModifier(frame: CGSize(width: 100, height: 100)))
+            .onTapGesture {
                 store.send(.showImagePicker)
             }
             WSXImage.subCamera

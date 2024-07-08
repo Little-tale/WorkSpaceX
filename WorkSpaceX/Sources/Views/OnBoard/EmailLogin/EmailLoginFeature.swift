@@ -20,6 +20,8 @@ struct EmailLoginFeature {
         var loginBottomMessge: String? = nil
         var buttonState: Bool = false
         var focusField: Field? = nil
+        
+        var logining: Bool = false
     }
     
     enum Action: BindableAction {
@@ -73,6 +75,7 @@ struct EmailLoginFeature {
             case .loginButtonTapped:
                 let email = state.email
                 let password = state.password
+                state.logining = true
                 return .run { send in
                    let result = try await repository.requestEmailLogin((email,password))
                     print("이메일 로그인 성공시 출력")
@@ -93,6 +96,7 @@ struct EmailLoginFeature {
                 return .none
                 
             case .errorHandeler(let error):
+                state.logining = false
                 if !error.ifDevelopError {
                     state.alertMessage = error.message
                     return .run { send in
