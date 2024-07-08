@@ -211,6 +211,7 @@
 		7BC09C852C3BB64700F0ABDC /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C842C3BB64700F0ABDC /* DocumentView.swift */; };
 		7BC09C872C3BB6DE00F0ABDC /* DocumentFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */; };
 		7BC09C8B2C3BC54500F0ABDC /* WSXFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */; };
+		7BC09C8D2C3C0A2700F0ABDC /* WorkSpaceExitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -479,6 +480,7 @@
 		7BC09C842C3BB64700F0ABDC /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
 		7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFeature.swift; sourceTree = "<group>"; };
 		7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXFileManager.swift; sourceTree = "<group>"; };
+		7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceExitError.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -1272,6 +1274,7 @@
 				7B7EB8492C33B8EB00D22362 /* DMSRoomAPIError.swift */,
 				7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */,
 				7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */,
+				7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */,
 			);
 			path = WorkSpaceError;
 			sourceTree = "<group>";
@@ -1647,6 +1650,7 @@
 				7B26D1FA2C2120F400BC9912 /* WorkSpaceEditFeature.swift in Sources */,
 				7B592EBA2C0EC45C00E47797 /* OnboardingView.swift in Sources */,
 				7B23ADCC2C2A8DED00A9E499 /* CustomDataPicker.swift in Sources */,
+				7BC09C8D2C3C0A2700F0ABDC /* WorkSpaceExitError.swift in Sources */,
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
 				7BC09C822C3BACF800F0ABDC /* CustomDocumentInteractionController.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,

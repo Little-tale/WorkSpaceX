@@ -29,6 +29,7 @@ struct WorkSpaceSideFeature {
         var errorAlertBoll = false
         var successAlertBool = false
         var alertMessage = ""
+        var errorMessage: String? = nil
         @Presents var workSpaceEdit: WorkSpaceEditFeature.State? = nil
     }
     
@@ -73,7 +74,7 @@ struct WorkSpaceSideFeature {
         case confirmRemoveModelID(String)
         
         // 에러 알렛
-        case errorMessage(String)
+        case errorMessage(String?)
         case errorAlertBool(Bool)
         // 성공 알렛
         case successMessage(String)
@@ -81,6 +82,8 @@ struct WorkSpaceSideFeature {
         case removeSuccessAlertTapped
         
         case delegate(Delegate)
+        
+        case workSpaceExitTry(workSpaceID: String)
         
         enum Delegate {
             case changedWorkSpaceID(String?)
@@ -213,8 +216,43 @@ struct WorkSpaceSideFeature {
                     return .send(.showWorkSpaceEditSheet(model))
                 }
                 
-            case .alertSheetAction(.presented(.workSpaceOwnerChange)):
-                state.
+//            case .alertSheetAction(.presented(.workSpaceOwnerChange)):
+//                state.
+                
+            case .alertSheetAction(.presented(.workSpaceOut)):
+                if let model = state.currentSheetSelectModel,
+                   let userId = UserDefaultsManager.userID {
+                    let workSpaceID = model.workSpaceID
+                    let ownerID = model.ownerID
+                    
+                    if ownerID == userId {
+                        return .run { send in
+                            await send(.errorMessage("관리자 권한을 양도하셔야 방을 나가실수 있어요!"))
+                        }
+                    } else {
+                        return .run { send in
+                            await send(.workSpaceExitTry(workSpaceID: workSpaceID))
+                        }
+                    }
+                }
+                
+            case let .workSpaceExitTry(workSpaceID):
+                return .run { send in
+                    let _ = try await workSpaceRepo.workSpaceExit(workSpaceID: workSpaceID)
+                        
+                    await send(.confirmRemoveModelID(workSpaceID))
+                    
+                } catch: { error, send in
+                    if let error = error as? WorkSpaceExitError {
+                        if !error.ifDevelopError {
+                            await send(.errorMessage(error.message))
+                        } else {
+                            print(error)
+                        }
+                    } else {
+                        print(error)
+                    }
+                }
                 
             case let .showWorkSpaceEditSheet(model):
                 state.workSpaceEdit = WorkSpaceEditFeature.State()
@@ -244,8 +282,8 @@ struct WorkSpaceSideFeature {
                 state.successAlertBool = bool
                 
             case let .errorMessage(message):
-                state.alertMessage = message
-                state.errorAlertBoll = true
+                state.errorMessage = message
+//                state.errorAlertBoll = true
                 
             case let .errorAlertBool(bool):
                 state.errorAlertBoll = bool

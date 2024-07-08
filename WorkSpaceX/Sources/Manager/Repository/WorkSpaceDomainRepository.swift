@@ -283,9 +283,23 @@ extension WorkSpaceDomainRepository: DependencyKey {
         return result
     }
     
-    func workSpaceOWnerChange(workSpaceID: String, ownerID: String) async throws -> Void {
+    func workSpaceOWnerChange(workSpaceID: String, ownerID: String) async throws ->  WorkSpaceEntity {
         let reqeustDTO = ChannelOwnerRequestDTO(owner_id: ownerID)
         
+        let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.workSpaceOWnerChange(workSpaceID: workSpaceID,owner: reqeustDTO), errorType: ChannelOwnerChangedAPIError.self)
+        let mapper = WorkSpaceDomainMapper()
+        
+        let end = mapper.toWorkSpaceModel(model: result)
+        
+        return end
+    }
+    
+    func workSpaceExit(workSpaceID: String) async throws -> [WorkSpaceEntity] {
+        
+        let result = try await NetworkManager.shared.requestDto(WorkSpaceaListDTO.self, router: WorkSpaceRouter.exitToWorkSpace(WorkSpaceID: workSpaceID), errorType: WorkSpaceExitError.self)
+        
+        let mapping = WorkSpaceDomainRepository.workSpaceMapper.toWorkSpaceListModel(result)
+        return mapping
     }
     
 }

@@ -44,7 +44,15 @@ struct WorkSpaceSideView: View {
             .onAppear {
                 store.send(.onAppear)
             }
-            .alert("ERROR", isPresented: $store.errorAlertBoll.sending(\.errorAlertBool), actions: {
+            .alert(item: $store.errorMessage.sending(\.errorMessage), title: { _ in
+                Text("Error")
+            }, actions: { _ in
+                Text("확인")
+                    .asButton {
+                        store.send(.errorMessage(nil))
+                    }
+            }, message: { message in
+                Text(message)
             })
             .alert("삭제완료", isPresented: $store.successAlertBool.sending(\.successAlertBool), actions: {
                 Text("확인")
