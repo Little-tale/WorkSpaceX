@@ -210,6 +210,7 @@
 		7BC09C822C3BACF800F0ABDC /* CustomDocumentInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C812C3BACF800F0ABDC /* CustomDocumentInteractionController.swift */; };
 		7BC09C852C3BB64700F0ABDC /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C842C3BB64700F0ABDC /* DocumentView.swift */; };
 		7BC09C872C3BB6DE00F0ABDC /* DocumentFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */; };
+		7BC09C8B2C3BC54500F0ABDC /* WSXFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -477,6 +478,7 @@
 		7BC09C812C3BACF800F0ABDC /* CustomDocumentInteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDocumentInteractionController.swift; sourceTree = "<group>"; };
 		7BC09C842C3BB64700F0ABDC /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
 		7BC09C862C3BB6DE00F0ABDC /* DocumentFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFeature.swift; sourceTree = "<group>"; };
+		7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXFileManager.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
 				7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */,
 				7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */,
+				7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1647,6 +1650,7 @@
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
 				7BC09C822C3BACF800F0ABDC /* CustomDocumentInteractionController.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
+				7BC09C8B2C3BC54500F0ABDC /* WSXFileManager.swift in Sources */,
 				7BC09C572C38431800F0ABDC /* StoreListView.swift in Sources */,
 				7B7EB8312C32881600D22362 /* DMSCoordinatorView.swift in Sources */,
 				7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */,

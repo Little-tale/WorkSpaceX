@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import QuickLook
 
 struct DMSChatView: View {
     
@@ -16,36 +17,44 @@ struct DMSChatView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            
-            VStack {
-                ScrollViewReader { proxy in
-                    WithPerceptionTracking {
-                        ScrollView {
-                            LazyVStack {
-                                
-                                ForEach(store.currentModels, id: \.chatID) { send in
-                                    ChatModeView(
-                                        setModel: send,
-                                        profileClicked: { reModel in
-                                            store.send(.profileImageClikced(reModel))
-                                        },
-                                        fileClicked: { urlString in
-                                            store.send(.fileClicked(urlString: urlString))
-                                        }
-                                    )
+            ZStack {
+                VStack {
+                    ScrollViewReader { proxy in
+                        WithPerceptionTracking {
+                            ScrollView {
+                                LazyVStack {
+                                    
+                                    ForEach(store.currentModels, id: \.chatID) { send in
+                                        ChatModeView(
+                                            setModel: send,
+                                            profileClicked: { reModel in
+                                                store.send(.profileImageClikced(reModel))
+                                            },
+                                            fileClicked: { urlString in
+                                                store.send(.fileClicked(urlString: urlString))
+                                            }
+                                        )
+                                    }
                                 }
+                                .rotationEffect(.radians(.pi))
+                                .scaleEffect(x: -1, y: 1, anchor: .center)
                             }
-                            .rotationEffect(.radians(.pi))
-                            .scaleEffect(x: -1, y: 1, anchor: .center)
                         }
+                        .rotationEffect(.radians(.pi))
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
+                        
                     }
-                    .rotationEffect(.radians(.pi))
-                    .scaleEffect(x: -1, y: 1, anchor: .center)
                     
+                    Spacer()
+                    chatTextField()
                 }
-                
-                Spacer()
-                chatTextField()
+                .quickLookPreview($store.presentDoc.sending(\.presentDoc))
+                if store.progressView {
+                    ProgressView()
+                        .padding(.all, 60)
+                        .background(WSXColor.white)
+                        .foregroundStyle(WSXColor.black)
+                }
             }
             .onAppear {
                 store.send(.onAppear)
@@ -99,7 +108,6 @@ struct DMSChatView: View {
                 EmptyView()
                     .presentationDetents([.large])
             }
-
         }
     }
 }

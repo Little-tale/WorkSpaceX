@@ -276,6 +276,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
     }
     
     func fileDownload(urlString: String) async throws -> Data? {
+        print("ass \(urlString)")
         let result = try await NetworkManager.shared.request(WorkSpaceRouter.fileDownload(
             fileString: urlString
         ), errorType: MyProfileAPIError.self)

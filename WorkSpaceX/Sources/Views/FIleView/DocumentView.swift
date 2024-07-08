@@ -8,12 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct DocumentView: View {
-
-    @Perception.Bindable var store: StoreOf<DocumentFeature>
-    
-    var body: some View {
-        CustomDocumentInteractionController(url: store.url)
-            .ignoresSafeArea(.all)
-    }
-}
+//struct DocumentView: View {
+//
+//    @Perception.Bindable var store: StoreOf<DocumentFeature>
+//    
+//    var body: some View {
+//        CustomDocumentInteractionController(url: store.url)
+//            .ignoresSafeArea(.all)
+//    }
+//}

@@ -48,6 +48,10 @@ struct DMSChatFeature {
         var channelModel: ChanelEntity?
         
         var ifDeleteRoom: Bool = false
+        
+        var progressView: Bool = false
+        
+        var presentDoc: URL? = nil
     }
     
     enum Action {
@@ -108,6 +112,10 @@ struct DMSChatFeature {
         
         case fileClicked(urlString: String)
         
+        case progressView(Bool)
+        
+        case presentDoc(URL?)
+        
         enum Delegate {
             case popClicked(roomID: String)
             case otehrUserProfile(userID: String)
@@ -117,6 +125,7 @@ struct DMSChatFeature {
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.workSpaceReader) var reader
     @Dependency(\.dmsRepository) var dmsRepo
+    @Dependency(\.fileManager) var fileManager
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -484,14 +493,32 @@ struct DMSChatFeature {
             case let .fileClicked(string):
                 
                 return .run { send in
+                    await send(.progressView(true))
                     do {
-                        let fileData = try await workRepo.fileDownload(urlString: string)
-                        
-                        print(fileData)
+                        guard let fileData = try await workRepo.fileDownload(urlString: string) else {
+                            await send(.progressView(false))
+                            return
+                        }
+                        guard let url = fileManager.fileSave(
+                            fileData,
+                            urlString: string
+                        ) else {
+                            await send(.progressView(false))
+                            return
+                        }
+                        await send(.progressView(false))
+                        await send(.presentDoc(url))
                     } catch {
-                        
+                        await send(.progressView(false))
+                        print(error)
                     }
                 }
+                
+            case let .progressView(bool):
+                state.progressView = bool
+                
+            case let .presentDoc(url):
+                state.presentDoc = url
                 
             default:
                 break

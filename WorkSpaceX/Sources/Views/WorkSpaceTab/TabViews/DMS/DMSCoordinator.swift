@@ -22,7 +22,7 @@ enum DMSListScreens {
     case storeListView(StoreListFeature)
     
     // fileDocumnet
-    case document(DocumentFeature)
+//    case document(DocumentFeature)
 }
 
 @Reducer
@@ -34,6 +34,7 @@ struct DMSCoordinator {
         
         let profileView = UUID()
         let storeView = UUID()
+//        let fileDC = UUID()
         
         var currentWorkSpaceId: String?
         var identeRoutes: IdentifiedArrayOf<Route<DMSListScreens.State>>
@@ -173,6 +174,13 @@ struct DMSCoordinator {
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 // 소켓 연결시 해제 해주어야 함.
                 state.identeRoutes.pop()
+                
+//            case let .router(.routeAction(id: _, action: .dmChat(.delegate(.moveToFileView(url))))):
+//                let id = state.fileDC
+////                state.identeRoutes.push(.document(DocumentFeature.State(
+//                    id: id,
+//                    url: url
+//                )))
                 
             default:
                 break
