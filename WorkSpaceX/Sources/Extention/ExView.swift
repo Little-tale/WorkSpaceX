@@ -58,4 +58,20 @@ extension View {
             .shadow(color: .black.opacity(0.16), radius: 24, x: 0, y: 0)
     }
     
+    func gradientProfile() -> some View {
+        self
+            .frame(width: 32, height: 32)
+            .clipShape(
+                Circle()
+            )
+            .overlay {
+                Circle()
+                    .stroke(
+                        WSXColor
+                        .profileStorkeGradient,
+                        lineWidth: 2
+                    )
+            }
+    }
+    
 }

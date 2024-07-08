@@ -34,4 +34,14 @@ extension WSXColor {
         startPoint: .leading,
         endPoint: .trailing
     )
+    
+    static let profileStorkeGradient = LinearGradient(
+        colors: [
+            Color(ColorResource.lightGreen),
+            Color(ColorResource.wsxGreen),
+            .blue
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
 }

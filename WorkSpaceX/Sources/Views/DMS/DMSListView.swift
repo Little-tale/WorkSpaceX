@@ -204,7 +204,7 @@ extension DMSListView {
                         .resizable()
                 }
             }
-            .frame(width: 30, height: 30)
+            .frame(width: 35, height: 35)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             Text("Direct Message")
@@ -216,16 +216,14 @@ extension DMSListView {
     func navigationTrailingView() -> some View {
         if let userProfile = userProfile.first,
            let image = userProfile.profileImage {
-            
             let url = URL(string: image)
             DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
-                .frame(width: 30, height: 30)
-                .clipShape(Circle())
+                .gradientProfile()
+            
         } else {
             WSXImage.profileEmpty1
                 .resizable()
-                .frame(width: 30, height: 30)
-                .clipShape(Circle())
+                .gradientProfile()
         }
     }
     

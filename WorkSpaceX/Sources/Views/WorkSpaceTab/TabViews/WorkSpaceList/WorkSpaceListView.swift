@@ -78,20 +78,7 @@ struct WorkSpaceListView: View {
             .confirmationDialog($store.scope(state: \.alert, action: \.alertSheet))
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    HStack {
-                        if let image = store.workSpaceCoverImage {
-                            DownSamplingImageView(url: image, size: ImageResizingCase.small.size)
-                                .frame(width: 40, height: 40)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                        }
-                        
-                        Text(store.workSpaceName ?? "Loading")
-                            .font(WSXFont.title1)
-                            .foregroundGrdientTo(gradient: WSXColor.titleGradient)
-                            .asButton {
-                                store.send(.openSideMenu)
-                            }
-                    }
+                    navigationFrontView()
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     navigationTrailingView()
@@ -103,6 +90,30 @@ struct WorkSpaceListView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
+    
+    func navigationFrontView() -> some View {
+        
+        HStack {
+            Group {
+                if let image = store.workSpaceCoverImage {
+                    DownSamplingImageView(url: image, size: ImageResizingCase.small.size)
+                } else {
+                    WSXImage.logoImage
+                        .resizable()
+                }
+            }
+            .frame(width: 35, height: 35)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            Text(store.workSpaceName ?? "Loading")
+                .font(WSXFont.title1)
+                .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+                .asButton {
+                    store.send(.openSideMenu)
+                }
+        }
+    }
+    
     @ViewBuilder
     func navigationTrailingView() -> some View {
         if let userProfile = userProfile.first,
@@ -110,13 +121,11 @@ struct WorkSpaceListView: View {
             
             let url = URL(string: image)
             DownSamplingImageView(url: url, size: ImageResizingCase.small.size)
-                .frame(width: 30, height: 30)
-                .clipShape(Circle())
+                .gradientProfile()
         } else {
             WSXImage.profileEmpty1
                 .resizable()
-                .frame(width: 30, height: 30)
-                .clipShape(Circle())
+                .gradientProfile()
         }
     }
     
