@@ -214,6 +214,7 @@
 		7BC09C8D2C3C0A2700F0ABDC /* WorkSpaceExitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */; };
 		7BC09C8F2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C8E2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift */; };
 		7BC09C912C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */; };
+		7BC09C932C3CDF1500F0ABDC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BC09C922C3CDF1500F0ABDC /* README.md */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -485,6 +486,7 @@
 		7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceExitError.swift; sourceTree = "<group>"; };
 		7BC09C8E2C3C11BA00F0ABDC /* WorkSpaceOwnerChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceOwnerChangeView.swift; sourceTree = "<group>"; };
 		7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceOwnerChangeFeature.swift; sourceTree = "<group>"; };
+		7BC09C922C3CDF1500F0ABDC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -761,6 +763,7 @@
 		7B592E782C0E251F00E47797 = {
 			isa = PBXGroup;
 			children = (
+				7BC09C922C3CDF1500F0ABDC /* README.md */,
 				7B592E922C0E255F00E47797 /* .gitignore */,
 				7B592E832C0E251F00E47797 /* WorkSpaceX */,
 				7B592E822C0E251F00E47797 /* Products */,
@@ -1478,6 +1481,7 @@
 			files = (
 				7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */,
 				7B592E932C0E255F00E47797 /* .gitignore in Resources */,
+				7BC09C932C3CDF1500F0ABDC /* README.md in Resources */,
 				7B2EEDFE2C10BD0A0024853C /* Memo in Resources */,
 				7B592E892C0E252000E47797 /* Assets.xcassets in Resources */,
 			);
