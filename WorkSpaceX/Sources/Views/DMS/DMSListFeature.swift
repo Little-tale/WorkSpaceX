@@ -31,6 +31,8 @@ struct DMSListFeature {
         case members
     }
     
+    enum CancelID { case timer }
+    
     enum Action {
         case onAppaer
         
@@ -50,6 +52,7 @@ struct DMSListFeature {
         case users([WorkSpaceMembersEntity])
         case dmsListReqeust(WorkSpaceID: String)
         
+        case infinityStart(WorkSpaceID: String)
         
         // 타 사용자 클릭시
         case selectedOtherUser(WorkSpaceMembersEntity)
@@ -69,12 +72,15 @@ struct DMSListFeature {
         }
         case clickedAddMember
         case errorMessage(String?)
+        case onDisappear
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.dmsRepository) var dmsRepo
+    /// Push 기능이  미뤄지어, Polling 방법으로 해결해 보죠.
+    @Dependency(\.continuousClock) var clock
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -90,9 +96,24 @@ struct DMSListFeature {
                     if id != "" {
                         
                         await send(.requestWorkSpaceMember(WorkSpaceID: id))
-                        await send(.dmsListReqeust(WorkSpaceID: id))
+                        await send(.infinityStart(WorkSpaceID: id))
                     }
                 }
+                
+            case let .infinityStart(workSpaceID):
+                
+                return .run { send in
+                    
+                    await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
+                    
+                    try await Task.sleep(for: .seconds(2))
+                    
+                    for await _ in clock.timer(interval: .seconds(2)) {
+                        await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
+                    }
+                }
+                .cancellable(id: CancelID.timer)
+                
             case let .parentAction(.getWorkSpaceId(id)):
                 state.currentWorkSpaceID = id
                 return .run { send in
@@ -271,6 +292,8 @@ struct DMSListFeature {
                 return .run { send in
                     await send(.delegate(.moveToProfileView))
                 }
+            case .onDisappear:
+                return .cancel(id: CancelID.timer)
                 
             default:
                 break

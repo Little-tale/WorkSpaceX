@@ -47,6 +47,9 @@ struct DMSListView: View {
                         }
                 }
             }
+            .onDisappear {
+                store.send(.onDisappear)
+            }
             .navigationBarTitleDisplayMode(.inline)
         }
     }
