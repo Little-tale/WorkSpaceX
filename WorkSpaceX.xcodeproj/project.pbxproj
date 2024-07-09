@@ -22,7 +22,6 @@
 		7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */; };
 		7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */; };
 		7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */; };
-		7B23ADDB2C2C437B00A9E499 /* ExBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */; };
 		7B23ADDD2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDC2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift */; };
 		7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDE2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
@@ -253,7 +252,7 @@
 		7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45F42C1808F800576ECA /* ExImage.swift */; };
 		7BEC45F72C180F0600576ECA /* WorkSpaceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45F62C180F0600576ECA /* WorkSpaceEntity.swift */; };
 		7BEC45F92C1813FE00576ECA /* ImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45F82C1813FE00576ECA /* ImageMapper.swift */; };
-		7BEC45FB2C18184800576ECA /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FA2C18184800576ECA /* MultipartFormData.swift */; };
+		7BEC45FB2C18184800576ECA /* MultipartFromData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FA2C18184800576ECA /* MultipartFromData.swift */; };
 		7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FC2C181FAE00576ECA /* ExData.swift */; };
 		7BEC45FF2C18363900576ECA /* ExString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FE2C18363900576ECA /* ExString.swift */; };
 		7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */; };
@@ -298,7 +297,6 @@
 		7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingView.swift; sourceTree = "<group>"; };
 		7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelSettingFeature.swift; sourceTree = "<group>"; };
 		7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalButtonViewModifier.swift; sourceTree = "<group>"; };
-		7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExBinding.swift; sourceTree = "<group>"; };
 		7B23ADDC2C2D0A4200A9E499 /* WorkSpaceExitChannelAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceExitChannelAPIError.swift; sourceTree = "<group>"; };
 		7B23ADDE2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelEntity.swift; sourceTree = "<group>"; };
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
@@ -522,7 +520,7 @@
 		7BEC45F42C1808F800576ECA /* ExImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExImage.swift; sourceTree = "<group>"; };
 		7BEC45F62C180F0600576ECA /* WorkSpaceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEntity.swift; sourceTree = "<group>"; };
 		7BEC45F82C1813FE00576ECA /* ImageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapper.swift; sourceTree = "<group>"; };
-		7BEC45FA2C18184800576ECA /* MultipartFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
+		7BEC45FA2C18184800576ECA /* MultipartFromData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFromData.swift; sourceTree = "<group>"; };
 		7BEC45FC2C181FAE00576ECA /* ExData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExData.swift; sourceTree = "<group>"; };
 		7BEC45FE2C18363900576ECA /* ExString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExString.swift; sourceTree = "<group>"; };
 		7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelsEntity.swift; sourceTree = "<group>"; };
@@ -655,7 +653,7 @@
 				7B2EEE0D2C117BC70024853C /* Router */,
 				7B2EEE282C11A38B0024853C /* WSXCoder.swift */,
 				7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */,
-				7BEC45FA2C18184800576ECA /* MultipartFormData.swift */,
+				7BEC45FA2C18184800576ECA /* MultipartFromData.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -725,7 +723,6 @@
 				7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */,
 				7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */,
 				7B10A9992C2910090035C3C8 /* ExCollection.swift */,
-				7B23ADDA2C2C437B00A9E499 /* ExBinding.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -1606,7 +1603,7 @@
 				7B2EEE242C1193D60024853C /* RouterProtocol.swift in Sources */,
 				7BEC45AC2C12EBAA00576ECA /* NotNeedInterception.swift in Sources */,
 				7B592ED02C0F089700E47797 /* DefaultTextFieldViewModifier.swift in Sources */,
-				7BEC45FB2C18184800576ECA /* MultipartFormData.swift in Sources */,
+				7BEC45FB2C18184800576ECA /* MultipartFromData.swift in Sources */,
 				7BC09C792C3AD3FC00F0ABDC /* SettingCoordinatorView.swift in Sources */,
 				7BC09C4E2C383D1E00F0ABDC /* StoreItemDTO.swift in Sources */,
 				7B592EB82C0EC3EA00E47797 /* RootView.swift in Sources */,
@@ -1644,7 +1641,6 @@
 				7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */,
 				7BC09C592C38459200F0ABDC /* StoreDomainRepository.swift in Sources */,
 				7BEC45B52C131B7800576ECA /* KakaoLoginDTORequest.swift in Sources */,
-				7B23ADDB2C2C437B00A9E499 /* ExBinding.swift in Sources */,
 				7B7EB81C2C325DA700D22362 /* DMSRouter.swift in Sources */,
 				7BF9D7252C2537580021D043 /* WorkSpaceMembersDTO.swift in Sources */,
 				7BEC45B72C132F4700576ECA /* PopUpViewSmall.swift in Sources */,

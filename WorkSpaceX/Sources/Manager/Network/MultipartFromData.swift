@@ -7,7 +7,23 @@
 
 import Foundation
 
-final class MultipartFormData {
+protocol MultipartFromDataType {
+    
+    func append(
+        _ data: Data,
+        withName name: String,
+        fileName: String?,
+        mimeType: String,
+        boundary: String
+    )
+    
+    func finalize(boundary: String) -> Data
+    
+    func headers(boundary: String) -> HTTPHeaders
+    
+}
+
+final class MultipartFromData: MultipartFromDataType {
     
     private var body = Data()
     

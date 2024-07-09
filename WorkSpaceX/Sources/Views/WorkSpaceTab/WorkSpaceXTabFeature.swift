@@ -312,6 +312,9 @@ struct WorkSpaceTabCoordinator {
                 
             case let .refreshDeadAlert(bool):
                 state.refreshAlert = bool
+                return .run { send in
+                    try await realmeRepo.logout()
+                } catch : { error, _ in print(error) }
 
             
             case .workSpaceSubscribe:

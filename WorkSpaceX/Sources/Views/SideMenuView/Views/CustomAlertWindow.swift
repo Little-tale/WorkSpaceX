@@ -22,7 +22,7 @@ final class CustomAlertWindow {
             hostingController.view.backgroundColor = .clear
             
             window.rootViewController = hostingController
-            window.windowLevel = .alert
+            window.windowLevel = .alert + 1
             window.makeKeyAndVisible()
             self.window = window
             

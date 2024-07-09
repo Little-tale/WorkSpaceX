@@ -84,4 +84,6 @@ extension WSXImage {
         }
     }
     
+    static let pdf = Image(.PDF)
+    static let zip = Image(.ZIP)
 }

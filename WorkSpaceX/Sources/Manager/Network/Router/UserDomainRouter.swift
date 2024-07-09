@@ -65,7 +65,7 @@ extension UserDomainRouter {
         case .userEmail, .userReg, .kakaoLogin, .emailLogin, .appleLoginRegister, .myProfile, .editUserInfo:
             return nil
         case .editUserProfileImage(_, boundary: let boundary):
-            let multipartFormData = MultipartFormData()
+            let multipartFormData = MultipartFromData()
             return multipartFormData.headers(boundary: boundary)
         }
     }
@@ -122,7 +122,7 @@ extension UserDomainRouter {
     
     private func makeProfileImageMultipartData(_ image: Data, boundary: String) -> Data {
         
-        let multiPart = MultipartFormData()
+        let multiPart = MultipartFromData()
         
         multiPart.append(
             image,

@@ -52,7 +52,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
         regWorkSpaceReqeust: { model in
             let reqeustDTO = workSpaceMapper.workSpaceReqeustDTO(model: model)
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(reqeustDTO, randomBoundary: MultipartFormData.randomBoundary()), errorType: MakeWorkSpaceAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(reqeustDTO, randomBoundary: MultipartFromData.randomBoundary()), errorType: MakeWorkSpaceAPIError.self)
             
             UserDefaultsManager.workSpaceSelectedID = result.workspace_id
             
@@ -75,7 +75,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
             let reqeustMapping = workSpaceMapper.workSpaceReqeustDTO(model: model)
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.modifyWorkSpace(reqeustMapping, randomBoundary: MultipartFormData.randomBoundary(), workSpaceID: id), errorType: WorkSpaceEditAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.modifyWorkSpace(reqeustMapping, randomBoundary: MultipartFromData.randomBoundary(), workSpaceID: id), errorType: WorkSpaceEditAPIError.self)
             
             let mapping = workSpaceMapper.toWorkSpaceModel(model: result)
             
@@ -89,7 +89,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
             let requestDTO = workSpaceMapper.workSpaceReqeustDTO(model: request)
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelsDTO.self, router: WorkSpaceRouter.createChannel(requestDTO, workSpaceID: workSpaceID, boundary: MultipartFormData.randomBoundary()), errorType: WorkSpaceMakeChannelAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelsDTO.self, router: WorkSpaceRouter.createChannel(requestDTO, workSpaceID: workSpaceID, boundary: MultipartFromData.randomBoundary()), errorType: WorkSpaceMakeChannelAPIError.self)
             
             let mapping = workSpaceMapper.workSpaceChanelsDTOToChannel(dto: result)
             
@@ -148,7 +148,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
                     workSpaceID: workSpaceID,
                     channelID,
                     model,
-                    boundary: MultipartFormData.randomBoundary()
+                    boundary: MultipartFromData.randomBoundary()
                 ),
                 errorType: WorkSpaceChatSendAPIError.self
             )
@@ -196,7 +196,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
                 router: WorkSpaceRouter.editToChannel(
                     workSpaceID: wornSpaceId,
                     ChannelID, multi: request,
-                    randomBoundary: MultipartFormData.randomBoundary()
+                    randomBoundary: MultipartFromData.randomBoundary()
                 ), errorType: ChannelEditAPIError.self)
             
             let mapping = workSpaceMapper.workSpaceChanelsDTOToChannel(

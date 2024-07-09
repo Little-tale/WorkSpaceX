@@ -194,6 +194,7 @@ struct WorkSpaceChannelChattingFeature {
                         // 처음 렘
                         await send(.firstInit)
                         await send(.realmobserberStart)
+                        try await Task.sleep(for: .seconds(0.5))
                         await send(.socketConnected)
                     } catch: { error, send in
                         if let error = error as? WorkSpaceChannelListAPIError {
@@ -266,6 +267,8 @@ struct WorkSpaceChannelChattingFeature {
                         )
                         
                         send(.showChats(entitys))
+                    } else {
+                        send(.showChats([]))
                     }
                 }
             case .sendTapped:
@@ -422,7 +425,7 @@ struct WorkSpaceChannelChattingFeature {
                             try await realmRepo.upsertToChatInChannel(models: [model])
                             print("마지막 소켓 model 받음")
                         case .failure(let error):
-                            print("마지막 소켓 에러 발생")
+                            print("마지막 소켓 에러 발생\(error)")
                             await send(.errorMessage(error.message))
                         }
                     }

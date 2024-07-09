@@ -24,6 +24,8 @@ struct DMSListFeature {
         var roomList: [DMSRoomEntity] = []
         
         var viewState: DmViewState = .loading
+        
+        var stopTrigger: Bool = true
     }
     enum DmViewState {
         case loading
@@ -73,6 +75,7 @@ struct DMSListFeature {
         case clickedAddMember
         case errorMessage(String?)
         case onDisappear
+        case stop
     }
     
     @Dependency(\.workSpaceReader) var workSpaceReader
@@ -101,15 +104,16 @@ struct DMSListFeature {
                 }
                 
             case let .infinityStart(workSpaceID):
-                
+                let stop = state.stopTrigger
                 return .run { send in
                     
                     await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
                     
                     try await Task.sleep(for: .seconds(2))
-                    
-                    for await _ in clock.timer(interval: .seconds(2)) {
-                        await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
+                    if stop {
+                        for await _ in clock.timer(interval: .seconds(2)) {
+                            await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
+                        }
                     }
                 }
                 .cancellable(id: CancelID.timer)
@@ -294,7 +298,8 @@ struct DMSListFeature {
                 }
             case .onDisappear:
                 return .cancel(id: CancelID.timer)
-                
+            case .stop:
+                state.stopTrigger = false
             default:
                 break
             }

@@ -60,7 +60,7 @@ enum RegularExpressionCase {
         case .password:
             return "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$"
         case .nickName:
-            return  "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u1100-\\u11FF\\u3130-\\u318F]{1,30}$"
+            return  "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u1100-\\u11FF\\u3130-\\u318F\\s]{1,30}$"
         case .phoneNumber:
             return "^01([0-9]{1})([0-9]{3,4})([0-9]{4})$"
        

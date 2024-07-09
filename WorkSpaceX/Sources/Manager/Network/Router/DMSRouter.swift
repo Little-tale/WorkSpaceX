@@ -62,7 +62,7 @@ extension DMSRouter {
             return nil
             
         case let .sendDmMessage(_, _, _, boundary):
-            let multipartFormData = MultipartFormData()
+            let multipartFormData = MultipartFromData()
             return multipartFormData.headers(boundary: boundary)
         }
     }
@@ -122,7 +122,7 @@ extension DMSRouter {
     
     private func makeChatMultipartData(_ data: ChatMultipart, boundary: String) -> Data {
         
-        let multiPart = MultipartFormData()
+        let multiPart = MultipartFromData()
         
         if let content = data.content {
             if content != "" {

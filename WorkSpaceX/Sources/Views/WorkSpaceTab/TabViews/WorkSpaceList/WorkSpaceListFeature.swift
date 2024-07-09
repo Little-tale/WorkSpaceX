@@ -216,7 +216,7 @@ struct WorkSpaceListFeature {
                 
             case let .channelListRequest(workSpaceID):
                 return .run { send in
-                    let result = try await workSpaceRepo.workSpaceSearchingToChannel(workSpaceID)
+                    let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
                     await withThrowingTaskGroup(of: Void.self) { group in
                         for model in result {
                             group.addTask {

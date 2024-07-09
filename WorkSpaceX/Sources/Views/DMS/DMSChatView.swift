@@ -224,7 +224,7 @@ extension DMSChatView {
                 .resizable()
         case .pdf:
             VStack {
-                Image(systemName: "doc.richtext")
+                WSXImage.pdf
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .background(WSXColor.white)
@@ -233,7 +233,7 @@ extension DMSChatView {
             .font(WSXFont.caption)
         case .zip:
             VStack {
-                Image(systemName: "doc.zipper")
+                WSXImage.zip
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .background(WSXColor.white)

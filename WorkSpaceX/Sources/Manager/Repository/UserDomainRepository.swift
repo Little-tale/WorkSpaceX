@@ -56,8 +56,8 @@ extension UserDomainRepository: DependencyKey {
             
             UserDefaultsManager.userID = result.userID
             
-            print("accessToken",UserDefaultsManager.accessToken)
-            print("refreshToken",UserDefaultsManager.refreshToken)
+            print("accessToken",UserDefaultsManager.accessToken ?? "nil")
+            print("refreshToken",UserDefaultsManager.refreshToken ?? "nil")
             
             return reEntry
             
@@ -79,8 +79,8 @@ extension UserDomainRepository: DependencyKey {
             UserDefaultsManager.userName = result.nickname
             UserDefaultsManager.userID = result.userID
             
-            print("accessToken",UserDefaultsManager.accessToken)
-            print("refreshToken",UserDefaultsManager.refreshToken)
+            print("accessToken",UserDefaultsManager.accessToken ?? "nil")
+            print("refreshToken",UserDefaultsManager.refreshToken ?? "nil")
         
             return entity
             
@@ -107,7 +107,7 @@ extension UserDomainRepository: DependencyKey {
             UserDefaultsManager.userID = result.userID
             print("이메일 로그인시 토큰 \(result.token)")
             
-            print("이메일 유저디폴트 입장 \(UserDefaultsManager.accessToken)")
+            print("이메일 유저디폴트 입장 \(UserDefaultsManager.accessToken ?? "nil")")
             
             UserDefaultsManager.ifEmailLogin = true
             
@@ -159,7 +159,7 @@ extension UserDomainRepository: DependencyKey {
         }, profileImageEdit: { data in
             let result = try await NetworkManager.shared.requestDto(UserEditDTO.self, router: UserDomainRouter.editUserProfileImage(
                 image: data,
-                boundary: MultipartFormData.randomBoundary()
+                boundary: MultipartFromData.randomBoundary()
             ), errorType: UserEditAPIError.self)
             let mapping = mapper.toEntity(result)
             return mapping

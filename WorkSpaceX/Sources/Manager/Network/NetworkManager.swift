@@ -7,7 +7,15 @@
 
 import Foundation
 
-struct NetworkManager {
+protocol NetworkManagerType {
+    
+    func request<T: Router, E: WSXErrorType>(_ router: T, errorType: E.Type) async throws -> Data
+    
+    func requestDto<T: DTO, R: Router, E: WSXErrorType>(_ model: T.Type, router: R, errorType: E.Type) async throws -> T
+    
+}
+
+struct NetworkManager: NetworkManagerType {
     static let shared = NetworkManager()
 }
 

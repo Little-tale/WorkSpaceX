@@ -124,8 +124,9 @@ struct DMSCoordinator {
                 )
                 
             case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToOnBoardingView)))):
-                
+                let uuid = DMSCoordinator.State.uuid
                 return .run { send in
+                    await send(.router(.routeAction(id: uuid, action: .dmHome(.stop))))
                     await send(.delegate(.moveToOnBoardingView))
                 }
                 

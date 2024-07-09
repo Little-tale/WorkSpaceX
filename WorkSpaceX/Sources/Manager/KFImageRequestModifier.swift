@@ -7,10 +7,6 @@
 
 import Kingfisher
 import Foundation
-/*
- 회고
- /v1 이 없어지는 현상
- */
 
 final class KFImageRequestModifier: ImageDownloadRequestModifier {
     

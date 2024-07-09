@@ -189,7 +189,7 @@ extension ChatModeView {
             
         case .pdf:
             VStack {
-                Image(systemName: "doc.richtext")
+                WSXImage.pdf
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .background(WSXColor.white)
@@ -200,7 +200,7 @@ extension ChatModeView {
             .font(WSXFont.caption)
         case .zip:
             VStack {
-                Image(systemName: "doc.zipper")
+                WSXImage.zip
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
                     .background(WSXColor.white)
