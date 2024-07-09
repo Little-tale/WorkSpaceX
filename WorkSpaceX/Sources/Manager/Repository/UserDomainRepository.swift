@@ -159,7 +159,7 @@ extension UserDomainRepository: DependencyKey {
         }, profileImageEdit: { data in
             let result = try await NetworkManager.shared.requestDto(UserEditDTO.self, router: UserDomainRouter.editUserProfileImage(
                 image: data,
-                boundary: MultipartFromData.randomBoundary()
+                boundary: MultipartFormData.randomBoundary()
             ), errorType: UserEditAPIError.self)
             let mapping = mapper.toEntity(result)
             return mapping

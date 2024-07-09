@@ -267,7 +267,7 @@ struct WorkSpaceListCordinator {
                 
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 
-                if let workID =  state.currentWorkSpaceId {
+                if state.currentWorkSpaceId != nil {
                     state.identeRoutes.goBackTo(\.rootScreen)
                 }
                 // 채널 삭제시..parentToAction

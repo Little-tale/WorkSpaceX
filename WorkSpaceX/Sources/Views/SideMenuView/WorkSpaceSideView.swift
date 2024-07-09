@@ -75,6 +75,7 @@ struct WorkSpaceSideView: View {
                             isShowing: $store.removeAlertBool.sending(\.removeAlertBoolCatch),
                             title: "워크스페이스 삭제",
                             message: "삭제시 채널/멤버/채팅 등의 데이터들이 사라집니다. 삭제 하시겠습니까?",
+                            ifMessageCenter: true,
                             onCancel: {
                                 
                             }, onAction: {

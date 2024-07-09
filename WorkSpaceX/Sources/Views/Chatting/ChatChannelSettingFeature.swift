@@ -203,7 +203,7 @@ struct ChatChannelSettingFeature {
                 }
                 
             case let .alertCaseOf(alertCase):
-                print("얼렛 케이스 발동 \(alertCase)")
+                print("얼렛 케이스 발동 \(alertCase )")
                 state.alertCaseOf = alertCase
                 
             case let .alertAction(caseOf):
@@ -219,7 +219,6 @@ struct ChatChannelSettingFeature {
                     return .run { send in
                         await send(.channelDeleteStart)
                     }
-                    break
                 }
                 
             case .exitChannel:
@@ -302,6 +301,7 @@ struct ChatChannelSettingFeature {
                     } else { print(error) }
                 }
             case .parentsAction(.successOwnerChange):
+//                return .send(.channelOwnerChanged(true))
                 return .run { send in
                     await send(.channelOwnerChanged(true))
                 }

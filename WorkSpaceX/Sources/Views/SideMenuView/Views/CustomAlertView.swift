@@ -20,6 +20,8 @@ struct CustomAlertView: View {
     
     var title: String
     var message: String
+    var ifMessageCenter : Bool
+    
     
     var onCancel: () -> Void
     var onAction: () -> Void
@@ -40,7 +42,7 @@ struct CustomAlertView: View {
                         .foregroundColor(.black)
                     Text(message)
                         .font(WSXFont.body)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(ifMessageCenter ? .center : .leading)
                         .foregroundColor(.gray)
                     makeAlertView()
                 }

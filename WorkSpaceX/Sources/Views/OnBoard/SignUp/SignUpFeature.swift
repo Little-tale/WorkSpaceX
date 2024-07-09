@@ -194,7 +194,7 @@ struct SignUpFeature {
                 let email = state.user.email
                 return .run { send in
                     
-                    let result = try await reposiory.chaeckEmail(email)
+                    let result: Void = try await reposiory.chaeckEmail(email)
                     
                     await send(.checkEmailSuccess)
                     await send(.returnView("중복되지 않았어요"))

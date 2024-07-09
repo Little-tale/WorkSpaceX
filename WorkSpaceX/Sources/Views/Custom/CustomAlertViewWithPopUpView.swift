@@ -27,7 +27,7 @@ struct CustomAlertViewWithPopUpView: View {
                 .foregroundColor(.black)
             Text(message)
                 .font(WSXFont.body)
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.leading)
                 .foregroundColor(.gray)
             makeAlertView()
         }

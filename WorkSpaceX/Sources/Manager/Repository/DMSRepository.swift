@@ -72,7 +72,7 @@ struct DMSRepository {
                 workSpaceID,
                 roomID: roomID,
                 reqeust: reqeust,
-                boundary: MultipartFromData.randomBoundary()
+                boundary: MultipartFormData.randomBoundary()
             ),
             errorType: DMSRoomAPIError.self
         )

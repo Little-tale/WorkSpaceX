@@ -28,17 +28,17 @@ actor RefreshTokenManager {
         }
         
         do {
-            print("유저 리프레시 \(UserDefaultsManager.refreshToken)")
-            print("유저 엑세스 \(UserDefaultsManager.accessToken)")
+            print("유저 리프레시 \(UserDefaultsManager.refreshToken ?? "nil")")
+            print("유저 엑세스 \(UserDefaultsManager.accessToken ?? "nil")")
             
             try await Task.sleep(for: .seconds(0.3))
             
             guard let refresh = UserDefaultsManager.refreshToken else {
-                print("리프레시 Miss \(UserDefaultsManager.refreshToken)")
+                print("리프레시 Miss \(UserDefaultsManager.refreshToken ?? "nil")")
                 throw APIError.httpError("엑세스 Miss")
             }
             guard let access = UserDefaultsManager.accessToken else {
-                print("엑세스 Miss \(UserDefaultsManager.accessToken)")
+                print("엑세스 Miss \(UserDefaultsManager.accessToken ?? "nil")")
                 
                 RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
                 return

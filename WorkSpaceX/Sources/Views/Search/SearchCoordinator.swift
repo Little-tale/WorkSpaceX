@@ -114,7 +114,7 @@ struct SearchCoordinator {
                 
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 
-                if let workID =  state.currentWorkSpaceID {
+                if state.currentWorkSpaceID != nil {
                     state.identeRoutes.goBackTo(\.home)
                 }
                 

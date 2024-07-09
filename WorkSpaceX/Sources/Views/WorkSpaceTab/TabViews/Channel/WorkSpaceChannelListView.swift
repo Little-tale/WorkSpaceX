@@ -48,6 +48,7 @@ struct WorkSpaceChannelListView: View {
                     isShowing: $store.ifNeedChannelAlert.sending(\.channelAlertBool),
                     title: "채널 참여",
                     message: store.chaannelAlertMessage,
+                    ifMessageCenter: true,
                     onCancel: {
                         store.send(.channelAlertCancel)
                     },

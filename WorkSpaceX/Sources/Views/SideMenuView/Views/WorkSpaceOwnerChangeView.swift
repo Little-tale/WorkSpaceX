@@ -17,24 +17,17 @@ struct WorkSpaceOwnerChangeView: View {
         WithPerceptionTracking {
             NavigationView {
                 VStack {
-                    if store.currentWorkSpaceMemeber.isEmpty {
-                        memberEmptyView()
-                    } else {
-                        contentView()
+                    Group {
+                        if store.currentWorkSpaceMemeber.isEmpty {
+                            memberEmptyView()
+                        } else {
+                            contentView()
+                        }
                     }
                 }
                 .onAppear {
                     store.send(.onAppear)
                 }
-                .popup(item: $store.selectedModel.sending(\.selectedModel), itemView: { model in
-                    sureOwncerChangePopView(model: model)
-                }, customize: {
-                    $0
-                        .appearFrom(.centerScale)
-                        .closeOnTap(false)
-                        .closeOnTapOutside(false)
-                        .dragToDismiss(false)
-                })
                 .alert(item: $store.errorMessage.sending(\.errorMessage), title: { _ in
                     Text("에러")
                 }, actions: { _ in
@@ -57,14 +50,26 @@ struct WorkSpaceOwnerChangeView: View {
 extension WorkSpaceOwnerChangeView {
     
     private func contentView() -> some View {
-        List {
-            LazyVStack(alignment: .center, spacing: 5) {
-                ForEach(store.currentWorkSpaceMemeber, id: \.userID) { model in
-                    memberView(model)
-                        .listRowSeparator(.hidden)
+        VStack {
+            List {
+                LazyVStack(alignment: .center, spacing: 5) {
+                    ForEach(store.currentWorkSpaceMemeber, id: \.userID) { model in
+                        memberView(model)
+                            .listRowSeparator(.hidden)
+                    }
                 }
             }
         }
+        .popup(item: $store.selectedModel.sending(\.selectedModel), itemView: { model in
+            sureOwncerChangePopView(model: model)
+        }) {
+            $0
+                .appearFrom(.centerScale)
+                .closeOnTap(false)
+                .closeOnTapOutside(false)
+                .dragToDismiss(false)
+        }
+        
     }
     
     private func memberEmptyView() -> some View {

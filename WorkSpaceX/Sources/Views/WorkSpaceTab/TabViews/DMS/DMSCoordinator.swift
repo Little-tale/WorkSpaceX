@@ -20,9 +20,6 @@ enum DMSListScreens {
     
     // 결제
     case storeListView(StoreListFeature)
-    
-    // fileDocumnet
-//    case document(DocumentFeature)
 }
 
 @Reducer
@@ -34,7 +31,6 @@ struct DMSCoordinator {
         
         let profileView = UUID()
         let storeView = UUID()
-//        let fileDC = UUID()
         
         var currentWorkSpaceId: String?
         var identeRoutes: IdentifiedArrayOf<Route<DMSListScreens.State>>

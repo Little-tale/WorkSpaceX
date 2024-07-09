@@ -61,6 +61,9 @@ struct OnboardingFeature {
                 
                 return .run { send in
                     try await realmeRepo.upsertUserModel(response: user)
+                    
+                    try await Task.sleep(for:.seconds(1))
+                    
                     await send(.testSuccess)
                 } catch: { error , send in
                    print(error)
@@ -71,7 +74,7 @@ struct OnboardingFeature {
                 
                 return .run { send in
                     try await realmeRepo.upsertUserModel(response: model)
-                    try await Task.sleep(for:.seconds(0.4))
+                    try await Task.sleep(for:.seconds(1))
                     await send(.testSuccess)
                 } catch: { error , send in
                    print(error)
@@ -103,9 +106,9 @@ struct OnboardingFeature {
 extension OnboardingFeature {
     
     private func ifLogin() -> Bool {
-        if UserDefaultsManager.refreshToken == nil {
-            return false
-        }
+//        if UserDefaultsManager.refreshToken == nil {
+//            return false
+//        }
         if UserDefaultsManager.accessToken == nil {
             return false
         }

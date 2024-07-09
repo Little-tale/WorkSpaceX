@@ -140,7 +140,7 @@ struct WorkSpaceListFeature {
                 return .run { @MainActor send in
                     let result = try await realmRepo.findModel(workSpaceId, type: WorkSpaceRealmModel.self)
                     
-                    print("찾아오기 성공 \(result)")
+                    print("찾아오기 성공 \(String(describing: result))")
                     
                     if let result {
                         send(.catchToWorkSpaceRealmModel(result))

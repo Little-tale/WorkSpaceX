@@ -48,7 +48,7 @@ extension DMSRouter {
         case let .dmRoomChatsReqeust(workSpaceID, roomID, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/dms/\(roomID)/chats"
             
-        case let .sendDmMessage(workSpaceID, roomID, reqeust, _):
+        case let .sendDmMessage(workSpaceID, roomID, _, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/dms/\(roomID)/chats"
         }
     }
@@ -62,7 +62,7 @@ extension DMSRouter {
             return nil
             
         case let .sendDmMessage(_, _, _, boundary):
-            let multipartFormData = MultipartFromData()
+            let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
         }
     }
@@ -122,7 +122,7 @@ extension DMSRouter {
     
     private func makeChatMultipartData(_ data: ChatMultipart, boundary: String) -> Data {
         
-        let multiPart = MultipartFromData()
+        let multiPart = MultipartFormData()
         
         if let content = data.content {
             if content != "" {

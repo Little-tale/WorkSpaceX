@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MultipartFromDataType {
+protocol MultipartFormDataType {
     
     func append(
         _ data: Data,
@@ -23,7 +23,7 @@ protocol MultipartFromDataType {
     
 }
 
-final class MultipartFromData: MultipartFromDataType {
+final class MultipartFormData: MultipartFormDataType {
     
     private var body = Data()
     

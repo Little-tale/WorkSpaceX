@@ -136,9 +136,8 @@ extension DMSListView {
                         }
                     }
                     HStack(alignment: .top) {
-                        Text(model.lastChat)
-                            .lineLimit(2)
-                            .font(WSXFont.regu1)
+                        lastChangeView(model.lastChat)
+                            
                         Spacer()
                         unReadCountView(num: model.unReadCount)
                     }
@@ -148,6 +147,29 @@ extension DMSListView {
             .frame(height: 45)
         }
     }
+}
+
+extension DMSListView {
+    
+    private func lastChangeView(_ text: String) -> some View {
+        Group {
+            if text.hasSuffix(".jpg") || text.hasSuffix(".png") || text.hasSuffix(".jpeg") {
+                Text("이미지")
+                    .font(WSXFont.regu1)
+            } else if text.hasSuffix(".zip") {
+                Text("ZIP 파일")
+                    .font(WSXFont.regu1)
+            } else if text.hasSuffix(".pdf") {
+                Text("PDF 파일")
+                    .font(WSXFont.regu1)
+            } else {
+                Text(text)
+                    .font(WSXFont.regu1)
+            }
+        }
+        .lineLimit(2)
+    }
+    
 }
 
 

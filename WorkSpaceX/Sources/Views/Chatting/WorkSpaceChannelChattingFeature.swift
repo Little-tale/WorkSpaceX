@@ -132,7 +132,7 @@ struct WorkSpaceChannelChattingFeature {
             switch action {
             case .onAppear:
                 
-                let workSpaceID = state.workSpaceID
+//                let workSpaceID = state.workSpaceID
                 let channelID = state.channelID
                 
                 let bool = state.onAppearTrigger

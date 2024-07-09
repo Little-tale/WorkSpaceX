@@ -159,14 +159,14 @@ extension WorkSpaceRouter {
             return nil
             
         case .makeWorkSpace(_,let boundary):
-            let multipartFormData = MultipartFromData()
+            let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
         case let .modifyWorkSpace(_, boundary, _):
-            let multipartFormData = MultipartFromData()
+            let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
             
         case let .createChannel(_, _, boundary) :
-            let multipartFormData = MultipartFromData()
+            let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
             
         case .workSpaceChatRequest:
@@ -175,10 +175,10 @@ extension WorkSpaceRouter {
             ]
             
         case let .sendChat(_,_,_, boundary):
-            let multipartFormData = MultipartFromData()
+            let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
         case let .editToChannel(_, _, _, boundary):
-            let multipartFoemData = MultipartFromData()
+            let multipartFoemData = MultipartFormData()
             return multipartFoemData.headers(boundary: boundary)
         }
     }
@@ -294,7 +294,7 @@ extension WorkSpaceRouter {
     
     private func makeWorkSpaceMultipartData(_ data: MakeWorkSpaceDTORequest, boundary: String) -> Data {
         
-        let multiPart = MultipartFromData()
+        let multiPart = MultipartFormData()
         
         multiPart.append(
             data.name.toData,
@@ -330,7 +330,7 @@ extension WorkSpaceRouter {
     
     private func makeWorkSpaceMultipartData(_ data: ModifyWorkSpaceDTORequest, boundary: String) -> Data {
         
-        let multiPart = MultipartFromData()
+        let multiPart = MultipartFormData()
         
         multiPart.append(
             data.name.toData,
@@ -365,7 +365,7 @@ extension WorkSpaceRouter {
     
     private func makeChatMultipartData(_ data: ChatMultipart, boundary: String) -> Data {
         
-        let multiPart = MultipartFromData()
+        let multiPart = MultipartFormData()
         
         if let content = data.content {
             if content != "" {

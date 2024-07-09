@@ -69,6 +69,7 @@ struct ChannelOwnerChangeView: View {
                         isShowing: $alertTrigger,
                         title: newValue.title,
                         message: newValue.message,
+                        ifMessageCenter: false,
                         onCancel: {
                             store.send(.alertAction(nil))
                         }, onAction: {
