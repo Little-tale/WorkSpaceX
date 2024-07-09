@@ -399,6 +399,7 @@ struct DMSCoordinatorView: View {
 |:---:|:---:|:---:|:---:|
 |<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/c116efbd-8308-4b25-9966-f11d4c8223b7" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/41691e36-39c7-4b7a-add3-5b1a6e18cd55" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/8bb10ddb-e816-45d5-ab3b-9b3fe3d122e7" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/d146d178-6067-41f4-a356-fad6e31c3596" width="200" height="440"/></picture>|
 
- 결제 | 검색
-|:---:||:---:|
+ 
+| 결제 | 검색 |
+|:---:|:---:|
 |<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/aea3c5bb-8690-4cbd-a959-aad793910f71" width="200" height="440"/></picture>||<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/610a16a7-f55e-47f9-821b-df08f6b2787e" width="200" height="440"/></picture>|
