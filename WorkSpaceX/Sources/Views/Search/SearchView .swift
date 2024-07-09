@@ -119,7 +119,8 @@ extension SearchView {
                 text: model.name,
                 filter: store.currentTextFilterText,
                 font: WSXFont.title2,
-                backColor: WSXColor.lightGray
+                otherFont: WSXFont.title2,
+                backColor: WSXColor.lightGreen.opacity(0.7)
             ))
             .frame(maxWidth: 78)
         }
@@ -145,14 +146,16 @@ extension SearchView {
                     text: model.nickname,
                     filter: store.currentTextFilterText,
                     font: WSXFont.title2,
-                    backColor: WSXColor.lightGray
+                    otherFont: WSXFont.title2,
+                    backColor: WSXColor.lightGreen.opacity(0.7)
                 ))
     
                 Text(attributeString(
                     text: model.email,
                     filter: store.currentTextFilterText,
                     font: WSXFont.regu1,
-                    backColor: WSXColor.lightGray
+                    otherFont: WSXFont.regu1,
+                    backColor: WSXColor.lightGreen.opacity(0.7)
                 ))
             }
             Spacer()
@@ -166,13 +169,17 @@ extension SearchView {
         text: String,
         filter: String,
         font: Font,
+        otherFont: Font,
         backColor: Color
     ) -> AttributedString {
         var string = AttributedString(text)
-        if let text = string.range(of: filter) {
-            string[text].font = font
-            string[text].backgroundColor = backColor
+        string.font = otherFont
+        
+        if let range = string.range(of: filter, options: [.caseInsensitive]) {
+            string[range].font = font
+            string[range].backgroundColor = backColor
         }
+
         return string
     }
 }

@@ -159,12 +159,12 @@ extension NetworkManager {
 }
 ```
 
-## MultipartFromData
+## MultipartFormData
 > 
-직접 `MultipartFromData` 로직을 구현하여, 이미지, PDF, Zip 파일을 전송하여 공유 할 수 있도록 하였습니다.
+직접 `MultipartFormData` 로직을 구현하여, 이미지, PDF, Zip 파일을 전송하여 공유 할 수 있도록 하였습니다.
 > 
 ```swift
-protocol MultipartFromDataType {
+protocol MultipartFormDataType {
   
     func append(_ data: Data, withName name: String, fileName: String?, mimeType: String, boundary: String)
     
@@ -194,7 +194,7 @@ enum FileType: String {
     }
 }
 
-final class MultipartFromData: MultipartFromDataType {
+final class MultipartFormData: MultipartFormDataType {
     
     private var body = Data()
     
@@ -327,3 +327,78 @@ final class CustomAlertWindow {
     }
 }
 ```
+## TCACoordinators
+> `TCACoordinator`를 활용하여  각 Feature 와 복잡한 네비게이션 구조를 관리하고 구조화 하였습니다.
+
+```swift
+import TCACoordinators
+
+@Reducer(state: .equatable)
+enum DMSListScreens {
+    case dmHome(DMSListFeature)
+    case dmChat(DMSChatFeature)
+    case profileInfo(ProfileInfoFeature)
+    case profileEdit(ProfileInfoEditFeature)
+    // sheet
+    case memberAdd(AddMemberFeature)
+    
+    // 결제
+    case storeListView(StoreListFeature)
+}
+
+@Reducer
+struct DMSCoordinator { ... }
+
+/// View 
+struct DMSCoordinatorView: View {
+    
+    @Perception.Bindable var store: StoreOf<DMSCoordinator>
+    
+    var body: some View {
+        WithPerceptionTracking {
+            TCARouter(store.scope(state: \.identeRoutes, action: \.router)) { screen in
+                switch screen.case {
+                case let .dmHome(store):
+                    DMSListView(store: store)
+                case let .memberAdd(store):
+                    AddMemberView(store: store)
+                case let .dmChat(store):
+                    DMSChatView(store: store)
+                case let .profileInfo(store):
+                    ProfileInfoView(store: store)
+                case let .profileEdit(store):
+                    ProfileInfoEditView(store: store)
+                case let .storeListView(store):
+                    StoreListView(store: store)
+                }
+            }
+        }
+    }
+}
+
+```
+
+
+
+# UI
+
+| 로그인 화면 | 회원 가입 (비밀번호 가려짐) | 초기(워크스페이스 없을시) | 워크 스페이스 홈화면 |
+|:---:|:---:|:---:|:---:| 
+|<picture><img src="https://github.com/kickbell/SwiftUiFirebaseChat/assets/116441522/d281920a-f7d6-4a18-b57f-295c89ac24ce" width="200" height="440"/></picture>| <picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/bf856aa5-7ff1-49ac-b063-1097abb182b4" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/7fea8b7f-4024-4dcd-8c6a-1392d44a8f7d" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/776d499b-87d3-4347-88c1-cac615f7096b" width="200" height="400"/>
+
+| 워크 스페이스 전환시 | 워크스페이스 멤버 초대 | 워크스페이스 삭제 | 권한 양도 및 나가기 |
+|:---:|:---:|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/e56e468d-ba5d-4a84-99f4-cf2517cb6c0f" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/7f130a53-1105-4f03-870a-51f96a543ca4" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/d516b392-40ef-4c1b-babc-7fe41fe94555" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/8f2fa641-da3e-49c6-9903-4e04fbe7e49d" width="200" height="440"/></picture>|
+
+| DM 리스트 | 채팅 | 사진 또는 파일 전송 | 사진 또는 파일 클릭시 |
+|:---:|:---:|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/473c8c7d-77bc-4b46-85e5-66ef1d733606" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/81d1584b-e438-4d58-b5f4-37999a71f71c" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/e075935f-645c-461a-bf4d-aea9a39d0965" width="200" height="440"/></picture><picture>|<img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/13d05646-6939-407d-9960-81af364f9c11" width="200" height="440"/></picture>
+
+
+| 채널 권한 변경 | 채널 생성 | 채널 탐색 및 참여 | 채널삭제 |
+|:---:|:---:|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/c116efbd-8308-4b25-9966-f11d4c8223b7" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/41691e36-39c7-4b7a-add3-5b1a6e18cd55" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/8bb10ddb-e816-45d5-ab3b-9b3fe3d122e7" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/d146d178-6067-41f4-a356-fad6e31c3596" width="200" height="440"/></picture>|
+
+ 결제 | 검색
+|:---:||:---:|
+|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/aea3c5bb-8690-4cbd-a959-aad793910f71" width="200" height="440"/></picture>||<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/610a16a7-f55e-47f9-821b-df08f6b2787e" width="200" height="440"/></picture>|

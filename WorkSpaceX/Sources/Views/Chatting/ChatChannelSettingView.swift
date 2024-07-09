@@ -74,7 +74,7 @@ struct ChatChannelSettingView: View {
                             isShowing: $alertTrigger,
                             title: newValue.title,
                             message: newValue.message,
-                            ifMessageCenter: false,
+                            ifMessageCenter: true,
                             onCancel: {
                                 store.send(.alertCaseOf(nil))
                             }, onAction: {
