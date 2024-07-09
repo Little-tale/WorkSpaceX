@@ -46,6 +46,19 @@ struct ChatChannelSettingView: View {
                     buttonSetView(isOwner: store.isOwner)
                 }
             }
+            .popup(isPresented: $store.channelOwnerChanged.sending(\.channelOwnerChanged)) {
+                PopUpViewSmall(text: "채널 관리자가 변경되었습니다.")
+            } customize: {
+                $0
+                    .type(.toast)
+                    .position(.bottom)
+                    .autohideIn(2)
+            }
+            .navigationTitle("채널 설정")
+            .toolbar(.hidden, for: .tabBar)
+            .onAppear {
+                store.send(.onAppear)
+            }
             .bind($store.alertCaseOf.sending(\.alertCaseOf), to: $alertCaseOf)
             .onChange(of: alertCaseOf) { _ in
                 withAnimation {
@@ -72,19 +85,6 @@ struct ChatChannelSettingView: View {
                             store.send(.alertCaseOf(nil))
                         }, actionTitle: newValue.alertActionTitle)
                 }
-            }
-            .popup(isPresented: $store.channelOwnerChanged.sending(\.channelOwnerChanged)) {
-                PopUpViewSmall(text: "채널 관리자가 변경되었습니다.")
-            } customize: {
-                $0
-                    .type(.toast)
-                    .position(.bottom)
-                    .autohideIn(2)
-            }
-            .navigationTitle("채널 설정")
-            .toolbar(.hidden, for: .tabBar)
-            .onAppear {
-                store.send(.onAppear)
             }
         }
     }
