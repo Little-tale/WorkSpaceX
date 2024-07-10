@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import ComposableArchitecture
 
 struct ChatModeView: View {
     
@@ -18,8 +17,6 @@ struct ChatModeView: View {
         case four
         case five
     }
-    
-    //    @Perception.Bindable var store: StoreOf<ChatModeFeature>
     
     var setModel: ChatModeEntity
     
@@ -34,10 +31,6 @@ struct ChatModeView: View {
     var fileClicked: (String) -> Void
     
     var body: some View {
-//        WithPerceptionTracking {
-//            
-//
-//        }
         if setModel.isFirstDate {
             VStack(alignment: .center) {
                 HStack {
@@ -70,9 +63,6 @@ struct ChatModeView: View {
                 
                 chatMode = chatModeResult(model: setModel)
             }
-        //            .onAppear {
-        //                store.send(.onAppear)
-        //            }
     }
     
     private func sectionInView() -> some View {
@@ -81,9 +71,6 @@ struct ChatModeView: View {
             case .me:
                 HStack(alignment: .bottom) {
                     Spacer()
-                    Text(DateManager.shared.dateToStringToChat(setModel.date, isMe: true))
-                        .font(WSXFont.caption)
-                        .padding(.leading, 15)
                     modelCaseView()
                         .padding(.trailing, 10)
                     
@@ -97,10 +84,6 @@ struct ChatModeView: View {
                         .font(WSXFont.regu1)
                     HStack(alignment:.bottom) {
                         modelCaseView()
-                        
-                        Text(DateManager.shared.dateToStringToChat(setModel.date, isMe: false))
-                            .font(WSXFont.caption)
-                            .padding(.trailing, 15)
                     }
                 }
                 Spacer()
@@ -108,26 +91,60 @@ struct ChatModeView: View {
         }
     }
     
+    private func dateView(ifFront: Bool) -> some View {
+        Text(DateManager.shared.dateToStringToChat(setModel.date, isMe: ifFront))
+            .font(WSXFont.caption)
+            .padding(ifFront ? .leading : .trailing, 15)
+    }
+    
     @ViewBuilder
     private func modelCaseView() -> some View {
-//        WithPerceptionTracking {
-//
-//        }
+
         switch chatMode {
         case .text:
-            textModeView()
-                .modifier(ChatModifier(isMe: setModel.isMe == .me))
+            if setModel.isMe == .me {
+                dateView(ifFront: setModel.isMe == .me)
+                textModeView()
+                    .modifier(ChatModifier(isMe: setModel.isMe == .me))
+            } else {
+                textModeView()
+                    .modifier(ChatModifier(isMe: setModel.isMe == .me))
+                dateView(ifFront: setModel.isMe == .me)
+            }
+            
         case .File:
-            fileCountCaseView(with: fileCountCase)
-                .modifier(ChatModifier(isMe: setModel.isMe == .me))
+            if setModel.isMe == .me {
+                dateView(ifFront: setModel.isMe == .me)
+                fileCountCaseView(with: fileCountCase)
+                    .modifier(ChatModifier(isMe: setModel.isMe == .me))
+               
+            } else {
+                fileCountCaseView(with: fileCountCase)
+                    .modifier(ChatModifier(isMe: setModel.isMe == .me))
+                dateView(ifFront: setModel.isMe == .me)
+            }
+            
             
         case .textAndFile:
             VStack(alignment: setModel.isMe == .me ? .trailing : .leading) {
                 textModeView()
                     .modifier(ChatModifier(isMe: setModel.isMe == .me))
-                fileCountCaseView(with: fileCountCase)
-                    .foregroundStyle(WSXColor.black)
-                    .modifier(ChatModifier(isMe: setModel.isMe == .me))
+                if setModel.isMe == .me {
+                   
+                    HStack(alignment:.bottom ) {
+                        dateView(ifFront: setModel.isMe == .me)
+                        fileCountCaseView(with: fileCountCase)
+                            .foregroundStyle(WSXColor.black)
+                            .modifier(ChatModifier(isMe: setModel.isMe == .me))
+                    }
+                } else {
+                    HStack(alignment:.bottom ) {
+                        fileCountCaseView(with: fileCountCase)
+                            .foregroundStyle(WSXColor.black)
+                            .modifier(ChatModifier(isMe: setModel.isMe == .me))
+                        dateView(ifFront: setModel.isMe == .me)
+                    }
+                }
             }
             
         case .loading:
@@ -157,25 +174,25 @@ struct ChatModeView: View {
 extension ChatModeView {
     
     private func textModeView() -> some View {
-//        WithPerceptionTracking {
-//
-//        }
-        Text(setModel.content)
-            .font(WSXFont.title2)
+        HStack {
+            Text(setModel.content)
+                .font(WSXFont.title2)
+        }
     }
 }
 extension ChatModeView {
+    
     private func fileModeView() -> some View {
-//        WithPerceptionTracking {
-//            
-//        }
-        VStack {
-            ForEach(setModel.files.enumerated().map { $0 }, id: \.element) { index, file in
-                if let fileType = fileModeModels[file] {
-                    imageForFileType(fileType, model: file)
+        HStack {
+            VStack {
+                ForEach(setModel.files.enumerated().map { $0 }, id: \.element) { index, file in
+                    if let fileType = fileModeModels[file] {
+                        imageForFileType(fileType, model: file)
+                    }
                 }
             }
         }
+        
     }
     
     @ViewBuilder
@@ -227,7 +244,6 @@ extension ChatModeView {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .asButton {
                         fileClicked(file)
-                        //                            store.send(.selectedFileURLString(file))
                     }
             }
         case .two:
@@ -395,34 +411,3 @@ extension ChatModeView {
     }
     
 }
-
-
-//#Preview {
-//    ChatModeView(store: Store(
-//        initialState: ChatModeFeature.State(model: .init(
-//            chatID: "asd",
-//            isMe: .me,
-//            content: "댓글도 있었을때",
-//            files: [
-//                "/static/channelChats/면접질문 정리_1701706651157.zip",
-//                "/static/channelChats/면접질문 정리_1701706651157.zip",
-//                "/static/channelChats/면접질문 정리_1701706651157.zip",
-//                "/static/channelChats/면접질문 정리_1701706651157.pdf",
-//                "/static/channelChats/면접질문 정리_1701706651157.pdf"
-//            ],
-//            date: Date())
-//        ),
-//        reducer: {
-//            ChatModeFeature()
-//        })
-//    )
-//}
-
-/*
- .other(.init(
- userID: "TestID",
- email: "이메일",
- nickName: "라일리",
- profileImage: nil)
- )
- */
