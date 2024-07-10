@@ -280,6 +280,7 @@ struct WorkSpaceTabCoordinator {
                 }
                 
             case let .sidebar(.delegate(.changedWorkSpaceID(id))):
+                PollingManager.shared.stopPolling()
                 if let id {
                     return .run { send in
                         await send(.homeTabbar(.sendToRootWorkSpaceID(id)))

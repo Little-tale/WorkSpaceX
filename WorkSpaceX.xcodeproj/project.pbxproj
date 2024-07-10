@@ -213,6 +213,8 @@
 		7BC09C912C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */; };
 		7BC09C932C3CDF1500F0ABDC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BC09C922C3CDF1500F0ABDC /* README.md */; };
 		7BC09C972C3E26F400F0ABDC /* PolingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C962C3E26F400F0ABDC /* PolingManager.swift */; };
+		7BC09C9A2C3E416400F0ABDC /* ChatSocketManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C992C3E416400F0ABDC /* ChatSocketManagerError.swift */; };
+		7BC09C9D2C3E420800F0ABDC /* SocketCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C9C2C3E420800F0ABDC /* SocketCase.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
 		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
@@ -483,6 +485,8 @@
 		7BC09C902C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceOwnerChangeFeature.swift; sourceTree = "<group>"; };
 		7BC09C922C3CDF1500F0ABDC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7BC09C962C3E26F400F0ABDC /* PolingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolingManager.swift; sourceTree = "<group>"; };
+		7BC09C992C3E416400F0ABDC /* ChatSocketManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSocketManagerError.swift; sourceTree = "<group>"; };
+		7BC09C9C2C3E420800F0ABDC /* SocketCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCase.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
@@ -639,6 +643,7 @@
 		7B2EEE192C118D060024853C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				7BC09C9B2C3E41ED00F0ABDC /* Socket */,
 				7B2EEE1C2C11903E0024853C /* Error */,
 				7B2EEDFF2C10C2900024853C /* NetworkManager.swift */,
 				7B2EEE0D2C117BC70024853C /* Router */,
@@ -652,6 +657,7 @@
 		7B2EEE1C2C11903E0024853C /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				7BC09C982C3E415300F0ABDC /* Socket */,
 				7BC09C612C3847BB00F0ABDC /* Store */,
 				7BEC45E42C16EFE000576ECA /* WorkSpaceError */,
 				7BEC45A82C12E80100576ECA /* AuthError */,
@@ -836,7 +842,6 @@
 				7B8FD6422C1AC0C100948E7C /* DateManager.swift */,
 				7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */,
 				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
-				7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */,
 				7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */,
 				7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */,
 			);
@@ -1159,6 +1164,23 @@
 				7BC09C962C3E26F400F0ABDC /* PolingManager.swift */,
 			);
 			path = PolingManager;
+			sourceTree = "<group>";
+		};
+		7BC09C982C3E415300F0ABDC /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				7BC09C992C3E416400F0ABDC /* ChatSocketManagerError.swift */,
+			);
+			path = Socket;
+			sourceTree = "<group>";
+		};
+		7BC09C9B2C3E41ED00F0ABDC /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */,
+				7BC09C9C2C3E420800F0ABDC /* SocketCase.swift */,
+			);
+			path = Socket;
 			sourceTree = "<group>";
 		};
 		7BEC45A52C12E7C000576ECA /* AuthDomain */ = {
@@ -1648,6 +1670,7 @@
 				7BC09C8D2C3C0A2700F0ABDC /* WorkSpaceExitError.swift in Sources */,
 				7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */,
 				7BC09C822C3BACF800F0ABDC /* CustomDocumentInteractionController.swift in Sources */,
+				7BC09C9D2C3E420800F0ABDC /* SocketCase.swift in Sources */,
 				7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */,
 				7BC09C8B2C3BC54500F0ABDC /* WSXFileManager.swift in Sources */,
 				7BC09C572C38431800F0ABDC /* StoreListView.swift in Sources */,
@@ -1734,6 +1757,7 @@
 				7B7EB8522C33C6B700D22362 /* DMSChatEntity.swift in Sources */,
 				7B592ED92C0F2C7600E47797 /* TextValid.swift in Sources */,
 				7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */,
+				7BC09C9A2C3E416400F0ABDC /* ChatSocketManagerError.swift in Sources */,
 				7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */,
 				7B8FD64F2C1BEB9900948E7C /* WorkSpaceSideView.swift in Sources */,
 			);

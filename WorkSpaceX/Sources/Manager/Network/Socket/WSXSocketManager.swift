@@ -6,56 +6,58 @@
 //
 
 import Foundation
-import ComposableArchitecture
 import SocketIO
 
-enum ChatSocketManagerError: Error {
-    case nilSocat
-    case weakError
-    case JSONDecodeError
+protocol WSXSocketManagerType {
     
-    var message: String {
-        switch self {
-        case .nilSocat:
-            return "인터넷 환경을 확인해 주세요"
-        case .weakError:
-            return "치명적이 에러가 발생했습니다."
-        case .JSONDecodeError:
-            return "모델을 불러오는중 문제가 발생 했어요!"
+    func startSocket()
+    
+    func stopAndRemoveSocket()
+    
+    func stopSocket()
+    
+    func removeSocket()
+    
+    func connect<T: DTO>(to socketCase: SocketCase, type: T.Type) -> AsyncStream<Result<T, ChatSocketManagerError>>
+    
+}
+
+final class WSXSocketManager: WSXSocketManagerType {
+    
+    static let shared = WSXSocketManager()
+    private var manager: SocketManager?
+    private var socket: SocketIOClient?
+    private init() {}
+    
+    func startSocket() {
+        print("소켓 시도 시작")
+        socket?.connect()
+    }
+    
+    func stopAndRemoveSocket() {
+        stopSocket()
+        removeSocket()
+    }
+    
+    func stopSocket() {
+        print("소켓 멈춥니다.")
+        socket?.disconnect()
+    }
+    
+    func removeSocket() {
+        print("소켓 완전 제거")
+        if let socket {
+            manager?.removeSocket(socket)
         }
+        socket = nil
+    }
+    
+    deinit {
+        print("소켓 디이닛 (나올수 없는 상황)")
     }
 }
 
-final class WSXSocketManager {
-    
-    enum SocketCase {
-        case channelChat(channelID: String)
-        case dmsChat(roomID: String)
-        var address: String {
-            switch self {
-            case .channelChat(let channelID):
-                return "/ws-channel-\(channelID)"
-            case let .dmsChat(roomID):
-                return "/ws-dm-\(roomID)"
-            }
-        }
-        
-        var eventName: String {
-            switch self {
-            case .channelChat:
-                return "channel"
-            case .dmsChat:
-                return "dm"
-            }
-        }
-    }
-    
-    static let shared = WSXSocketManager()
-    
-    private var manager: SocketManager?
-    private var socket: SocketIOClient?
-    
-    private init() {}
+extension WSXSocketManager {
     
     func connect<T: DTO>(to socketCase: SocketCase, type: T.Type) -> AsyncStream<Result<T, ChatSocketManagerError>> {
         let base = APIKey.baseURL
@@ -143,43 +145,4 @@ final class WSXSocketManager {
             }
         }
     }
-    
-    func startSocket() {
-        print("소켓 시도 시작")
-        socket?.connect()
-    }
-    
-    func stopAndRemoveSocket() {
-        stopSocket()
-        removeSocket()
-    }
-    
-    func stopSocket() {
-        print("소켓 멈춥니다.")
-        socket?.disconnect()
-    }
-    
-    func removeSocket() {
-        print("소켓 완전 제거")
-        if let socket {
-            manager?.removeSocket(socket)
-        }
-        socket = nil
-    }
-    
-    deinit {
-        print("소켓 디이닛..?")
-    }
 }
-
-/// 고민해야 할 부분
-//extension WSXSocketManager: DependencyKey {
-//    static var liveValue: WSXSocketManager = WSXSocketManager.shared
-//}
-//
-//extension DependencyValues {
-//    var socketManager: WSXSocketManager {
-//        get { self[WSXSocketManager.self] }
-//        set { self[WSXSocketManager.self] = newValue }
-//    }
-//}

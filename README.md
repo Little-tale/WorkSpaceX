@@ -4,6 +4,11 @@
 # WorkSpaceX
 
 - WorkSpaceX는 팀플, 회사, 업무용 SNS 앱 입니다.
+- 이미지와 파일, 글을 전송하고 공유할 수 있습니다.
+- 실시간 채팅 기능을 지원합니다. ( 단체, 1 : 1 )
+- 코인을 결제하여, 워크스페이스를 생성할 수 있습니다.
+- 검색 기능을 지원하여, 다른 사용자나 채널 등을 검색 할 수 있습니다.
+- 관리자일 경우엔 워크 스페이스 혹은 채널 등을 수정하거나 멤버를 초대 할 수 있습니다.
 
 
 # 📷 소개 사진
@@ -11,18 +16,9 @@
     <img src ="https://github.com/Little-tale/WorkSpaceX/assets/116441522/2e8a205a-541f-4b8a-9a26-60a857c14243">
 </picture>
 
-# 📷 프로젝트 소개
- 
-- WorkSpaceX는 이미지와 파일, 글을 전송하고 공유할 수 있습니다.
-- 실시간 채팅 기능을 지원합니다.
-- 코인을 결제하여, 워크스페이스를 생성할 수 있습니다.
-- 검색 기능을 지원하여, 다른 사용자나 채널 등을 검색 할 수 있습니다.
-- 관리자일 경우엔 워크 스페이스 혹은 채널 등을 수정하거나 멤버를 초대 할 수 있습니다.
-
 ## 📸 개발 기간
 
 > 6/4 ~ 7/9 (대략 한달)
-> 
 
 ## 📸 앱 개발 환경
 - 최소 지원 버전: iOS 16.0+
@@ -31,7 +27,7 @@
 ## 📷 사용한 기술
 
 - SwiftUI 
--  TCA(ComposableArchitecture) / TCACoordinators
+-  TCA(ComposableArchitecture 1.10.4) / TCACoordinators
 -   URLSession / iamport / SocketIO / Codable
 -   Realm / UserDefaults
 -   PopupView / Kingfisher 
@@ -40,7 +36,7 @@
 
 ### TCA + SwiftUI
 
-> 단방향 아키텍처인 TCA(ComposableArchitecture)를 적용하여 상태관리의 일관성을 유지하고, 
+> 단방향 아키텍처인 TCA(ComposableArchitecture)를 적용하여 상태관리의 일관성을 유지하고, <br>
 재사용 가능한 컴포턴트들로 분리하여 유지보수성을 높였습니다.
 > 
 
@@ -111,7 +107,7 @@ struct ProfileInfoFeature {
 
 ## URLSession + RouterPattern + Custom intercept + Custom Retry
 
-> URLSession을 통해 도메인별 Router를 분리하여 구조화 하였습니다.
+> URLSession을 통해 도메인별 Router를 분리하여 구조화 하였습니다.<br>
 > 직접 Intercept와 Retry를 구현하여 accessToken이 만료 되었을 시 RefreshToken을 통해
 > 재생성할 수 있도록 하였습니다.
 
@@ -159,11 +155,9 @@ extension NetworkManager {
 }
 ```
 
-
-
 ## AsyncStream + @Sendable
-AsyncStream와 @Sendable을 사용하여 비동기 함수가 스레드에 안전하게 호출될 수 있도록 하였습니다.
-호출자가 사라지면 함수가 알아서 종료되도록 하였습니다.
+> AsyncStream와 @Sendable을 사용하여 비동기 함수가 스레드에 안전하게 호출될 수 있도록 하였습니다.<br>
+> 호출자가 사라지면 함수가 알아서 종료되도록 하였습니다.
 
 ```swift
 @MainActor
@@ -207,50 +201,6 @@ AsyncStream와 @Sendable을 사용하여 비동기 함수가 스레드에 안전
         }
     }
 
-```
-
-## CustomAlertView + WindowLevel
-> 사이드 메뉴 에서도 커스텀 된 Alert 을 표현하기위해, `UIWindow` 레벨을 통해 알림 창을 구현하였습니다. 
-```swift
-final class CustomAlertWindow {
-    static let shared = CustomAlertWindow()
-    private var window: UIWindow?
-    
-    func show<Content: View>(@ViewBuilder content: @escaping () -> Content) {
-        if let windowSceen = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            let window = UIWindow(windowScene: windowSceen)
-            
-            let hostingController = UIHostingController(rootView: content())
-            
-            hostingController.view.backgroundColor = .clear
-            
-            window.rootViewController = hostingController
-            window.windowLevel = .alert + 1
-            window.makeKeyAndVisible()
-            self.window = window
-            
-            hostingController.view.alpha = 0
-            UIView.animate(withDuration: 0.3) {
-                hostingController.view.alpha = 1
-            }
-        }
-    }
-    
-    func hide() {
-        self.window?.isHidden = true
-    
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            guard let self else { return }
-            window?.alpha = 0
-        } completion: { [weak self] _ in
-            guard let self else {
-                self?.window = nil
-                return
-            }
-            window = nil
-        }
-    }
-}
 ```
 ## TCACoordinators
 > `TCACoordinator`를 활용하여  각 Feature 와 복잡한 네비게이션 구조를 관리하고 구조화 하였습니다.
@@ -303,8 +253,6 @@ struct DMSCoordinatorView: View {
 
 ```
 
-
-
 # UI
 
 | 로그인 화면 | 회원 가입 (비밀번호 가려짐) | 초기(워크스페이스 없을시) | 워크 스페이스 홈화면 |
@@ -332,9 +280,10 @@ struct DMSCoordinatorView: View {
 
 # 새롭게 학습 한 부분 과 고려했던 사항
 
-## 1️⃣ MultipartFormData
-> 이전 까진 라이브러리를 통해 `MultipartFormData` 를 구현 하였으나, `MultipartFormData` 가 어떠한 과정을 거쳐 동작하는지 
-학습하기 위해 직접 `MultipartFormData` 로직을 구현하여, 이미지, PDF, Zip 파일을 전송하여 공유 할 수 있도록 하였습니다.
+## 1️⃣ MultipartFormData
+> 이전 까진 라이브러리를 통해 `MultipartFormData` 를 구현 하였었습니다. <br>
+> `MultipartFormData` 가 어떠한 과정을 거쳐 동작하는지 학습하기 위해 직접 `MultipartFormData` 로직을 구현하여 <br>
+>  이미지, PDF, zip 파일을 전송하여 공유 할 수 있도록 하였습니다.
  
 ```swift
 protocol MultipartFormDataType {
@@ -396,15 +345,59 @@ final class MultipartFormData: MultipartFormDataType {
 }
 ```
 
-## subscript + Collection
-> 채팅에서 이미지나, 파일등의 갯수에 따라 뷰를 정해야 할때, 인덱스에 접근해야 하는 경우가 있었습니다.
-> 인덱스 접근시 문제가 발생할수 있기에, 
-> `Collection`을 확장하여 `subscript`를 정의해 인덱스 접근의 안전성을 보장하였습니다.
+## 2️⃣ subscript + Collection
+> 채팅에서 이미지나, 파일등의 갯수에 따라 뷰를 정해야 할때, 인덱스에 접근해야 하는 경우가 있었습니다. <br>
+> 인덱스 접근시 문제가 발생할수 있기에, `Collection`을 확장하여 `subscript`를 정의해 <br>
+> 인덱스 접근의 안전성을 보장하였습니다.
 ```swift
 extension Collection {
     /// 인덱스 터짐 방지
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+```
+
+## 3️⃣ CustomAlertView + WindowLevel
+> 사이드 메뉴 에서도 커스텀 된 Alert 을 표현하기위해, `UIWindow` 레벨을 통해 알림 창을 구현하였습니다. 
+```swift
+final class CustomAlertWindow {
+    static let shared = CustomAlertWindow()
+    private var window: UIWindow?
+    
+    func show<Content: View>(@ViewBuilder content: @escaping () -> Content) {
+        if let windowSceen = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            let window = UIWindow(windowScene: windowSceen)
+            
+            let hostingController = UIHostingController(rootView: content())
+            
+            hostingController.view.backgroundColor = .clear
+            
+            window.rootViewController = hostingController
+            window.windowLevel = .alert + 1
+            window.makeKeyAndVisible()
+            self.window = window
+            
+            hostingController.view.alpha = 0
+            UIView.animate(withDuration: 0.3) {
+                hostingController.view.alpha = 1
+            }
+        }
+    }
+    
+    func hide() {
+        self.window?.isHidden = true
+    
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self else { return }
+            window?.alpha = 0
+        } completion: { [weak self] _ in
+            guard let self else {
+                self?.window = nil
+                return
+            }
+            window = nil
+        }
     }
 }
 ```
