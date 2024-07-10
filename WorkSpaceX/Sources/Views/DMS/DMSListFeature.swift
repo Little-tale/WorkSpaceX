@@ -83,7 +83,8 @@ struct DMSListFeature {
     @Dependency(\.realmRepository) var realmRepo
     @Dependency(\.dmsRepository) var dmsRepo
     /// Push 기능이  미뤄지어, Polling 방법으로 해결해 보죠.
-    @Dependency(\.continuousClock) var clock
+//    @Dependency(\.continuousClock) var clock
+    @Dependency(\.pollingManager) var polling
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -110,13 +111,16 @@ struct DMSListFeature {
                     await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
                     
                     try await Task.sleep(for: .seconds(2))
-                    if stop {
-                        for await _ in clock.timer(interval: .seconds(2)) {
-                            await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
-                        }
+
+                    for await _ in polling.startPolling(every: 2) {
+                        await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
                     }
                 }
-                .cancellable(id: CancelID.timer)
+                //                    poling.startPolling(
+                //                        every: 2) {
+                //                            await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
+                //                        }
+//                .cancellable(id: CancelID.timer)
                 
             case let .parentAction(.getWorkSpaceId(id)):
                 state.currentWorkSpaceID = id
@@ -297,9 +301,8 @@ struct DMSListFeature {
                     await send(.delegate(.moveToProfileView))
                 }
             case .onDisappear:
+                polling.stopPolling()
                 return .cancel(id: CancelID.timer)
-            case .stop:
-                state.stopTrigger = false
             default:
                 break
             }

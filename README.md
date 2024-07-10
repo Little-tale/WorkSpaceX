@@ -159,69 +159,7 @@ extension NetworkManager {
 }
 ```
 
-## MultipartFormData
-> 
-직접 `MultipartFormData` 로직을 구현하여, 이미지, PDF, Zip 파일을 전송하여 공유 할 수 있도록 하였습니다.
-> 
-```swift
-protocol MultipartFormDataType {
-  
-    func append(_ data: Data, withName name: String, fileName: String?, mimeType: String, boundary: String)
-    
-    func finalize(boundary: String) -> Data
-    
-    func headers(boundary: String) -> HTTPHeaders
-}
 
-// 파일 타입
-enum FileType: String {
-    case image
-    case pdf = "pdf"
-    case zip = "zip"
-    case unknown
-    
-    var mimeType: String {
-        switch self {
-        case .image:
-            return "image/jpeg"
-        case .pdf:
-            return "application/pdf"
-        case .zip:
-            return "application/zip"
-        case .unknown:
-            return "application/octet-stream"
-        }
-    }
-}
-
-final class MultipartFormData: MultipartFormDataType {
-    
-    private var body = Data()
-    
-    static func randomBoundary() -> String {
-        let first = UInt32.random(in: UInt32.min...UInt32.max)
-        let second = UInt32.random(in: UInt32.min...UInt32.max)
-        
-        return String(format: "workSpaceX.boundary.%08x%08x", first, second)
-    }
-    
-    func append(_ data: Data, withName name: String, fileName: String?, mimeType: String, boundary: String) {
-        // 멀티파트의 시작을 알리는 boundary 추가
-        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        ...  
-    }
-    
-    /// 모든 파트를 추가한 경우 최종적으로 명시
-    func finalize(boundary: String) -> Data {
-        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-        return body
-    }
-    
-    func headers(boundary: String) -> HTTPHeaders {
-        return [WSXHeader.Key.contentType: "\(WSXHeader.Value.multipartFormData); boundary=\(boundary)"]
-    }
-}
-```
 
 ## AsyncStream + @Sendable
 AsyncStream와 @Sendable을 사용하여 비동기 함수가 스레드에 안전하게 호출될 수 있도록 하였습니다.
@@ -270,19 +208,6 @@ AsyncStream와 @Sendable을 사용하여 비동기 함수가 스레드에 안전
     }
 
 ```
-
-## subscript + Collection
-> Collection의 확장을 통해 인덱스 접근의 안전성을 보장하였습니다.
-```swift
-extension Collection {
-    /// 인덱스 터짐 방지
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-```
-
-
 
 ## CustomAlertView + WindowLevel
 > 사이드 메뉴 에서도 커스텀 된 Alert 을 표현하기위해, `UIWindow` 레벨을 통해 알림 창을 구현하였습니다. 
@@ -403,3 +328,83 @@ struct DMSCoordinatorView: View {
 | 결제 | 검색 |
 |:---:|:---:|
 |<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/aea3c5bb-8690-4cbd-a959-aad793910f71" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/610a16a7-f55e-47f9-821b-df08f6b2787e" width="200" height="440"/></picture>|
+
+
+# 새롭게 학습 한 부분 과 고려했던 사항
+
+## 1️⃣ MultipartFormData
+> 이전 까진 라이브러리를 통해 `MultipartFormData` 를 구현 하였으나, `MultipartFormData` 가 어떠한 과정을 거쳐 동작하는지 
+학습하기 위해 직접 `MultipartFormData` 로직을 구현하여, 이미지, PDF, Zip 파일을 전송하여 공유 할 수 있도록 하였습니다.
+ 
+```swift
+protocol MultipartFormDataType {
+  
+    func append(_ data: Data, withName name: String, fileName: String?, mimeType: String, boundary: String)
+    
+    func finalize(boundary: String) -> Data
+    
+    func headers(boundary: String) -> HTTPHeaders
+}
+
+// 파일 타입
+enum FileType: String {
+    case image
+    case pdf = "pdf"
+    case zip = "zip"
+    case unknown
+    
+    var mimeType: String {
+        switch self {
+        case .image:
+            return "image/jpeg"
+        case .pdf:
+            return "application/pdf"
+        case .zip:
+            return "application/zip"
+        case .unknown:
+            return "application/octet-stream"
+        }
+    }
+}
+
+final class MultipartFormData: MultipartFormDataType {
+    
+    private var body = Data()
+    
+    static func randomBoundary() -> String {
+        let first = UInt32.random(in: UInt32.min...UInt32.max)
+        let second = UInt32.random(in: UInt32.min...UInt32.max)
+        
+        return String(format: "workSpaceX.boundary.%08x%08x", first, second)
+    }
+    
+    func append(_ data: Data, withName name: String, fileName: String?, mimeType: String, boundary: String) {
+        // 멀티파트의 시작을 알리는 boundary 추가
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        ...  
+    }
+    
+    /// 모든 파트를 추가한 경우 최종적으로 명시
+    func finalize(boundary: String) -> Data {
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        return body
+    }
+    
+    func headers(boundary: String) -> HTTPHeaders {
+        return [WSXHeader.Key.contentType: "\(WSXHeader.Value.multipartFormData); boundary=\(boundary)"]
+    }
+}
+```
+
+## subscript + Collection
+> 채팅에서 이미지나, 파일등의 갯수에 따라 뷰를 정해야 할때, 인덱스에 접근해야 하는 경우가 있었습니다.
+> 인덱스 접근시 문제가 발생할수 있기에, 
+> `Collection`을 확장하여 `subscript`를 정의해 인덱스 접근의 안전성을 보장하였습니다.
+```swift
+extension Collection {
+    /// 인덱스 터짐 방지
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+```
