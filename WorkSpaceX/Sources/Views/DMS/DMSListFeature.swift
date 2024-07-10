@@ -116,11 +116,6 @@ struct DMSListFeature {
                         await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
                     }
                 }
-                //                    poling.startPolling(
-                //                        every: 2) {
-                //                            await send(.dmsListReqeust(WorkSpaceID: workSpaceID))
-                //                        }
-//                .cancellable(id: CancelID.timer)
                 
             case let .parentAction(.getWorkSpaceId(id)):
                 state.currentWorkSpaceID = id

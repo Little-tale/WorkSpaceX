@@ -22,7 +22,13 @@ final class PollingManager {
     
     func startPolling(every seconds: any BinaryInteger) -> AsyncStream<Void> {
         self.interval = seconds
-        let stream = AsyncStream<Void> { continuation in
+        self.continuation?.finish()
+        
+        let stream = AsyncStream<Void> { [weak self] continuation in
+            guard let self else {
+                continuation.finish()
+                return
+            }
             self.continuation = continuation
             
             Task {
