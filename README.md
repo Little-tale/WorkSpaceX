@@ -26,7 +26,7 @@
 
 ## 📷 사용한 기술
 
-- SwiftUI 
+-  SwiftUI 
 -  TCA(ComposableArchitecture 1.10.4) / TCACoordinators
 -   URLSession / iamport / SocketIO / Codable
 -   Realm / UserDefaults
@@ -255,7 +255,7 @@ struct DMSCoordinatorView: View {
 
 # UI
 
-| 로그인 화면 | 회원 가입 (비밀번호 가려짐) | 초기(워크스페이스 없을시) | 워크 스페이스 홈화면 |
+| 로그인 화면 | 회원 가입 (비밀번호 가려짐) | 초기(워크스페이스 없을시) | 워크 스페이스 홈화면 |
 |:---:|:---:|:---:|:---:| 
 |<picture><img src="https://github.com/kickbell/SwiftUiFirebaseChat/assets/116441522/d281920a-f7d6-4a18-b57f-295c89ac24ce" width="200" height="440"/></picture>| <picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/bf856aa5-7ff1-49ac-b063-1097abb182b4" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/7fea8b7f-4024-4dcd-8c6a-1392d44a8f7d" width="200" height="440"/></picture>|<picture><img src="https://github.com/Little-tale/WorkSpaceX/assets/116441522/776d499b-87d3-4347-88c1-cac615f7096b" width="200" height="400"/>
 
