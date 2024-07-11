@@ -17,7 +17,8 @@ extension String {
     }
     
     var removeForURLChannelChats: String {
-        let remove = self.replacingOccurrences(of: "/static/channelChats/", with: "")
+        var remove = self.replacingOccurrences(of: "/static/channelChats/", with: "")
+        remove = self.replacingOccurrences(of: "/static/dmChats/", with: "")
         return remove
     }
     
