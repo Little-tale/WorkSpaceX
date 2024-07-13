@@ -289,18 +289,18 @@ struct DMSChatFeature {
                     }
                 }
 
-                
+                /// 렘 옵저버를 바로볼 필요가 있는가?
             case .realmobserberStart:
                 if let roomID = state.roomID {
-                    let userID = state.userID
-                    return .run { @MainActor send in
-                        for await models in  reader.observeNewMessage(
-                            dmRoomID: roomID
-                        ) {
-                            let result = try await realmRepo.toChat(models, userID: userID)
-                            send(.appendChat(result))
-                        }
-                    }
+//                    let userID = state.userID
+//                    return .run { @MainActor send in
+//                        for await models in  reader.observeNewMessage(
+//                            dmRoomID: roomID
+//                        ) {
+//                            let result = try await realmRepo.toChat(models, userID: userID)
+//                            send(.appendChat(result))
+//                        }
+//                    }
                 }
             case .sendTapped:
                 if state.ifDeleteRoom {
@@ -438,6 +438,24 @@ struct DMSChatFeature {
                     for await result in dmsRepo.dmSocketReqeust(roomID) {
                         switch result {
                         case let .success(model):
+                            /*
+                             let fakeModel = WorkSpaceMemberEntity(
+                                 userID: user.userID,
+                                 email: user.email,
+                                 nickName: user.nickName,
+                                 profileImage: user.profileImage
+                             )
+                             
+                             return ChatModeEntity(
+                                 chatID: model.dmID,
+                                 isMe: ifMe ? .me : .other(fakeModel),
+                                 content: model.content ?? "",
+                                 files: Array(model.files),
+                                 date: model.createdAt ?? Date(),
+                                 isFirstDate: model.isDateSection
+                             )
+                             */
+                            
                             await send(.socketTORealm(model, roomID))
                         case let .failure(error):
                             print(error)

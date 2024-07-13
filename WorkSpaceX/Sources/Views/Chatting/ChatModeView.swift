@@ -80,7 +80,7 @@ struct ChatModeView: View {
                     .padding(.leading, 10)
                 
                 VStack (alignment: .leading) {
-                    Text(member.nickName)
+                    Text(member.nickname)
                         .font(WSXFont.regu1)
                     HStack(alignment:.bottom) {
                         modelCaseView()
@@ -152,7 +152,7 @@ struct ChatModeView: View {
         }
     }
     
-    private func otherProfileView(model: WorkSpaceMemberEntity) -> some View {
+    private func otherProfileView(model: WorkSpaceMembersEntity) -> some View {
         HStack {
             if let image = model.profileImage {
                 DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)

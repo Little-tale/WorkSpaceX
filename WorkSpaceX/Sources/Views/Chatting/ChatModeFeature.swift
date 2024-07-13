@@ -41,7 +41,7 @@ struct ChatModeFeature {
         case selectedFileURLString(String)
         
         enum Delegate {
-            case selectedProfile(WorkSpaceMemberEntity)
+            case selectedProfile(WorkSpaceMembersEntity)
             case selectedFileURLString(String)
         }
     }

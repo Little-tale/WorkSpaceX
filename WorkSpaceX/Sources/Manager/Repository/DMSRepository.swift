@@ -135,6 +135,25 @@ extension DMSRepository {
             lasstChatDate: model.lastChatDate ?? Date()
         )
     }
+    
+    
+    func toChat(_ model: DMSChatEntity, userID: String, isFirstDate: Bool) -> ChatModeEntity {
+        var isMe: isME
+        if userID == model.user.userID {
+            isMe = .me
+        } else {
+            isMe = .other(model.user)
+        }
+        
+        return ChatModeEntity(
+            chatID: model.dmID,
+            isMe: isMe,
+            content: model.content ?? "",
+            files: model.files ?? [],
+            date: model.createdAt.toDate ?? Date(),
+            isFirstDate: isFirstDate
+        )
+    }
 }
 
 extension DMSRepository: DependencyKey {

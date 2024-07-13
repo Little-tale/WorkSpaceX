@@ -897,10 +897,10 @@ extension RealmRepository {
         
         let ifMe: Bool = model.user == userID
         
-        let fakeModel = WorkSpaceMemberEntity(
+        let fakeModel = WorkSpaceMembersEntity(
             userID: user.userID,
             email: user.email,
-            nickName: user.nickName,
+            nickname: user.nickName,
             profileImage: user.profileImage
         )
         
@@ -943,10 +943,10 @@ extension RealmRepository {
         
         let ifMe: Bool = model.user == userID
         
-        let fakeModel = WorkSpaceMemberEntity(
+        let fakeModel = WorkSpaceMembersEntity(
             userID: user.userID,
             email: user.email,
-            nickName: user.nickName,
+            nickname: user.nickName,
             profileImage: user.profileImage
         )
         
