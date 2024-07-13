@@ -302,6 +302,23 @@ extension WorkSpaceDomainRepository: DependencyKey {
         return mapping
     }
     
+    func toChat(model: WorkSpaceChatEntity, userID: String, isFirstDate: Bool) -> ChatModeEntity {
+        var isMe: isME
+        if userID == model.user.userID {
+            isMe = .me
+        } else {
+            isMe = .other(model.user)
+        }
+        return ChatModeEntity(
+            chatID: model.channelId,
+            isMe: isMe,
+            content: model.content ?? "",
+            files: model.files ?? [],
+            date: model.createdAt.toDate ?? Date(),
+            isFirstDate: isFirstDate
+        )
+    }
+
 }
 
 extension DependencyValues {

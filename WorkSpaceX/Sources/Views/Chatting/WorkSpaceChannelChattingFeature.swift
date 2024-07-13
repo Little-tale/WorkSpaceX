@@ -53,7 +53,7 @@ struct WorkSpaceChannelChattingFeature {
         
         var presentDoc: URL? = nil
         
-        
+        var thisLastChatDate: Date = Date()
     }
     
     enum Action {
@@ -80,6 +80,9 @@ struct WorkSpaceChannelChattingFeature {
         case errorMessage(String?)
         // 전송
         case sendTapped
+        
+        // 채팅 모델 변환
+        case toChat(WorkSpaceChatEntity)
         
         // 채팅들 액션
 //        case chats(IdentifiedActionOf<ChatModeFeature>)
@@ -138,13 +141,6 @@ struct WorkSpaceChannelChattingFeature {
                 let bool = state.onAppearTrigger
                 state.onAppearTrigger = false
                 
-                
-                // 1. 채팅 데이터가 존재하는지 최소한 한번은 확인해야함.
-                // 1.0.1 렘 페이지 네이션을 위해. 날짜별 호출 먼저 최초 1회 후
-                // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
-                // 2. 없다면 커서 데이트를 빈값으로 보내야함.
-                // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
-                // + 렘 멤버 도 꼭 확인
                 return .run { send in
                     
                     await send(.channelInfoRequest)
@@ -166,7 +162,7 @@ struct WorkSpaceChannelChattingFeature {
                     
                         try await Task.sleep(for: .seconds(0.1))
                         await send(.firstInit)
-                        await send(.realmobserberStart)
+//                        await send(.realmobserberStart)
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
                         
                         await send(.networkResult(result))
@@ -193,7 +189,7 @@ struct WorkSpaceChannelChattingFeature {
                         
                         // 처음 렘
                         await send(.firstInit)
-                        await send(.realmobserberStart)
+//                        await send(.realmobserberStart)
                         try await Task.sleep(for: .seconds(0.5))
                         await send(.socketConnected)
                     } catch: { error, send in
@@ -306,33 +302,32 @@ struct WorkSpaceChannelChattingFeature {
                     }
                 }
                 
-            case .realmobserberStart:
-                let channelID = state.channelID
-                let userID = state.userID
-                return .run { @MainActor send in
-                    
-                    for await model in  reader.observeNewMessage(channelID: channelID) {
-
-                        let result = try await realmRepo.toChat(model, userID: userID)
-                        send(.appendChat(result))
-                    }
-                }
+//            case .realmobserberStart:
+//                let channelID = state.channelID
+//                let userID = state.userID
+//                return .run { @MainActor send in
+//                    
+////                    for await model in  reader.observeNewMessage(channelID: channelID) {
+////
+////                        let result = try await realmRepo.toChat(model, userID: userID)
+////                        send(.appendChat(result))
+////                    }
+//                }
                 
             case let .appendChat(models):
-//                var chatStates: [ChatModeFeature.State] = []
                 for model in models {
-//                    state.currentModels.insert(model, at: 0)
                     state.currentModels.append(model)
-//                    chatStates.append(ChatModeFeature.State(model: model))
                 }
-//                state.chatStates.append(contentsOf: chatStates)
-                
+
             case let .showChats(models):
                 dump(models)
+                if let first = models.first {
+                    state.thisLastChatDate = first.date
+                } else {
+                    state.thisLastChatDate = Date()
+                }
                 state.currentModels = models
-//                let states = state.currentModels.map { ChatModeFeature.State(model: $0) }
-//                state.chatStates.append(contentsOf: states)
-                
+
                 
                 // 이미지 피커란
             case .showImagePicker:
@@ -422,6 +417,9 @@ struct WorkSpaceChannelChattingFeature {
                     for await result in  workSpaceRepo.channelSocketReqeust(channelID) {
                         switch result {
                         case let .success(model):
+                            
+                            await send(.toChat(model))
+                            
                             try await realmRepo.upsertToChatInChannel(models: [model])
                             print("마지막 소켓 model 받음")
                         case .failure(let error):
@@ -502,6 +500,22 @@ struct WorkSpaceChannelChattingFeature {
             case let .presentDoc(url):
                 state.presentDoc = url
                 
+            case let .toChat(model):
+                let modelDate = model.createdAt.toDate ?? Date()
+                let beforeDate = state.thisLastChatDate
+                let trigger = isSameDay(modelDate, beforeDate)
+                let userID = state.userID
+                
+                
+                let mapping = workSpaceRepo.toChat(
+                    model: model,
+                    userID: userID,
+                    isFirstDate: !trigger
+                )
+                return .run { send in
+                    await send(.appendChat([mapping]))
+                }
+                
             default:
                 break
             }
@@ -522,6 +536,10 @@ extension WorkSpaceChannelChattingFeature {
         return FileType(rawValue: fileEx) ?? .unknown
     }
     
+    private func isSameDay(_ date1: Date, _ date2: Date) -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDate(date1, inSameDayAs: date2)
+    }
 }
 
 
