@@ -52,6 +52,8 @@ struct DMSChatFeature {
         var progressView: Bool = false
         
         var presentDoc: URL? = nil
+        
+        var thisLastChatDate: Date = Date()
     }
     
     enum Action {
@@ -116,6 +118,8 @@ struct DMSChatFeature {
         
         case presentDoc(URL?)
         
+        case toChatModel(DMSChatEntity)
+        
         enum Delegate {
             case popClicked(roomID: String)
             case otehrUserProfile(userID: String)
@@ -158,7 +162,7 @@ struct DMSChatFeature {
                     // 룸 아이디는 그대로일 것으로 보임 즉 최초로 한번만 룸에 대해서 조사 후 DM 연결해야 함
                     return .run { send in
                         await send(.catchToDMSRoomEntity(entity))
-                        await send(.realmobserberStart)
+//                        await send(.realmobserberStart)
                         
                     }
                 } else {
@@ -173,7 +177,7 @@ struct DMSChatFeature {
                         )
                         await send(.catchToDMSRoomEntity(result))
                         
-                        await send(.realmobserberStart)
+//                        await send(.realmobserberStart)
                         
                     } catch: { error, send in
                         if let error = error as? DMSRoomAPIError {
@@ -290,18 +294,18 @@ struct DMSChatFeature {
                 }
 
                 /// 렘 옵저버를 바로볼 필요가 있는가?
-            case .realmobserberStart:
-                if let roomID = state.roomID {
-//                    let userID = state.userID
-//                    return .run { @MainActor send in
-//                        for await models in  reader.observeNewMessage(
-//                            dmRoomID: roomID
-//                        ) {
-//                            let result = try await realmRepo.toChat(models, userID: userID)
-//                            send(.appendChat(result))
-//                        }
-//                    }
-                }
+//            case .realmobserberStart:
+//                if let roomID = state.roomID {
+////                    let userID = state.userID
+////                    return .run { @MainActor send in
+////                        for await models in  reader.observeNewMessage(
+////                            dmRoomID: roomID
+////                        ) {
+////                            let result = try await realmRepo.toChat(models, userID: userID)
+////                            send(.appendChat(result))
+////                        }
+////                    }
+//                }
             case .sendTapped:
                 if state.ifDeleteRoom {
                     break
@@ -344,6 +348,9 @@ struct DMSChatFeature {
                 
             case let .showChats(models):
                 print("해당 문제? \(models),갯수:::: \(models.count)")
+                if let last = models.first {
+                    state.thisLastChatDate = last.date
+                }
                 state.currentModels = models
                 
             case let .userFeildText(text):
@@ -431,6 +438,7 @@ struct DMSChatFeature {
                 return .run { send in
                     await send(.dataCountChaeck)
                 }
+                
             case .socketConnected:
                 let roomID = state.roomID
                 guard let roomID else { break }
@@ -438,24 +446,7 @@ struct DMSChatFeature {
                     for await result in dmsRepo.dmSocketReqeust(roomID) {
                         switch result {
                         case let .success(model):
-                            /*
-                             let fakeModel = WorkSpaceMemberEntity(
-                                 userID: user.userID,
-                                 email: user.email,
-                                 nickName: user.nickName,
-                                 profileImage: user.profileImage
-                             )
-                             
-                             return ChatModeEntity(
-                                 chatID: model.dmID,
-                                 isMe: ifMe ? .me : .other(fakeModel),
-                                 content: model.content ?? "",
-                                 files: Array(model.files),
-                                 date: model.createdAt ?? Date(),
-                                 isFirstDate: model.isDateSection
-                             )
-                             */
-                            
+                            await send(.toChatModel(model))
                             await send(.socketTORealm(model, roomID))
                         case let .failure(error):
                             print(error)
@@ -493,6 +484,22 @@ struct DMSChatFeature {
                     } catch: { error, send in
                         print(error)
                     }
+                }
+            case let .toChatModel(model):
+                let modelDate = model.createdAt.toDate ?? Date()
+                let beforeDate = state.thisLastChatDate
+                let trigger = isSameDay(modelDate, beforeDate)
+                let userID = state.userID
+                
+                let mapping = dmsRepo.toChat(
+                    model,
+                    userID: userID,
+                    isFirstDate: trigger
+                )
+                state.thisLastChatDate = modelDate
+                
+                return .run { send in
+                    await send(.appendChat([mapping]))
                 }
                 
             case let .ifDeleteRoom(bool):
@@ -553,7 +560,10 @@ extension DMSChatFeature {
         let fileEx = url.pathExtension.lowercased()
         return FileType(rawValue: fileEx) ?? .unknown
     }
-    
+    private func isSameDay(_ date1: Date, _ date2: Date) -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDate(date1, inSameDayAs: date2)
+    }
 }
 
 // 1. 채팅 데이터가 존재하는지 최소한 한번은 확인해야함.
