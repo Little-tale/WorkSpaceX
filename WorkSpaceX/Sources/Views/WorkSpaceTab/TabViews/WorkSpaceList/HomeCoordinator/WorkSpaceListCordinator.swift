@@ -12,26 +12,20 @@ import TCACoordinators
 @Reducer(state: .equatable)
 enum WorkSpaceListScreens {
     case rootScreen(WorkSpaceListFeature)
-    
     // Middel
     case workSpaceChannelListView(WorkSpaceChannelListFeature)
     case chattingView(WorkSpaceChannelChattingFeature)
     case dmChat(DMSChatFeature)
     case chatnnelEdit(ChannelEditFeature)
     case ChannelOwnerChange(ChannelOwnerChangeFeature)
-    
     // Profile
     case profileInfo(ProfileInfoFeature)
     case profileEdit(ProfileInfoEditFeature)
-    
     // setting
     case chatChannelSettingView(ChatChannelSettingFeature)
-    
     // PageSheet
     case channelAdd(WorkSpaceChannelAddFeature)
     case memberAdd(AddMemberFeature)
-    
-    
     // 결제
     case storeListView(StoreListFeature)
     

@@ -55,8 +55,6 @@ struct WorkSpaceChannelChattingFeature {
     }
     
     enum Action {
-        
-        
         // 채팅 분기점
         case chatDate(Date?)
         case channelInfoRequest
@@ -133,8 +131,6 @@ struct WorkSpaceChannelChattingFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                
-//                let workSpaceID = state.workSpaceID
                 let channelID = state.channelID
                 
                 let bool = state.onAppearTrigger
@@ -154,14 +150,11 @@ struct WorkSpaceChannelChattingFeature {
                 let workSpaceId = state.workSpaceID
                 
                 if let date {
-                    // 1.1 채팅 존재한다면 바로 렘 옵저버 걸기
-                    // 렘옵저버 선 후 -> 통신
                     state.lastFetchDate = date
                     return .run { send in
                     
                         try await Task.sleep(for: .seconds(0.1))
                         await send(.firstInit)
-//                        await send(.realmobserberStart)
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
                         
                         await send(.networkResult(result))
@@ -176,11 +169,7 @@ struct WorkSpaceChannelChattingFeature {
                         }
                     }
                 } else {
-                    // 2. 없다면 커서 데이트를 빈값으로 보내야함.
-                    // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
                     return .run { send in
-                        
-                        try await Task.sleep(for: .seconds(0.2))
                         
                         let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
                         print("받기 \(result)")
@@ -188,7 +177,7 @@ struct WorkSpaceChannelChattingFeature {
                         
                         // 처음 렘
                         await send(.firstInit)
-//                        await send(.realmobserberStart)
+
                         try await Task.sleep(for: .seconds(0.5))
                         await send(.socketConnected)
                     } catch: { error, send in
@@ -238,9 +227,6 @@ struct WorkSpaceChannelChattingFeature {
                 return .run { send in
                     await send(.navigationMemberCount(channel.users.count))
                 }
-                
-//            case let .chats(.element(id: _, action: .delegate(.selectedFileURLString(text)))):
-//                print(text)
                 
             case let .userFeildText(text):
                 state.userFeildText = text
@@ -301,23 +287,11 @@ struct WorkSpaceChannelChattingFeature {
                     }
                 }
                 
-//            case .realmobserberStart:
-//                let channelID = state.channelID
-//                let userID = state.userID
-//                return .run { @MainActor send in
-//                    
-////                    for await model in  reader.observeNewMessage(channelID: channelID) {
-////
-////                        let result = try await realmRepo.toChat(model, userID: userID)
-////                        send(.appendChat(result))
-////                    }
-//                }
-                
             case let .appendChat(models):
                 for model in models {
                     state.currentModels.append(model)
                 }
-
+                state.thisLastChatDate = models.last?.date ?? Date()
             case let .showChats(models):
                 dump(models)
                 if let first = models.first {
@@ -518,9 +492,6 @@ struct WorkSpaceChannelChattingFeature {
             }
             return .none
         }
-//        .forEach(\.chatStates, action: \.chats) {
-//            ChatModeFeature()
-//        }
         
     }
     
@@ -538,9 +509,3 @@ extension WorkSpaceChannelChattingFeature {
         return calendar.isDate(date1, inSameDayAs: date2)
     }
 }
-
-
-// 3. 있다면 커서 데이트를 쿼리 스트링으로 보내야함.
-// 확인하면서 채널을 생성해버림과 동시에 워크스페이스에 연결
-// 이유는 간단. 해당 뷰로 오면 이미 사용자는 해당 멤버
-// print("네트워크 요청해야함...")

@@ -34,7 +34,7 @@ struct EmailLoginFeature {
         case loginSuccess(UserEntity)
     }
     
-    enum Field {
+    enum Field: Hashable {
         case email
         case password
     }
@@ -91,6 +91,7 @@ struct EmailLoginFeature {
                         await send(.timerStart("로그인중 문제가 발생헀습니다."))
                     }
                 }
+                    .throttle(id: Field.email ,for: 1, scheduler: RunLoop.main, latest: false)
                 
             case .binding:
                 return .none
