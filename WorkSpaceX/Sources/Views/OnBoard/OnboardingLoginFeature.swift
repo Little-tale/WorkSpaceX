@@ -175,7 +175,7 @@ extension OnboardingLoginFeature {
         DispatchQueue.main.async {
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { oauthToken, error in
-                    print("에러가 발생하였는가???",error)
+                    print("에러가 발생하였는가???", error ?? "None" )
                     if let error {
                         let results = checkKakaoError(error: error)
                         result(.failure(results))
@@ -188,7 +188,6 @@ extension OnboardingLoginFeature {
                 }
             } else {
                 UserApi.shared.loginWithKakaoAccount { oauthToken, error in
-                    print("에러가 발생하였는가??? 여기?",error)
                     if let error {
                         let results = checkKakaoError(error: error)
                         result(.failure(results))

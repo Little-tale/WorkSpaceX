@@ -107,7 +107,7 @@ struct EmailLoginFeature {
                     print(error)
                 }
                 return .none
-            case .loginSuccess: // 상위뷰가 지켜볼것.
+            case .loginSuccess:
                 return .none
             }
         }
@@ -129,25 +129,5 @@ extension EmailLoginFeature {
         
         return true
     }
-    
-//    private func errorHandelForLogin(error: UserDomainError) -> String? {
-//        switch error {
-//        case .commonError(let common):
-//            if !common.ifDevelopError {
-//                return common.message
-//            } else {
-//                print("개발자 잘못 \(common.message)")
-//            }
-//        case .emailLoginError:
-//            if !error.ifDevelopError {
-//                return error.message
-//            } else {
-//                print("개발자 잘못 \(error.message)")
-//            }
-//        default:
-//            break
-//        }
-//        return nil
-//    }
     
 }

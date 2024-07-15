@@ -38,15 +38,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
-//    func applicationDidBecomeActive(_ application: UIApplication) {
-//        checkNotification()
-//    }
-    /// 푸시 기능 생길때.
-//    func checkNotification() {
-//        let center = UNUserNotificationCenter.current()
-//       
-//    }
-    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

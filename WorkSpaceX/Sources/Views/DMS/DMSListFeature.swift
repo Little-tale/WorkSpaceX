@@ -105,7 +105,7 @@ struct DMSListFeature {
                 }
                 
             case let .infinityStart(workSpaceID):
-                let stop = state.stopTrigger
+//                let stop = state.stopTrigger
                 return .run { send in
                     
                     await send(.dmsListReqeust(WorkSpaceID: workSpaceID))

@@ -69,17 +69,13 @@ struct WorkSpaceChannelChattingFeature {
         case popClientClicked
         case userFeildText(String)
         
-        case realmobserberStart
-        
         case errorMessage(String?)
         // 전송
         case sendTapped
         
         // 채팅 모델 변환
         case toChat(WorkSpaceChatEntity)
-        
-        // 채팅들 액션
-//        case chats(IdentifiedActionOf<ChatModeFeature>)
+    
         case firstInit
         case showChats([ChatModeEntity])
         case appendChat([ChatModeEntity])

@@ -203,7 +203,7 @@ struct ChatChannelSettingFeature {
                 }
                 
             case let .alertCaseOf(alertCase):
-                print("얼렛 케이스 발동 \(alertCase )")
+                print("얼렛 케이스 발동 \(String(describing: alertCase) )")
                 state.alertCaseOf = alertCase
                 
             case let .alertAction(caseOf):

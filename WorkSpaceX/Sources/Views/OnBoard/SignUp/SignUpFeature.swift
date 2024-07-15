@@ -194,26 +194,10 @@ struct SignUpFeature {
                 let email = state.user.email
                 return .run { send in
                     
-                    let result: Void = try await reposiory.chaeckEmail(email)
+                    try await reposiory.chaeckEmail(email)
                     
                     await send(.checkEmailSuccess)
                     await send(.returnView("중복되지 않았어요"))
-                    
-//                    switch result {
-//                    case .success:
-//                        
-//                    case .failure(let errorCase):
-//                        switch errorCase {
-//                        case .httpError(let error):
-//                            await send(.returnView(error))
-//                        case .commonError(let error):
-//                            await send(.returnView(error.message))
-//                        case .customError(let error):
-//                            await send(.returnView(error))
-//                        case .unknownError:
-//                            await send(.returnView("알수없음"))
-//                        }
-//                    }
                 } catch: { error, send in
                     if let error = error as? EmailValidError {
                         if error.ifDevelopError {

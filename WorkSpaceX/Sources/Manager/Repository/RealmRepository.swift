@@ -219,7 +219,7 @@ extension RealmRepository {
     func upsertWorkSpaceInMembers(responses: [WorkSpaceMembersEntity], workSpaceID: String) async throws {
         
         let realm = try await Realm(actor: MainActor.shared)
-        print("렘 : \(Realm.Configuration.defaultConfiguration.fileURL)")
+        print("렘 : \(String(describing: Realm.Configuration.defaultConfiguration.fileURL))")
         var users: [UserRealmModel] = []
         
         for response in responses {
