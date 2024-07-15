@@ -178,6 +178,8 @@
 		7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6502C1BEF3500948E7C /* WorkSpaceSideFeature.swift */; };
 		7B8FD6532C1BF77A00948E7C /* WorkSpaceRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */; };
 		7B8FD6592C1BFCAB00948E7C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8FD6582C1BFCAB00948E7C /* ComposableArchitecture */; };
+		7BB030262C4536B400399D83 /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030252C4536B400399D83 /* MimeType.swift */; };
+		7BB030292C4536E900399D83 /* EncodingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030282C4536E900399D83 /* EncodingType.swift */; };
 		7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */; };
 		7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C342C37B02100F0ABDC /* SearchView .swift */; };
 		7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */; };
@@ -451,6 +453,8 @@
 		7B8FD64E2C1BEB9900948E7C /* WorkSpaceSideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSideView.swift; sourceTree = "<group>"; };
 		7B8FD6502C1BEF3500948E7C /* WorkSpaceSideFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSideFeature.swift; sourceTree = "<group>"; };
 		7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRealmModel.swift; sourceTree = "<group>"; };
+		7BB030252C4536B400399D83 /* MimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeType.swift; sourceTree = "<group>"; };
+		7BB030282C4536E900399D83 /* EncodingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingType.swift; sourceTree = "<group>"; };
 		7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
 		7BC09C342C37B02100F0ABDC /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
 		7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
@@ -951,6 +955,7 @@
 		7B592ED42C0F1A7800E47797 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7BB030272C4536CE00399D83 /* NetworkModel */,
 				7B8FD63B2C1AB6A000948E7C /* RealmModels */,
 				7BEC45EE2C1802D100576ECA /* Mapper */,
 				7B2EEE452C12C6770024853C /* EntityModel */,
@@ -1098,6 +1103,15 @@
 				7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */,
 			);
 			path = RealmModels;
+			sourceTree = "<group>";
+		};
+		7BB030272C4536CE00399D83 /* NetworkModel */ = {
+			isa = PBXGroup;
+			children = (
+				7BB030252C4536B400399D83 /* MimeType.swift */,
+				7BB030282C4536E900399D83 /* EncodingType.swift */,
+			);
+			path = NetworkModel;
 			sourceTree = "<group>";
 		};
 		7BC09C312C37AFB800F0ABDC /* Search */ = {
@@ -1559,6 +1573,7 @@
 				7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */,
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
+				7BB030262C4536B400399D83 /* MimeType.swift in Sources */,
 				7B7EB83A2C32D4D900D22362 /* DMSRoomRealmModel.swift in Sources */,
 				7B7EB8612C362EC400D22362 /* ProfileInfoEditFeature.swift in Sources */,
 				7B2EEE222C11913A0024853C /* APIErrorResponse.swift in Sources */,
@@ -1735,6 +1750,7 @@
 				7B2EEE072C10C43B0024853C /* EntityProtocol.swift in Sources */,
 				7B592EA42C0E289C00E47797 /* SplashView.swift in Sources */,
 				7B8FD6092C198D7B00948E7C /* WorkSpaceEmptyListView.swift in Sources */,
+				7BB030292C4536E900399D83 /* EncodingType.swift in Sources */,
 				7B7EB8182C31643300D22362 /* ChannelDeleteAPIError.swift in Sources */,
 				7B7EB8542C33CD3700D22362 /* DMChatRealmModel.swift in Sources */,
 				7B26D2232C2282E200BC9912 /* WorkSpaceUserRealmModel.swift in Sources */,

@@ -20,21 +20,9 @@ protocol Router {
     var body: Data? { get }
     var encodingType: EncodingType { get }
 }
-enum EncodingType {
-    case url
-    case json
-    case multiPart
-}
-
-enum MimeType: String {
-    case text = "text/plain"
-    case image = "image/jpeg"
-}
 
 extension Router {
     
-    
-   
     var baseURL: String {
         return APIKey.baseURL
     }
