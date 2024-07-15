@@ -49,12 +49,8 @@ struct RootFeature {
     }
     
     var body: some ReducerOf<Self> {
+        
         BindingReducer()
-        
-//        Scope(state: \.workSpaceTabViewState, action: \.sendToWorkSpaceTab) {
-//            WorkSpaceTabCoordinator()
-//        }
-        
         Reduce {state, action in
             switch action {
             case .onAppear :
@@ -129,11 +125,7 @@ struct RootFeature {
                 state.OnboardingViewState = OnboardingFeature.State()
                 
                 state.currentLoginState = .logout
-                
-//                return .run { send in
-//                    await send(.onAppear)
-//
-                
+              
                 return .none
             }
         }
@@ -150,13 +142,3 @@ struct RootFeature {
     }
     
 }
-
-/*
- NotificationCenter.default.addObserver(
-     forName: .ifNeedReChack,
-     object: nil,
-     queue: .main) { _ in
-         print("한번씩만...")
-         store.send(.onAppear)
-     }
- */

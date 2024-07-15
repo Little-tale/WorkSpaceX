@@ -164,10 +164,7 @@ struct SignUpFeature {
                 !state.user.password.isEmpty &&
                 !state.user.passwordConfirmaion.isEmpty
                 state.lastButtonState = result
-                print(state.user.email.isEmpty)
-                print(state.user.nickName.isEmpty)
-                print(state.user.password.isEmpty)
-                print(state.user.passwordConfirmaion.isEmpty)
+
                 
                 return .none
             case .duplicateButtonTapped:

@@ -40,18 +40,4 @@ enum Const {
              }
         }
     }
-//    enum fileType {
-//        case image
-//        case pdf
-//        
-//        var type: String {
-//            switch self {
-//            case .image:
-//                <#code#>
-//            case .pdf:
-//                <#code#>
-//            }
-//        }
-//    }
-    
 }
