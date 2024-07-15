@@ -293,19 +293,6 @@ struct DMSChatFeature {
                     }
                 }
 
-                /// 렘 옵저버를 바로볼 필요가 있는가?
-//            case .realmobserberStart:
-//                if let roomID = state.roomID {
-////                    let userID = state.userID
-////                    return .run { @MainActor send in
-////                        for await models in  reader.observeNewMessage(
-////                            dmRoomID: roomID
-////                        ) {
-////                            let result = try await realmRepo.toChat(models, userID: userID)
-////                            send(.appendChat(result))
-////                        }
-////                    }
-//                }
             case .sendTapped:
                 if state.ifDeleteRoom {
                     break
@@ -347,8 +334,7 @@ struct DMSChatFeature {
                 state.currentModels.append(contentsOf: models)
                 
             case let .showChats(models):
-                print("해당 문제? \(models),갯수:::: \(models.count)")
-                if let last = models.first {
+                if let last = models.last {
                     state.thisLastChatDate = last.date
                 }
                 state.currentModels = models
@@ -447,7 +433,9 @@ struct DMSChatFeature {
                         switch result {
                         case let .success(model):
                             await send(.toChatModel(model))
-                            await send(.socketTORealm(model, roomID))
+                            Task.detached {
+                                await send(.socketTORealm(model, roomID))
+                            }
                         case let .failure(error):
                             print(error)
                             await send(.errorMessage(error.message))
@@ -494,7 +482,7 @@ struct DMSChatFeature {
                 let mapping = dmsRepo.toChat(
                     model,
                     userID: userID,
-                    isFirstDate: trigger
+                    isFirstDate: !trigger
                 )
                 state.thisLastChatDate = modelDate
                 
@@ -572,3 +560,16 @@ extension DMSChatFeature {
 // 2. 없다면 커서 데이트를 빈값으로 보내야함.
 // 1.2 없다면 네트워크 먼저 수행후 렘 옵저버 걸기
 // + 렘 멤버 도 꼭 확인
+/// 렘 옵저버를 바로볼 필요가 있는가?
+//            case .realmobserberStart:
+//                if let roomID = state.roomID {
+////                    let userID = state.userID
+////                    return .run { @MainActor send in
+////                        for await models in  reader.observeNewMessage(
+////                            dmRoomID: roomID
+////                        ) {
+////                            let result = try await realmRepo.toChat(models, userID: userID)
+////                            send(.appendChat(result))
+////                        }
+////                    }
+//                }
