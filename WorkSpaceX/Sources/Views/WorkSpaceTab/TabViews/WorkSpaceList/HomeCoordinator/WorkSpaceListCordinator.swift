@@ -241,14 +241,14 @@ struct WorkSpaceListCordinator {
                 }
                 
                 // 채널 채팅뷰 뒤로가기시.
-            case .router(.routeAction(id: _, action: .chattingView(.popClicked))):
+            case .router(.routeAction(id: _, action: .chattingView(.delegate(.popClicked)))):
                 
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 
                 state.identeRoutes.popToCurrentNavigationRoot()
                 
                 // 쳇 세팅 이동.
-            case .router(.routeAction(id: _, action: .chattingView(.sendToList(let channel, let isOwner)))):
+            case .router(.routeAction(id: _, action: .chattingView(.delegate(.sendToList(let channel, let isOwner))))):
                 if let workSpaceID = state.currentWorkSpaceId {
                     let chatState = ChatChannelSettingFeature.State(
                         id: state.channelEditID,

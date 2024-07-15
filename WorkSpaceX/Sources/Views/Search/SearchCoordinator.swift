@@ -92,13 +92,13 @@ struct SearchCoordinator {
                     ))
                 }
                 
-            case .router(.routeAction(id: _, action: .channelChatView(.popClicked))):
+            case .router(.routeAction(id: _, action: .channelChatView(.delegate(.popClicked)))):
                 
                 WSXSocketManager.shared.stopAndRemoveSocket()
                 
                 state.identeRoutes.popToCurrentNavigationRoot()
                 
-            case let .router(.routeAction(id: _, action: .channelChatView(.sendToList(channel, isOwner)))):
+            case let .router(.routeAction(id: _, action: .channelChatView(.delegate(.sendToList(channel, isOwner))))):
                 let setting = state.channelEditID
                 if let workSpaceID = state.currentWorkSpaceID {
                     state.identeRoutes.push(.chatChannelSettingView(

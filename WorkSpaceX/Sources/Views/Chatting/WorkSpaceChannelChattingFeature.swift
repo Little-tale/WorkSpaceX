@@ -28,8 +28,6 @@ struct WorkSpaceChannelChattingFeature {
         var currentDatas: [ChatMultipart.File] = []
         var showChatBottom: Bool = false
         
-//        var chatStates: IdentifiedArrayOf<ChatModeFeature.State> = []
-        
         var scrollTo: String = ""
         var lastFetchDate: Date? = nil
         
@@ -57,9 +55,7 @@ struct WorkSpaceChannelChattingFeature {
     }
     
     enum Action {
-        // 상위뷰 관찰
-        case popClicked
-        case sendToList(channel: ChanelEntity, isOwner: Bool)
+        
         
         // 채팅 분기점
         case chatDate(Date?)
@@ -118,7 +114,10 @@ struct WorkSpaceChannelChattingFeature {
         case presentDoc(URL?)
         case delegate(Delegate)
         
+        // 상위뷰 관찰
         enum Delegate {
+            case popClicked
+            case sendToList(channel: ChanelEntity, isOwner: Bool)
             case otehrUserProfile(userID: String)
         }
     }
@@ -439,13 +438,11 @@ struct WorkSpaceChannelChattingFeature {
                 state.scrollTo = string
                 
             case .listButtonTapped:
-                let channelID = state.channelID
-                
                 if let owner = state.ownerID,
                    let chatmodel = state.channelModel {
                     let ifOwner = owner == state.userID
                     return .run { send in
-                        await send(.sendToList(channel: chatmodel, isOwner: ifOwner))
+                        await send(.delegate(.sendToList(channel: chatmodel, isOwner: ifOwner)))
                     }
                 }
             case let .navigationMemberCount(count):
@@ -455,7 +452,7 @@ struct WorkSpaceChannelChattingFeature {
                 let channelID = state.channelID
                 return .run { send in
                     try await realmRepo.upsertToChatDate(channelID: channelID)
-                    await send(.popClicked)
+                    await send(.delegate(.popClicked))
                 } catch: { error, _ in
                     print(error)
                 }
