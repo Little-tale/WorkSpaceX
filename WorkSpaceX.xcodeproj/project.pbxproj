@@ -256,7 +256,6 @@
 		7BEC45F72C180F0600576ECA /* WorkSpaceEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45F62C180F0600576ECA /* WorkSpaceEntity.swift */; };
 		7BEC45F92C1813FE00576ECA /* ImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45F82C1813FE00576ECA /* ImageMapper.swift */; };
 		7BEC45FB2C18184800576ECA /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FA2C18184800576ECA /* MultipartFormData.swift */; };
-		7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FC2C181FAE00576ECA /* ExData.swift */; };
 		7BEC45FF2C18363900576ECA /* ExString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45FE2C18363900576ECA /* ExString.swift */; };
 		7BF9D7092C22A2740021D043 /* WorkSpaceChannelsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */; };
 		7BF9D70B2C22C8740021D043 /* WorkSpaceChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */; };
@@ -527,7 +526,6 @@
 		7BEC45F62C180F0600576ECA /* WorkSpaceEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceEntity.swift; sourceTree = "<group>"; };
 		7BEC45F82C1813FE00576ECA /* ImageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMapper.swift; sourceTree = "<group>"; };
 		7BEC45FA2C18184800576ECA /* MultipartFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
-		7BEC45FC2C181FAE00576ECA /* ExData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExData.swift; sourceTree = "<group>"; };
 		7BEC45FE2C18363900576ECA /* ExString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExString.swift; sourceTree = "<group>"; };
 		7BF9D7082C22A2740021D043 /* WorkSpaceChannelsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelsEntity.swift; sourceTree = "<group>"; };
 		7BF9D70A2C22C8740021D043 /* WorkSpaceChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceChannelAddView.swift; sourceTree = "<group>"; };
@@ -717,7 +715,6 @@
 			children = (
 				7B2EEE3E2C129F6F0024853C /* ExView.swift */,
 				7BEC45F42C1808F800576ECA /* ExImage.swift */,
-				7BEC45FC2C181FAE00576ECA /* ExData.swift */,
 				7BEC45FE2C18363900576ECA /* ExString.swift */,
 				7B8FD5FB2C19486500948E7C /* ExNotification.swift */,
 				7B8FD6222C1AA2CA00948E7C /* ExText.swift */,
@@ -1729,7 +1726,6 @@
 				7B8FD64D2C1B421200948E7C /* RefreshTokkenDeadReciver.swift in Sources */,
 				7B10A9982C2851080035C3C8 /* ChatModeFeature.swift in Sources */,
 				7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */,
-				7BEC45FD2C181FAE00576ECA /* ExData.swift in Sources */,
 				7B8FD6112C19B69100948E7C /* KakaoLoginAPIError.swift in Sources */,
 				7B26D1E42C1DB61200BC9912 /* SideMenuCoordinator.swift in Sources */,
 				7B8FD60D2C19AE6100948E7C /* EmailValidError.swift in Sources */,

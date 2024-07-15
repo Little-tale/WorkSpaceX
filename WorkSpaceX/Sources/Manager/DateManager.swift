@@ -14,6 +14,18 @@ final class DateManager {
     
     private let isoDateFormatter = ISO8601DateFormatter()
     private let dateFormatter = DateFormatter()
+    private let loacale = Locale(identifier:"ko_KR")
+    
+    enum dateFormatType: String {
+        case slimYDM = "yy. MM. dd"
+        case fullType = "yyyyMMMMd"
+        case roomListType = "a hh:mm"
+        case rightChatType = "a hh시 mm분"
+        case leftChatType = "hh시 mm분 a"
+        
+        var format: String { return self.rawValue}
+    }
+    
     
     func toDateISO(_ dateString: String) -> Date? {
         var calender = Calendar.current
@@ -37,39 +49,40 @@ final class DateManager {
     func asDateToString(_ date: Date?) -> String {
         guard let date else { return "" }
         
-        dateFormatter.dateFormat = "yy. MM. dd"
+        dateFormatter.dateFormat = dateFormatType.slimYDM.format
         
         return dateFormatter.string(from: date)
     }
     
     func dateToStringToChat(_ date: Date, isMe: Bool) -> String {
         if isMe {
-            dateFormatter.dateFormat = "a hh시 mm분"
+            dateFormatter.dateFormat = dateFormatType.rightChatType.format
         } else {
-            dateFormatter.dateFormat = "hh시 mm분 a"
+            dateFormatter.dateFormat = dateFormatType.leftChatType.format
         }
         
-        dateFormatter.locale = Locale(identifier:"ko_KR")
+        dateFormatter.locale = loacale
         
         return dateFormatter.string(from: date)
     }
     
     func dateToStringToChatSection(_ date: Date) -> String {
-        dateFormatter.setLocalizedDateFormatFromTemplate("yyyyMMMMd")
-        dateFormatter.locale = Locale(identifier:"ko_KR")
+        let format = dateFormatType.fullType.format
+        dateFormatter.setLocalizedDateFormatFromTemplate(format)
+        dateFormatter.locale = loacale
         
         return dateFormatter.string(from: date)
     }
     
     func dateToStringToRoomList(_ date: Date) -> String {
-        
+        let format = dateFormatType.fullType.format
         let calendar = Calendar.current
         
         if calendar.isDateInToday(date) {
-            dateFormatter.dateFormat = "a hh:mm"
+            dateFormatter.dateFormat = dateFormatType.roomListType.format
         } else {
-            dateFormatter.setLocalizedDateFormatFromTemplate("yyyyMMMMd")
-            dateFormatter.locale = Locale(identifier: "ko_KR")
+            dateFormatter.setLocalizedDateFormatFromTemplate(format)
+            dateFormatter.locale = loacale
         }
         
         return dateFormatter.string(from: date)
