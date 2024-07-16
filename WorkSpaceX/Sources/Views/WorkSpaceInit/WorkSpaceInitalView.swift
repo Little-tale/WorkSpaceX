@@ -21,13 +21,7 @@ struct WorkSpaceInitalView: View {
                         WSXColor.lightGray
                         VStack {
                             ZStack (alignment: .bottomTrailing) {
-                                CustomeImagePickView(
-                                    store: store.scope(state: \.imagePick, action: \.imagePickFeature)
-                                )
-                                .modifier(RoudProfileImageModifier(frame: CGSize(width: 80, height: 80)))
-                                .asButton {
-                                    store.send(.showImagePicker)
-                                }
+                                imagePickView()
                                 WSXImage.subCamera
                                     .resizable()
                                     .frame(width: 25, height: 25)
@@ -57,19 +51,7 @@ struct WorkSpaceInitalView: View {
                             
                         }// VStack
                         .padding(.horizontal, 20)
-                        Text("완료")
-                            .font(WSXFont.title2)
-                            .modifier(CommonButtonModifer())
-                            .background(store.regButtonState ? WSXColor.green : WSXColor.gray)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, keyboardPadding + 10)
-                            .foregroundStyle(WSXColor.white)
-                            .asButton {
-                                store.send(.regButtonTapped)
-                            }
-                            .disabled(!store.regButtonState)
-                        
+                        successButton()
                     } // ZStack
                     .fullScreenCover(isPresented: $store.showImagePicker) {
                         
@@ -115,10 +97,31 @@ struct WorkSpaceInitalView: View {
     }
 }
 
-//#Preview {
-//    WorkSpaceInitalView(
-//        store: Store(initialState: WorkSpaceInitalFeature.State(), reducer: {
-//            WorkSpaceInitalFeature()
-//        })
-//    )
-//}
+extension WorkSpaceInitalView {
+
+    private func imagePickView() -> some View {
+        CustomeImagePickView(
+            store: store.scope(state: \.imagePick, action: \.imagePickFeature)
+        )
+        .modifier(RoudProfileImageModifier(frame: CGSize(width: 80, height: 80)))
+        .asButton {
+            store.send(.showImagePicker)
+        }
+    }
+    
+    private func successButton() -> some View {
+        Text("완료")
+            .font(WSXFont.title2)
+            .modifier(CommonButtonModifer())
+            .background(store.regButtonState ? WSXColor.green : WSXColor.gray)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .padding(.horizontal, 20)
+            .padding(.bottom, keyboardPadding + 10)
+            .foregroundStyle(WSXColor.white)
+            .asButton {
+                store.send(.regButtonTapped)
+            }
+            .disabled(!store.regButtonState)
+    }
+    
+}

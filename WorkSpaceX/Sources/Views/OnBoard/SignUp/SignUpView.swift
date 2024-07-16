@@ -33,18 +33,7 @@ struct SignUpView: View {
                         )
                         .focused($focus, equals: .email)
                         
-                        Text("중복확인")
-                            .font(WSXFont.title2)
-                            .padding(.all, 10)
-                            .frame(width: 70 ,height: 50)
-                            .background(store.duplicateButtonState ? WSXColor.green : WSXColor.inacitve)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .asButton {
-                                store.send(.duplicateButtonTapped)
-                            }
-                            .disabled(!store.duplicateButtonState)
-                            .buttonStyle(PlainButtonStyle())
-                            .foregroundStyle(WSXColor.white)
+                        duplicateButton()
                     }
                     .padding(.horizontal, 30)
                     
@@ -114,7 +103,6 @@ struct SignUpView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         WSXImage.xImage
                             .asButton {
-                                print("asas")
                                 store.send(.cancelButtonTapped)
                             }
                             .foregroundStyle(WSXColor.black)
@@ -124,7 +112,25 @@ struct SignUpView: View {
             }
         }
     }
+     
+}
+
+extension SignUpView {
     
+    private func duplicateButton() -> some View {
+        Text("중복확인")
+            .font(WSXFont.title2)
+            .padding(.all, 10)
+            .frame(width: 70 ,height: 50)
+            .background(store.duplicateButtonState ? WSXColor.green : WSXColor.inacitve)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .asButton {
+                store.send(.duplicateButtonTapped)
+            }
+            .disabled(!store.duplicateButtonState)
+            .buttonStyle(PlainButtonStyle())
+            .foregroundStyle(WSXColor.white)
+    }
     
     private func regButtonView(bool: Bool) -> some View {
         Text("가입하기")
@@ -135,5 +141,4 @@ struct SignUpView: View {
             .padding(.horizontal, 30)
             .padding(.bottom, 20)
     }
-    
 }

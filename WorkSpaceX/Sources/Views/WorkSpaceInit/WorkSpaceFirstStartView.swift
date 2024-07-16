@@ -31,29 +31,18 @@ struct WorkSpaceFirstStartView: View {
                         .frame(maxWidth: .infinity)
                     
                     Spacer()
-                    Text("워크 스페이스 생성")
-                        .font(WSXFont.title2)
-                        .modifier(CommonButtonModifer())
-                        .background(WSXColor.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.bottom, 20)
-                        .padding(.horizontal, 30)
-                        .foregroundStyle(WSXColor.white)
-                        .asButton {
-                            store.send(.startButtonTapped)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .navigationTitle("시작하기")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .topBarLeading) {
-                                WSXImage.xImage
-                                    .asButton {
-                                        store.send(.cancelButtonTapped)
-                                    }
-                                    .foregroundStyle(WSXColor.black)
+                    workSpaceMakeButton()
+                }
+                .navigationTitle("시작하기")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        WSXImage.xImage
+                            .asButton {
+                                store.send(.cancelButtonTapped)
                             }
-                        }
+                            .foregroundStyle(WSXColor.black)
+                    }
                 }
                 .onAppear {
                     store.send(.onAppear)
@@ -67,6 +56,20 @@ struct WorkSpaceFirstStartView: View {
     }
 }
 
-//#Preview {
-//    WorkSpaceFirstStartView()
-//}
+extension WorkSpaceFirstStartView {
+    
+    private func workSpaceMakeButton() -> some View {
+        Text("워크 스페이스 생성")
+            .font(WSXFont.title2)
+            .modifier(CommonButtonModifer())
+            .background(WSXColor.green)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.bottom, 20)
+            .padding(.horizontal, 30)
+            .foregroundStyle(WSXColor.white)
+            .asButton {
+                store.send(.startButtonTapped)
+            }
+            .buttonStyle(PlainButtonStyle())
+    }
+}
