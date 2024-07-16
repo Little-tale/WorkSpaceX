@@ -193,14 +193,6 @@ struct WorkSpaceInitalFeature {
                 }
                
                 return .none
-//                
-//            case .realmRegSuccess:
-//                print("success 이여야!")
-//                state.showPrograssView = false
-//                state.successMessage = "등록 완료 되었습니다."
-//                return .none
-                
-            
                 
             case .alert(.dismiss):
                 return .run{ send in
@@ -217,6 +209,14 @@ struct WorkSpaceInitalFeature {
 }
 
 /*
+ //
+ //            case .realmRegSuccess:
+ //                print("success 이여야!")
+ //                state.showPrograssView = false
+ //                state.successMessage = "등록 완료 되었습니다."
+ //                return .none
+                 
+             
  switch error {
      
  case let .commonError(error):
