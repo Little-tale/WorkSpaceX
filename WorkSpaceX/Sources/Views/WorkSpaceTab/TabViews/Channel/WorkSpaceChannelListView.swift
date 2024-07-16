@@ -85,11 +85,3 @@ extension WorkSpaceChannelListView {
         }
     }
 }
-
-//#Preview {
-//    WorkSpaceChannelListView(store: Store(initialState: {
-//        WorkSpaceChannelListFeature.State(id: UUID(), workSpaceID: "e655f5f4-dee7-4703-a9c4-8409e9f11f10")
-//    }(), reducer: {
-//        WorkSpaceChannelListFeature()
-//    }))
-//}

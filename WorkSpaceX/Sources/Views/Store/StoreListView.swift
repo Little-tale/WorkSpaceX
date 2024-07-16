@@ -148,8 +148,3 @@ extension StoreListView {
     }
 }
 
-extension IamportPayment: Identifiable {
-    public var id: UUID {
-        return UUID()
-    }
-}

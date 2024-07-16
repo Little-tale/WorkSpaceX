@@ -68,9 +68,9 @@ struct RootFeature {
                     state.OnboardingViewState = OnboardingFeature.State()
                     state.currentLoginState = .logout
                 }
+                
                 return .none
             case .sendToWorkSpaceStart(.sendWorkSpaceInit(.presented(.goRootCheck))):
-                print("작동하는가..?")
                 
                 return .run { send in await send(.onAppear) }
                 
@@ -79,36 +79,21 @@ struct RootFeature {
                 return .run { send in await send(.onAppear) }
                 
             case .sendToOnboardingView(.checkedLogin):
-                print("엥??????")
+             
                 return .run { send in await send(.onAppear) }
                 
             case .sendToWorkSpaceTab(.noWorkSpaceTrigger) :
                 
-                return .run { send in await send(.onAppear)
-                }
+                return .run { send in await send(.onAppear) }
                 
-            case .sendToWorkSpaceStart:
-                
-                return .none
-                
-            case .binding:
-                
-                return .none
             case .sendToWorkSpaceTab(.delegate(.moveToOnBoardingView)):
                 state.currentLoginState = .logout
-                return .none
-                
-            case .sendToOnboardingView:
-                
                 return .none
                 
             case .sendToWorkSpaceTab(.refreshChecked):
                 state.OnboardingViewState = OnboardingFeature.State()
                 state.currentLoginState = .logout
                 
-//                return .run { send in
-//                    await send(.onAppear)
-//                }
                 return .none
             case .sendToWorkSpaceTab:
                 return .none
@@ -121,11 +106,12 @@ struct RootFeature {
                 return .none
     
             case .alert(.presented(.refreshTokkenDead)):
-               
                 state.OnboardingViewState = OnboardingFeature.State()
-                
                 state.currentLoginState = .logout
-              
+
+                return .none
+                
+            default:
                 return .none
             }
         }

@@ -27,3 +27,12 @@ struct SideMenuCoordinatorView: View {
         }
     }
 }
+
+extension SideMenuCoordinator.SideMenuScreen.State: Identifiable {
+    var id: UUID {
+        switch self {
+        case let .base(state):
+            return state.id
+        }
+    }
+}

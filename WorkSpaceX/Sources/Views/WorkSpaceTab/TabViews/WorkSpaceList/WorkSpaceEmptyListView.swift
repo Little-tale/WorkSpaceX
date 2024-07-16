@@ -81,8 +81,3 @@ struct WorkSpaceEmptyListView: View {
         }
     }
 }
-    //#Preview {
-    //    WorkSpaceEmptyListView(store: Store(initialState: WorkSpaceEmptyListFeature.State(), reducer: {
-    //        WorkSpaceEmptyListFeature()
-    //    }))
-    //}

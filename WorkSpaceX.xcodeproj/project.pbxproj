@@ -28,7 +28,6 @@
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
 		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
 		7B26D1962C1C51B800BC9912 /* WorkSpaceListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */; };
-		7B26D1E22C1DB5E300BC9912 /* ExScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */; };
 		7B26D1E42C1DB61200BC9912 /* SideMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E32C1DB61200BC9912 /* SideMenuCoordinator.swift */; };
 		7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E52C1DB7C200BC9912 /* SideMenuCoordinatorView.swift */; };
 		7B26D1EC2C1F00EC00BC9912 /* EXDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */; };
@@ -180,6 +179,7 @@
 		7B8FD6592C1BFCAB00948E7C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8FD6582C1BFCAB00948E7C /* ComposableArchitecture */; };
 		7BB030262C4536B400399D83 /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030252C4536B400399D83 /* MimeType.swift */; };
 		7BB030292C4536E900399D83 /* EncodingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030282C4536E900399D83 /* EncodingType.swift */; };
+		7BB0302B2C463C9C00399D83 /* ExIamportPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */; };
 		7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */; };
 		7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C342C37B02100F0ABDC /* SearchView .swift */; };
 		7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */; };
@@ -304,7 +304,6 @@
 		7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCordinator.swift; sourceTree = "<group>"; };
 		7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListScreens.swift; sourceTree = "<group>"; };
-		7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExScreens.swift; sourceTree = "<group>"; };
 		7B26D1E32C1DB61200BC9912 /* SideMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCoordinator.swift; sourceTree = "<group>"; };
 		7B26D1E52C1DB7C200BC9912 /* SideMenuCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCoordinatorView.swift; sourceTree = "<group>"; };
 		7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDate.swift; sourceTree = "<group>"; };
@@ -454,6 +453,7 @@
 		7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRealmModel.swift; sourceTree = "<group>"; };
 		7BB030252C4536B400399D83 /* MimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeType.swift; sourceTree = "<group>"; };
 		7BB030282C4536E900399D83 /* EncodingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingType.swift; sourceTree = "<group>"; };
+		7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExIamportPayment.swift; sourceTree = "<group>"; };
 		7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
 		7BC09C342C37B02100F0ABDC /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
 		7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
@@ -718,9 +718,9 @@
 				7BEC45FE2C18363900576ECA /* ExString.swift */,
 				7B8FD5FB2C19486500948E7C /* ExNotification.swift */,
 				7B8FD6222C1AA2CA00948E7C /* ExText.swift */,
-				7B26D1E12C1DB5E300BC9912 /* ExScreens.swift */,
 				7B26D1EB2C1F00EC00BC9912 /* EXDate.swift */,
 				7B10A9992C2910090035C3C8 /* ExCollection.swift */,
+				7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -1615,6 +1615,7 @@
 				7B5AEB0C2C1098C800D10330 /* StaticToastColorView.swift in Sources */,
 				7B7EB8632C36305300D22362 /* ProfileInfoEditView.swift in Sources */,
 				7BF9D73B2C269D720021D043 /* WorkSpaceChatEntity.swift in Sources */,
+				7BB0302B2C463C9C00399D83 /* ExIamportPayment.swift in Sources */,
 				7BF9D71B2C2406A40021D043 /* WorkSpaceMemberEntity.swift in Sources */,
 				7BEC45F52C1808F800576ECA /* ExImage.swift in Sources */,
 				7B10A9902C282EAF0035C3C8 /* ChatModeEntity.swift in Sources */,
@@ -1732,7 +1733,6 @@
 				7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
 				7BEC45D12C16AACE00576ECA /* CustomImagePickPeature.swift in Sources */,
-				7B26D1E22C1DB5E300BC9912 /* ExScreens.swift in Sources */,
 				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
 				7BC09C672C39497400F0ABDC /* CustomPaymentView.swift in Sources */,
 				7B26D2252C228B1800BC9912 /* WorkSpaceChanelsDTO.swift in Sources */,
