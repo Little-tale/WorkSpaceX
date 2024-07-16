@@ -106,8 +106,10 @@ extension ChannelEditView {
             }// VStack
             .padding(.horizontal, 20)
             
-            successButton()
-            
+          
+            SuccessButtonView(action: {
+                store.send(.regButtonTapped)
+            }, regButtonState: store.regButtonState)
         }
     }
 }
@@ -126,26 +128,6 @@ extension ChannelEditView {
             WSXImage.subCamera
                 .resizable()
                 .frame(width: 25, height: 25)
-        }
-    }
-}
-
-extension ChannelEditView {
-    
-    private func successButton() -> some View {
-        VStack {
-            Text("완료")
-                .font(WSXFont.title2)
-                .modifier(CommonButtonModifer())
-                .background(store.regButtonState ? WSXColor.green : WSXColor.gray)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.horizontal, 20)
-                .padding(.bottom, keyboardPadding + 10)
-                .foregroundStyle(WSXColor.white)
-                .asButton {
-                    store.send(.regButtonTapped)
-                }
-                .disabled(!store.regButtonState)
         }
     }
 }

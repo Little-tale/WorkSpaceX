@@ -118,11 +118,3 @@ extension CustomAlertView {
         }
     }
 }
-
-//#Preview {
-//    CustomAlertView(alertMode: .cancelWith, title: "테스트", message: "테스트테스트 테스트 테스트 테스트", onCancel: {
-//        
-//    }, onAction: {
-//        
-//    }, actionTitle: "액션")
-//}

@@ -181,6 +181,7 @@
 		7BB030292C4536E900399D83 /* EncodingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030282C4536E900399D83 /* EncodingType.swift */; };
 		7BB0302B2C463C9C00399D83 /* ExIamportPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */; };
 		7BB0302E2C46415000399D83 /* KakaoLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB0302D2C46415000399D83 /* KakaoLoginManager.swift */; };
+		7BB030302C465C8E00399D83 /* SuccessButtonView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB0302F2C465C8E00399D83 /* SuccessButtonView .swift */; };
 		7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */; };
 		7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C342C37B02100F0ABDC /* SearchView .swift */; };
 		7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */; };
@@ -456,6 +457,7 @@
 		7BB030282C4536E900399D83 /* EncodingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingType.swift; sourceTree = "<group>"; };
 		7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExIamportPayment.swift; sourceTree = "<group>"; };
 		7BB0302D2C46415000399D83 /* KakaoLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginManager.swift; sourceTree = "<group>"; };
+		7BB0302F2C465C8E00399D83 /* SuccessButtonView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SuccessButtonView .swift"; sourceTree = "<group>"; };
 		7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
 		7BC09C342C37B02100F0ABDC /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
 		7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
@@ -1267,6 +1269,7 @@
 				7BC09C662C39497400F0ABDC /* CustomPaymentView.swift */,
 				7BC09C6C2C3AB5D800F0ABDC /* ProgressLoadingSaveView.swift */,
 				7BC09C812C3BACF800F0ABDC /* CustomDocumentInteractionController.swift */,
+				7BB0302F2C465C8E00399D83 /* SuccessButtonView .swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -1726,6 +1729,7 @@
 				7B8FD6132C19B9C800948E7C /* EmailLoginAPIError.swift in Sources */,
 				7B7EB81F2C32638400D22362 /* DMSRoomDTO.swift in Sources */,
 				7BEC45F92C1813FE00576ECA /* ImageMapper.swift in Sources */,
+				7BB030302C465C8E00399D83 /* SuccessButtonView .swift in Sources */,
 				7BEC45FF2C18363900576ECA /* ExString.swift in Sources */,
 				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */,
 				7BEC45E32C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift in Sources */,

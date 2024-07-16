@@ -31,18 +31,10 @@ struct ProfileInfoEditView: View {
                     .font(WSXFont.title2)
                     Spacer()
                 }
-                Text("완료")
-                    .font(WSXFont.title2)
-                    .modifier(CommonButtonModifer())
-                    .background(store.buttonState ? WSXColor.green : WSXColor.gray)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, keyboardPadding + 10)
-                    .foregroundStyle(WSXColor.white)
-                    .asButton {
-                        store.send(.regButtonTapped)
-                    }
-                    .disabled(!store.buttonState)
+
+                SuccessButtonView(action: {
+                    store.send(.regButtonTapped)
+                }, regButtonState: store.regButtonState)
                 
             }
             .toolbar(.hidden, for: .tabBar)
