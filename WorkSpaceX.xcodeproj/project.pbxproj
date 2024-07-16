@@ -180,6 +180,7 @@
 		7BB030262C4536B400399D83 /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030252C4536B400399D83 /* MimeType.swift */; };
 		7BB030292C4536E900399D83 /* EncodingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB030282C4536E900399D83 /* EncodingType.swift */; };
 		7BB0302B2C463C9C00399D83 /* ExIamportPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */; };
+		7BB0302E2C46415000399D83 /* KakaoLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB0302D2C46415000399D83 /* KakaoLoginManager.swift */; };
 		7BC09C332C37AFC900F0ABDC /* SearchFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */; };
 		7BC09C352C37B02100F0ABDC /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C342C37B02100F0ABDC /* SearchView .swift */; };
 		7BC09C372C37B0C200F0ABDC /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */; };
@@ -454,6 +455,7 @@
 		7BB030252C4536B400399D83 /* MimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeType.swift; sourceTree = "<group>"; };
 		7BB030282C4536E900399D83 /* EncodingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingType.swift; sourceTree = "<group>"; };
 		7BB0302A2C463C9C00399D83 /* ExIamportPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExIamportPayment.swift; sourceTree = "<group>"; };
+		7BB0302D2C46415000399D83 /* KakaoLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginManager.swift; sourceTree = "<group>"; };
 		7BC09C322C37AFC900F0ABDC /* SearchFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeature.swift; sourceTree = "<group>"; };
 		7BC09C342C37B02100F0ABDC /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
 		7BC09C362C37B0C200F0ABDC /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
@@ -832,6 +834,7 @@
 		7B592E992C0E26F200E47797 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				7BB0302C2C46413B00399D83 /* Login */,
 				7BC09C952C3E234300F0ABDC /* PolingManager */,
 				7BEC45E52C16F28300576ECA /* Repository */,
 				7B2EEE4B2C12CE7E0024853C /* UserDefaults */,
@@ -1109,6 +1112,14 @@
 				7BB030282C4536E900399D83 /* EncodingType.swift */,
 			);
 			path = NetworkModel;
+			sourceTree = "<group>";
+		};
+		7BB0302C2C46413B00399D83 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7BB0302D2C46415000399D83 /* KakaoLoginManager.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		7BC09C312C37AFB800F0ABDC /* Search */ = {
@@ -1646,6 +1657,7 @@
 				7B7EB8232C32657200D22362 /* DMSListAPIError.swift in Sources */,
 				7BC09C392C37B14700F0ABDC /* SearchCoordinatorView.swift in Sources */,
 				7B10A9942C2832440035C3C8 /* ChatModeView.swift in Sources */,
+				7BB0302E2C46415000399D83 /* KakaoLoginManager.swift in Sources */,
 				7B7EB83C2C3399BE00D22362 /* DMSRoomUnReadDTO.swift in Sources */,
 				7B7EB8402C33A73D00D22362 /* DMSChatFeature.swift in Sources */,
 				7B8FD6262C1AA49C00948E7C /* SideMenuView.swift in Sources */,
