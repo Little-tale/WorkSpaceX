@@ -34,7 +34,7 @@ struct ProfileInfoEditView: View {
 
                 SuccessButtonView(action: {
                     store.send(.regButtonTapped)
-                }, regButtonState: store.regButtonState)
+                }, regButtonState: store.buttonState)
                 
             }
             .toolbar(.hidden, for: .tabBar)
