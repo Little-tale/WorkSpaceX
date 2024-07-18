@@ -16,62 +16,70 @@ struct EmailLoginView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            ZStack (alignment: .bottom) {
-                WSXColor.lightGray
-                VStack(spacing: 20) {
-                    HeaderTextField(
-                        headerTitle: "이메일",
-                        placeHolder: "이메일을 입력하세요",
-                        isSecure: false,
-                        binding: $store.email,
-                        scopeColor: false
-                    )
-                    .focused($focus, equals: .email)
-                    HeaderTextField(
-                        headerTitle: "비밀번호",
-                        placeHolder: "비밀번호를 입력하세요",
-                        isSecure: true,
-                        binding: $store.password,
-                        scopeColor: false
-                    )
-                    .focused($focus, equals: .password)
-                    
-                    loginIssueView(text: $store.loginBottomMessge)
-                    
-                    Spacer()
-                }
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
-                .font(WSXFont.title2)
-                
-                loginButtonView(buttonState: store.buttonState)
-                    .asButton {
-                        store.send(.loginButtonTapped)
+            NavigationStack {
+                ZStack (alignment: .bottom) {
+                    WSXColor.lightGray
+                    VStack(spacing: 20) {
+                        HeaderTextField(
+                            headerTitle: "이메일",
+                            placeHolder: "이메일을 입력하세요",
+                            isSecure: false,
+                            binding: $store.email,
+                            scopeColor: false
+                        )
+                        .focused($focus, equals: .email)
+                        HeaderTextField(
+                            headerTitle: "비밀번호",
+                            placeHolder: "비밀번호를 입력하세요",
+                            isSecure: true,
+                            binding: $store.password,
+                            scopeColor: false
+                        )
+                        .focused($focus, equals: .password)
+                        
+                        loginIssueView(text: $store.loginBottomMessge)
+                        
+                        Spacer()
                     }
-                    .disabled(!store.buttonState)
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    WSXImage.xImage
+                    .padding(.horizontal, 30)
+                    .padding(.top, 20)
+                    .font(WSXFont.title2)
+                    
+                    loginButtonView(buttonState: store.buttonState)
                         .asButton {
-                            store.send(.dismiss)
+                            store.send(.loginButtonTapped)
                         }
-                        .foregroundStyle(WSXColor.black)
+                        .disabled(!store.buttonState)
                 }
-            }
-            .popup(isPresented: $store.logining) {
-                ProgressView()
-                    .padding(.all, 60)
-                    .background(WSXColor.white)
-                    .foregroundStyle(WSXColor.black)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-            } customize: {
-                $0
-                    .closeOnTapOutside(false)
-                    .closeOnTap(false)
-                    .type(.default)
-                    .appearFrom(.centerScale)
-                    .animation(.spring)
+                .navigationTitle(
+                    Text(store.emailNavTitle)
+                )
+                .presentationDragIndicator(.visible)
+                .navigationBarTitleDisplayMode(.inline)
+                .font(WSXFont.title2)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        WSXImage.xImage
+                            .asButton {
+                                store.send(.dismiss)
+                            }
+                            .foregroundStyle(WSXColor.black)
+                    }
+                }
+                .popup(isPresented: $store.logining) {
+                    ProgressView()
+                        .padding(.all, 60)
+                        .background(WSXColor.white)
+                        .foregroundStyle(WSXColor.black)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                } customize: {
+                    $0
+                        .closeOnTapOutside(false)
+                        .closeOnTap(false)
+                        .type(.default)
+                        .appearFrom(.centerScale)
+                        .animation(.spring)
+                }
             }
         }
     }

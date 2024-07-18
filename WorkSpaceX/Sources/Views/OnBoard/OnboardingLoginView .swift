@@ -22,15 +22,7 @@ struct OnboardingLoginView: View {
                         state: \.signUp,
                         action: \.signUpFeature
                     )) { store in
-                        NavigationStack {
-                            SignUpView(store: store)
-                                .presentationDragIndicator(.visible)
-                                .navigationTitle(
-                                    Text(store.signupNavTitle)
-                                )
-                                .navigationBarTitleDisplayMode(.inline)
-                        }
-                        .font(WSXFont.title2)
+                        SignUpView(store: store)
                     }
                     .alert(item: $store.errorPresentation.sending(\.errorMessage)) { _ in
                         Text("에러")
@@ -43,15 +35,7 @@ struct OnboardingLoginView: View {
                             state: \.emailLogin,
                             action: \.emailLoginFeature
                         )) { store in
-                            NavigationStack {
-                                EmailLoginView(store: store)
-                                    .presentationDragIndicator(.visible)
-                                    .navigationTitle(
-                                        Text(store.emailNavTitle)
-                                    )
-                                    .navigationBarTitleDisplayMode(.inline)
-                            }
-                            .font(WSXFont.title2)
+                            EmailLoginView(store: store)
                         }
         }
         
