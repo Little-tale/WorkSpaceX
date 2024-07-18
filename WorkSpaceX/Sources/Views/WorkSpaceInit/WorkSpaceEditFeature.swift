@@ -16,6 +16,7 @@ struct WorkSpaceEditFeature {
     struct State: Equatable {
         var imagePick = CustomImagePickPeature.State()
         var showImagePicker = false
+        let navigationTitle = "워크스페이스 편집"
         var workSpaceName = ""
         var workSpaceIntroduce = ""
         var regButtonState = false

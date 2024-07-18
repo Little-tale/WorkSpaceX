@@ -22,6 +22,8 @@ struct EmailLoginFeature {
         var focusField: Field? = nil
         
         var logining: Bool = false
+        
+        let emailNavTitle = "이메일 로그인"
     }
     
     enum Action: BindableAction {

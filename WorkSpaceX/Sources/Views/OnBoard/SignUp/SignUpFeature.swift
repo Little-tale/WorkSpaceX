@@ -41,6 +41,7 @@ struct SignUpFeature {
         
         var scopeAndColorChange: Field?  = nil
        
+        let signupNavTitle = "회원가입"
     }
     enum Field: Hashable, CaseIterable {
         case email, nickname, contact, password, passwordConfirm

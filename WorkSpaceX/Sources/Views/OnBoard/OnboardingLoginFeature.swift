@@ -15,7 +15,13 @@ struct OnboardingLoginFeature {
     struct State: Equatable {
         @Presents var signUp: SignUpFeature.State?
         @Presents var emailLogin: EmailLoginFeature.State?
+        var viewText = ViewText()
         var errorPresentation: String? = nil
+    }
+    
+    struct ViewText: Equatable {
+        let also = "또는"
+        let newUser = "새롭게 회원가입 하기"
     }
     
     @Dependency(\.dismiss) var dismiss

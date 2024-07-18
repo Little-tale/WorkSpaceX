@@ -35,7 +35,7 @@ struct WorkSpaceEditView: View {
                             })
                         
                     }
-                    .navigationTitle("워크스페이스 편집")
+                    .navigationTitle(store.navigationTitle)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {

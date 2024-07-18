@@ -26,7 +26,7 @@ struct OnboardingLoginView: View {
                             SignUpView(store: store)
                                 .presentationDragIndicator(.visible)
                                 .navigationTitle(
-                                    Text("회원가입")
+                                    Text(store.signupNavTitle)
                                 )
                                 .navigationBarTitleDisplayMode(.inline)
                         }
@@ -47,7 +47,7 @@ struct OnboardingLoginView: View {
                                 EmailLoginView(store: store)
                                     .presentationDragIndicator(.visible)
                                     .navigationTitle(
-                                        Text("이메일 로그인")
+                                        Text(store.emailNavTitle)
                                     )
                                     .navigationBarTitleDisplayMode(.inline)
                             }
@@ -83,9 +83,9 @@ extension OnboardingLoginView {
                     store.send(.emailLoginButtonTapped)
                 }
             HStack {
-                Text("또는")
+                Text(store.viewText.also)
                 
-                Text("새롭게 회원가입 하기")
+                Text(store.viewText.newUser)
                     .foregroundStyle(WSXColor.lightGreen)
                     .asButton {
                         store.send(.newSignUpTapped)
