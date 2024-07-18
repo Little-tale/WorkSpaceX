@@ -50,16 +50,15 @@ struct WorkSpaceTabView: View {
                 print("감시해제")
                 NotificationCenter.default.removeObserver(self, name: .refreshTokenDead, object: nil)
             }
-            .alert("재로그인 필요",
+            .alert(store.refreshAlertText.title,
                    isPresented: $store.refreshAlert) {
-                Text("확인")
+                Text(store.refreshAlertText.action)
                     .asButton {
                         store.send(.refreshChecked)
                     }
             } message: {
-                Text("로그인 정보가 만료되어 재로그인이 필요합니다.")
+                Text(store.refreshAlertText.maeesage)
             }
-
         }
     }
 }
@@ -69,7 +68,7 @@ extension WorkSpaceTabView {
     
     private func tabView() -> some View {
         TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
-            
+            /// 홈뷰
             WorkSpaceListCoordinatorView(
                 store: store.scope(
                     state: \.homeState, action: \.homeTabbar)
@@ -83,7 +82,7 @@ extension WorkSpaceTabView {
                     Text(WorkSpaceTabCoordinator.Tab.home.title)
                 }
             }
-            
+            /// DM뷰
             DMSCoordinatorView(store: store.scope(state: \.dmHomeState, action: \.dmsTabbar))
                 .tag(WorkSpaceTabCoordinator.Tab.dm)
                 .tabItem {
@@ -94,7 +93,7 @@ extension WorkSpaceTabView {
                         Text(WorkSpaceTabCoordinator.Tab.dm.title)
                     }
                 }
-            
+            /// 검색뷰
             SearchCoordinatorView(store: store.scope(state: \.searchState, action: \.searchTabbar))
                 .tag(WorkSpaceTabCoordinator.Tab.search)
                 .tabItem {
@@ -105,6 +104,7 @@ extension WorkSpaceTabView {
                         Text(WorkSpaceTabCoordinator.Tab.search.title)
                     }
                 }
+            /// 설정뷰
             SettingCoordinatorView(store: store.scope(state: \.settingState, action: \.settingTabbar))
                 .tag(WorkSpaceTabCoordinator.Tab.setting)
                 .tabItem {

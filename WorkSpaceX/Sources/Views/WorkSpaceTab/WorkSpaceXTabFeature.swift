@@ -67,7 +67,7 @@ struct WorkSpaceTabCoordinator {
         
         var sideMenuState: WorkSpaceSideFeature.State?
         
-        
+        let refreshAlertText = ReloadAlertText()
         
         // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
         @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
@@ -76,9 +76,14 @@ struct WorkSpaceTabCoordinator {
         
         // Refresh
         var refreshAlert: Bool = false
-        
-
     }
+    
+    struct ReloadAlertText {
+        let title = "재로그인 필요"
+        let action = "확인"
+        let maeesage = "로그인 정보가 만료되어 재로그인이 필요합니다."
+    }
+    
     enum viewStateCase {
         case loading
         case noneSpace
