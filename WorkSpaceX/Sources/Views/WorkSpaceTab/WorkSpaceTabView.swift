@@ -11,7 +11,6 @@ import ComposableArchitecture
 struct WorkSpaceTabView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceTabCoordinator>
-
     
     var body: some View {
         
@@ -30,59 +29,7 @@ struct WorkSpaceTabView: View {
                         )
                     }
                 case .notEmpty:
-                    TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
-                        
-                        WorkSpaceListCoordinatorView(
-                            store: store.scope(
-                                state: \.homeState, action: \.homeTabbar)
-                        )
-                        .tag(WorkSpaceTabCoordinator.Tab.home)
-                        .tabItem {
-                            VStack {
-                                WSXImage.homeImage
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                Text(WorkSpaceTabCoordinator.Tab.home.title)
-                            }
-                        }
-                        
-                        DMSCoordinatorView(store: store.scope(state: \.dmHomeState, action: \.dmsTabbar))
-                            .tag(WorkSpaceTabCoordinator.Tab.dm)
-                            .tabItem {
-                                VStack {
-                                    WSXImage.dmsTab
-                                        .resizable()
-                                        .frame(width: 12, height: 12)
-                                    Text(WorkSpaceTabCoordinator.Tab.dm.title)
-                                }
-                            }
-                        
-                        SearchCoordinatorView(store: store.scope(state: \.searchState, action: \.searchTabbar))
-                            .tag(WorkSpaceTabCoordinator.Tab.search)
-                            .tabItem {
-                                VStack {
-                                    WSXImage.searchImage
-                                        .resizable()
-                                        .frame(width: 12, height: 12)
-                                    Text(WorkSpaceTabCoordinator.Tab.search.title)
-                                }
-                            }
-                        SettingCoordinatorView(store: store.scope(state: \.settingState, action: \.settingTabbar))
-                            .tag(WorkSpaceTabCoordinator.Tab.setting)
-                            .tabItem {
-                                VStack {
-                                    WSXImage.settingImage
-                                        .resizable()
-                                        .frame(width: 12, height: 12)
-                                    Text(WorkSpaceTabCoordinator.Tab.setting.title)
-                                }
-                            }
-                        //                            Text("setting")
-                        //                                .tabItem {
-                        //                                    Text(WorkSpaceXTabFeature.Tab.setting.title) }.tag(WorkSpaceXTabFeature.Tab.setting)
-                        
-                    }
-                    .tint(WSXColor.black)
+                    tabView()
                 }
                 SideMenu()
             }
@@ -115,6 +62,63 @@ struct WorkSpaceTabView: View {
 
         }
     }
+}
+
+
+extension WorkSpaceTabView {
+    
+    private func tabView() -> some View {
+        TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
+            
+            WorkSpaceListCoordinatorView(
+                store: store.scope(
+                    state: \.homeState, action: \.homeTabbar)
+            )
+            .tag(WorkSpaceTabCoordinator.Tab.home)
+            .tabItem {
+                VStack {
+                    WSXImage.homeImage
+                        .resizable()
+                        .frame(width: 12, height: 12)
+                    Text(WorkSpaceTabCoordinator.Tab.home.title)
+                }
+            }
+            
+            DMSCoordinatorView(store: store.scope(state: \.dmHomeState, action: \.dmsTabbar))
+                .tag(WorkSpaceTabCoordinator.Tab.dm)
+                .tabItem {
+                    VStack {
+                        WSXImage.dmsTab
+                            .resizable()
+                            .frame(width: 12, height: 12)
+                        Text(WorkSpaceTabCoordinator.Tab.dm.title)
+                    }
+                }
+            
+            SearchCoordinatorView(store: store.scope(state: \.searchState, action: \.searchTabbar))
+                .tag(WorkSpaceTabCoordinator.Tab.search)
+                .tabItem {
+                    VStack {
+                        WSXImage.searchImage
+                            .resizable()
+                            .frame(width: 12, height: 12)
+                        Text(WorkSpaceTabCoordinator.Tab.search.title)
+                    }
+                }
+            SettingCoordinatorView(store: store.scope(state: \.settingState, action: \.settingTabbar))
+                .tag(WorkSpaceTabCoordinator.Tab.setting)
+                .tabItem {
+                    VStack {
+                        WSXImage.settingImage
+                            .resizable()
+                            .frame(width: 12, height: 12)
+                        Text(WorkSpaceTabCoordinator.Tab.setting.title)
+                    }
+                }
+        }
+        .tint(WSXColor.black)
+       
+    }
     
     
     private func SideMenu() -> some View {
@@ -125,10 +129,6 @@ struct WorkSpaceTabView: View {
             }
         }
     }
+    
 }
 
-//#Preview {
-//    WorkSpaceTabView(store: Store(initialState: { WorkSpaceXTabFeature.State()}(), reducer: {
-//        WorkSpaceXTabFeature()
-//    }))
-//}
