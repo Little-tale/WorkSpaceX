@@ -78,7 +78,7 @@ struct WorkSpaceTabCoordinator {
         var refreshAlert: Bool = false
     }
     
-    struct ReloadAlertText {
+    struct ReloadAlertText: Equatable {
         let title = "재로그인 필요"
         let action = "확인"
         let maeesage = "로그인 정보가 만료되어 재로그인이 필요합니다."
