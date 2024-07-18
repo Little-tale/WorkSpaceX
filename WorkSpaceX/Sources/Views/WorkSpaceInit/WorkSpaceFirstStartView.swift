@@ -16,24 +16,9 @@ struct WorkSpaceFirstStartView: View {
     var body: some View {
         WithPerceptionTracking { 
             NavigationStack {
-                VStack {
-                    Text("출시 준비 완료!")
-                        .font(WSXFont.title0)
-                        .padding(.top, 20)
-                    Text(store.state.introText)
-                        .font(WSXFont.bodyBold)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 5)
-                    WSXImage.workSpaceStart
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .padding(.horizontal, 20)
-                        .frame(maxWidth: .infinity)
-                    
-                    Spacer()
-                    workSpaceMakeButton()
-                }
-                .navigationTitle("시작하기")
+                
+                contentView()
+                .navigationTitle(store.navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -58,8 +43,28 @@ struct WorkSpaceFirstStartView: View {
 
 extension WorkSpaceFirstStartView {
     
+    private func contentView() -> some View {
+        VStack {
+            Text(store.readyText)
+                .font(WSXFont.title0)
+                .padding(.top, 20)
+            Text(store.state.introText)
+                .font(WSXFont.bodyBold)
+                .multilineTextAlignment(.center)
+                .padding(.vertical, 5)
+            WSXImage.workSpaceStart
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.horizontal, 20)
+                .frame(maxWidth: .infinity)
+            
+            Spacer()
+            workSpaceMakeButton()
+        }
+    }
+    
     private func workSpaceMakeButton() -> some View {
-        Text("워크 스페이스 생성")
+        Text(store.workSpaceMakeText)
             .font(WSXFont.title2)
             .modifier(CommonButtonModifer())
             .background(WSXColor.green)

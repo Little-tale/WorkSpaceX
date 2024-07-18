@@ -14,6 +14,9 @@ struct WorkSpaceFirstStartFeature {
     @ObservableState
     struct State {
         var introText = "새로운 WorkSpaceX의 워크 스페이스를\n 시작할 준비가 되었어요!"
+        var readyText = "출시 준비 완료!"
+        var navigationTitle = "시작하기"
+        var workSpaceMakeText = "워크 스페이스 생성"
         @Presents var workSpaceIniter: WorkSpaceInitalFeature.State?
     }
     
