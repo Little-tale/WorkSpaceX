@@ -19,37 +19,8 @@ struct WorkSpaceInitalView: View {
                 ZStack {
                     ZStack ( alignment: .bottom ) {
                         WSXColor.lightGray
-                        VStack {
-                            ZStack (alignment: .bottomTrailing) {
-                                imagePickView()
-                                WSXImage.subCamera
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            } // ZStack
-                            .padding(.top, 25)
-                            
-                            HeaderTextField(
-                                headerTitle: "워크스페이스 이름",
-                                placeHolder: "워크스페이스 이름을 입력하세요 (필수)",
-                                isSecure: false,
-                                binding: $store.workSpaceName,
-                                scopeColor: false
-                            )
-                            .padding(.vertical, 10)
-                            .font(WSXFont.title2)
-                            HeaderTextField(
-                                headerTitle: "워크스페이스 설명",
-                                placeHolder: "워크스페이스 설명를 설명하세요 (옵션)",
-                                isSecure: false,
-                                binding: $store.workSpaceIntroduce,
-                                scopeColor: false
-                            )
-                            .font(WSXFont.title2)
-                            .padding(.vertical, 10)
-                            
-                            Spacer()
-                            
-                        }// VStack
+                        
+                        contentView()
                         .padding(.horizontal, 20)
                     
                         SuccessButtonView(action: {
@@ -98,6 +69,43 @@ struct WorkSpaceInitalView: View {
             }
             
         }
+    }
+}
+
+extension WorkSpaceInitalView {
+    
+    private func contentView() -> some View {
+        VStack {
+            ZStack (alignment: .bottomTrailing) {
+                imagePickView()
+                WSXImage.subCamera
+                    .resizable()
+                    .frame(width: 25, height: 25)
+            } // ZStack
+            .padding(.top, 25)
+            
+            HeaderTextField(
+                headerTitle: "워크스페이스 이름",
+                placeHolder: "워크스페이스 이름을 입력하세요 (필수)",
+                isSecure: false,
+                binding: $store.workSpaceName,
+                scopeColor: false
+            )
+            .padding(.vertical, 10)
+            .font(WSXFont.title2)
+            HeaderTextField(
+                headerTitle: "워크스페이스 설명",
+                placeHolder: "워크스페이스 설명를 설명하세요 (옵션)",
+                isSecure: false,
+                binding: $store.workSpaceIntroduce,
+                scopeColor: false
+            )
+            .font(WSXFont.title2)
+            .padding(.vertical, 10)
+            
+            Spacer()
+            
+        }// VStack
     }
 }
 
