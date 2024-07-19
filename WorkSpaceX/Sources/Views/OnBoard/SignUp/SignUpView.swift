@@ -21,84 +21,8 @@ struct SignUpView: View {
                 ZStack (alignment: .top) {
                     WSXColor.lightGray
                         .ignoresSafeArea(edges: .bottom)
-                    VStack (spacing: 14) {
-                        
-                        HStack (alignment: .bottom ,spacing: 15) {
-                            
-                            HeaderTextField(
-                                headerTitle: Const.SignUpView.email.title,
-                                placeHolder: Const.SignUpView.email.placeHolder,
-                                isSecure: false,
-                                binding: $store.user.email.sending(\.emailChanged),
-                                scopeColor: store.scopeAndColorChange == .email
-                            )
-                            .focused($focus, equals: .email)
-                            
-                            duplicateButton()
-                        }
-                        .padding(.horizontal, 30)
-                        
-                        HeaderTextField(
-                            headerTitle: Const.SignUpView.nickName.title,
-                           
-                            placeHolder: Const.SignUpView.nickName.placeHolder,
-                            isSecure: false,
-                            binding: $store.user.nickName.sending(\.nicknameChanged),
-                            scopeColor: store.scopeAndColorChange == .nickname
-                                
-                        )
-                        .focused($focus, equals: .nickname)
-                        .padding(.horizontal, 30)
-                        
-                        HeaderTextField(
-                            headerTitle: Const.SignUpView.contact.title,
-                            placeHolder: Const.SignUpView.contact.placeHolder,
-                            isSecure: false,
-                            binding: $store.user.contact.sending(\.contactChanged),
-                            scopeColor: store.scopeAndColorChange == .contact
-                        )
-                        .focused($focus, equals: .contact)
-                        .padding(.horizontal, 30)
-                        
-                        
-                        HeaderTextField(
-                            headerTitle: Const.SignUpView.password.title,
-                            placeHolder: Const.SignUpView.password.placeHolder,
-                            isSecure: true,
-                            binding: $store.user.password.sending(\.passwordChanged),
-                            scopeColor: store.scopeAndColorChange == .password
-                        )
-                        .focused($focus, equals: .password)
-                        .padding(.horizontal, 30)
-                        
-                        
-                        
-                        HeaderTextField(
-                            headerTitle: Const.SignUpView.passwordCheck.title,
-                            placeHolder: Const.SignUpView.passwordCheck.placeHolder,
-                            isSecure: true,
-                            binding: $store.passwordConfirm.sending(\.passwordConfirmationChanged),
-                            scopeColor: store.scopeAndColorChange == .passwordConfirm
-                        )
-                        .focused($focus, equals: .passwordConfirm)
-                        .padding(.horizontal, 30)
-                        
-                        Spacer()
-                        // store.testButtonState
-                        // ifCurrectView(text: nil)
-                        StaticToastColorView(
-                            text: $store.presentationText.sending(\.returnView),
-                            color: WSXColor.green,
-                            duration: 1
-                        )
-                        
-                        regButtonView(bool: store.state.lastButtonState)
-                            .asButton {
-                                store.send(.lastButtonTapped)
-                            }
-                            .disabled(!store.lastButtonState)
                     
-                    }
+                    contentView()
                     .padding(.top, 30)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
@@ -123,6 +47,90 @@ struct SignUpView: View {
 }
 
 extension SignUpView {
+    
+    private func contentView() -> some View {
+        VStack (spacing: 14) {
+            
+            emailTextField()
+            .padding(.horizontal, 30)
+            /// nickName
+            HeaderTextField(
+                headerTitle: Const.SignUpView.nickName.title,
+               
+                placeHolder: Const.SignUpView.nickName.placeHolder,
+                isSecure: false,
+                binding: $store.user.nickName.sending(\.nicknameChanged),
+                scopeColor: store.scopeAndColorChange == .nickname
+                    
+            )
+            .focused($focus, equals: .nickname)
+            .padding(.horizontal, 30)
+            /// contact
+            HeaderTextField(
+                headerTitle: Const.SignUpView.contact.title,
+                placeHolder: Const.SignUpView.contact.placeHolder,
+                isSecure: false,
+                binding: $store.user.contact.sending(\.contactChanged),
+                scopeColor: store.scopeAndColorChange == .contact
+            )
+            .focused($focus, equals: .contact)
+            .padding(.horizontal, 30)
+            
+            /// password
+            HeaderTextField(
+                headerTitle: Const.SignUpView.password.title,
+                placeHolder: Const.SignUpView.password.placeHolder,
+                isSecure: true,
+                binding: $store.user.password.sending(\.passwordChanged),
+                scopeColor: store.scopeAndColorChange == .password
+            )
+            .focused($focus, equals: .password)
+            .padding(.horizontal, 30)
+            
+            /// passwordCheck
+            HeaderTextField(
+                headerTitle: Const.SignUpView.passwordCheck.title,
+                placeHolder: Const.SignUpView.passwordCheck.placeHolder,
+                isSecure: true,
+                binding: $store.passwordConfirm.sending(\.passwordConfirmationChanged),
+                scopeColor: store.scopeAndColorChange == .passwordConfirm
+            )
+            .focused($focus, equals: .passwordConfirm)
+            .padding(.horizontal, 30)
+            
+            Spacer()
+            // store.testButtonState
+            // ifCurrectView(text: nil)
+            
+            StaticToastColorView(
+                text: $store.presentationText.sending(\.returnView),
+                color: WSXColor.green,
+                duration: 1
+            )
+            
+            regButtonView(bool: store.state.lastButtonState)
+                .asButton {
+                    store.send(.lastButtonTapped)
+                }
+                .disabled(!store.lastButtonState)
+        }
+    }
+    
+    private func emailTextField() -> some View {
+        HStack (alignment: .bottom ,spacing: 15) {
+            
+            HeaderTextField(
+                headerTitle: Const.SignUpView.email.title,
+                placeHolder: Const.SignUpView.email.placeHolder,
+                isSecure: false,
+                binding: $store.user.email.sending(\.emailChanged),
+                scopeColor: store.scopeAndColorChange == .email
+            )
+            .focused($focus, equals: .email)
+            
+            duplicateButton()
+        }
+    }
     
     private func duplicateButton() -> some View {
         Text("중복확인")
