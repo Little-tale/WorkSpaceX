@@ -19,28 +19,8 @@ struct EmailLoginView: View {
             NavigationStack {
                 ZStack (alignment: .bottom) {
                     WSXColor.lightGray
-                    VStack(spacing: 20) {
-                        HeaderTextField(
-                            headerTitle: "이메일",
-                            placeHolder: "이메일을 입력하세요",
-                            isSecure: false,
-                            binding: $store.email,
-                            scopeColor: false
-                        )
-                        .focused($focus, equals: .email)
-                        HeaderTextField(
-                            headerTitle: "비밀번호",
-                            placeHolder: "비밀번호를 입력하세요",
-                            isSecure: true,
-                            binding: $store.password,
-                            scopeColor: false
-                        )
-                        .focused($focus, equals: .password)
-                        
-                        loginIssueView(text: $store.loginBottomMessge)
-                        
-                        Spacer()
-                    }
+                    
+                    contentView()
                     .padding(.horizontal, 30)
                     .padding(.top, 20)
                     .font(WSXFont.title2)
@@ -83,6 +63,38 @@ struct EmailLoginView: View {
             }
         }
     }
+   
+    
+}
+
+extension EmailLoginView {
+    
+    func contentView() -> some View {
+        VStack(spacing: 20) {
+            HeaderTextField(
+                headerTitle: "이메일",
+                placeHolder: "이메일을 입력하세요",
+                isSecure: false,
+                binding: $store.email,
+                scopeColor: false
+            )
+            .focused($focus, equals: .email)
+            HeaderTextField(
+                headerTitle: "비밀번호",
+                placeHolder: "비밀번호를 입력하세요",
+                isSecure: true,
+                binding: $store.password,
+                scopeColor: false
+            )
+            .focused($focus, equals: .password)
+            
+            loginIssueView(text: $store.loginBottomMessge)
+            
+            Spacer()
+        }
+    }
+    
+    
     func loginButtonView(buttonState: Bool) -> some View {
         Text("로그인")
             .font(WSXFont.title2)
@@ -107,5 +119,4 @@ struct EmailLoginView: View {
             }
         }
     }
-    
 }
