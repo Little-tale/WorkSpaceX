@@ -39,7 +39,7 @@ struct WorkSpaceInitalView: View {
                             })
                         
                     }
-                    .navigationTitle("워크스페이스 생성")
+                    .navigationTitle(store.navigationTitle)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
@@ -59,7 +59,6 @@ struct WorkSpaceInitalView: View {
                     } message: { message in
                         Text(message)
                     }
-                    
                     
                     if store.showPrograssView {
                         ProgressView()
@@ -85,8 +84,8 @@ extension WorkSpaceInitalView {
             .padding(.top, 25)
             
             HeaderTextField(
-                headerTitle: "워크스페이스 이름",
-                placeHolder: "워크스페이스 이름을 입력하세요 (필수)",
+                headerTitle: store.workSpaceNameFieldType.headerTitle,
+                placeHolder: store.workSpaceNameFieldType.placeHolderTitle,
                 isSecure: false,
                 binding: $store.workSpaceName,
                 scopeColor: false
@@ -94,8 +93,8 @@ extension WorkSpaceInitalView {
             .padding(.vertical, 10)
             .font(WSXFont.title2)
             HeaderTextField(
-                headerTitle: "워크스페이스 설명",
-                placeHolder: "워크스페이스 설명를 설명하세요 (옵션)",
+                headerTitle: store.workSpaceExplainType.headerTitle,
+                placeHolder: store.workSpaceExplainType.placeHolderTitle,
                 isSecure: false,
                 binding: $store.workSpaceIntroduce,
                 scopeColor: false

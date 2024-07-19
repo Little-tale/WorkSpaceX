@@ -14,6 +14,11 @@ struct WorkSpaceInitalFeature {
     @ObservableState
     struct State: Equatable {
         var imagePick = CustomImagePickPeature.State()
+        
+        let workSpaceNameFieldType = WorkSpaceNameFieldType()
+        let workSpaceExplainType = WorkSpaceExplainType()
+        let navigationTitle = "워크스페이스 생성"
+        
         var showImagePicker = false
         
         var workSpaceName = ""
@@ -28,6 +33,17 @@ struct WorkSpaceInitalFeature {
         
         var logOutAlertState: AlertState<Action.Alert>?
     }
+    
+    struct WorkSpaceNameFieldType: Equatable {
+        let headerTitle = "워크스페이스 이름"
+        let placeHolderTitle = "워크스페이스 이름을 입력하세요 (필수)"
+    }
+    
+    struct WorkSpaceExplainType: Equatable {
+        let headerTitle = "워크스페이스 설명"
+        let placeHolderTitle = "워크스페이스 설명를 설명하세요 (옵션)"
+    }
+    
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
