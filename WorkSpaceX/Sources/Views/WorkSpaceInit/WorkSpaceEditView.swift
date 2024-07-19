@@ -46,23 +46,20 @@ struct WorkSpaceEditView: View {
                                 .foregroundStyle(WSXColor.black)
                         }
                     }
-                    .alert(item: $store.errorMessage) { _ in
-                        Text("에러 발생")
-                    } actions: { _ in
-                        Text("확인")
-                    } message: { message in
-                        Text(message)
+                   
+                    .alert(item: $store.alertCase) { alertCase in
+                        Text(alertCase.title)
+                    } actions: { alertCase in
+                        Text(alertCase.action)
+                            .asButton {
+                                if case .success = alertCase {
+                                    store.send(.alertSuccessTapped)
+                                }
+                            }
+                    } message: { alertCase in
+                        Text(alertCase.message)
                     }
-                    .alert(item: $store.successMessage) { _ in
-                        Text("수정 완료")
-                    } actions: { _ in
-                        Text("확인").asButton {
-                            store.send(.alertSuccessTapped)
-                        }
-                    } message: { message in
-                        Text(message)
-                    }
-                    
+
                     if store.showPrograssView {
                         ProgressView()
                             .centerOverlay(size: CGSize(width: 120, height: 120))
@@ -89,8 +86,8 @@ extension WorkSpaceEditView {
             .padding(.top, 25)
             
             HeaderTextField(
-                headerTitle: "워크스페이스 이름",
-                placeHolder: "워크스페이스 이름을 입력하세요 (필수)",
+                headerTitle: store.workSpaceNameFieldType.headerTitle,
+                placeHolder: store.workSpaceNameFieldType.placeHolderTitle,
                 isSecure: false,
                 binding: $store.workSpaceName,
                 scopeColor: false
@@ -98,8 +95,8 @@ extension WorkSpaceEditView {
             .padding(.vertical, 10)
             .font(WSXFont.title2)
             HeaderTextField(
-                headerTitle: "워크스페이스 설명",
-                placeHolder: "워크스페이스 설명를 설명하세요 (옵션)",
+                headerTitle: store.workSpaceExplainType.headerTitle,
+                placeHolder: store.workSpaceExplainType.placeHolderTitle,
                 isSecure: false,
                 binding: $store.workSpaceIntroduce,
                 scopeColor: false

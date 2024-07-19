@@ -433,30 +433,3 @@ extension AlertState where Action == RootFeature.Action.Alert {
         TextState("로그인 시간이 만료되어 재로그인이 필요합니다 ㅠㅠ")
     }
 }
-
-/*
- 
- // - > realmModel 은 다른 쓰레드로 넘기면 무제가 생김
- // run {} 구문 안은 Swift Concurrency 즉 어떤 쓰레드로 갈지 전혀 모름. 즉 run 구문안에서 렘 모델을 넘겨주거나 무언가를 하게 되는순간 터짐 ex) print(model.id) 터짐.
- // Thread 5: "Realm accessed from incorrect thread."
- // 해결 방법은 꽤 단순한데.
- // run 옆에 MainActor를 명시 하는방법이 있음
- 
- let result = try await workSpaceRepo.findMyWordSpace()
- 
- print("현재 스페이스 갯수")
- dump(result)
- await send(.saveRealmOfWorkSpaces(result))
- 
- 
- if let error = error as? WorkSpaceMeError {
-     
-     if error.ifDevelopError {
-         print(error.message)
-     } else {
-         print(error)
-     }
- } else
- */
-
-//

@@ -21,11 +21,50 @@ struct WorkSpaceEditFeature {
         var workSpaceIntroduce = ""
         var regButtonState = false
         var image: Data? = nil
-        var errorMessage: String? = nil
+       
         var successMessage: String? = nil
         var showPrograssView = false
         
         var workSpaceID = ""
+        
+        var alertCase: AlertCase? = nil
+        let workSpaceNameFieldType = WorkSpaceNameFieldType()
+        let workSpaceExplainType = WorkSpaceExplainType()
+    }
+    
+    struct WorkSpaceNameFieldType: Equatable {
+        let headerTitle = "워크스페이스 이름"
+        let placeHolderTitle = "워크스페이스 이름을 입력하세요 (필수)"
+    }
+    
+    struct WorkSpaceExplainType: Equatable {
+        let headerTitle = "워크스페이스 설명"
+        let placeHolderTitle = "워크스페이스 설명를 설명하세요 (옵션)"
+    }
+    
+    enum AlertCase: Equatable {
+        case error(String)
+        case success(String)
+        
+        var title: String {
+            switch self {
+            case .error:
+                "에러 발생"
+            case .success:
+                "수정 완료"
+            }
+        }
+        
+        var message: String {
+            switch self {
+            case .error(let text), .success(let text):
+                text
+            }
+        }
+        
+        var action: String {
+            return "확인"
+        }
     }
     
     enum Action: BindableAction {
@@ -38,8 +77,8 @@ struct WorkSpaceEditFeature {
         case regButtonTapped
         case dismissButtonTapped
         
-        case errorMessage(String)
-        case successMessage(String)
+        case alertCase(AlertCase?)
+//        case successMessage(String)
         
         case regSuccess(WorkSpaceEntity)
         case realmRegSuccess
@@ -121,7 +160,7 @@ struct WorkSpaceEditFeature {
                 } catch: { error, send in
                     if let error = error as? WorkSpaceEditAPIError {
                         if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
+                            await send(.alertCase(.error(error.message)))
                         } else { print(error) }
                     
                     } else {
@@ -138,19 +177,21 @@ struct WorkSpaceEditFeature {
                     
                 } catch: { error, send in
                     print(error)
-                    await send(.errorMessage("저장중 오류가 발생하였습니다."))
+                    await send(.alertCase(.error("저장중 오류가 발생하였습니다.")))
                 }
                 
             case .realmRegSuccess:
                 return .run { send in
-                    await send(.successMessage("저장 되었습니다."))
+                    await send(.alertCase(.success("저장 되었습니다.")))
                 }
                 
-            case let .errorMessage(message):
-                state.errorMessage = message
-                
-            case let .successMessage(message):
-                state.successMessage = message
+//            case let .errorMessage(message):
+//                state.errorMessage = message
+//                
+//            case let .successMessage(message):
+//                state.successMessage = message
+            case let .alertCase(alert):
+                state.alertCase = alert
                 
             case .alertSuccessTapped:
                 return .run { send in
