@@ -16,7 +16,7 @@ enum UserDomainRouter: Router {
     case appleLoginRegister(AppleLoginDTORequest)
     case myProfile
     
-    case editUserInfo(UserInfoEditReqeustDTO)
+    case editUserInfo(UserInfoEditRequestDTO)
     case editUserProfileImage(image: Data, boundary: String)
 }
 extension UserDomainRouter {

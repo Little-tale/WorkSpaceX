@@ -132,7 +132,7 @@ extension DMSRepository {
             user: member,
             unReadCount: model.UnReadCount,
             lastChat: model.lastChatText,
-            lasstChatDate: model.lastChatDate ?? Date()
+            lastChatDate: model.lastChatDate ?? Date()
         )
     }
     

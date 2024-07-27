@@ -40,7 +40,7 @@ actor RefreshTokenManager {
             guard let access = UserDefaultsManager.accessToken else {
                 print("엑세스 Miss \(UserDefaultsManager.accessToken ?? "nil")")
                 
-                RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                RefreshTokenDeadReceiver.shared.postRefreshTokenDead()
                 return
             }
             
@@ -89,7 +89,7 @@ actor RefreshTokenManager {
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             if let errorResponse = try? WSXCoder.shared.jsonDecoding(model: APIErrorResponse.self, from: data) {
                 if errorResponse.errorCode == CommonError.refreshDead.rawValue {
-                    RefreshTokkenDeadReciver.shared.postRefreshTokenDead()
+                    RefreshTokenDeadReceiver.shared.postRefreshTokenDead()
                 }
                 let errorInstance = errorType.makeErrorType(from: errorResponse.errorCode)
                 throw errorInstance

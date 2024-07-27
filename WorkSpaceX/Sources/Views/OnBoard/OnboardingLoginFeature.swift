@@ -74,7 +74,7 @@ struct OnboardingLoginFeature {
             case .kakaoLoginButtonTapped:
                 return .run { send in
 
-                    let result = await kakaoLogin.reqeustKakao()
+                    let result = await kakaoLogin.requestKakao()
                     await send(.kakaoLoginSuccess(result))
                 }
             case .kakaoLoginSuccess(let result):

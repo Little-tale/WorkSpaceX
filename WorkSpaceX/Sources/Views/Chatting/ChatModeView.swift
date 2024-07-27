@@ -155,7 +155,7 @@ struct ChatModeView: View {
     private func otherProfileView(model: WorkSpaceMembersEntity) -> some View {
         HStack {
             if let image = model.profileImage {
-                DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middle.size)
                     .frame(width: 40, height: 40)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             } else {
@@ -202,7 +202,7 @@ extension ChatModeView {
             Image(systemName: "questionmark")
                 .resizable()
         case .image:
-            DownSamplingImageView(url: URL(string: model), size: ImageResizingCase.middel.size)
+            DownSamplingImageView(url: URL(string: model), size: ImageResizingCase.middle.size)
             
         case .pdf:
             VStack {

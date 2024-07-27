@@ -267,7 +267,7 @@ struct DMSChatFeature {
                 }
             case let .userInfoReqeust(memberId):
                 return .run { @MainActor send in
-                    let result = try await workRepo.reqeustUserInfo(
+                    let result = try await workRepo.requestUserInfo(
                         userID: memberId
                         // 렘에 업데이트하고 가져오는게 낳을것 같음
                     )
@@ -282,7 +282,7 @@ struct DMSChatFeature {
                     }
 //                    await send(.userInfoResult(result))
                 } catch: { error, send in
-                    if let error = error as? UserInfoReqeustAPIError {
+                    if let error = error as? UserInfoRequestAPIError {
                         if !error.ifDevelopError {
                             await send(.errorMessage(error.message))
                         } else {

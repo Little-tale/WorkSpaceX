@@ -21,7 +21,7 @@ struct WorkSpaceDomainMapper: Mapper {
         )
     }
     
-    func toWorkSpaceListModel(_ dtos: WorkSpaceaListDTO ) -> [WorkSpaceEntity] {
+    func toWorkSpaceListModel(_ dtos: WorkSpaceListDTO ) -> [WorkSpaceEntity] {
         dtos.workSpaces.map { toWorkSpaceModel(model: $0) }
     }
     
@@ -29,7 +29,7 @@ struct WorkSpaceDomainMapper: Mapper {
 
 extension WorkSpaceDomainMapper {
     
-    func workSpaceReqeustDTO(
+    func workSpaceRequestDTO(
         model: NewWorkSpaceRequest
     ) -> MakeWorkSpaceDTORequest {
         
@@ -40,7 +40,7 @@ extension WorkSpaceDomainMapper {
         )
     }
     
-    func workSpaceReqeustDTO(model: EditWorkSpaceReqeust) -> ModifyWorkSpaceDTORequest {
+    func workSpaceRequestDTO(model: EditWorkSpaceRequest) -> ModifyWorkSpaceDTORequest {
         
         return ModifyWorkSpaceDTORequest(
             name: model.name,

@@ -139,7 +139,7 @@ struct WorkSpaceInitalFeature {
 
                 return .run { [request = request] send in
                     print(request)
-                    let result = try await repository.regWorkSpaceReqeust(request)
+                    let result = try await repository.regWorkSpaceRequest(request)
                     UserDefaultsManager.workSpaceSelectedID = result.workSpaceID
                     await send(.regSuccess(result))
                     

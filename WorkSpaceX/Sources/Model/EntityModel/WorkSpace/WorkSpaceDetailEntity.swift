@@ -17,18 +17,18 @@ struct WorkSpaceDetailEntity: Entity {
     let ownerID: String
     let createdAt: String
     
-    var chanelEntitys: [ChanelEntity]
-    var workSpaceMembersEntitys : [WorkSpaceMembersEntity]
+    var channelEntities: [ChanelEntity]
+    var workSpaceMembersEntities : [WorkSpaceMembersEntity]
     
-    init(workSpaceID: String, name: String, description: String?, coverImage: URL?, ownerID: String, createdAt: String, chanelEntitys: [ChanelEntity], workSpaceMembersEntitys: [WorkSpaceMembersEntity]) {
+    init(workSpaceID: String, name: String, description: String?, coverImage: URL?, ownerID: String, createdAt: String, channelEntities: [ChanelEntity], workSpaceMembersEntities: [WorkSpaceMembersEntity]) {
         self.workSpaceID = workSpaceID
         self.name = name
         self.description = description
         self.coverImage = coverImage
         self.ownerID = ownerID
         self.createdAt = createdAt
-        self.chanelEntitys = chanelEntitys
-        self.workSpaceMembersEntitys = workSpaceMembersEntitys
+        self.channelEntities = channelEntities
+        self.workSpaceMembersEntities = workSpaceMembersEntities
     }
 }
 

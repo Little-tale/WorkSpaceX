@@ -73,7 +73,7 @@ extension DMSListView {
         VStack {
             Group {
                 if let image = model.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middle.size)
                 } else {
                     WSXImage.profileEmpty1
                         .resizable()
@@ -114,7 +114,7 @@ extension DMSListView {
             HStack (alignment: .top) {
                Group {
                     if let image = model.user.profileImage {
-                        DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                        DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middle.size)
                     } else {
                         WSXImage.profileEmpty1
                             .resizable()
@@ -131,7 +131,7 @@ extension DMSListView {
                         Spacer()
                         
                         VStack {
-                            Text(DateManager.shared.dateToStringToRoomList(model.lasstChatDate))
+                            Text(DateManager.shared.dateToStringToRoomList(model.lastChatDate))
                                 .font(WSXFont.regu1)
                         }
                     }

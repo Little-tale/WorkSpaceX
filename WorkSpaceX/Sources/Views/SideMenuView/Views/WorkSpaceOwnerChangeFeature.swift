@@ -87,7 +87,7 @@ struct WorkSpaceOwnerChangeFeature {
                 let ownerID = model.userID
                 return .run { send in
                     await send(.changing(true))
-                    let result = try await workRepo.workSpaceOWnerChange(
+                    let result = try await workRepo.workSpaceOwnerChange(
                         workSpaceID: workSpace,
                         ownerID: ownerID
                     )

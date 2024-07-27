@@ -9,6 +9,6 @@ import Foundation
 
 extension Notification.Name {
     
-    static let ifNeedReChack = Notification.Name("ifNeedReChack")
+    static let ifNeedReCheck = Notification.Name("ifNeedReChack")
     
 }

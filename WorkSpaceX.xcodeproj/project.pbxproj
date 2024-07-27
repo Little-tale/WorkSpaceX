@@ -16,9 +16,9 @@
 		7B10A9A02C296B680035C3C8 /* ChatMultipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A99F2C296B680035C3C8 /* ChatMultipart.swift */; };
 		7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9A12C296FD30035C3C8 /* FileType.swift */; };
 		7B10A9A42C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B10A9A32C29836C0035C3C8 /* WorkSpaceChatSendAPIError.swift */; };
+		7B1B26EC2C54FBB000384C55 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1B26EB2C54FBB000384C55 /* TCACoordinators */; };
 		7B23ADCC2C2A8DED00A9E499 /* CustomDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADCB2C2A8DED00A9E499 /* CustomDataPicker.swift */; };
 		7B23ADCE2C2ADA4500A9E499 /* WSXSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADCD2C2ADA4500A9E499 /* WSXSocketManager.swift */; };
-		7B23ADD12C2ADB1E00A9E499 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B23ADD02C2ADB1E00A9E499 /* SocketIO */; };
 		7B23ADD32C2C07D800A9E499 /* ChatChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD22C2C07D800A9E499 /* ChatChannelSettingView.swift */; };
 		7B23ADD52C2C07FA00A9E499 /* ChatChannelSettingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD42C2C07FA00A9E499 /* ChatChannelSettingFeature.swift */; };
 		7B23ADD92C2C2A4300A9E499 /* NormalButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADD82C2C2A4300A9E499 /* NormalButtonViewModifier.swift */; };
@@ -26,7 +26,6 @@
 		7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B23ADDE2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift */; };
 		7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18D2C1C19E300BC9912 /* WorkSpaceListCordinator.swift */; };
 		7B26D1902C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D18F2C1C327800BC9912 /* WorkSpaceListCoordinatorView.swift */; };
-		7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7B26D1922C1C4EF300BC9912 /* TCACoordinators */; };
 		7B26D1962C1C51B800BC9912 /* WorkSpaceListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1952C1C51B800BC9912 /* WorkSpaceListScreens.swift */; };
 		7B26D1E42C1DB61200BC9912 /* SideMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E32C1DB61200BC9912 /* SideMenuCoordinator.swift */; };
 		7B26D1E62C1DB7C200BC9912 /* SideMenuCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B26D1E52C1DB7C200BC9912 /* SideMenuCoordinatorView.swift */; };
@@ -74,6 +73,8 @@
 		7B2EEE472C12C6800024853C /* TokkenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE462C12C6800024853C /* TokkenModel.swift */; };
 		7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE482C12C6F00024853C /* UserEntity.swift */; };
 		7B2EEE4D2C12CE900024853C /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2EEE4C2C12CE900024853C /* UserDefaultsWrapper.swift */; };
+		7B52FCD82C54FF1C00DEE50A /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7B52FCD72C54FF1C00DEE50A /* iamport-ios */; };
+		7B52FCDB2C54FFA300DEE50A /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B52FCDA2C54FFA300DEE50A /* SocketIO */; };
 		7B592E852C0E251F00E47797 /* WorkSpaceXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592E842C0E251F00E47797 /* WorkSpaceXApp.swift */; };
 		7B592E892C0E252000E47797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E882C0E252000E47797 /* Assets.xcassets */; };
 		7B592E8C2C0E252000E47797 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B592E8B2C0E252000E47797 /* Preview Assets.xcassets */; };
@@ -134,13 +135,13 @@
 		7B7EB8502C33C53800D22362 /* DMSChatListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB84F2C33C53800D22362 /* DMSChatListDTO.swift */; };
 		7B7EB8522C33C6B700D22362 /* DMSChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */; };
 		7B7EB8542C33CD3700D22362 /* DMChatRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */; };
-		7B7EB8562C33F1C100D22362 /* UserInfoReqeustAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */; };
+		7B7EB8562C33F1C100D22362 /* UserInfoRequestAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8552C33F1C100D22362 /* UserInfoRequestAPIError.swift */; };
 		7B7EB8592C35435A00D22362 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */; };
 		7B7EB85B2C3543CB00D22362 /* ProfileInfoFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */; };
 		7B7EB85F2C357D3700D22362 /* UserInfoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */; };
 		7B7EB8612C362EC400D22362 /* ProfileInfoEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */; };
 		7B7EB8632C36305300D22362 /* ProfileInfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */; };
-		7B7EB8652C36431A00D22362 /* UserInfoEditReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8642C36431A00D22362 /* UserInfoEditReqeustDTO.swift */; };
+		7B7EB8652C36431A00D22362 /* UserInfoEditRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8642C36431A00D22362 /* UserInfoEditRequestDTO.swift */; };
 		7B7EB8672C36445400D22362 /* UserEditDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8662C36445400D22362 /* UserEditDTO.swift */; };
 		7B7EB8692C36453800D22362 /* UserEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8682C36453800D22362 /* UserEditAPIError.swift */; };
 		7B7EB86B2C36562C00D22362 /* PopupVIewSmallToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */; };
@@ -172,7 +173,7 @@
 		7B8FD6432C1AC0C100948E7C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6422C1AC0C100948E7C /* DateManager.swift */; };
 		7B8FD6462C1AF19400948E7C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7B8FD6452C1AF19400948E7C /* Kingfisher */; };
 		7B8FD6482C1AF22D00948E7C /* DownSamplingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6472C1AF22D00948E7C /* DownSamplingImageView.swift */; };
-		7B8FD64D2C1B421200948E7C /* RefreshTokkenDeadReciver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */; };
+		7B8FD64D2C1B421200948E7C /* RefreshTokenDeadReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD64C2C1B421200948E7C /* RefreshTokenDeadReceiver.swift */; };
 		7B8FD64F2C1BEB9900948E7C /* WorkSpaceSideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD64E2C1BEB9900948E7C /* WorkSpaceSideView.swift */; };
 		7B8FD6512C1BEF3500948E7C /* WorkSpaceSideFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6502C1BEF3500948E7C /* WorkSpaceSideFeature.swift */; };
 		7B8FD6532C1BF77A00948E7C /* WorkSpaceRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */; };
@@ -189,7 +190,6 @@
 		7BC09C3B2C37DD1D00F0ABDC /* SearchResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3A2C37DD1D00F0ABDC /* SearchResultDTO.swift */; };
 		7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */; };
 		7BC09C3F2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */; };
-		7BC09C422C383AB600F0ABDC /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC09C412C383AB600F0ABDC /* iamport-ios */; };
 		7BC09C452C383B6E00F0ABDC /* StoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C442C383B6E00F0ABDC /* StoreRouter.swift */; };
 		7BC09C482C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */; };
 		7BC09C4A2C383C7300F0ABDC /* StoreVaildateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */; };
@@ -243,7 +243,7 @@
 		7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */; };
 		7BEC45D52C16C7DE00576ECA /* CustomeImagePickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D42C16C7DE00576ECA /* CustomeImagePickView.swift */; };
 		7BEC45D82C16C9E400576ECA /* RoudProfileImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */; };
-		7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DA2C16E1F700576ECA /* WorkSpaceaListDTO.swift */; };
+		7BEC45DB2C16E1F700576ECA /* WorkSpaceListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */; };
 		7BEC45DD2C16E2AC00576ECA /* WorkSpaceDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */; };
 		7BEC45DF2C16E60100576ECA /* WorkSpaceDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DE2C16E60100576ECA /* WorkSpaceDomainError.swift */; };
 		7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */; };
@@ -414,13 +414,13 @@
 		7B7EB84F2C33C53800D22362 /* DMSChatListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatListDTO.swift; sourceTree = "<group>"; };
 		7B7EB8512C33C6B700D22362 /* DMSChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSChatEntity.swift; sourceTree = "<group>"; };
 		7B7EB8532C33CD3700D22362 /* DMChatRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatRealmModel.swift; sourceTree = "<group>"; };
-		7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoReqeustAPIError.swift; sourceTree = "<group>"; };
+		7B7EB8552C33F1C100D22362 /* UserInfoRequestAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRequestAPIError.swift; sourceTree = "<group>"; };
 		7B7EB8582C35435A00D22362 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		7B7EB85A2C3543CB00D22362 /* ProfileInfoFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoFeature.swift; sourceTree = "<group>"; };
 		7B7EB85E2C357D3700D22362 /* UserInfoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEntity.swift; sourceTree = "<group>"; };
 		7B7EB8602C362EC400D22362 /* ProfileInfoEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEditFeature.swift; sourceTree = "<group>"; };
 		7B7EB8622C36305300D22362 /* ProfileInfoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoEditView.swift; sourceTree = "<group>"; };
-		7B7EB8642C36431A00D22362 /* UserInfoEditReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEditReqeustDTO.swift; sourceTree = "<group>"; };
+		7B7EB8642C36431A00D22362 /* UserInfoEditRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEditRequestDTO.swift; sourceTree = "<group>"; };
 		7B7EB8662C36445400D22362 /* UserEditDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditDTO.swift; sourceTree = "<group>"; };
 		7B7EB8682C36453800D22362 /* UserEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditAPIError.swift; sourceTree = "<group>"; };
 		7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVIewSmallToColor.swift; sourceTree = "<group>"; };
@@ -449,7 +449,7 @@
 		7B8FD6402C1ABE1A00948E7C /* RealmError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmError.swift; sourceTree = "<group>"; };
 		7B8FD6422C1AC0C100948E7C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		7B8FD6472C1AF22D00948E7C /* DownSamplingImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownSamplingImageView.swift; sourceTree = "<group>"; };
-		7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokkenDeadReciver.swift; sourceTree = "<group>"; };
+		7B8FD64C2C1B421200948E7C /* RefreshTokenDeadReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenDeadReceiver.swift; sourceTree = "<group>"; };
 		7B8FD64E2C1BEB9900948E7C /* WorkSpaceSideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSideView.swift; sourceTree = "<group>"; };
 		7B8FD6502C1BEF3500948E7C /* WorkSpaceSideFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSideFeature.swift; sourceTree = "<group>"; };
 		7B8FD6522C1BF77A00948E7C /* WorkSpaceRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRealmModel.swift; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 		7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitalFeature.swift; sourceTree = "<group>"; };
 		7BEC45D42C16C7DE00576ECA /* CustomeImagePickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomeImagePickView.swift; sourceTree = "<group>"; };
 		7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoudProfileImageModifier.swift; sourceTree = "<group>"; };
-		7BEC45DA2C16E1F700576ECA /* WorkSpaceaListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceaListDTO.swift; sourceTree = "<group>"; };
+		7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListDTO.swift; sourceTree = "<group>"; };
 		7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDTO.swift; sourceTree = "<group>"; };
 		7BEC45DE2C16E60100576ECA /* WorkSpaceDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDomainError.swift; sourceTree = "<group>"; };
 		7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRouter.swift; sourceTree = "<group>"; };
@@ -564,16 +564,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B8FD6382C1AB50100948E7C /* Realm in Frameworks */,
+				7B1B26EC2C54FBB000384C55 /* TCACoordinators in Frameworks */,
 				7B5AEB072C108FCB00D10330 /* PopupView in Frameworks */,
 				7B8FD6592C1BFCAB00948E7C /* ComposableArchitecture in Frameworks */,
-				7B23ADD12C2ADB1E00A9E499 /* SocketIO in Frameworks */,
 				7B8FD63A2C1AB50100948E7C /* RealmSwift in Frameworks */,
+				7B52FCDB2C54FFA300DEE50A /* SocketIO in Frameworks */,
 				7BEC45B32C130EB700576ECA /* KakaoSDKUser in Frameworks */,
 				7B8FD6462C1AF19400948E7C /* Kingfisher in Frameworks */,
 				7BEC45B12C130EB700576ECA /* KakaoSDKCommon in Frameworks */,
-				7B26D1932C1C4EF300BC9912 /* TCACoordinators in Frameworks */,
 				7BEC45AF2C130EB700576ECA /* KakaoSDKAuth in Frameworks */,
-				7BC09C422C383AB600F0ABDC /* iamport-ios in Frameworks */,
+				7B52FCD82C54FF1C00DEE50A /* iamport-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,7 +684,7 @@
 				7B2EEE432C12C4A00024853C /* TokenDTO.swift */,
 				7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */,
 				7B8FD61E2C1A901500948E7C /* UserProfileDTO.swift */,
-				7B7EB8642C36431A00D22362 /* UserInfoEditReqeustDTO.swift */,
+				7B7EB8642C36431A00D22362 /* UserInfoEditRequestDTO.swift */,
 				7B7EB8662C36445400D22362 /* UserEditDTO.swift */,
 			);
 			path = UserDomain;
@@ -846,7 +846,7 @@
 				7B592EDA2C0F2CC100E47797 /* TextValidation.swift */,
 				7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandler.swift */,
 				7B8FD6422C1AC0C100948E7C /* DateManager.swift */,
-				7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */,
+				7B8FD64C2C1B421200948E7C /* RefreshTokenDeadReceiver.swift */,
 				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
 				7BC09C7D2C3B8F7300F0ABDC /* ImageResizingCase.swift */,
 				7BC09C8A2C3BC54500F0ABDC /* WSXFileManager.swift */,
@@ -1277,7 +1277,7 @@
 		7BEC45D92C16E1E000576ECA /* WorkSpace */ = {
 			isa = PBXGroup;
 			children = (
-				7BEC45DA2C16E1F700576ECA /* WorkSpaceaListDTO.swift */,
+				7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */,
 				7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */,
 				7BEC45E22C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift */,
 				7B26D2242C228B1800BC9912 /* WorkSpaceChanelsDTO.swift */,
@@ -1314,7 +1314,7 @@
 				7B7EB8172C31643300D22362 /* ChannelDeleteAPIError.swift */,
 				7B7EB8222C32657200D22362 /* DMSListAPIError.swift */,
 				7B7EB8492C33B8EB00D22362 /* DMSRoomAPIError.swift */,
-				7B7EB8552C33F1C100D22362 /* UserInfoReqeustAPIError.swift */,
+				7B7EB8552C33F1C100D22362 /* UserInfoRequestAPIError.swift */,
 				7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */,
 				7BC09C8C2C3C0A2700F0ABDC /* WorkSpaceExitError.swift */,
 			);
@@ -1456,9 +1456,9 @@
 				7B8FD6392C1AB50100948E7C /* RealmSwift */,
 				7B8FD6452C1AF19400948E7C /* Kingfisher */,
 				7B8FD6582C1BFCAB00948E7C /* ComposableArchitecture */,
-				7B26D1922C1C4EF300BC9912 /* TCACoordinators */,
-				7B23ADD02C2ADB1E00A9E499 /* SocketIO */,
-				7BC09C412C383AB600F0ABDC /* iamport-ios */,
+				7B1B26EB2C54FBB000384C55 /* TCACoordinators */,
+				7B52FCD72C54FF1C00DEE50A /* iamport-ios */,
+				7B52FCDA2C54FFA300DEE50A /* SocketIO */,
 			);
 			productName = WorkSpaceX;
 			productReference = 7B592E812C0E251F00E47797 /* WorkSpaceX.app */;
@@ -1494,9 +1494,9 @@
 				7B8FD6362C1AB50100948E7C /* XCRemoteSwiftPackageReference "realm-swift" */,
 				7B8FD6442C1AF19400948E7C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7B8FD6572C1BFCAB00948E7C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
-				7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */,
-				7BC09C402C383AB600F0ABDC /* XCRemoteSwiftPackageReference "iamport-ios" */,
+				7B1B26EA2C54FBB000384C55 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				7B52FCD62C54FF1C00DEE50A /* XCRemoteSwiftPackageReference "iamport-ios" */,
+				7B52FCD92C54FFA300DEE50A /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 7B592E822C0E251F00E47797 /* Products */;
 			projectDirPath = "";
@@ -1532,7 +1532,7 @@
 				7BC09C452C383B6E00F0ABDC /* StoreRouter.swift in Sources */,
 				7B2EEE3C2C1210990024853C /* AppDelegate.swift in Sources */,
 				7B2EEE492C12C6F00024853C /* UserEntity.swift in Sources */,
-				7B7EB8652C36431A00D22362 /* UserInfoEditReqeustDTO.swift in Sources */,
+				7B7EB8652C36431A00D22362 /* UserInfoEditRequestDTO.swift in Sources */,
 				7B23ADCE2C2ADA4500A9E499 /* WSXSocketManager.swift in Sources */,
 				7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */,
 				7BF9D7232C2535C90021D043 /* WorkSpaceMembersAPIError.swift in Sources */,
@@ -1552,7 +1552,7 @@
 				7B26D2212C2280FB00BC9912 /* WorkSpaceChannelRealmModel.swift in Sources */,
 				7B2EEE2E2C11B6AC0024853C /* UserEmail.swift in Sources */,
 				7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */,
-				7B7EB8562C33F1C100D22362 /* UserInfoReqeustAPIError.swift in Sources */,
+				7B7EB8562C33F1C100D22362 /* UserInfoRequestAPIError.swift in Sources */,
 				7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */,
 				7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */,
 				7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */,
@@ -1711,7 +1711,7 @@
 				7B7EB80E2C2EAC5900D22362 /* ChannelEditAPIError.swift in Sources */,
 				7B7EB84E2C33C45900D22362 /* DMSChatDTO.swift in Sources */,
 				7B7EB8162C31486300D22362 /* ChannelOwnerChangedAPIError.swift in Sources */,
-				7BEC45DB2C16E1F700576ECA /* WorkSpaceaListDTO.swift in Sources */,
+				7BEC45DB2C16E1F700576ECA /* WorkSpaceListDTO.swift in Sources */,
 				7B7EB83E2C339A6C00D22362 /* DMSUnReadEntity.swift in Sources */,
 				7B2EEE002C10C2900024853C /* NetworkManager.swift in Sources */,
 				7B26D21D2C227FB500BC9912 /* WorkSpaceMembersEntity.swift in Sources */,
@@ -1740,7 +1740,7 @@
 				7BC09C912C3C11D100F0ABDC /* WorkSpaceOwnerChangeFeature.swift in Sources */,
 				7B2EEE2B2C11A6120024853C /* UserDomainRouter.swift in Sources */,
 				7B2EEE052C10C3750024853C /* DTOProtocol.swift in Sources */,
-				7B8FD64D2C1B421200948E7C /* RefreshTokkenDeadReciver.swift in Sources */,
+				7B8FD64D2C1B421200948E7C /* RefreshTokenDeadReceiver.swift in Sources */,
 				7B10A9982C2851080035C3C8 /* ChatModeFeature.swift in Sources */,
 				7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */,
 				7B8FD6112C19B69100948E7C /* KakaoLoginAPIError.swift in Sources */,
@@ -2009,20 +2009,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
-			requirement = {
-				kind = exactVersion;
-				version = 16.1.0;
-			};
-		};
-		7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+		7B1B26EA2C54FBB000384C55 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.10.1;
+			};
+		};
+		7B52FCD62C54FF1C00DEE50A /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
+		7B52FCD92C54FFA300DEE50A /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 16.1.0;
 			};
 		};
 		7B5AEB052C108FCB00D10330 /* XCRemoteSwiftPackageReference "PopupView" */ = {
@@ -2057,14 +2065,6 @@
 				version = 1.10.4;
 			};
 		};
-		7BC09C402C383AB600F0ABDC /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/iamport/iamport-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.1;
-			};
-		};
 		7BEC45AD2C130EB700576ECA /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -2076,15 +2076,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7B23ADD02C2ADB1E00A9E499 /* SocketIO */ = {
+		7B1B26EB2C54FBB000384C55 /* TCACoordinators */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7B23ADCF2C2ADB1E00A9E499 /* XCRemoteSwiftPackageReference "socket" */;
-			productName = SocketIO;
-		};
-		7B26D1922C1C4EF300BC9912 /* TCACoordinators */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B26D1912C1C4EF300BC9912 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			package = 7B1B26EA2C54FBB000384C55 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
 			productName = TCACoordinators;
+		};
+		7B52FCD72C54FF1C00DEE50A /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B52FCD62C54FF1C00DEE50A /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
+		};
+		7B52FCDA2C54FFA300DEE50A /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B52FCD92C54FFA300DEE50A /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
 		};
 		7B5AEB062C108FCB00D10330 /* PopupView */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2110,11 +2115,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B8FD6572C1BFCAB00948E7C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		7BC09C412C383AB600F0ABDC /* iamport-ios */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7BC09C402C383AB600F0ABDC /* XCRemoteSwiftPackageReference "iamport-ios" */;
-			productName = "iamport-ios";
 		};
 		7BEC45AE2C130EB700576ECA /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;

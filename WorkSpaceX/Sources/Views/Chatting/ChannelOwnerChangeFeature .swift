@@ -125,7 +125,7 @@ struct ChannelOwnerChangeFeature {
                     let workSpaceID = state.workSpaceID
                     let channelID = state.channel.channelId
                     return .run { send in
-                        let result = try await workSpaceRepo.channelOWnerChanged(
+                        let result = try await workSpaceRepo.channelOwnerChanged(
                             workSpaceID,
                             channelID,
                             id

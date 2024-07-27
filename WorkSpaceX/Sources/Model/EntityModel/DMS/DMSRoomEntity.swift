@@ -19,5 +19,5 @@ struct DMSRoomEntity: Entity {
     
     var lastChat: String
     
-    var lasstChatDate: Date = Date()
+    var lastChatDate: Date = Date()
 }

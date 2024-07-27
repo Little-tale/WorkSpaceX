@@ -202,7 +202,7 @@ struct WorkSpaceChannelChattingFeature {
                     let result = try await workSpaceRepo.channelInfoRequest(workSpaceID, channelID)
                     await send(.channelResult(result))
                     // 이때 렘 업뎃
-                    try await  realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: workSpaceID, chanel: result, userBool: true)
+                    try await  realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: workSpaceID, channel: result, userBool: true)
                     
                 } catch: { error, send in
                     if let error = error as? WorkSpaceChannelListAPIError {
@@ -383,7 +383,7 @@ struct WorkSpaceChannelChattingFeature {
             case .socketConnected:
                 let channelID = state.channelID
                 return .run { send in
-                    for await result in  workSpaceRepo.channelSocketReqeust(channelID) {
+                    for await result in  workSpaceRepo.channelSocketRequest(channelID) {
                         switch result {
                         case let .success(model):
                             

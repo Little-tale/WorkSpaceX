@@ -23,7 +23,7 @@ extension Text {
         }
     }
     
-    func foregroundGrdientTo(gradient: LinearGradient) -> some View {
+    func foregroundGradientTo(gradient: LinearGradient) -> some View {
         return self.overlay {
             gradient
                 .mask(self)

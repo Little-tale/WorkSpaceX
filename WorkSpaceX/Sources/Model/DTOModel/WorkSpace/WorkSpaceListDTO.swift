@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WorkSpaceaListDTO: DTO {
+struct WorkSpaceListDTO: DTO {
     let workSpaces: [WorkSpaceDTO]
     
     init(from decoder: any Decoder) throws {

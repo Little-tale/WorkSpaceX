@@ -284,7 +284,7 @@ struct ChatChannelSettingFeature {
                 let channelID = state.channelEntity.channelId
                 return .run { send in
                     
-                    try await workSpaceRepo.channelDeleteReqeust(workSpaceID, channelID)
+                    try await workSpaceRepo.channelDeleteRequest(workSpaceID, channelID)
                     await WorkSpaceReader.shared.observeChannelStop(channelID)
                     
                     try await realmRepo.removeChannel(channelID)

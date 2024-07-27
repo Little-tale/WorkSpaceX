@@ -99,7 +99,7 @@ struct WorkSpaceChannelAddFeature {
                         newChannel,
                         id
                     )
-                    try await realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: id, chanel: result)
+                    try await realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: id, channel: result)
                     
                     await send(.realmRegSuccess)
                     

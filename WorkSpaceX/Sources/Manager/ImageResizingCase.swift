@@ -9,19 +9,19 @@ import Foundation
 
 enum ImageResizingCase {
     case big
-    case middel
+    case middle
     case small
-    case custome(CGSize)
+    case custom(CGSize)
     
     var size: CGSize {
         switch self {
         case .big:
             return CGSize(width: 200, height: 200)
-        case .middel:
+        case .middle:
             return CGSize(width: 150, height: 150)
         case .small:
             return CGSize(width: 100, height: 100)
-        case .custome(let size):
+        case .custom(let size):
             return size
         }
     }

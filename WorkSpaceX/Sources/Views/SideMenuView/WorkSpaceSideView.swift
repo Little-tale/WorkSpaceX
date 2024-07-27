@@ -228,7 +228,7 @@ extension WorkSpaceSideView {
             
             Text("WorkSpace X")
                 .font(WSXFont.bigTitle3)
-                .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+                .foregroundGradientTo(gradient: WSXColor.titleGradient)
             Spacer()
         }
         .padding(.top, 60)

@@ -11,7 +11,7 @@ import TCACoordinators
 
 @Reducer(state: .equatable)
 enum SearchListScreens {
-    case home(SerachFeature)
+    case home(SearchFeature)
     case channelChatView(WorkSpaceChannelChattingFeature)
     case otherProfileView(ProfileInfoFeature)
     case chatChannelSettingView(ChatChannelSettingFeature)
@@ -38,7 +38,7 @@ struct SearchCoordinator {
         
         var identeRoutes: IdentifiedArrayOf<Route<SearchListScreens.State>>
         
-        static let initialState = State(identeRoutes: [.root(.home(SerachFeature.State(id: homeID)), embedInNavigationView: true)])
+        static let initialState = State(identeRoutes: [.root(.home(SearchFeature.State(id: homeID)), embedInNavigationView: true)])
         
     }
     

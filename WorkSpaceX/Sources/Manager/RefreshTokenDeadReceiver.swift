@@ -1,5 +1,5 @@
 //
-//  RefreshTokkenDeadReciver.swift
+//  RefreshTokenDeadReceiver.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/14/24.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class RefreshTokkenDeadReciver {
+final class RefreshTokenDeadReceiver {
     
-    static let shared = RefreshTokkenDeadReciver()
+    static let shared = RefreshTokenDeadReceiver()
     
     private init() {}
     

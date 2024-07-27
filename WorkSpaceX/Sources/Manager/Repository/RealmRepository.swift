@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 @MainActor
 struct RealmRepository {
-    @Dependency(\.dmsMapper) var DMSmapper
+    
     @MainActor
     func removeForID<M: Object>(_ modelId: String, type: M.Type) async throws -> Void {
         let realm = try await Realm(actor: MainActor.shared)
@@ -93,7 +93,7 @@ extension RealmRepository {
         
         print("동기화 .... ")
         
-        try await removeForCleantoWorkSpace(
+        try await removeForCleanToWorkSpace(
             serverIDs: responses.map { $0.workSpaceID },
             ifRealm: realm
         )
@@ -119,7 +119,7 @@ extension RealmRepository {
         let realm = try await Realm(actor: MainActor.shared)
         print("동기화 .... ")
         
-        try await removeForCleantoWorkSpace(
+        try await removeForCleanToWorkSpace(
             serverIDs: responses.map { $0.workSpaceID },
             ifRealm: realm
         )
@@ -128,7 +128,7 @@ extension RealmRepository {
         for model in responses {
             var members: [UserRealmModel] = []
             
-            for member in model.workSpaceMembersEntitys {
+            for member in model.workSpaceMembersEntities {
                 let result = try await upserWorkMember(response: member, ifRealm: realm)
                 
                 if let result {
@@ -137,7 +137,7 @@ extension RealmRepository {
             }
             var channelRealms: [WorkSpaceChannelRealmModel] = []
             
-            channelRealms = try await upserWorkSpaceChannels(channels: model.chanelEntitys, ifRealm: realm)
+            channelRealms = try await upserWorkSpaceChannels(channels: model.channelEntities, ifRealm: realm)
             
             try await realm.asyncWrite {
                 realm.create(WorkSpaceRealmModel.self, value: [
@@ -155,7 +155,7 @@ extension RealmRepository {
     }
     
     @MainActor
-    func removeForCleantoWorkSpace(serverIDs: [String], ifRealm: Realm? = nil) async throws {
+    func removeForCleanToWorkSpace(serverIDs: [String], ifRealm: Realm? = nil) async throws {
         
         var realm: Realm
         
@@ -298,11 +298,11 @@ extension RealmRepository {
     
     @MainActor
     @discardableResult
-    func upsertToWorkSpaceChannelAppend(workSpaceID: String, chanel: ChanelEntity, userBool: Bool = false) async throws -> ChanelEntity {
+    func upsertToWorkSpaceChannelAppend(workSpaceID: String, channel: ChanelEntity, userBool: Bool = false) async throws -> ChanelEntity {
         
         let realm = try await Realm(actor: MainActor.shared)
         
-        guard let channelModel = try await upserWorkSpaceChannel(channel: chanel, ifRealm: realm)
+        guard let channelModel = try await upserWorkSpaceChannel(channel: channel, ifRealm: realm)
         else {
             throw RealmError.failAdd
         }
@@ -313,7 +313,7 @@ extension RealmRepository {
         }
         
         if userBool {
-            let users = try await upsertWorkSpaceUsers(users: chanel.users)
+            let users = try await upsertWorkSpaceUsers(users: channel.users)
             var update = Array(workSpaceModel.channels)
             
             if let index = update.firstIndex(where: { $0.channelID == channelModel.channelID }) {
@@ -333,7 +333,7 @@ extension RealmRepository {
                     update: .modified)
                 
             }
-            return chanel
+            return channel
         } else {
             
             var update = Array(workSpaceModel.channels)
@@ -354,7 +354,7 @@ extension RealmRepository {
                     ],
                     update: .modified)
             }
-            return chanel
+            return channel
         }
     }
     
@@ -413,7 +413,7 @@ extension RealmRepository {
         print("워크 스페이스 체널 저장과 동기화 ....")
         
         var results: [WorkSpaceChannelRealmModel] = []
-        var ifremove: [WorkSpaceChannelRealmModel] = []
+        var ifRemove: [WorkSpaceChannelRealmModel] = []
         
         let currentIDs = Set(realm.objects(WorkSpaceChannelRealmModel.self).map{ $0.channelID })
         
@@ -423,9 +423,9 @@ extension RealmRepository {
         
         let objectsToDelete = realm.objects(WorkSpaceChannelRealmModel.self).filter("channelID IN %@", idsToDelete)
         
-        ifremove.append(contentsOf: Array(objectsToDelete))
+        ifRemove.append(contentsOf: Array(objectsToDelete))
         
-        for model in ifremove {
+        for model in ifRemove {
             await WorkSpaceReader.shared.observeChannelStop(model.channelID)
         }
         
@@ -582,7 +582,7 @@ extension RealmRepository {
     }
     
     @MainActor
-    func unReadToDMSRoomCounteAndLastChat(roomID: String,_ ifRealm: Realm? = nil) async throws -> (room:DMSRoomRealmModel?, unRead: Int, Chat: DMChatRealmModel?) {
+    func unReadToDMSRoomCountAndLastChat(roomID: String,_ ifRealm: Realm? = nil) async throws -> (room:DMSRoomRealmModel?, unRead: Int, Chat: DMChatRealmModel?) {
         var realm: Realm
         
         if let ifRealm {
@@ -597,12 +597,12 @@ extension RealmRepository {
         let count = room.chatMessages.where { $0.createdAt > room.lastChatWatchedTrigger }.count
         let last = room.chatMessages.sorted(by: \.createdAt, ascending: false).first
 
-        return (room,count,last)
+        return (room, count, last)
     }
     @MainActor
     func lastChatUpdatedToDMS(roomID: String) async throws {
         let realm = try await Realm(actor: MainActor.shared)
-        let result = try await unReadToDMSRoomCounteAndLastChat(roomID: roomID, realm)
+        let result = try await unReadToDMSRoomCountAndLastChat(roomID: roomID, realm)
         if let room = result.room {
             try await realm.asyncWrite {
                 room.lastChatDate = result.Chat?.createdAt
@@ -615,7 +615,7 @@ extension RealmRepository {
     @MainActor
     func lastChatUpdateToChannel(channelID: String) async throws {
         let realm = try await Realm(actor: MainActor.shared)
-        let result = try await unReadToChannelCounteAndLastChat(channelID: channelID, realm)
+        let result = try await unReadToChannelCountAndLastChat(channelID: channelID, realm)
         
         if let channel = result.room {
             try await realm.asyncWrite {
@@ -625,7 +625,7 @@ extension RealmRepository {
     }
     
     @MainActor
-    func unReadToChannelCounteAndLastChat(channelID: String,_ ifRealm: Realm? = nil) async throws -> (room:WorkSpaceChannelRealmModel?, unRead: Int, Chat: ChatRealmModel?) {
+    func unReadToChannelCountAndLastChat(channelID: String,_ ifRealm: Realm? = nil) async throws -> (room:WorkSpaceChannelRealmModel?, unRead: Int, Chat: ChatRealmModel?) {
         var realm: Realm
         
         if let ifRealm {
@@ -640,7 +640,7 @@ extension RealmRepository {
         let count = room.chatMessages.where { $0.createdAt > room.lastWatchedTrigger }.count
         let last = room.chatMessages.sorted(by: \.createdAt, ascending: false).first
 
-        return (room,count,last)
+        return (room, count, last)
     }
     
     @MainActor
@@ -665,28 +665,6 @@ extension RealmRepository {
         }
         try await realm.asyncWrite {
             room.lastWatchedTrigger = Date()
-        }
-    }
-    
-    @MainActor /// WillDeplecated
-    func findDMSChatLastAndPreviousDates(roomID: String) async throws -> (lastDate: Date?, previousDate: Date?) {
-        let realm = try await Realm(actor: MainActor.shared)
-        
-        guard let chatMessages = realm.object(ofType: DMSRoomRealmModel.self, forPrimaryKey: roomID)?.chatMessages else {
-            return (nil, nil)
-        }
-        
-        let sortedMessages = chatMessages.sorted(by: \.createdAt, ascending: false)
-        
-        if sortedMessages.isEmpty {
-            // 메시지가 없는 경우 nil 반환
-            return (nil, nil)
-        } else if sortedMessages.count == 1 {
-            // 메시지가 1개인 경우
-            return (sortedMessages[0].createdAt, nil)
-        } else {
-            // 마지막 메시지와 그 전 메시지 반환
-            return (sortedMessages[0].createdAt, sortedMessages[1].createdAt)
         }
     }
     
@@ -1092,7 +1070,7 @@ extension RealmRepository {
                 "nickName" : model.user.nickname,
                 "profileImage" : model.user.profileImage as Any,
                 "lastChatText" : model.lastChat,
-                "lastChatDate" : model.lasstChatDate,
+                "lastChatDate" : model.lastChatDate,
                 "UnReadCount" : model.unReadCount
             ], update: .modified)
         }

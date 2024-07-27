@@ -88,7 +88,7 @@ extension ChannelOwnerChangeView {
         HStack {
             Group {
                 if let userImage = model.profileImage {
-                    DownSamplingImageView(url: URL(string: userImage), size: ImageResizingCase.middel.size)
+                    DownSamplingImageView(url: URL(string: userImage), size: ImageResizingCase.middle.size)
                 } else {
                     WSXImage.profileEmpty1
                         .resizable()

@@ -130,7 +130,7 @@ extension WorkSpaceOwnerChangeView {
         HStack {
             Group {
                 if let image = model.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middle.size)
                     .frame(width: 50, height: 50)
                 } else {
                     WSXImage.logoImage

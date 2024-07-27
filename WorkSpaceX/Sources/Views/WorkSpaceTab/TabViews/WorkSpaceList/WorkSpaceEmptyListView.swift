@@ -23,7 +23,7 @@ struct WorkSpaceEmptyListView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         Text("No WorkSpace")
                             .font(WSXFont.title1)
-                            .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+                            .foregroundGradientTo(gradient: WSXColor.titleGradient)
                             .asButton {
                                 store.send(.openSideMenu)
                             }

@@ -58,7 +58,7 @@ struct WorkSpaceChannelListFeature {
                 return .run { send in
                     let result = try await workSpaceRepo.workSpaceSearchingToChannel(id)
                     
-                    let myResult = try await workSpaceRepo.findWorkSpaceChnnel(id)
+                    let myResult = try await workSpaceRepo.findWorkSpaceChannel(id)
                     
                     await send(.catchModels(result))
                     await send(.catchMyChannels(myResult))

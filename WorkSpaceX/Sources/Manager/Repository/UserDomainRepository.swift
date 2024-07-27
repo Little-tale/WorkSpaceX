@@ -85,14 +85,14 @@ extension UserDomainRepository: DependencyKey {
             return entity
             
         }, requestEmailLogin: { emailLogin in
-            var tokken: String?
+            var token: String?
             if UserDefaultsManager.deviceToken != "" {
-                tokken = UserDefaultsManager.deviceToken
+                token = UserDefaultsManager.deviceToken
             }
             let dto = mapper.requestLoginDTO(
                 email: emailLogin.email,
                 password: emailLogin.password,
-                deviceToken: tokken
+                deviceToken: token
             )
             
             
@@ -147,12 +147,12 @@ extension UserDomainRepository: DependencyKey {
             return mapping
         }, profileInfoEdit: { nickname, contact in
             
-            let reqeustModle = UserInfoEditReqeustDTO(
+            let requestModel = UserInfoEditRequestDTO(
                 nickname: nickname,
                 phone: contact
             )
             let result = try await NetworkManager.shared
-                .requestDto(UserEditDTO.self, router: UserDomainRouter.editUserInfo(reqeustModle), errorType: UserEditAPIError.self)
+                .requestDto(UserEditDTO.self, router: UserDomainRouter.editUserInfo(requestModel), errorType: UserEditAPIError.self)
             let mapping = mapper.toEntity(result)
             
             return mapping
@@ -167,7 +167,7 @@ extension UserDomainRepository: DependencyKey {
             
             let result = try await NetworkManager.shared.requestDto(
                 WorkSpaceAddMemberDTO.self,
-                router: WorkSpaceRouter.reqeustUser(userID: otherUser),
+                router: WorkSpaceRouter.requestUser(userID: otherUser),
                 errorType: WorkSpaceMembersAPIError.self
             )
             

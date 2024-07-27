@@ -147,14 +147,14 @@ struct WorkSpaceEditFeature {
             case .regButtonTapped:
                 let id = state.workSpaceID
                 
-                let request = EditWorkSpaceReqeust(
+                let request = EditWorkSpaceRequest(
                     name: state.workSpaceName,
                     description: state.workSpaceIntroduce,
                     image: state.image
                 )
                 
                 return .run { send in
-                    let result = try await repository.modifySpaceReqeust(request, id)
+                    let result = try await repository.modifySpaceRequest(request, id)
                     await send(.regSuccess(result))
                     
                 } catch: { error, send in

@@ -26,14 +26,14 @@ enum KakaoLoginErrorCase: Error {
 
 protocol KakaoLoginManagerType {
     /// Kakao Login 은 GCD 구조로 Result 형태로 방출 해드립니다.
-    func reqeustKakao() async -> Result<String, KakaoLoginErrorCase>
+    func requestKakao() async -> Result<String, KakaoLoginErrorCase>
 }
 
 
 @MainActor
 struct KakaoLoginManager: KakaoLoginManagerType {
     
-     func reqeustKakao() async -> Result<String, KakaoLoginErrorCase> {
+     func requestKakao() async -> Result<String, KakaoLoginErrorCase> {
         if UserApi.isKakaoTalkLoginAvailable() {
             return await withCheckedContinuation { contin in
                 UserApi.shared.loginWithKakaoTalk { oauthToken, error in

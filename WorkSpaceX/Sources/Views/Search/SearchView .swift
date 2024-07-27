@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct SearchView: View {
     
-    @Perception.Bindable var store: StoreOf<SerachFeature>
+    @Perception.Bindable var store: StoreOf<SearchFeature>
     
     var body: some View {
         WithPerceptionTracking {
@@ -104,7 +104,7 @@ extension SearchView {
         VStack {
             Group {
                 if let image = model.coverImage {
-                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middle.size)
                     .frame(width: 80, height: 80)
                 } else {
                     WSXImage.logoImage
@@ -130,7 +130,7 @@ extension SearchView {
         HStack {
             Group {
                 if let image = model.profileImage {
-                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middel.size)
+                    DownSamplingImageView(url: URL(string: image), size: ImageResizingCase.middle.size)
                     .frame(width: 50, height: 50)
                 } else {
                     WSXImage.logoImage

@@ -9,13 +9,13 @@ import Foundation
 import ComposableArchitecture
 
 struct WorkSpaceDomainRepository {
-    var regWorkSpaceReqeust: (NewWorkSpaceRequest) async throws -> WorkSpaceEntity
+    var regWorkSpaceRequest: (NewWorkSpaceRequest) async throws -> WorkSpaceEntity
     var findMyWordSpace: () async throws -> [WorkSpaceEntity]
     
     var workSpaceRemove: (_ workSpaceID: String) async throws -> Void
-    var modifySpaceReqeust: (_ model: EditWorkSpaceReqeust,_ id: String) async throws -> WorkSpaceEntity
+    var modifySpaceRequest: (_ model: EditWorkSpaceRequest,_ id: String) async throws -> WorkSpaceEntity
     
-    var findWorkSpaceChnnel: (_ workSpaceID: String) async throws -> [ChanelEntity]
+    var findWorkSpaceChannel: (_ workSpaceID: String) async throws -> [ChanelEntity]
     
     var regWorkSpaceChannel: (NewWorkSpaceRequest, _ workSpaceID: String) async throws -> ChanelEntity
     
@@ -31,15 +31,15 @@ struct WorkSpaceDomainRepository {
     
     var sendChatting: (_ workSpaceID: String, _ ChannelID: String,_ model: ChatMultipart) async throws -> WorkSpaceChatEntity
     
-    var channelSocketReqeust: (_ channelID: String) -> AsyncStream<Result<WorkSpaceChatEntity,ChatSocketManagerError>>
+    var channelSocketRequest: (_ channelID: String) -> AsyncStream<Result<WorkSpaceChatEntity,ChatSocketManagerError>>
     
     var exitChannel: (_ workSpaceID: String,_ channelID: String) async throws -> [ChanelEntity]
     
-    var editToChannel: (_ workSpaceID: String,_ channelID: String, _ reqesut: ModifyWorkSpaceDTORequest) async throws -> ChanelEntity
+    var editToChannel: (_ workSpaceID: String,_ channelID: String, _ request: ModifyWorkSpaceDTORequest) async throws -> ChanelEntity
     
-    var channelOWnerChanged: (_ workSpaceID: String, _ ChannelID: String, _ changedID: String) async throws -> ChanelEntity
+    var channelOwnerChanged: (_ workSpaceID: String, _ ChannelID: String, _ changedID: String) async throws -> ChanelEntity
     
-    var channelDeleteReqeust: (_ workSpaceID: String, _ channelID: String) async throws -> Void
+    var channelDeleteRequest: (_ workSpaceID: String, _ channelID: String) async throws -> Void
     
     var workSpaceKeywordSearching: (_ workSpaceID: String, _ Keyword: String) async throws -> (Channel: [WorkSpaceChannelEntity], Member: [WorkSpaceMembersEntity])
 }
@@ -49,10 +49,10 @@ extension WorkSpaceDomainRepository: DependencyKey {
     static let workSpaceMapper = WorkSpaceDomainMapper()
     
     static var liveValue: Self = Self (
-        regWorkSpaceReqeust: { model in
-            let reqeustDTO = workSpaceMapper.workSpaceReqeustDTO(model: model)
+        regWorkSpaceRequest: { model in
+            let requestDTO = workSpaceMapper.workSpaceRequestDTO(model: model)
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(reqeustDTO, randomBoundary: MultipartFormData.randomBoundary()), errorType: MakeWorkSpaceAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.makeWorkSpace(requestDTO, randomBoundary: MultipartFormData.randomBoundary()), errorType: MakeWorkSpaceAPIError.self)
             
             UserDefaultsManager.workSpaceSelectedID = result.workspace_id
             
@@ -62,7 +62,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
             return entity
             
         }, findMyWordSpace: {
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceaListDTO.self, router: WorkSpaceRouter.meWorkSpace, errorType: WorkSpaceMeError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceListDTO.self, router: WorkSpaceRouter.meWorkSpace, errorType: WorkSpaceMeError.self)
                 
                 let mapping = workSpaceMapper.toWorkSpaceListModel(result)
                 
@@ -71,23 +71,23 @@ extension WorkSpaceDomainRepository: DependencyKey {
         }, workSpaceRemove: { workSpaceID in
             let _ = try await NetworkManager.shared.request(WorkSpaceRouter.removeWorkSpace(workSpaceId: workSpaceID), errorType: WorkSpaceRemoveAPIError.self)
             return
-        }, modifySpaceReqeust: { model, id in
+        }, modifySpaceRequest: { model, id in
             
-            let reqeustMapping = workSpaceMapper.workSpaceReqeustDTO(model: model)
+            let requestMapping = workSpaceMapper.workSpaceRequestDTO(model: model)
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.modifyWorkSpace(reqeustMapping, randomBoundary: MultipartFormData.randomBoundary(), workSpaceID: id), errorType: WorkSpaceEditAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.modifyWorkSpace(requestMapping, randomBoundary: MultipartFormData.randomBoundary(), workSpaceID: id), errorType: WorkSpaceEditAPIError.self)
             
             let mapping = workSpaceMapper.toWorkSpaceModel(model: result)
             
             return mapping
-        }, findWorkSpaceChnnel: { workSpaceID in
+        }, findWorkSpaceChannel: { workSpaceID in
             
            let result = try await NetworkManager.shared.requestDto(WorkSpaceChannelListDTO.self, router: WorkSpaceRouter.findWorkSpaceChannels(workSpaceID: workSpaceID), errorType: WorkSpaceMyChannelError.self)
             
             return workSpaceMapper.workSpaceChannelListDTOToChannels(dto: result)
         }, regWorkSpaceChannel: { request, workSpaceID in
             
-            let requestDTO = workSpaceMapper.workSpaceReqeustDTO(model: request)
+            let requestDTO = workSpaceMapper.workSpaceRequestDTO(model: request)
             
             let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelsDTO.self, router: WorkSpaceRouter.createChannel(requestDTO, workSpaceID: workSpaceID, boundary: MultipartFormData.randomBoundary()), errorType: WorkSpaceMakeChannelAPIError.self)
             
@@ -96,15 +96,15 @@ extension WorkSpaceDomainRepository: DependencyKey {
             return mapping
         }, addWorkSpaceMember: { workSpaceID, email in
             
-            let reqeustModel = workSpaceMapper.toWorkSpaceAddMemberRequestDTO(email)
+            let requestModel = workSpaceMapper.toWorkSpaceAddMemberRequestDTO(email)
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceAddMemberDTO.self, router: WorkSpaceRouter.workSpaceAddMember(workSpaceId: workSpaceID, request: reqeustModel), errorType: WorkSpaceAddMemberAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceAddMemberDTO.self, router: WorkSpaceRouter.workSpaceAddMember(workSpaceId: workSpaceID, request: requestModel), errorType: WorkSpaceAddMemberAPIError.self)
             
             let mapping = workSpaceMapper.workSpaceAddMemberDTOToEntity(dto: result)
             return mapping
         }, workSpaceMemberUpdate: { workSpaceID in
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceMembersDTO.self, router: WorkSpaceRouter.workSpaceMembersReqeust(workSpaceId: workSpaceID), errorType: WorkSpaceMembersAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceMembersDTO.self, router: WorkSpaceRouter.workSpaceMembersRequest(workSpaceId: workSpaceID), errorType: WorkSpaceMembersAPIError.self)
             
             let members = result.members
             
@@ -134,9 +134,9 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
             return workSpaceMapper.workSpaceChatDtoToEntity(dtos: result.workSpaceChats)
             
-        }, channelInfoRequest: { workSapceID, channelID in
+        }, channelInfoRequest: { workSpaceID, channelID in
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelInfoDTO.self, router: WorkSpaceRouter.channelInfoReqesut(workSpaceId: workSapceID, channelID: channelID), errorType: WorkSpaceChannelListAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelInfoDTO.self, router: WorkSpaceRouter.channelInfoReqesut(workSpaceId: workSpaceID, channelID: channelID), errorType: WorkSpaceChannelListAPIError.self)
             
             let mapping = workSpaceMapper.workSpaceChanelInfoDTOToEntity(dto: result)
             
@@ -154,7 +154,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
             )
             print("쳇 결과 : ",result.files ?? "nil")
             return workSpaceMapper.workSpaceChatDtoToEntity(dto: result)
-        }, channelSocketReqeust: { channelID in
+        }, channelSocketRequest: { channelID in
             return AsyncStream { contin in
                 Task {
                     let stream = WSXSocketManager.shared.connect(
@@ -205,23 +205,23 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
             return mapping
             
-        }, channelOWnerChanged: { workSpaceID, channelID, changedID in
+        }, channelOwnerChanged: { workSpaceID, channelID, changedID in
             
-            let reqeust = ChannelOwnerRequestDTO(owner_id: changedID)
+            let request = ChannelOwnerRequestDTO(owner_id: changedID)
             
             let result = try await NetworkManager.shared.requestDto(
                 WorkSpaceChanelsDTO.self,
                 router: WorkSpaceRouter.channelOwnerChanged(
                     workSpaceId: workSpaceID,
                     ChannelID: channelID,
-                    request: reqeust
+                    request: request
                 ),
                 errorType: ChannelOwnerChangedAPIError.self
             )
             let mapping = workSpaceMapper.workSpaceChanelsDTOToChannel(dto: result)
             
             return mapping
-        }, channelDeleteReqeust: { workSpaceID, channelID in
+        }, channelDeleteRequest: { workSpaceID, channelID in
             let result = try await NetworkManager.shared.request(
                 WorkSpaceRouter.channelDelete(
                 workSpaceID: workSpaceID,
@@ -232,7 +232,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
         }, workSpaceKeywordSearching: { workSpaceID, keyword in
             let result = try await NetworkManager.shared.requestDto(
                 SearchResultDTO.self,
-                router: WorkSpaceRouter.searchKeywork(
+                router: WorkSpaceRouter.searchKeyword(
                     workSpaceID: workSpaceID,
                     keyword: keyword
                 ),
@@ -244,14 +244,14 @@ extension WorkSpaceDomainRepository: DependencyKey {
         }
     )
     
-    func reqeustUserInfo(userID: String) async throws -> WorkSpaceMembersEntity {
+    func requestUserInfo(userID: String) async throws -> WorkSpaceMembersEntity {
 
         let result = try await NetworkManager.shared.requestDto(
             WorkSpaceAddMemberDTO.self,
-            router: WorkSpaceRouter.reqeustUser(
+            router: WorkSpaceRouter.requestUser(
                 userID: userID
             ),
-            errorType: UserInfoReqeustAPIError.self
+            errorType: UserInfoRequestAPIError.self
         )
         let mapping = WorkSpaceDomainRepository.workSpaceMapper.workSpaceAddMemberDTOToEntity(
             dto: result
@@ -283,10 +283,10 @@ extension WorkSpaceDomainRepository: DependencyKey {
         return result
     }
     
-    func workSpaceOWnerChange(workSpaceID: String, ownerID: String) async throws ->  WorkSpaceEntity {
-        let reqeustDTO = ChannelOwnerRequestDTO(owner_id: ownerID)
+    func workSpaceOwnerChange(workSpaceID: String, ownerID: String) async throws ->  WorkSpaceEntity {
+        let requestDTO = ChannelOwnerRequestDTO(owner_id: ownerID)
         
-        let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.workSpaceOWnerChange(workSpaceID: workSpaceID,owner: reqeustDTO), errorType: ChannelOwnerChangedAPIError.self)
+        let result = try await NetworkManager.shared.requestDto(WorkSpaceDTO.self, router: WorkSpaceRouter.workSpaceOwnerChange(workSpaceID: workSpaceID,owner: requestDTO), errorType: ChannelOwnerChangedAPIError.self)
         let mapper = WorkSpaceDomainMapper()
         
         let end = mapper.toWorkSpaceModel(model: result)
@@ -296,7 +296,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
     
     func workSpaceExit(workSpaceID: String) async throws -> [WorkSpaceEntity] {
         
-        let result = try await NetworkManager.shared.requestDto(WorkSpaceaListDTO.self, router: WorkSpaceRouter.exitToWorkSpace(WorkSpaceID: workSpaceID), errorType: WorkSpaceExitError.self)
+        let result = try await NetworkManager.shared.requestDto(WorkSpaceListDTO.self, router: WorkSpaceRouter.exitToWorkSpace(WorkSpaceID: workSpaceID), errorType: WorkSpaceExitError.self)
         
         let mapping = WorkSpaceDomainRepository.workSpaceMapper.toWorkSpaceListModel(result)
         return mapping

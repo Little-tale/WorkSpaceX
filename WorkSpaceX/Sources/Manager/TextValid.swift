@@ -28,7 +28,7 @@ extension TextValid : DependencyKey {
 
 extension DependencyValues {
     
-    var textValidtor: TextValid {
+    var textValid: TextValid {
         get { self[TextValid.self] }
         set { self[TextValid.self] = newValue }
     }

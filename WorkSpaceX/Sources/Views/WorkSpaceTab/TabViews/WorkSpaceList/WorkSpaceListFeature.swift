@@ -198,7 +198,7 @@ struct WorkSpaceListFeature {
             case let .workSpaceChnnelUpdate(workSpaceID):
                 print("워크스페이스 채널 네트워크 요청 시작")
                 return .run { send in
-                    let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
+                    let result = try await workSpaceRepo.findWorkSpaceChannel(workSpaceID)
                     print("채널의 결말",result)
                     try await realmRepo.upsertToWorkSpaceChannels(workSpaceId: workSpaceID, channels: result)
                     
@@ -216,7 +216,7 @@ struct WorkSpaceListFeature {
                 
             case let .channelListRequest(workSpaceID):
                 return .run { send in
-                    let result = try await workSpaceRepo.findWorkSpaceChnnel(workSpaceID)
+                    let result = try await workSpaceRepo.findWorkSpaceChannel(workSpaceID)
                     await withThrowingTaskGroup(of: Void.self) { group in
                         for model in result {
                             group.addTask {

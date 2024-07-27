@@ -107,7 +107,7 @@ struct WorkSpaceListView: View {
             
             Text(store.workSpaceName ?? "Loading")
                 .font(WSXFont.title1)
-                .foregroundGrdientTo(gradient: WSXColor.titleGradient)
+                .foregroundGradientTo(gradient: WSXColor.titleGradient)
                 .asButton {
                     store.send(.openSideMenu)
                 }

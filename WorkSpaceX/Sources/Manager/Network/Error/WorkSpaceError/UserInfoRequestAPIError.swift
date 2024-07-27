@@ -1,5 +1,5 @@
 //
-//  UserInfoReqeustAPIError.swift
+//  UserInfoRequestAPIError.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 7/2/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserInfoReqeustAPIError: WSXErrorType {
+struct UserInfoRequestAPIError: WSXErrorType {
     var errorCode: String
     
     var thisErrorCodes: [String] = ["E03"]

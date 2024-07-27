@@ -19,7 +19,7 @@ enum WorkSpaceRouter: Router {
     case createChannel(MakeWorkSpaceDTORequest, workSpaceID: String, boundary: String)
     case workSpaceAddMember(workSpaceId: String, request: WorkSpaceAddMemberRequestDTO)
     
-    case workSpaceMembersReqeust(workSpaceId: String)
+    case workSpaceMembersRequest(workSpaceId: String)
     
     case workSpaceChatRequest(workSpaceId: String, channelID: String, ifDate: String?)
     
@@ -35,13 +35,13 @@ enum WorkSpaceRouter: Router {
     
     case channelDelete(workSpaceID: String, channelID: String)
     
-    case reqeustUser(userID: String)
+    case requestUser(userID: String)
     
-    case searchKeywork(workSpaceID: String, keyword: String)
+    case searchKeyword(workSpaceID: String, keyword: String)
     
     case fileDownload(fileString: String)
     
-    case workSpaceOWnerChange(workSpaceID: String, owner: ChannelOwnerRequestDTO)
+    case workSpaceOwnerChange(workSpaceID: String, owner: ChannelOwnerRequestDTO)
     
     case exitToWorkSpace(WorkSpaceID: String)
 }
@@ -50,13 +50,13 @@ extension WorkSpaceRouter {
         switch self {
         case .meWorkSpace,
                 .findWorkSpaceChannels,
-                .workSpaceMembersReqeust,
+                .workSpaceMembersRequest,
                 .channelListSearching,
                 .workSpaceChatRequest,
                 .channelInfoReqesut,
                 .exitChannel,
-                .reqeustUser,
-                .searchKeywork,
+                .requestUser,
+                .searchKeyword,
                 .fileDownload,
                 .exitToWorkSpace :
             return .get
@@ -64,7 +64,7 @@ extension WorkSpaceRouter {
             return .post
         case .removeWorkSpace, .channelDelete:
             return .delete
-        case .modifyWorkSpace, .editToChannel, .channelOwnerChanged, .workSpaceOWnerChange:
+        case .modifyWorkSpace, .editToChannel, .channelOwnerChanged, .workSpaceOwnerChange:
             return .put
             
         }
@@ -94,7 +94,7 @@ extension WorkSpaceRouter {
         case let .workSpaceAddMember(id,_):
             return APIKey.version + "/workspaces/\(id)/members"
             
-        case let .workSpaceMembersReqeust(id):
+        case let .workSpaceMembersRequest(id):
             return APIKey.version + "/workspaces/\(id)/members"
         case let .channelListSearching(id):
             return APIKey.version + "/workspaces/\(id)/channels"
@@ -122,16 +122,16 @@ extension WorkSpaceRouter {
         case let .channelDelete(workSpace, channel):
             return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)"
             
-        case let .reqeustUser(userID):
+        case let .requestUser(userID):
             return APIKey.version + "/users/\(userID)"
             
-        case let .searchKeywork(workSpaceID, _):
+        case let .searchKeyword(workSpaceID, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/search"
             
         case let .fileDownload(fileString):
             return APIKey.version + fileString
             
-        case let .workSpaceOWnerChange(work, _):
+        case let .workSpaceOwnerChange(work, _):
             return APIKey.version + "/workspaces/\(work)/transfer/ownership"
         case let .exitToWorkSpace(work):
             return APIKey.version + "/workspaces/\(work)/exit"
@@ -145,16 +145,16 @@ extension WorkSpaceRouter {
                 .removeWorkSpace,
                 .findWorkSpaceChannels,
                 .workSpaceAddMember,
-                .workSpaceMembersReqeust,
+                .workSpaceMembersRequest,
                 .channelListSearching,
                 .channelInfoReqesut,
                 .exitChannel,
                 .channelOwnerChanged,
                 .channelDelete,
-                .reqeustUser,
-                .searchKeywork,
+                .requestUser,
+                .searchKeyword,
                 .fileDownload,
-                .workSpaceOWnerChange,
+                .workSpaceOwnerChange,
                 .exitToWorkSpace :
             return nil
             
@@ -185,16 +185,16 @@ extension WorkSpaceRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersReqeust, .channelListSearching,
+        case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersRequest, .channelListSearching,
                 .channelInfoReqesut,
                 .sendChat,
                 .exitChannel,
                 .editToChannel,
                 .channelOwnerChanged,
                 .channelDelete,
-                .reqeustUser,
+                .requestUser,
                 .fileDownload,
-                .workSpaceOWnerChange,
+                .workSpaceOwnerChange,
                 .exitToWorkSpace :
             return nil
             
@@ -205,7 +205,7 @@ extension WorkSpaceRouter {
                 return nil
             }
             
-        case let .searchKeywork(_,keyword):
+        case let .searchKeyword(_,keyword):
             return ["keyword": keyword]
         }
     }
@@ -215,14 +215,14 @@ extension WorkSpaceRouter {
         case .meWorkSpace,
                 .removeWorkSpace,
                 .findWorkSpaceChannels,
-                .workSpaceMembersReqeust,
+                .workSpaceMembersRequest,
                 .channelListSearching,
                 .workSpaceChatRequest,
                 .channelInfoReqesut,
                 .exitChannel,
                 .channelDelete,
-                .reqeustUser,
-                .searchKeywork,
+                .requestUser,
+                .searchKeyword,
                 .fileDownload,
                 .exitToWorkSpace :
             return nil
@@ -245,7 +245,7 @@ extension WorkSpaceRouter {
         case let .channelOwnerChanged(_,_,request):
             return requestToBody(request)
             
-        case let .workSpaceOWnerChange(_, owner):
+        case let .workSpaceOwnerChange(_, owner):
             return requestToBody(owner)
         }
     }
@@ -255,14 +255,14 @@ extension WorkSpaceRouter {
         case .meWorkSpace,
                 .removeWorkSpace,
                 .findWorkSpaceChannels,
-                .workSpaceMembersReqeust,
+                .workSpaceMembersRequest,
                 .channelListSearching,
                 .workSpaceChatRequest,
                 .channelInfoReqesut,
                 .exitChannel,
                 .channelDelete,
-                .reqeustUser,
-                .searchKeywork,
+                .requestUser,
+                .searchKeyword,
                 .fileDownload,
                 .exitToWorkSpace:
             return .url
@@ -284,7 +284,7 @@ extension WorkSpaceRouter {
             
         case .workSpaceAddMember,
                 .channelOwnerChanged,
-                .workSpaceOWnerChange:
+                .workSpaceOwnerChange:
             return .json
         }
     }
