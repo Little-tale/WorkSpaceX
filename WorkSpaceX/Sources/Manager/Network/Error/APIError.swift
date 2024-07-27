@@ -12,7 +12,7 @@ enum APIError: Error, Equatable {
     case customError(String)
     case unknownError
     
-    static let Unkonwn = "알수없는 에러"
+    static let Unknown = "알수없는 에러"
     
     static func ==(lhs: APIError, rhs: APIError) -> Bool {
         switch (lhs, rhs) {

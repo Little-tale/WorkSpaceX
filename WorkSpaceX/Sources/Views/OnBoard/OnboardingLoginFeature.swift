@@ -27,7 +27,7 @@ struct OnboardingLoginFeature {
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userDomainRepository) var repository
     @Dependency(\.kakaoLoginManager) var kakaoLogin
-    @Dependency(\.appleLoginErrorHandeler) var isUserErrorApple
+    @Dependency(\.appleLoginErrorHandler) var isUserErrorApple
     
     enum Action {
         case appleLoginButtonTapped
@@ -40,7 +40,7 @@ struct OnboardingLoginFeature {
         case signUpFeature(PresentationAction<SignUpFeature.Action>)
         
         case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
-        case errorMessage(messgage: String?)
+        case errorMessage(message: String?)
         
         case appleLoginFinish(UserEntity)
         case kakaoLoginFinish(UserEntity)
@@ -63,10 +63,10 @@ struct OnboardingLoginFeature {
                 } catch: { error, send in
                     if let error = error as? AppleLoginAPIError {
                         if !error.ifDevelopError {
-                            await send(.errorMessage(messgage: error.message))
+                            await send(.errorMessage(message: error.message))
                         }
                     } else {
-                        await send(.errorMessage(messgage: APIError.Unkonwn))
+                        await send(.errorMessage(message: APIError.Unknown))
                         print(error)
                     }
             
@@ -90,10 +90,10 @@ struct OnboardingLoginFeature {
                     } catch: { error, send in
                         if let error = error as? KakaoLoginAPIError {
                             if !error.ifDevelopError {
-                                await send(.errorMessage(messgage: error.message))
+                                await send(.errorMessage(message: error.message))
                             }
                         } else {
-                            await send(.errorMessage(messgage: APIError.Unkonwn))
+                            await send(.errorMessage(message: APIError.Unknown))
                         }
                     }
                 case .failure(let error):
@@ -101,7 +101,7 @@ struct OnboardingLoginFeature {
                     case .cancel:
                         return .none
                     case .error:
-                        return .send(.errorMessage(messgage: error.message))
+                        return .send(.errorMessage(message: error.message))
                     }
                 }
                 
@@ -132,7 +132,7 @@ struct OnboardingLoginFeature {
                 }
                 return .none
                 
-            case .errorMessage(messgage: let messgage):
+            case .errorMessage(message: let messgage):
                 state.errorPresentation = messgage
                 return .none
           

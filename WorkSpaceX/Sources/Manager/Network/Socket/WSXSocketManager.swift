@@ -78,7 +78,6 @@ extension WSXSocketManager {
             .reconnectAttempts(-1), // 무한 재연결
             .forceNew(true), // 새로운 것이 있을 시 예전 것 삭제
             .secure(false), // https
-            .compress
         ]
         
         manager = SocketManager(socketURL: url, config: config)

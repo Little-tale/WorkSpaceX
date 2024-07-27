@@ -1,5 +1,5 @@
 //
-//  AppleLoginErrorHandeler.swift
+//  AppleLoginErrorHandler.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/9/24.
@@ -13,7 +13,7 @@ enum AppleLoginError: Error {
     case userCancel
    
     
-    var mesage: String {
+    var message: String {
         switch self {
         case .error:
             "애플 로그인을 취소 하셨습니다."
@@ -23,11 +23,11 @@ enum AppleLoginError: Error {
     }
 }
 
-struct AppleLoginErrorHandeler {
+struct AppleLoginErrorHandler {
     var isUserError: (Error) -> AppleLoginError
 }
 
-extension AppleLoginErrorHandeler: DependencyKey {
+extension AppleLoginErrorHandler: DependencyKey {
     static var liveValue: Self = Self(
         isUserError: { error in
             let error = error.localizedDescription
@@ -40,8 +40,8 @@ extension AppleLoginErrorHandeler: DependencyKey {
 }
 
 extension DependencyValues {
-    var appleLoginErrorHandeler: AppleLoginErrorHandeler {
-        get { self[AppleLoginErrorHandeler.self] }
-        set { self[AppleLoginErrorHandeler.self] = newValue }
+    var appleLoginErrorHandler: AppleLoginErrorHandler {
+        get { self[AppleLoginErrorHandler.self] }
+        set { self[AppleLoginErrorHandler.self] = newValue }
     }
 }

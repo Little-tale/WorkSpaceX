@@ -235,7 +235,7 @@
 		7BEC45BE2C14862300576ECA /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */; };
 		7BEC45C12C15A4CE00576ECA /* AppleRegDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */; };
 		7BEC45C32C15B01D00576ECA /* AppleSignInDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C22C15B01D00576ECA /* AppleSignInDelegate.swift */; };
-		7BEC45C52C15D59C00576ECA /* AppleLoginErrorHandeler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandeler.swift */; };
+		7BEC45C52C15D59C00576ECA /* AppleLoginErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandler.swift */; };
 		7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */; };
 		7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */; };
 		7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */; };
@@ -507,7 +507,7 @@
 		7BEC45BD2C14862300576ECA /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
 		7BEC45C02C15A4CE00576ECA /* AppleRegDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRegDependency.swift; sourceTree = "<group>"; };
 		7BEC45C22C15B01D00576ECA /* AppleSignInDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInDelegate.swift; sourceTree = "<group>"; };
-		7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandeler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginErrorHandeler.swift; sourceTree = "<group>"; };
+		7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginErrorHandler.swift; sourceTree = "<group>"; };
 		7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDTORequest.swift; sourceTree = "<group>"; };
 		7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitalView.swift; sourceTree = "<group>"; };
 		7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePicker.swift; sourceTree = "<group>"; };
@@ -844,7 +844,7 @@
 				7B2EEE192C118D060024853C /* Network */,
 				7B592ED82C0F2C7600E47797 /* TextValid.swift */,
 				7B592EDA2C0F2CC100E47797 /* TextValidation.swift */,
-				7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandeler.swift */,
+				7BEC45C42C15D59C00576ECA /* AppleLoginErrorHandler.swift */,
 				7B8FD6422C1AC0C100948E7C /* DateManager.swift */,
 				7B8FD64C2C1B421200948E7C /* RefreshTokkenDeadReciver.swift */,
 				7B26D1ED2C1F04D900BC9912 /* KFImageRequestModifier.swift */,
@@ -1580,7 +1580,7 @@
 				7B8FD6532C1BF77A00948E7C /* WorkSpaceRealmModel.swift in Sources */,
 				7B2EEE022C10C3340024853C /* EmailDuplicateModel.swift in Sources */,
 				7B26D21B2C227E7E00BC9912 /* ChanelEntity.swift in Sources */,
-				7BEC45C52C15D59C00576ECA /* AppleLoginErrorHandeler.swift in Sources */,
+				7BEC45C52C15D59C00576ECA /* AppleLoginErrorHandler.swift in Sources */,
 				7B23ADDF2C2D457A00A9E499 /* WorkSpaceChannelEntity.swift in Sources */,
 				7B2EEE342C11E8FF0024853C /* UserDomainError.swift in Sources */,
 				7B592EDB2C0F2CC100E47797 /* TextValidation.swift in Sources */,
