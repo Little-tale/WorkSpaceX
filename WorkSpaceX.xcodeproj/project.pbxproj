@@ -191,7 +191,7 @@
 		7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */; };
 		7BC09C3F2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */; };
 		7BC09C452C383B6E00F0ABDC /* StoreRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C442C383B6E00F0ABDC /* StoreRouter.swift */; };
-		7BC09C482C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */; };
+		7BC09C482C383BFD00F0ABDC /* StoreValidationRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C472C383BFD00F0ABDC /* StoreValidationRequestDTO.swift */; };
 		7BC09C4A2C383C7300F0ABDC /* StoreVaildateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */; };
 		7BC09C4C2C383D1500F0ABDC /* StoreItemListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C4B2C383D1500F0ABDC /* StoreItemListDTO.swift */; };
 		7BC09C4E2C383D1E00F0ABDC /* StoreItemDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C4D2C383D1E00F0ABDC /* StoreItemDTO.swift */; };
@@ -220,7 +220,6 @@
 		7BC09C9A2C3E416400F0ABDC /* ChatSocketManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C992C3E416400F0ABDC /* ChatSocketManagerError.swift */; };
 		7BC09C9D2C3E420800F0ABDC /* SocketCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC09C9C2C3E420800F0ABDC /* SocketCase.swift */; };
 		7BEC45A02C12D38B00576ECA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */; };
-		7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */; };
 		7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A32C12E53400576ECA /* AuthRouter.swift */; };
 		7BEC45A72C12E7D300576ECA /* AccessTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */; };
 		7BEC45AA2C12E80F00576ECA /* reFreshError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45A92C12E80F00576ECA /* reFreshError.swift */; };
@@ -245,7 +244,6 @@
 		7BEC45D82C16C9E400576ECA /* RoudProfileImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */; };
 		7BEC45DB2C16E1F700576ECA /* WorkSpaceListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */; };
 		7BEC45DD2C16E2AC00576ECA /* WorkSpaceDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */; };
-		7BEC45DF2C16E60100576ECA /* WorkSpaceDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DE2C16E60100576ECA /* WorkSpaceDomainError.swift */; };
 		7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */; };
 		7BEC45E32C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E22C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift */; };
 		7BEC45E72C16F2A800576ECA /* WorkSpaceDomainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E62C16F2A800576ECA /* WorkSpaceDomainRepository.swift */; };
@@ -466,7 +464,7 @@
 		7BC09C3C2C37DD9000F0ABDC /* SearchChannelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchChannelDTO.swift; sourceTree = "<group>"; };
 		7BC09C3E2C37E20500F0ABDC /* WorkSpaceSearchToListAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceSearchToListAPIError.swift; sourceTree = "<group>"; };
 		7BC09C442C383B6E00F0ABDC /* StoreRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRouter.swift; sourceTree = "<group>"; };
-		7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreValidationReqeustDTO.swift; sourceTree = "<group>"; };
+		7BC09C472C383BFD00F0ABDC /* StoreValidationRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreValidationRequestDTO.swift; sourceTree = "<group>"; };
 		7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreVaildateDTO.swift; sourceTree = "<group>"; };
 		7BC09C4B2C383D1500F0ABDC /* StoreItemListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemListDTO.swift; sourceTree = "<group>"; };
 		7BC09C4D2C383D1E00F0ABDC /* StoreItemDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemDTO.swift; sourceTree = "<group>"; };
@@ -495,7 +493,6 @@
 		7BC09C992C3E416400F0ABDC /* ChatSocketManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSocketManagerError.swift; sourceTree = "<group>"; };
 		7BC09C9C2C3E420800F0ABDC /* SocketCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketCase.swift; sourceTree = "<group>"; };
 		7BEC459F2C12D38B00576ECA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
-		7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInterceptor.swift; sourceTree = "<group>"; };
 		7BEC45A32C12E53400576ECA /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		7BEC45A62C12E7D300576ECA /* AccessTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenDTO.swift; sourceTree = "<group>"; };
 		7BEC45A92C12E80F00576ECA /* reFreshError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reFreshError.swift; sourceTree = "<group>"; };
@@ -517,7 +514,6 @@
 		7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoudProfileImageModifier.swift; sourceTree = "<group>"; };
 		7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListDTO.swift; sourceTree = "<group>"; };
 		7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDTO.swift; sourceTree = "<group>"; };
-		7BEC45DE2C16E60100576ECA /* WorkSpaceDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDomainError.swift; sourceTree = "<group>"; };
 		7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRouter.swift; sourceTree = "<group>"; };
 		7BEC45E22C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeWorkSpaceDTORequest.swift; sourceTree = "<group>"; };
 		7BEC45E62C16F2A800576ECA /* WorkSpaceDomainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDomainRepository.swift; sourceTree = "<group>"; };
@@ -654,7 +650,6 @@
 				7B2EEDFF2C10C2900024853C /* NetworkManager.swift */,
 				7B2EEE0D2C117BC70024853C /* Router */,
 				7B2EEE282C11A38B0024853C /* WSXCoder.swift */,
-				7BEC45A12C12D76800576ECA /* RequestInterceptor.swift */,
 				7BEC45FA2C18184800576ECA /* MultipartFormData.swift */,
 			);
 			path = Network;
@@ -1138,7 +1133,7 @@
 		7BC09C462C383BAF00F0ABDC /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				7BC09C472C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift */,
+				7BC09C472C383BFD00F0ABDC /* StoreValidationRequestDTO.swift */,
 				7BC09C492C383C7300F0ABDC /* StoreVaildateDTO.swift */,
 				7BC09C4B2C383D1500F0ABDC /* StoreItemListDTO.swift */,
 				7BC09C4D2C383D1E00F0ABDC /* StoreItemDTO.swift */,
@@ -1297,7 +1292,6 @@
 		7BEC45E42C16EFE000576ECA /* WorkSpaceError */ = {
 			isa = PBXGroup;
 			children = (
-				7BEC45DE2C16E60100576ECA /* WorkSpaceDomainError.swift */,
 				7B8FD6162C19CEE500948E7C /* WorkSpaceMeError.swift */,
 				7B8FD6182C19CF9300948E7C /* MakeWorkSpaceAPIError.swift */,
 				7B26D1F32C20013A00BC9912 /* WorkSpaceRemoveAPIError.swift */,
@@ -1704,7 +1698,6 @@
 				7BC09C572C38431800F0ABDC /* StoreListView.swift in Sources */,
 				7B7EB8312C32881600D22362 /* DMSCoordinatorView.swift in Sources */,
 				7B10A9A22C296FD30035C3C8 /* FileType.swift in Sources */,
-				7BEC45DF2C16E60100576ECA /* WorkSpaceDomainError.swift in Sources */,
 				7B592ED72C0F1A8F00E47797 /* UserRegEntityModel.swift in Sources */,
 				7BF9D7192C2405130021D043 /* WorkSpaceAddMemberRequestDTO.swift in Sources */,
 				7BEC45ED2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift in Sources */,
@@ -1724,7 +1717,7 @@
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
 				7BEC45F32C18074D00576ECA /* NewWorkSpaceRequest.swift in Sources */,
-				7BC09C482C383BFD00F0ABDC /* StoreValidationReqeustDTO.swift in Sources */,
+				7BC09C482C383BFD00F0ABDC /* StoreValidationRequestDTO.swift in Sources */,
 				7B26D18E2C1C19E300BC9912 /* WorkSpaceListCordinator.swift in Sources */,
 				7B8FD6132C19B9C800948E7C /* EmailLoginAPIError.swift in Sources */,
 				7B7EB81F2C32638400D22362 /* DMSRoomDTO.swift in Sources */,
@@ -1733,7 +1726,6 @@
 				7BEC45FF2C18363900576ECA /* ExString.swift in Sources */,
 				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */,
 				7BEC45E32C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift in Sources */,
-				7BEC45A22C12D76800576ECA /* RequestInterceptor.swift in Sources */,
 				7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */,
 				7BC09C4C2C383D1500F0ABDC /* StoreItemListDTO.swift in Sources */,
 				7B26D2272C228C3300BC9912 /* WorkSpaceChannelListDTO.swift in Sources */,

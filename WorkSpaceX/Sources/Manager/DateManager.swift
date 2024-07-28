@@ -14,7 +14,7 @@ final class DateManager {
     
     private let isoDateFormatter = ISO8601DateFormatter()
     private let dateFormatter = DateFormatter()
-    private let loacale = Locale(identifier:"ko_KR")
+    private let locale = Locale(identifier:"ko_KR")
     
     enum dateFormatType: String {
         case slimYDM = "yy. MM. dd"
@@ -28,13 +28,13 @@ final class DateManager {
     
     
     func toDateISO(_ dateString: String) -> Date? {
-        var calender = Calendar.current
+        var calendar = Calendar.current
         
         isoDateFormatter.formatOptions = [
             .withInternetDateTime,
             .withFractionalSeconds
         ]
-        calender.timeZone = .current
+        calendar.timeZone = .current
         
         return isoDateFormatter.date(from: dateString)
     }
@@ -61,7 +61,7 @@ final class DateManager {
             dateFormatter.dateFormat = dateFormatType.leftChatType.format
         }
         
-        dateFormatter.locale = loacale
+        dateFormatter.locale = locale
         
         return dateFormatter.string(from: date)
     }
@@ -69,7 +69,7 @@ final class DateManager {
     func dateToStringToChatSection(_ date: Date) -> String {
         let format = dateFormatType.fullType.format
         dateFormatter.setLocalizedDateFormatFromTemplate(format)
-        dateFormatter.locale = loacale
+        dateFormatter.locale = locale
         
         return dateFormatter.string(from: date)
     }
@@ -82,7 +82,7 @@ final class DateManager {
             dateFormatter.dateFormat = dateFormatType.roomListType.format
         } else {
             dateFormatter.setLocalizedDateFormatFromTemplate(format)
-            dateFormatter.locale = loacale
+            dateFormatter.locale = locale
         }
         
         return dateFormatter.string(from: date)

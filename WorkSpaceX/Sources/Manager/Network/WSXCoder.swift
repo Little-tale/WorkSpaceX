@@ -32,7 +32,7 @@ extension WSXCoder {
         guard let parameter else { return request }
         
         guard let url = request.url else {
-            print("Seconde Bad URL")
+            print("Second Bad URL")
             throw APIError.httpError("BAD URL")
         }
         

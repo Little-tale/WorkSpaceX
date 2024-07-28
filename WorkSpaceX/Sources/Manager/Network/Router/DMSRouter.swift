@@ -9,11 +9,11 @@ import Foundation
 
 enum DMSRouter: Router {
     
-    case dmRoomListReqeust(_ workSpaceID: String)
+    case dmRoomListRequest(_ workSpaceID: String)
     
     case dmRoomUnReadRequest(_ workSpaceID: String, roomID: String, date: String?)
     
-    case dmRoomReqeust(_ workSpaceID: String, requestDTO: DMSRoomRequestDTO)
+    case dmRoomRequest(_ workSpaceID: String, requestDTO: DMSRoomRequestDTO)
     
     case dmRoomChatsRequest(_ workSpaceID: String, roomID: String, date: String?)
     
@@ -24,25 +24,25 @@ extension DMSRouter {
     
     var method: HTTPMethod {
         switch self {
-        case .dmRoomListReqeust,
+        case .dmRoomListRequest,
                 .dmRoomUnReadRequest,
                 .dmRoomChatsRequest :
             return .get
-        case .dmRoomReqeust, .sendDmMessage:
+        case .dmRoomRequest, .sendDmMessage:
             return .post
         }
     }
     
     var path: String {
         switch self {
-        case .dmRoomListReqeust(let workSpaceID):
+        case .dmRoomListRequest(let workSpaceID):
             return APIKey.version + "/workspaces/\(workSpaceID)/dms"
             
         case let .dmRoomUnReadRequest(workSpaceID, roomID, _):
             return APIKey.version +
             "/workspaces/\(workSpaceID)/dms/\(roomID)/unreads"
             
-        case let .dmRoomReqeust(workSpaceID, _):
+        case let .dmRoomRequest(workSpaceID, _):
             return APIKey.version + "/workspaces/\(workSpaceID)/dms"
             
         case let .dmRoomChatsRequest(workSpaceID, roomID, _):
@@ -55,9 +55,9 @@ extension DMSRouter {
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .dmRoomListReqeust,
+        case .dmRoomListRequest,
                 .dmRoomUnReadRequest,
-                .dmRoomReqeust,
+                .dmRoomRequest,
                 .dmRoomChatsRequest :
             return nil
             
@@ -69,8 +69,8 @@ extension DMSRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .dmRoomListReqeust,
-                .dmRoomReqeust,
+        case .dmRoomListRequest,
+                .dmRoomRequest,
                 .sendDmMessage:
             return nil
         case let .dmRoomUnReadRequest(_, _, date):
@@ -90,25 +90,25 @@ extension DMSRouter {
     
     var body: Data? {
         switch self {
-        case .dmRoomListReqeust,
+        case .dmRoomListRequest,
                 .dmRoomUnReadRequest,
                 .dmRoomChatsRequest :
             return nil
-        case let .dmRoomReqeust(_, model):
+        case let .dmRoomRequest(_, model):
             return requestToBody(model)
-        case let .sendDmMessage(_, _, reqeust, boundary):
-            return makeChatMultipartData(reqeust, boundary: boundary)
+        case let .sendDmMessage(_, _, request, boundary):
+            return makeChatMultipartData(request, boundary: boundary)
         }
     }
     
     var encodingType: EncodingType {
         switch self {
-        case .dmRoomListReqeust,
+        case .dmRoomListRequest,
                 .dmRoomUnReadRequest,
                 .dmRoomChatsRequest :
             return .url
             
-        case .dmRoomReqeust:
+        case .dmRoomRequest:
             return .json
             
         case .sendDmMessage:

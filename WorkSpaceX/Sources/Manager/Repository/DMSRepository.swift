@@ -15,7 +15,7 @@ struct DMSRepository {
     func dmRoomListRequest(_ workSpaceID: String) async throws -> [DMSRoomEntity] {
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomListDTO.self,
-            router: DMSRouter.dmRoomListReqeust(workSpaceID),
+            router: DMSRouter.dmRoomListRequest(workSpaceID),
             errorType: DMSListAPIError.self
         )
         return dmsMapper.toEntity(result)
@@ -26,7 +26,7 @@ struct DMSRepository {
         
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomDTO.self,
-            router: DMSRouter.dmRoomReqeust(
+            router: DMSRouter.dmRoomRequest(
                 workSpaceID,
                 requestDTO: request
             ), errorType: DMSRoomAPIError.self)

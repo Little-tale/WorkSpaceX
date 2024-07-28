@@ -15,7 +15,7 @@ struct TextValid {
         return caseOf.matchesPattern(text)
     }
     
-    static func phoneTextValiate(_ text: String) -> String {
+    static func phoneTextValidate(_ text: String) -> String {
         if text.isEmpty { return "" }
         return RegularExpressionCase.phoneNumber.formatterPhoneNumber(text)
     }

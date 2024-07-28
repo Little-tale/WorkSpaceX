@@ -136,7 +136,7 @@ extension WorkSpaceDomainRepository: DependencyKey {
             
         }, channelInfoRequest: { workSpaceID, channelID in
             
-            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelInfoDTO.self, router: WorkSpaceRouter.channelInfoReqesut(workSpaceId: workSpaceID, channelID: channelID), errorType: WorkSpaceChannelListAPIError.self)
+            let result = try await NetworkManager.shared.requestDto(WorkSpaceChanelInfoDTO.self, router: WorkSpaceRouter.channelInfoRequest(workSpaceId: workSpaceID, channelID: channelID), errorType: WorkSpaceChannelListAPIError.self)
             
             let mapping = workSpaceMapper.workSpaceChanelInfoDTOToEntity(dto: result)
             

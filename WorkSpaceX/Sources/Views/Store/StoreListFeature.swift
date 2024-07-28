@@ -22,7 +22,7 @@ struct StoreListFeature {
         let navigationTitle = "코인샵"
         var paymentModel: IamportPayment? = nil
         
-        var payMentBool: Bool = false
+        var paymentBool: Bool = false
         
         var alertCase: AlertCase? = nil
         
@@ -41,13 +41,13 @@ struct StoreListFeature {
     
     enum AlertCase:Equatable {
         case error(String)
-        case scueess(String)
+        case success(String)
         
         var title: String {
             switch self {
             case .error:
                 return "에러"
-            case .scueess:
+            case .success:
                 return "성공"
             }
         }
@@ -55,7 +55,7 @@ struct StoreListFeature {
             switch self {
             case .error(let string):
                 return string
-            case .scueess(let string):
+            case .success(let string):
                 return string
             }
         }
@@ -70,7 +70,7 @@ struct StoreListFeature {
         case delegate(Delegate)
         case parentAction(ParentAction)
         
-        case explinShow(Bool)
+        case explainShow(Bool)
         case exPlainBind(ExplainState?)
         
         case catchToCoinItems([StoreItemEntity])
@@ -78,7 +78,7 @@ struct StoreListFeature {
         
         case paymentModel(IamportPayment?)
         case paymentResponse(IamportResponse?)
-        case payMentBool(Bool)
+        case paymentBool(Bool)
         
         case alertCase(AlertCase?)
         
@@ -111,7 +111,7 @@ struct StoreListFeature {
                     print(error) // 해당 에선 에러 코드가 없음
                 }
                 
-            case .explinShow(let bool):
+            case .explainShow(let bool):
                 return .run { send in
                     if bool {
                         await send(.exPlainBind(ExplainState()))
@@ -138,17 +138,17 @@ struct StoreListFeature {
             case let .exPlainBind(bind):
                 state.explainState = bind
                 
-            case let .payMentBool(bool):
-                state.payMentBool = bool
+            case let .paymentBool(bool):
+                state.paymentBool = bool
                 if !bool { state.paymentModel = nil }
                 
             case let .paymentModel(model):
                 state.paymentModel = model
                 
                 if model != nil {
-                    state.payMentBool = true
+                    state.paymentBool = true
                 } else {
-                    state.payMentBool = false
+                    state.paymentBool = false
                 }
                 
             case let .paymentResponse(model):
@@ -180,7 +180,7 @@ struct StoreListFeature {
             case let .catchToStoreValidEntity(model):
                 state.currentCoinCount += model.sesacCoin
                 return .run { send in
-                    await send(.alertCase(.scueess("결제가 완료 되었습니다.")))
+                    await send(.alertCase(.success("결제가 완료 되었습니다.")))
                 }
             case let .alertCase(caseOf):
                 state.alertCase = caseOf

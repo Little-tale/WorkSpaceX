@@ -33,13 +33,13 @@ struct StoreListView: View {
                     }
                 }
             }
-            .sheet(isPresented: $store.payMentBool.sending(\.payMentBool)) {
+            .sheet(isPresented: $store.paymentBool.sending(\.paymentBool)) {
                 IamportPaymentView(
                     iamPort: $store.paymentModel.sending(\.paymentModel),
                     userCode: store.userCode) { response in
                         store.send(.paymentResponse(response))
                     } onClose: {
-                        store.send(.payMentBool(false))
+                        store.send(.paymentBool(false))
                     }
             }
             .navigationTitle(store.navigationTitle)
@@ -59,7 +59,7 @@ struct StoreListView: View {
             })
             .popup(item: $store.explainState.sending(\.exPlainBind)) { item in
                 CustomExPlainView( item: item ) {
-                    store.send(.explinShow(false))
+                    store.send(.explainShow(false))
                 }
             } customize: {
                 $0
@@ -141,7 +141,7 @@ extension StoreListView {
                 Text("코인이란?")
                     .font(WSXFont.regu1)
                     .onTapGesture {
-                        store.send(.explinShow(true))
+                        store.send(.explainShow(true))
                     }
             }
         }

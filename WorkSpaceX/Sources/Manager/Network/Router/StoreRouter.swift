@@ -9,7 +9,7 @@ import Foundation
 
 enum StoreRouter: Router {
  
-    case storeValidation(request: StoreValidationReqeustDTO)
+    case storeValidation(request: StoreValidationRequestDTO)
     
     case storeItemList
     

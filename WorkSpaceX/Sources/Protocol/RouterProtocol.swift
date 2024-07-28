@@ -63,7 +63,7 @@ extension Router {
     
     func requestToBody(_ request: DTORequest) -> Data? {
         let result = try? WSXCoder.shared.JSONEncode(from: request)
-        print("iF nil is Faile ", result ?? "Not Nil")
+        print("iF nil is Fail ", result ?? "Not Nil")
         return result
     }
     

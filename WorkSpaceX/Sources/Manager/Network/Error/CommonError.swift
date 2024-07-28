@@ -12,7 +12,7 @@ enum CommonError: String, Error {
     case unknownPath = "E97"
     case accessToken = "E05"
     case failAuthentication = "E02"
-    case unknownAcount = "E03"
+    case unknownAccount = "E03"
     case tooManyRequest = "E98"
     case serverError = "E99"
     case fail = "E100"
@@ -30,7 +30,7 @@ extension CommonError {
             "엑세스 토큰 만료"
         case .failAuthentication:
             "인증 실패"
-        case .unknownAcount:
+        case .unknownAccount:
             "알수 없는 계정입니다."
         case .tooManyRequest:
             "너무 많은 호출이 감지되었습니다."
@@ -48,7 +48,7 @@ extension CommonError {
     }
     
     var ifDevelopError: Bool {
-        if case .unknownAcount = self {
+        if case .unknownAccount = self {
             return false
         } else if case .accessToken = self {
             return false

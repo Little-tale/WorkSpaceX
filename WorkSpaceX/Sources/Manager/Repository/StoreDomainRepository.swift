@@ -34,7 +34,7 @@ struct StoreDomainRepository: StoreRepositoryType {
     }
     
     func requestValid(impUid: String, merChantUID: String) async throws ->  StoreValidEntity {
-        let reqeustDTO = StoreValidationReqeustDTO(
+        let reqeustDTO = StoreValidationRequestDTO(
             imp_uid: impUid,
             merchant_uid: merChantUID
         )

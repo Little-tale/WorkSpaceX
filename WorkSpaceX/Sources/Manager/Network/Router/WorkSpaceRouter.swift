@@ -23,7 +23,7 @@ enum WorkSpaceRouter: Router {
     
     case workSpaceChatRequest(workSpaceId: String, channelID: String, ifDate: String?)
     
-    case channelInfoReqesut(workSpaceId: String, channelID: String)
+    case channelInfoRequest(workSpaceId: String, channelID: String)
     
     case sendChat(workSpaceID: String, _ ChannelID: String,_ multi: ChatMultipart, boundary: String)
     
@@ -53,7 +53,7 @@ extension WorkSpaceRouter {
                 .workSpaceMembersRequest,
                 .channelListSearching,
                 .workSpaceChatRequest,
-                .channelInfoReqesut,
+                .channelInfoRequest,
                 .exitChannel,
                 .requestUser,
                 .searchKeyword,
@@ -103,7 +103,7 @@ extension WorkSpaceRouter {
             
             return APIKey.version +  "/workspaces/\(workSpace)/channels/\(channel)/chats"
             
-        case let .channelInfoReqesut(workSpace, channel):
+        case let .channelInfoRequest(workSpace, channel):
             return APIKey.version + "/workspaces/\(workSpace)/channels/\(channel)"
             
         case let .sendChat(workSpace, channel, _, _):
@@ -147,7 +147,7 @@ extension WorkSpaceRouter {
                 .workSpaceAddMember,
                 .workSpaceMembersRequest,
                 .channelListSearching,
-                .channelInfoReqesut,
+                .channelInfoRequest,
                 .exitChannel,
                 .channelOwnerChanged,
                 .channelDelete,
@@ -178,15 +178,15 @@ extension WorkSpaceRouter {
             let multipartFormData = MultipartFormData()
             return multipartFormData.headers(boundary: boundary)
         case let .editToChannel(_, _, _, boundary):
-            let multipartFoemData = MultipartFormData()
-            return multipartFoemData.headers(boundary: boundary)
+            let multipartFormData = MultipartFormData()
+            return multipartFormData.headers(boundary: boundary)
         }
     }
     
     var parameters: Parameters? {
         switch self {
         case .meWorkSpace, .makeWorkSpace, .removeWorkSpace, .modifyWorkSpace, .findWorkSpaceChannels, .createChannel, .workSpaceAddMember, .workSpaceMembersRequest, .channelListSearching,
-                .channelInfoReqesut,
+                .channelInfoRequest,
                 .sendChat,
                 .exitChannel,
                 .editToChannel,
@@ -218,7 +218,7 @@ extension WorkSpaceRouter {
                 .workSpaceMembersRequest,
                 .channelListSearching,
                 .workSpaceChatRequest,
-                .channelInfoReqesut,
+                .channelInfoRequest,
                 .exitChannel,
                 .channelDelete,
                 .requestUser,
@@ -228,8 +228,10 @@ extension WorkSpaceRouter {
             return nil
         case let .makeWorkSpace(data, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
+            
         case let .modifyWorkSpace(data, boundary,_ ):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
+            
         case let .createChannel(data, _, boundary):
             return makeWorkSpaceMultipartData(data, boundary: boundary)
             
@@ -242,7 +244,8 @@ extension WorkSpaceRouter {
             
         case let .editToChannel(_,_, model, boundary):
             return makeWorkSpaceMultipartData(model, boundary: boundary)
-        case let .channelOwnerChanged(_,_,request):
+            
+        case let .channelOwnerChanged(_, _, request):
             return requestToBody(request)
             
         case let .workSpaceOwnerChange(_, owner):
@@ -258,7 +261,7 @@ extension WorkSpaceRouter {
                 .workSpaceMembersRequest,
                 .channelListSearching,
                 .workSpaceChatRequest,
-                .channelInfoReqesut,
+                .channelInfoRequest,
                 .exitChannel,
                 .channelDelete,
                 .requestUser,
