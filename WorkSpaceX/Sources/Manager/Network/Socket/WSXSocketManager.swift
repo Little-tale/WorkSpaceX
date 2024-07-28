@@ -123,9 +123,9 @@ extension WSXSocketManager {
         socket?.on(eventName) { dataArray, ack in
             print("소켓 channel ->>> ")
             do {
-                if let datafirst = dataArray.first {
+                if let dataFirst = dataArray.first {
                     print("소켓 jsonData try")
-                    let jsonData = try JSONSerialization.data(withJSONObject: datafirst, options: [])
+                    let jsonData = try JSONSerialization.data(withJSONObject: dataFirst, options: [])
                     print("소켓 jsonDecoding try")
                     let dto = try WSXCoder.shared.jsonDecoding(model: T.self, from: jsonData)
                     print("소켓 방출")

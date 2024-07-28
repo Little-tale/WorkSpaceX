@@ -12,7 +12,7 @@ struct DMSRepository {
     
     @Dependency(\.dmsMapper) var dmsMapper
     
-    func dmRoomListReqeust(_ workSpaceID: String) async throws -> [DMSRoomEntity] {
+    func dmRoomListRequest(_ workSpaceID: String) async throws -> [DMSRoomEntity] {
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomListDTO.self,
             router: DMSRouter.dmRoomListReqeust(workSpaceID),
@@ -22,24 +22,24 @@ struct DMSRepository {
     }
     
     func dmsRoomRequest(_ workSpaceID: String, otherUserID: String ) async throws -> DMSRoomEntity {
-        let reqeust = dmsMapper.toDTOReqeust(otherUserID)
+        let request = dmsMapper.toDTOReqeust(otherUserID)
         
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomDTO.self,
             router: DMSRouter.dmRoomReqeust(
                 workSpaceID,
-                requestDTO: reqeust
+                requestDTO: request
             ), errorType: DMSRoomAPIError.self)
         let mapping = dmsMapper.toEntity(result)
         
         return mapping
     }
     
-    func dmRoomUnreadReqeust(_ workSpaceId: String, roomID: String, date: String?) async throws -> DMSUnReadEntity {
+    func dmRoomUnreadRequest(_ workSpaceId: String, roomID: String, date: String?) async throws -> DMSUnReadEntity {
         
         let result = try await NetworkManager.shared.requestDto(
             DMSRoomUnReadDTO.self,
-            router: DMSRouter.dmRoomUnReadReqeust(
+            router: DMSRouter.dmRoomUnReadRequest(
                 workSpaceId,
                 roomID: roomID,
                 date: date
@@ -48,11 +48,11 @@ struct DMSRepository {
         return dmsMapper.toEntity(result)
     }
     
-    func dmsChatListRqeust(_ roomID: String, workSpaceId: String, cursurDate: String?) async throws -> [DMSChatEntity]  {
+    func dmsChatListRquest(_ roomID: String, workSpaceId: String, cursurDate: String?) async throws -> [DMSChatEntity]  {
        
         let result = try await NetworkManager.shared.requestDto(
             DMSChatListDTO.self,
-            router: DMSRouter.dmRoomChatsReqeust(
+            router: DMSRouter.dmRoomChatsRequest(
             workSpaceId,
             roomID: roomID,
             date: cursurDate
@@ -64,14 +64,14 @@ struct DMSRepository {
     }
     
     @discardableResult
-    func sendChatReqeust(_ workSpaceID: String, roomID: String, reqeust: ChatMultipart) async throws ->  DMSChatEntity {
+    func sendChatRequest(_ workSpaceID: String, roomID: String, request: ChatMultipart) async throws ->  DMSChatEntity {
         
         let result = try await NetworkManager.shared.requestDto(
             DMSChatDTO.self,
             router: DMSRouter.sendDmMessage(
                 workSpaceID,
                 roomID: roomID,
-                reqeust: reqeust,
+                request: request,
                 boundary: MultipartFormData.randomBoundary()
             ),
             errorType: DMSRoomAPIError.self
@@ -80,7 +80,7 @@ struct DMSRepository {
         return mapping
     }
     
-    func dmSocketReqeust(_ roomID: String) -> AsyncStream<Result<DMSChatEntity,ChatSocketManagerError>> {
+    func dmSocketRequest(_ roomID: String) -> AsyncStream<Result<DMSChatEntity,ChatSocketManagerError>> {
         return AsyncStream { contin in
             Task {
                 let stream = WSXSocketManager.shared.connect(

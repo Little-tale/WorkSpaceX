@@ -205,7 +205,7 @@ struct DMSChatFeature {
                     if let date {
                         await send(.firstInit)
                         let date = DateManager.shared.toDateISO(date)
-                        let result = try await dmsRepo.dmsChatListRqeust(
+                        let result = try await dmsRepo.dmsChatListRquest(
                             model.roomId,
                             workSpaceId: id,
                             cursurDate: date
@@ -213,7 +213,7 @@ struct DMSChatFeature {
                         await send(.networkResult(result))
                         await send(.socketConnected)
                     } else {
-                        let result = try await dmsRepo.dmsChatListRqeust(
+                        let result = try await dmsRepo.dmsChatListRquest(
                             model.roomId,
                             workSpaceId: id,
                             cursurDate: nil
@@ -313,10 +313,10 @@ struct DMSChatFeature {
                 return .run { send in
                     await send(.dataCountChaeck)
                     // 소켓을 통해 받을 예정
-                    try await dmsRepo.sendChatReqeust(
+                    try await dmsRepo.sendChatRequest(
                         workSpaceID,
                         roomID: roomId,
-                        reqeust: multi
+                        request: multi
                     )
                 } catch: { error, send in
                     if let error = error as? DMSRoomAPIError {
@@ -429,7 +429,7 @@ struct DMSChatFeature {
                 let roomID = state.roomID
                 guard let roomID else { break }
                 return .run { send in
-                    for await result in dmsRepo.dmSocketReqeust(roomID) {
+                    for await result in dmsRepo.dmSocketRequest(roomID) {
                         switch result {
                         case let .success(model):
                             await send(.toChatModel(model))

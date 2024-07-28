@@ -16,11 +16,11 @@ enum UserDefaultsManager {
         case accessToken
         case refreshToken
         case appleLoginNickName
-        case isfirstUser
+        case isFirstUser
         case userName
         case ifNeedChecked
         case workSpaceSelectedID
-        case ifEmaliLogin
+        case ifEmailLogin
         var value: String {
             return self.rawValue
         }
@@ -41,7 +41,7 @@ enum UserDefaultsManager {
     @UserDefaultsWrapper(key: Key.appleLoginNickName.value, placeValue: nil)
     static var appleLoginNickName: String?
     
-    @UserDefaultsWrapper(key: Key.isfirstUser.value, placeValue: true)
+    @UserDefaultsWrapper(key: Key.isFirstUser.value, placeValue: true)
     static var isFirstUser: Bool
     
     @UserDefaultsWrapper(key: Key.userName.value, placeValue: nil)
@@ -52,6 +52,6 @@ enum UserDefaultsManager {
     @UserDefaultsWrapper(key: Key.workSpaceSelectedID.value, placeValue: "")
     static var workSpaceSelectedID: String
     
-    @UserDefaultsWrapper(key: Key.ifEmaliLogin.value, placeValue: false)
+    @UserDefaultsWrapper(key: Key.ifEmailLogin.value, placeValue: false)
     static var ifEmailLogin: Bool
 }

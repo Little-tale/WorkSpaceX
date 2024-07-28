@@ -151,7 +151,7 @@ struct WorkSpaceListFeature {
             case let .observerStart(workSpaceID):
                 
                 return .run { send in
-                    for await currentModel in await workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                    for await currentModel in await workSpaceReader.observeChangeForPrimary(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
                         print("응답 받음 ")
                         if let currentModel{
                             await send(.catchToWorkSpaceRealmModel(currentModel))
@@ -266,7 +266,7 @@ struct WorkSpaceListFeature {
             case let .dmRoomListReqeust(workSpaceID):
                
                 return .run { send in
-                    let result = try await dmsRepository.dmRoomListReqeust(workSpaceID)
+                    let result = try await dmsRepository.dmRoomListRequest(workSpaceID)
                     try await realmRepo.upsertDMSRoomEntity(result, workSpaceID: workSpaceID, nil)
                     
                     await withThrowingTaskGroup(of: Void.self) { group in
@@ -281,7 +281,7 @@ struct WorkSpaceListFeature {
                                         lastChatDateString = DateManager.shared.toDateISO(lastChatDate)
                                     }
                                     
-                                    let chatList = try await dmsRepository.dmsChatListRqeust(
+                                    let chatList = try await dmsRepository.dmsChatListRquest(
                                         model.roomId,
                                         workSpaceId: workSpaceID,
                                         cursurDate: lastChatDateString
@@ -337,7 +337,7 @@ struct WorkSpaceListFeature {
                 }
             case let .channelInfoObserver(workSpaceID):
                 return .run { @MainActor send in
-                    for await currentModel in workSpaceReader.observeChaeelsForWorkSpace(
+                    for await currentModel in workSpaceReader.observeChannelsForWorkSpace(
                         workSpaceId: workSpaceID
                     ) {
                         let models =  workSpaceRepo.toChannelSection(models: currentModel)

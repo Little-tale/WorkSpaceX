@@ -8,13 +8,13 @@
 import Foundation
 
 enum ChatSocketManagerError: Error {
-    case nilSocat
+    case nilSocket
     case weakError
     case JSONDecodeError
     
     var message: String {
         switch self {
-        case .nilSocat:
+        case .nilSocket:
             return "인터넷 환경을 확인해 주세요"
         case .weakError:
             return "치명적이 에러가 발생했습니다."

@@ -127,7 +127,7 @@ struct DMSListFeature {
             case let .workSpaceInfoObserver(workSpaceID):
                 print("이게 왜...? 에러 \(workSpaceID)")
                 return .run { @MainActor send in
-                    for await currentModel in workSpaceReader.observeChangeForPrimery(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
+                    for await currentModel in workSpaceReader.observeChangeForPrimary(for: WorkSpaceRealmModel.self, primary: workSpaceID) {
                         print("응답 받음 ")
                         if let currentModel{
                             send(.catchToWorkSpaceRealmModel(currentModel))
@@ -196,7 +196,7 @@ struct DMSListFeature {
             case let .dmsListReqeust(workSpaceID):
                 return .run { send in
                     
-                    let result = try await dmsRepo.dmRoomListReqeust(workSpaceID)
+                    let result = try await dmsRepo.dmRoomListRequest(workSpaceID)
                     
                     await send(.roomEntityCatch(result))
                     
@@ -229,7 +229,7 @@ struct DMSListFeature {
                                         lastChatDateString = DateManager.shared.toDateISO(lastChatDate)
                                     }
                                     
-                                    let chatList = try await dmsRepo.dmsChatListRqeust(
+                                    let chatList = try await dmsRepo.dmsChatListRquest(
                                         model.roomId,
                                         workSpaceId: id,
                                         cursurDate: lastChatDateString

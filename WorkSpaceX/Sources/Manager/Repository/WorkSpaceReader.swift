@@ -60,7 +60,7 @@ class WorkSpaceReader {
     }
     
     @MainActor
-    func observeChangeForPrimery<M: Object> (
+    func observeChangeForPrimary<M: Object> (
         for modelType: M.Type,
         primary key: String
     ) -> AsyncStream<M?> {
@@ -111,7 +111,7 @@ class WorkSpaceReader {
 
 extension WorkSpaceReader {
     
-    func observeChaeelsForWorkSpace(
+    func observeChannelsForWorkSpace(
         workSpaceId: String,
         sort keyPath: String = "createdAt",
         ascending: Bool = true
