@@ -13,7 +13,7 @@ struct WorkSpaceInitalFeature {
     
     @ObservableState
     struct State: Equatable {
-        var imagePick = CustomImagePickPeature.State()
+        var imagePick = CustomImagePickFeature.State()
         
         let workSpaceNameFieldType = WorkSpaceNameFieldType()
         let workSpaceExplainType = WorkSpaceExplainType()
@@ -47,7 +47,7 @@ struct WorkSpaceInitalFeature {
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case imagePickFeature(CustomImagePickPeature.Action)
+        case imagePickFeature(CustomImagePickFeature.Action)
         case showImagePicker
         case imagePickerData(Data?)
         case regButtonTapped
@@ -76,7 +76,7 @@ struct WorkSpaceInitalFeature {
         BindingReducer()
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
-            CustomImagePickPeature()
+            CustomImagePickFeature()
         }
         
         Reduce { state, action in

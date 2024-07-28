@@ -14,7 +14,7 @@ struct WorkSpaceEditFeature {
     
     @ObservableState
     struct State: Equatable {
-        var imagePick = CustomImagePickPeature.State()
+        var imagePick = CustomImagePickFeature.State()
         var showImagePicker = false
         let navigationTitle = "워크스페이스 편집"
         var workSpaceName = ""
@@ -70,7 +70,7 @@ struct WorkSpaceEditFeature {
     enum Action: BindableAction {
         case getModel(WorkSpaceRealmModel)
         case binding(BindingAction<State>)
-        case imagePickFeature(CustomImagePickPeature.Action)
+        case imagePickFeature(CustomImagePickFeature.Action)
         
         case showImagePicker
         case imagePickerData(Data?)
@@ -96,7 +96,7 @@ struct WorkSpaceEditFeature {
         BindingReducer()
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
-            CustomImagePickPeature()
+            CustomImagePickFeature()
         }
         
         Reduce { state, action in

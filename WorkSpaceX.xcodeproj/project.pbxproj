@@ -238,10 +238,10 @@
 		7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */; };
 		7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */; };
 		7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */; };
-		7BEC45D12C16AACE00576ECA /* CustomImagePickPeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D02C16AACE00576ECA /* CustomImagePickPeature.swift */; };
+		7BEC45D12C16AACE00576ECA /* CustomImagePickFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D02C16AACE00576ECA /* CustomImagePickFeature.swift */; };
 		7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */; };
-		7BEC45D52C16C7DE00576ECA /* CustomeImagePickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D42C16C7DE00576ECA /* CustomeImagePickView.swift */; };
-		7BEC45D82C16C9E400576ECA /* RoudProfileImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */; };
+		7BEC45D52C16C7DE00576ECA /* CustomImagePickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D42C16C7DE00576ECA /* CustomImagePickView.swift */; };
+		7BEC45D82C16C9E400576ECA /* RoundProfileImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D72C16C9E400576ECA /* RoundProfileImageModifier.swift */; };
 		7BEC45DB2C16E1F700576ECA /* WorkSpaceListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */; };
 		7BEC45DD2C16E2AC00576ECA /* WorkSpaceDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */; };
 		7BEC45E12C16E76900576ECA /* WorkSpaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */; };
@@ -508,10 +508,10 @@
 		7BEC45C62C15DD5600576ECA /* AppleLoginDTORequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginDTORequest.swift; sourceTree = "<group>"; };
 		7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitalView.swift; sourceTree = "<group>"; };
 		7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePicker.swift; sourceTree = "<group>"; };
-		7BEC45D02C16AACE00576ECA /* CustomImagePickPeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickPeature.swift; sourceTree = "<group>"; };
+		7BEC45D02C16AACE00576ECA /* CustomImagePickFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickFeature.swift; sourceTree = "<group>"; };
 		7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitalFeature.swift; sourceTree = "<group>"; };
-		7BEC45D42C16C7DE00576ECA /* CustomeImagePickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomeImagePickView.swift; sourceTree = "<group>"; };
-		7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoudProfileImageModifier.swift; sourceTree = "<group>"; };
+		7BEC45D42C16C7DE00576ECA /* CustomImagePickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickView.swift; sourceTree = "<group>"; };
+		7BEC45D72C16C9E400576ECA /* RoundProfileImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProfileImageModifier.swift; sourceTree = "<group>"; };
 		7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListDTO.swift; sourceTree = "<group>"; };
 		7BEC45DC2C16E2AC00576ECA /* WorkSpaceDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceDTO.swift; sourceTree = "<group>"; };
 		7BEC45E02C16E76900576ECA /* WorkSpaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceRouter.swift; sourceTree = "<group>"; };
@@ -924,7 +924,7 @@
 		7B592EBD2C0EC97100E47797 /* Modifer */ = {
 			isa = PBXGroup;
 			children = (
-				7BEC45D72C16C9E400576ECA /* RoudProfileImageModifier.swift */,
+				7BEC45D72C16C9E400576ECA /* RoundProfileImageModifier.swift */,
 				7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */,
 				7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */,
 				7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */,
@@ -1256,8 +1256,8 @@
 			children = (
 				7B23ADCB2C2A8DED00A9E499 /* CustomDataPicker.swift */,
 				7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */,
-				7BEC45D02C16AACE00576ECA /* CustomImagePickPeature.swift */,
-				7BEC45D42C16C7DE00576ECA /* CustomeImagePickView.swift */,
+				7BEC45D02C16AACE00576ECA /* CustomImagePickFeature.swift */,
+				7BEC45D42C16C7DE00576ECA /* CustomImagePickView.swift */,
 				7B8FD6472C1AF22D00948E7C /* DownSamplingImageView.swift */,
 				7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */,
 				7BC09C642C39173600F0ABDC /* CustomExPlainView.swift */,
@@ -1586,7 +1586,7 @@
 				7BF9D7442C2708F50021D043 /* ShadowModifier.swift in Sources */,
 				7B592ED32C0F08F600E47797 /* HeaderTextField.swift in Sources */,
 				7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */,
-				7BEC45D82C16C9E400576ECA /* RoudProfileImageModifier.swift in Sources */,
+				7BEC45D82C16C9E400576ECA /* RoundProfileImageModifier.swift in Sources */,
 				7BF9D72C2C2563AD0021D043 /* WorkSpaceChannelListAPIError.swift in Sources */,
 				7B2EEE4D2C12CE900024853C /* UserDefaultsWrapper.swift in Sources */,
 				7BC09C602C3846AF00F0ABDC /* StoreMapper.swift in Sources */,
@@ -1712,7 +1712,7 @@
 				7B26D1FC2C214D1300BC9912 /* WorkSpaceEditAPIError.swift in Sources */,
 				7B26D1EC2C1F00EC00BC9912 /* EXDate.swift in Sources */,
 				7B2EEE292C11A38B0024853C /* WSXCoder.swift in Sources */,
-				7BEC45D52C16C7DE00576ECA /* CustomeImagePickView.swift in Sources */,
+				7BEC45D52C16C7DE00576ECA /* CustomImagePickView.swift in Sources */,
 				7BF9D72F2C2593600021D043 /* WorkSpaceChannelChattingView.swift in Sources */,
 				7BEC45A42C12E53400576ECA /* AuthRouter.swift in Sources */,
 				7B592ECE2C0EE30700E47797 /* SignUpFeature.swift in Sources */,
@@ -1740,7 +1740,7 @@
 				7B8FD60D2C19AE6100948E7C /* EmailValidError.swift in Sources */,
 				7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */,
 				7B592EAA2C0E294200E47797 /* WSXImage.swift in Sources */,
-				7BEC45D12C16AACE00576ECA /* CustomImagePickPeature.swift in Sources */,
+				7BEC45D12C16AACE00576ECA /* CustomImagePickFeature.swift in Sources */,
 				7BEC45C72C15DD5600576ECA /* AppleLoginDTORequest.swift in Sources */,
 				7BC09C672C39497400F0ABDC /* CustomPaymentView.swift in Sources */,
 				7B26D2252C228B1800BC9912 /* WorkSpaceChanelsDTO.swift in Sources */,

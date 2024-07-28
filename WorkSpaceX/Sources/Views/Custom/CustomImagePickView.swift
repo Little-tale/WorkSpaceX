@@ -1,5 +1,5 @@
 //
-//  CustomeImagePickView.swift
+//  CustomImagePickView.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/10/24.
@@ -10,9 +10,9 @@ import PhotosUI
 import ComposableArchitecture
 import Kingfisher
 
-struct CustomeImagePickView: View {
+struct CustomImagePickView: View {
     
-    @Perception.Bindable var store: StoreOf<CustomImagePickPeature>
+    @Perception.Bindable var store: StoreOf<CustomImagePickFeature>
     
     var body: some View {
         WithPerceptionTracking {

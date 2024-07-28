@@ -17,7 +17,7 @@ struct WorkSpaceChannelAddFeature {
         var id: UUID
         let workSpaceId: String
         
-        var imagePick = CustomImagePickPeature.State()
+        var imagePick = CustomImagePickFeature.State()
         var showImagePicker = false
         var channelName = ""
         var channelIntro = ""
@@ -31,7 +31,7 @@ struct WorkSpaceChannelAddFeature {
     enum Action: BindableAction {
     
         case binding(BindingAction<State>)
-        case imagePickFeature(CustomImagePickPeature.Action)
+        case imagePickFeature(CustomImagePickFeature.Action)
         
         case showImagePicker
         case imagePickerData(Data?)
@@ -55,7 +55,7 @@ struct WorkSpaceChannelAddFeature {
         BindingReducer()
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
-            CustomImagePickPeature()
+            CustomImagePickFeature()
         }
         
         Reduce { state, action in

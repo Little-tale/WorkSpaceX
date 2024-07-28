@@ -15,7 +15,7 @@ enum SearchListScreens {
     case channelChatView(WorkSpaceChannelChattingFeature)
     case otherProfileView(ProfileInfoFeature)
     case chatChannelSettingView(ChatChannelSettingFeature)
-    case chatnnelEdit(ChannelEditFeature)
+    case channelEdit(ChannelEditFeature)
     case ChannelOwnerChange(ChannelOwnerChangeFeature)
 }
 
@@ -126,7 +126,7 @@ struct SearchCoordinator {
             case .router(.routeAction(id: _, action: .chatChannelSettingView(.delegate(.channelEditClicked(let model, let workSpaceId))))):
                 
                 state.identeRoutes.presentSheet(
-                    .chatnnelEdit(
+                    .channelEdit(
                         ChannelEditFeature.State(
                             channelEntity: model,
                             workSpaceId: workSpaceId
@@ -135,11 +135,11 @@ struct SearchCoordinator {
                     embedInNavigationView: true
                 )
                 
-            case .router(.routeAction(id: _, action: .chatnnelEdit(.dismissButtonTapped))):
+            case .router(.routeAction(id: _, action: .channelEdit(.dismissButtonTapped))):
                 
                 state.identeRoutes.dismiss()
                 
-            case .router(.routeAction(id: _, action: .chatnnelEdit(.delegate(.successChannel(_))))):
+            case .router(.routeAction(id: _, action: .channelEdit(.delegate(.successChannel(_))))):
                 
                 state.identeRoutes.dismiss()
                 

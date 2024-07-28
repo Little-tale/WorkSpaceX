@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct CustomImagePickPeature {
+struct CustomImagePickFeature {
     
     @ObservableState
     struct State: Equatable {

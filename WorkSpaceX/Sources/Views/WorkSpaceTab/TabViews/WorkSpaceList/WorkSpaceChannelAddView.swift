@@ -22,10 +22,10 @@ struct WorkSpaceChannelAddView: View {
                     WSXColor.lightGray
                     VStack {
                         ZStack (alignment: .bottomTrailing) {
-                            CustomeImagePickView(
+                            CustomImagePickView(
                                 store: store.scope(state: \.imagePick, action: \.imagePickFeature)
                             )
-                            .modifier(RoudProfileImageModifier(frame: CGSize(width: 80, height: 80)))
+                            .modifier(RoundProfileImageModifier(frame: CGSize(width: 80, height: 80)))
                             .asButton {
                                 store.send(.showImagePicker)
                             }

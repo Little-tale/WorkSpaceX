@@ -18,7 +18,7 @@ struct ChannelEditFeature {
         var channelEntity: ChanelEntity
         let workSpaceId: String
         
-        var imagePick = CustomImagePickPeature.State()
+        var imagePick = CustomImagePickFeature.State()
         
         var showImagePicker = false
         var channelName = ""
@@ -35,7 +35,7 @@ struct ChannelEditFeature {
         case onAppear
         
         case binding(BindingAction<State>)
-        case imagePickFeature(CustomImagePickPeature.Action)
+        case imagePickFeature(CustomImagePickFeature.Action)
         
         case showImagePicker
         case imagePickerData(Data?)
@@ -65,7 +65,7 @@ struct ChannelEditFeature {
         BindingReducer()
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
-            CustomImagePickPeature()
+            CustomImagePickFeature()
         }
         
         Reduce { state, action in

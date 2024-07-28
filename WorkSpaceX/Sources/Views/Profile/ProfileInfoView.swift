@@ -26,7 +26,7 @@ struct ProfileInfoView: View {
                     }
                 }
                 .navigationBarTitleDisplayMode(.inline)
-                .alert(item: $store.notifiMessage.sending(\.notifiMessage), title: { _ in
+                .alert(item: $store.notiMessage.sending(\.notiMessage), title: { _ in
                     Text("알림 설정")
                 }, actions: { _ in
                     Text("Cancel")
@@ -38,7 +38,7 @@ struct ProfileInfoView: View {
                     Text(message)
                 })
                 .onAppear {
-                    store.send(.onAppaer)
+                    store.send(.onAppear)
                 }
                 .toolbar(store.tabbarHidden ? .hidden : .visible, for: .tabBar)
                 .popup(item: $store.popUpViewState.sending(\.popUpViewState)) { text in
@@ -124,7 +124,7 @@ extension ProfileInfoView {
                 topSectionView(model)
             }
             Section {
-                setticgCaseView()
+                settingCaseView()
             }
             Section {
                 bottomSectionView(model)
@@ -135,10 +135,10 @@ extension ProfileInfoView {
     
     private func imagePickView() -> some View {
         ZStack(alignment: .bottomTrailing) {
-            CustomeImagePickView(
+            CustomImagePickView(
                 store: store.scope(state: \.imagePick, action: \.imagePickFeature)
             )
-            .modifier(RoudProfileImageModifier(frame: CGSize(width: 100, height: 100)))
+            .modifier(RoundProfileImageModifier(frame: CGSize(width: 100, height: 100)))
             .onTapGesture {
                 store.send(.showImagePicker)
             }
@@ -148,8 +148,8 @@ extension ProfileInfoView {
         }
     }
     
-    private func setticgCaseView() -> some View {
-        ForEach(ProfileInfoFeature.MyProfileViewType.nototification, id: \.self) { item in
+    private func settingCaseView() -> some View {
+        ForEach(ProfileInfoFeature.MyProfileViewType.notifications, id: \.self) { item in
             HStack {
                 Toggle( isOn:$store.notificationBool.sending(\.notificationBool)) {
                     Text(item.title)
@@ -207,7 +207,7 @@ extension ProfileInfoView {
                 }
             }
         } else {
-            ForEach(ProfileInfoFeature.MyProfileViewType.emalilLogginBottomSection, id: \.self) { item in
+            ForEach(ProfileInfoFeature.MyProfileViewType.emaliLoginBottomSection, id: \.self) { item in
                 Group {
                     HStack {
                         Text(item.title)

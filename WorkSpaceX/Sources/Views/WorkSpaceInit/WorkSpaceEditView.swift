@@ -110,10 +110,10 @@ extension WorkSpaceEditView {
     }
     
     private func imagePickView() -> some View {
-        CustomeImagePickView(
+        CustomImagePickView(
             store: store.scope(state: \.imagePick, action: \.imagePickFeature)
         )
-        .modifier(RoudProfileImageModifier(frame: CGSize(width: 80, height: 80)))
+        .modifier(RoundProfileImageModifier(frame: CGSize(width: 80, height: 80)))
         .asButton {
             store.send(.showImagePicker)
         }

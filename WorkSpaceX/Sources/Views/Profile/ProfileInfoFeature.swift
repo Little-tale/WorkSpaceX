@@ -20,14 +20,14 @@ struct ProfileInfoFeature {
         var id: UUID
         var userType: UserType
         var errorMessage: String? = nil
-        var notifiMessage: String? = nil
+        var notiMessage: String? = nil
         
         var tabbarHidden: Bool
         
         var userEntity: UserInfoEntity? = nil
         var otherEntity: WorkSpaceMemberEntity? = nil
         
-        var imagePick = CustomImagePickPeature.State()
+        var imagePick = CustomImagePickFeature.State()
         var showImagePicker = false
         
         var image: Data? = nil
@@ -55,10 +55,10 @@ struct ProfileInfoFeature {
     }
     
     enum Action {
-        case onAppaer
+        case onAppear
         case delegate(Delegate)
         
-        case imagePickFeature(CustomImagePickPeature.Action)
+        case imagePickFeature(CustomImagePickFeature.Action)
         case showImagePicker
         case imagePick(Bool)
         
@@ -66,9 +66,9 @@ struct ProfileInfoFeature {
         case imageRegRequest(Data)
         case realmUpdate(UserEntity)
         
-        case profilInfoReqeustMe(userID: String)
+        case profileInfoRequestMe(userID: String)
         
-        case profilInfoRequestOther(userID: String)
+        case profileInfoRequestOther(userID: String)
         
         case resultToMe(UserInfoEntity)
         case resultToOther(WorkSpaceMemberEntity)
@@ -84,11 +84,11 @@ struct ProfileInfoFeature {
         /// 딜레이
         case progressBool(Bool)
         
-        case showPrograssView(Bool)
+        case showProgressView(Bool)
         
         case notificationBool(Bool)
         
-        case notifiMessage(String?)
+        case notiMessage(String?)
         
         case notifiGoSetting
         
@@ -117,12 +117,12 @@ struct ProfileInfoFeature {
     var body: some ReducerOf<Self> {
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
-            CustomImagePickPeature()
+            CustomImagePickFeature()
         }
         
         Reduce { state, action in
             switch action {
-            case .onAppaer:
+            case .onAppear:
                 if !state.tabbarHidden {
                     state.navigationTitle = "설정"
                 } else {
@@ -137,14 +137,14 @@ struct ProfileInfoFeature {
                             await send(.imagePickFeature(.profileEmpty))
                         }
                         await send(.currentNotificationState)
-                        await send(.profilInfoReqeustMe(userID: userID))
+                        await send(.profileInfoRequestMe(userID: userID))
                     }
                 case let .other(userID):
                     return .run { send in
-                        await send(.profilInfoRequestOther(userID: userID))
+                        await send(.profileInfoRequestOther(userID: userID))
                     }
                 }
-            case .profilInfoReqeustMe(_):
+            case .profileInfoRequestMe(_):
                 state.ifNeedOnAppear = false
                 return .run { send in
                     let result = try await userRepo.myProfile()
@@ -160,7 +160,7 @@ struct ProfileInfoFeature {
                         print(error)
                     }
                 }
-            case let .profilInfoRequestOther(userID):
+            case let .profileInfoRequestOther(userID):
                 return .run { send in
                     let result = try await userRepo.otherUserProfileReqeust(userID)
                     await send(.resultToOther(result))
@@ -241,12 +241,12 @@ struct ProfileInfoFeature {
                 
             case let .imageRegRequest(data):
                 return .run { send in
-                    await send(.showPrograssView(true))
+                    await send(.showProgressView(true))
                     
                     let result = try await userRepo.profileImageEdit(
                         data
                     )
-                    await send(.showPrograssView(false))
+                    await send(.showProgressView(false))
                     
                     await send(.realmUpdate(result)) // 프로필은 다른뷰에서도 업데이트 가능
                 } catch: { error, send in
@@ -261,7 +261,7 @@ struct ProfileInfoFeature {
                         print(error)
                     }
                 }
-            case let .showPrograssView(bool):
+            case let .showProgressView(bool):
                 state.progress = bool
 //                return .run { send in
 //                    try await Task.sleep(for: .seconds(1))
@@ -381,7 +381,7 @@ extension ProfileInfoFeature {
             return [.myCoinInfo, .nickName, .contact]
         }
         
-        static var nototification: [MyProfileViewType] {
+        static var notifications: [MyProfileViewType] {
             return [.notificationState]
         }
         
@@ -389,7 +389,7 @@ extension ProfileInfoFeature {
             return [.email, .connectedSocial, .logout]
         }
         
-        static var emalilLogginBottomSection: [MyProfileViewType] {
+        static var emaliLoginBottomSection: [MyProfileViewType] {
             return [.email, .logout]
         }
     }

@@ -1,5 +1,5 @@
 //
-//  RoudProfileImageModifier.swift
+//  RoundProfileImageModifier.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/10/24.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct RoudProfileImageModifier: ViewModifier {
+struct RoundProfileImageModifier: ViewModifier {
     
     var frame: CGSize
    
