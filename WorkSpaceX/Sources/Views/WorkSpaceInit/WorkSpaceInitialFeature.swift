@@ -1,5 +1,5 @@
 //
-//  WorkSpaceInitalFeature.swift
+//  WorkSpaceInitialFeature.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/10/24.
@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct WorkSpaceInitalFeature {
+struct WorkSpaceInitialFeature {
     
     @ObservableState
     struct State: Equatable {
@@ -29,7 +29,7 @@ struct WorkSpaceInitalFeature {
         var errorMessage: String? = nil
         var successMessage: String? = nil
         
-        var showPrograssView = false
+        var showProgressView = false
         
         var logOutAlertState: AlertState<Action.Alert>?
     }
@@ -105,7 +105,7 @@ struct WorkSpaceInitalFeature {
                 return .none
                 
             case .regButtonTapped:
-                state.showPrograssView = true
+                state.showProgressView = true
 
                 var description: String?
                 
@@ -192,7 +192,7 @@ struct WorkSpaceInitalFeature {
                 }
                 
             case .regFaileHandler(let error):
-                state.showPrograssView = false
+                state.showProgressView = false
                 
                 if error.ifReFreshDead {
                     return .run { send in

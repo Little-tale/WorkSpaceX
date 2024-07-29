@@ -1,5 +1,5 @@
 //
-//  CommonButtonModifer.swift
+//  CommonButtonModifier.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/4/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct CommonButtonModifer: ViewModifier {
+struct CommonButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(maxWidth: .infinity)
