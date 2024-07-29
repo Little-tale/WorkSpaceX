@@ -53,7 +53,7 @@ struct ProfileInfoEditView: View {
                 Text(item)
             }
             .popup(isPresented: $store.successTrigger.sending(\.successTrigger)) {
-                PopupVIewSmallToColor(
+                PopupViewSmallToColor(
                     text: "등록이 완료되었습니다.",
                     color: WSXColor.lightGreen
                 )

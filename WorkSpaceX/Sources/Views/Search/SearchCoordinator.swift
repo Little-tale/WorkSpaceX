@@ -74,7 +74,7 @@ struct SearchCoordinator {
                 state.identeRoutes.push(.otherProfileView(ProfileInfoFeature.State(
                     id: id,
                     userType: .other(userID: model.userID),
-                    tabbarHidden: true
+                    tabBarHidden: true
                 )))
                 
                 

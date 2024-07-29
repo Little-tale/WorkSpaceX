@@ -22,7 +22,7 @@ struct ProfileInfoFeature {
         var errorMessage: String? = nil
         var notiMessage: String? = nil
         
-        var tabbarHidden: Bool
+        var tabBarHidden: Bool
         
         var userEntity: UserInfoEntity? = nil
         var otherEntity: WorkSpaceMemberEntity? = nil
@@ -94,7 +94,7 @@ struct ProfileInfoFeature {
         
         enum Delegate {
             case moveToNickNameChange(UserInfoEntity)
-            case moveToContackChange(UserInfoEntity)
+            case moveToContactChange(UserInfoEntity)
             case moveToOnBoardingView
             case moveToCoinShop(Int)
         }
@@ -123,7 +123,7 @@ struct ProfileInfoFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                if !state.tabbarHidden {
+                if !state.tabBarHidden {
                     state.navigationTitle = "설정"
                 } else {
                     state.navigationTitle = "내 정보 수정"
@@ -162,7 +162,7 @@ struct ProfileInfoFeature {
                 }
             case let .profileInfoRequestOther(userID):
                 return .run { send in
-                    let result = try await userRepo.otherUserProfileReqeust(userID)
+                    let result = try await userRepo.otherUserProfileRequest(userID)
                     await send(.resultToOther(result))
                 }
                 
@@ -218,7 +218,7 @@ struct ProfileInfoFeature {
                     }
                 case .contact:
                     return .run { send in
-                        await send(.delegate(.moveToContackChange(user)))
+                        await send(.delegate(.moveToContactChange(user)))
                     }
                     
                 case .email:
@@ -389,7 +389,7 @@ extension ProfileInfoFeature {
             return [.email, .connectedSocial, .logout]
         }
         
-        static var emaliLoginBottomSection: [MyProfileViewType] {
+        static var emailLoginBottomSection: [MyProfileViewType] {
             return [.email, .logout]
         }
     }

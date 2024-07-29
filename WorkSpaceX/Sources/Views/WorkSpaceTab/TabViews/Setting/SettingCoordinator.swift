@@ -40,7 +40,7 @@ struct SettingCoordinator {
             ProfileInfoFeature.State(
             id: homeID,
             userType: .me(userID: meID),
-            tabbarHidden: false)
+            tabBarHidden: false)
         ), embedInNavigationView: true)])
         
     }
@@ -56,7 +56,7 @@ struct SettingCoordinator {
         
         enum ParentAction {
             case getWorkSpaceId(String)
-            case getcurrentUserID(String)
+            case getCurrentUserID(String)
         }
         
         enum Delegate {
@@ -80,7 +80,7 @@ struct SettingCoordinator {
                     state.currentUserID = userID
                 }
                 
-            case .parentAction(.getcurrentUserID(let user)):
+            case .parentAction(.getCurrentUserID(let user)):
                 state.currentUserID = user
                 let id = SettingCoordinator.State.homeID
                 
@@ -98,7 +98,7 @@ struct SettingCoordinator {
                  
                  
                  /// 연락처 수정으로 전환
-             case .router(.routeAction(id: _, action: .home(.delegate(.moveToContackChange(let model))))):
+             case .router(.routeAction(id: _, action: .home(.delegate(.moveToContactChange(let model))))):
                  state.identeRoutes.push(.profileEdit(ProfileInfoEditFeature.State(
                      editType: .contact,
                      model: model

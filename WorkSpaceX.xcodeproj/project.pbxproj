@@ -144,7 +144,7 @@
 		7B7EB8652C36431A00D22362 /* UserInfoEditRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8642C36431A00D22362 /* UserInfoEditRequestDTO.swift */; };
 		7B7EB8672C36445400D22362 /* UserEditDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8662C36445400D22362 /* UserEditDTO.swift */; };
 		7B7EB8692C36453800D22362 /* UserEditAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB8682C36453800D22362 /* UserEditAPIError.swift */; };
-		7B7EB86B2C36562C00D22362 /* PopupVIewSmallToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */; };
+		7B7EB86B2C36562C00D22362 /* PopupViewSmallToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB86A2C36562C00D22362 /* PopupViewSmallToColor.swift */; };
 		7B7EB86D2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */; };
 		7B8FD5FC2C19486500948E7C /* ExNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FB2C19486500948E7C /* ExNotification.swift */; };
 		7B8FD5FF2C1975A600948E7C /* WorkSpaceTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */; };
@@ -421,7 +421,7 @@
 		7B7EB8642C36431A00D22362 /* UserInfoEditRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEditRequestDTO.swift; sourceTree = "<group>"; };
 		7B7EB8662C36445400D22362 /* UserEditDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditDTO.swift; sourceTree = "<group>"; };
 		7B7EB8682C36453800D22362 /* UserEditAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditAPIError.swift; sourceTree = "<group>"; };
-		7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVIewSmallToColor.swift; sourceTree = "<group>"; };
+		7B7EB86A2C36562C00D22362 /* PopupViewSmallToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewSmallToColor.swift; sourceTree = "<group>"; };
 		7B7EB86C2C36EA0000D22362 /* CustomAlertViewWithPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewWithPopUpView.swift; sourceTree = "<group>"; };
 		7B8FD5FB2C19486500948E7C /* ExNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExNotification.swift; sourceTree = "<group>"; };
 		7B8FD5FE2C1975A600948E7C /* WorkSpaceTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceTabView.swift; sourceTree = "<group>"; };
@@ -978,7 +978,7 @@
 			children = (
 				7B5AEB0B2C1098C800D10330 /* StaticToastColorView.swift */,
 				7BEC45B62C132F4700576ECA /* PopUpViewSmall.swift */,
-				7B7EB86A2C36562C00D22362 /* PopupVIewSmallToColor.swift */,
+				7B7EB86A2C36562C00D22362 /* PopupViewSmallToColor.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -1594,7 +1594,7 @@
 				7BF9D7332C26883E0021D043 /* ChatRealmModel.swift in Sources */,
 				7B26D1962C1C51B800BC9912 /* WorkSpaceListScreens.swift in Sources */,
 				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
-				7B7EB86B2C36562C00D22362 /* PopupVIewSmallToColor.swift in Sources */,
+				7B7EB86B2C36562C00D22362 /* PopupViewSmallToColor.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B8FD6232C1AA2CA00948E7C /* ExText.swift in Sources */,
 				7B592EA12C0E283D00E47797 /* Const.swift in Sources */,

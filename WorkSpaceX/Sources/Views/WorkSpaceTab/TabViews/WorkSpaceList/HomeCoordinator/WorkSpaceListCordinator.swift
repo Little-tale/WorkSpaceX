@@ -112,7 +112,7 @@ struct WorkSpaceListCordinator {
                             ProfileInfoFeature.State(
                                 id: uuid,
                                 userType: .me(userID: id),
-                                tabbarHidden: true
+                                tabBarHidden: true
                             )
                         )
                     )
@@ -126,7 +126,7 @@ struct WorkSpaceListCordinator {
                 
                 
                 /// 연락처 수정으로 전환
-            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToContackChange(let model))))):
+            case .router(.routeAction(id: _, action: .profileInfo(.delegate(.moveToContactChange(let model))))):
                 state.identeRoutes.push(.profileEdit(ProfileInfoEditFeature.State(
                     editType: .contact,
                     model: model
@@ -182,14 +182,14 @@ struct WorkSpaceListCordinator {
                 // 소켓 연결시 해제 해주어야 함.
                 state.identeRoutes.pop()
                 
-            case .router(.routeAction(id: _, action: .dmChat(.delegate(.otehrUserProfile(userID: let userID))))):
+            case .router(.routeAction(id: _, action: .dmChat(.delegate(.otherUserProfile(userID: let userID))))):
                 let uuid = state.profileView
                 
                 state.identeRoutes.push(
                     .profileInfo(ProfileInfoFeature.State(
                         id: uuid,
                         userType: .other(userID: userID),
-                        tabbarHidden: true
+                        tabBarHidden: true
                     ))
                 )
                 
@@ -201,7 +201,7 @@ struct WorkSpaceListCordinator {
                     .profileInfo(ProfileInfoFeature.State(
                         id: uuid,
                         userType: .other(userID: id),
-                        tabbarHidden: true
+                        tabBarHidden: true
                     ))
                 )
             

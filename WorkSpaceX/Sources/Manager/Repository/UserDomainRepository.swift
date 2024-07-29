@@ -26,7 +26,7 @@ struct UserDomainRepository {
     
     var profileImageEdit: (_ data: Data) async throws -> UserEntity
     
-    var otherUserProfileReqeust: (_ userID: String) async throws -> WorkSpaceMemberEntity
+    var otherUserProfileRequest: (_ userID: String) async throws -> WorkSpaceMemberEntity
 }
 
 extension UserDomainRepository: DependencyKey {
@@ -163,7 +163,7 @@ extension UserDomainRepository: DependencyKey {
             ), errorType: UserEditAPIError.self)
             let mapping = mapper.toEntity(result)
             return mapping
-        }, otherUserProfileReqeust: { otherUser in
+        }, otherUserProfileRequest: { otherUser in
             
             let result = try await NetworkManager.shared.requestDto(
                 WorkSpaceAddMemberDTO.self,

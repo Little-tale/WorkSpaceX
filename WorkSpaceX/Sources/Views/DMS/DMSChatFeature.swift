@@ -122,7 +122,7 @@ struct DMSChatFeature {
         
         enum Delegate {
             case popClicked(roomID: String)
-            case otehrUserProfile(userID: String)
+            case otherUserProfile(userID: String)
         }
     }
     @Dependency(\.workspaceDomainRepository) var workRepo
@@ -500,7 +500,7 @@ struct DMSChatFeature {
                 }
                 
                 return .run { send in
-                    await send(.delegate(.otehrUserProfile(userID: member.userID)))
+                    await send(.delegate(.otherUserProfile(userID: member.userID)))
                 }
                 
             case let .fileClicked(string):

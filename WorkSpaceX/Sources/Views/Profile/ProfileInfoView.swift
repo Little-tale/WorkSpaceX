@@ -40,9 +40,9 @@ struct ProfileInfoView: View {
                 .onAppear {
                     store.send(.onAppear)
                 }
-                .toolbar(store.tabbarHidden ? .hidden : .visible, for: .tabBar)
+                .toolbar(store.tabBarHidden ? .hidden : .visible, for: .tabBar)
                 .popup(item: $store.popUpViewState.sending(\.popUpViewState)) { text in
-                    PopupVIewSmallToColor(text: text, color: WSXColor.lightGreen)
+                    PopupViewSmallToColor(text: text, color: WSXColor.lightGreen)
                 } customize: {
                     $0
                         .type(.floater())
@@ -207,7 +207,7 @@ extension ProfileInfoView {
                 }
             }
         } else {
-            ForEach(ProfileInfoFeature.MyProfileViewType.emaliLoginBottomSection, id: \.self) { item in
+            ForEach(ProfileInfoFeature.MyProfileViewType.emailLoginBottomSection, id: \.self) { item in
                 Group {
                     HStack {
                         Text(item.title)
