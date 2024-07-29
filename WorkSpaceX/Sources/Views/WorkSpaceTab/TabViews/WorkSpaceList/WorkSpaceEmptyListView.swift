@@ -80,7 +80,7 @@ extension WorkSpaceEmptyListView {
     private func workSpaceMakeButton() -> some View {
         Text("워크 스페이스 생성")
             .font(WSXFont.title2)
-            .modifier(CommonButtonModifer())
+            .modifier(CommonButtonModifier())
             .background(WSXColor.green)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.bottom, 20)

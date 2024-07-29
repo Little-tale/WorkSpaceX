@@ -1,5 +1,5 @@
 //
-//  BottomToastColorVIew.swift
+//  BottomToastColorView.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/5/24.

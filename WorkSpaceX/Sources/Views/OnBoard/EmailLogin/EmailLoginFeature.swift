@@ -17,7 +17,7 @@ struct EmailLoginFeature {
         var password: String = ""
         var confirm: Bool = false
         var alertMessage: String? = nil
-        var loginBottomMessge: String? = nil
+        var loginBottomMessage: String? = nil
         var buttonState: Bool = false
         var focusField: Field? = nil
         
@@ -32,7 +32,7 @@ struct EmailLoginFeature {
         case timerStart(String)
         case timerStop
         case loginButtonTapped
-        case errorHandeler(EmailLoginAPIError)
+        case errorHandler(EmailLoginAPIError)
         case loginSuccess(UserEntity)
     }
     
@@ -66,13 +66,13 @@ struct EmailLoginFeature {
                 state.buttonState = result
                 return .none
             case .timerStart(let message):
-                state.loginBottomMessge = message
+                state.loginBottomMessage = message
                 return .run { send in
                     try await Task.sleep(for: .seconds(2))
                     await send(.timerStop)
                 }
             case .timerStop:
-                state.loginBottomMessge = nil
+                state.loginBottomMessage = nil
                 return .none
             case .loginButtonTapped:
                 let email = state.email
@@ -87,7 +87,7 @@ struct EmailLoginFeature {
                     await send(.loginSuccess(result))
                 } catch: { error, send in
                     if let error = error as? EmailLoginAPIError {
-                        await send(.errorHandeler(error))
+                        await send(.errorHandler(error))
                     } else {
                         print("이메일 로그인 에러",error)
                         await send(.timerStart("로그인중 문제가 발생헀습니다."))
@@ -98,7 +98,7 @@ struct EmailLoginFeature {
             case .binding:
                 return .none
                 
-            case .errorHandeler(let error):
+            case .errorHandler(let error):
                 state.logining = false
                 if !error.ifDevelopError {
                     state.alertMessage = error.message

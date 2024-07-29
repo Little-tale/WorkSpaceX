@@ -88,7 +88,7 @@ extension EmailLoginView {
             )
             .focused($focus, equals: .password)
             
-            loginIssueView(text: $store.loginBottomMessge)
+            loginIssueView(text: $store.loginBottomMessage)
             
             Spacer()
         }
@@ -98,7 +98,7 @@ extension EmailLoginView {
     func loginButtonView(buttonState: Bool) -> some View {
         Text("로그인")
             .font(WSXFont.title2)
-            .modifier(CommonButtonModifer())
+            .modifier(CommonButtonModifier())
             .background(buttonState ? WSXColor.green : .inactive)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.horizontal, 30)

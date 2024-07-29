@@ -70,7 +70,7 @@ struct WorkSpaceTabCoordinator {
         let refreshAlertText = ReloadAlertText()
         
         // 탭뷰 자체적으로 프레젠테이션 하겠습니다.
-        @Presents var makeWorkSpaceState: WorkSpaceInitalFeature.State?
+        @Presents var makeWorkSpaceState: WorkSpaceInitialFeature.State?
         var currentCount = 0
         var currentModels: [WorkSpaceRealmModel] = []
         
@@ -113,7 +113,7 @@ struct WorkSpaceTabCoordinator {
         // case sideMenuCoordiAction(SideMenuCoordinator.Action)
         case sideMenuMake(Bool)
         
-        case sendWorkSpaceMakeAction(PresentationAction<WorkSpaceInitalFeature.Action>)
+        case sendWorkSpaceMakeAction(PresentationAction<WorkSpaceInitialFeature.Action>)
         case makeWorkSpaceStart(Bool)
         case workSpaceRegSuccess(id: String)
         
@@ -253,7 +253,7 @@ struct WorkSpaceTabCoordinator {
                 }
             case .makeWorkSpaceStart(let bool):
                 if bool {
-                    state.makeWorkSpaceState = WorkSpaceInitalFeature.State()
+                    state.makeWorkSpaceState = WorkSpaceInitialFeature.State()
                 } else {
                     state.makeWorkSpaceState = nil
                 }
@@ -411,7 +411,7 @@ struct WorkSpaceTabCoordinator {
             return .none
         }
         .ifLet(\.$makeWorkSpaceState, action: \.sendWorkSpaceMakeAction) {
-            WorkSpaceInitalFeature()
+            WorkSpaceInitialFeature()
         }
         .ifLet(\.sideMenuState, action: \.sidebar) {
             WorkSpaceSideFeature()

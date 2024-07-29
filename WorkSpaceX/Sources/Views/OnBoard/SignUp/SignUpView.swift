@@ -149,7 +149,7 @@ extension SignUpView {
     
     private func regButtonView(bool: Bool) -> some View {
         Text("가입하기")
-            .modifier(CommonButtonModifer())
+            .modifier(CommonButtonModifier())
             .background(bool ? WSXColor.green : WSXColor.gray)
             .foregroundStyle(WSXColor.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))

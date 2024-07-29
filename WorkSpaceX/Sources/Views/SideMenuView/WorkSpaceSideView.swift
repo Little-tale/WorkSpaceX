@@ -112,7 +112,7 @@ extension WorkSpaceSideView {
                 Text("워크스페이스 생성")
                     .font(WSXFont.title2)
                     .foregroundStyle(WSXColor.white)
-                    .modifier(CommonButtonModifer())
+                    .modifier(CommonButtonModifier())
                     .background(WSXColor.green)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .asButton {

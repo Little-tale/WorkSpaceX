@@ -15,7 +15,7 @@ struct CustomDataPicker: UIViewControllerRepresentable {
     /// selectedLimit
     let selectedLimit: Int
     
-    var didSelctedFiles: ([URL]) -> Void
+    var didSelectedFiles: ([URL]) -> Void
     var ifNeedRemitOver: () -> Void
     
     func makeCoordinator() -> Coordinator {
@@ -45,11 +45,11 @@ struct CustomDataPicker: UIViewControllerRepresentable {
             if urls.count > parent.selectedLimit {
                 
                 let limitedUrls = Array(urls.prefix(parent.selectedLimit))
-                parent.didSelctedFiles(limitedUrls)
+                parent.didSelectedFiles(limitedUrls)
                 parent.isPresented = false
                 parent.ifNeedRemitOver()
             } else {
-                parent.didSelctedFiles(urls)
+                parent.didSelectedFiles(urls)
                 parent.isPresented = false
             }
         }

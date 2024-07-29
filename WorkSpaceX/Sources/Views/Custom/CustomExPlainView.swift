@@ -1,5 +1,5 @@
 //
-//  CustomExPlainbiew.swift
+//  CustomExPlainView.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 7/6/24.

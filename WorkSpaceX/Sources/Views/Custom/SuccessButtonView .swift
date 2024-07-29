@@ -15,7 +15,7 @@ struct SuccessButtonView: View {
     var body: some View {
         Text("완료")
             .font(WSXFont.title2)
-            .modifier(CommonButtonModifer())
+            .modifier(CommonButtonModifier())
             .background(regButtonState ? WSXColor.green : WSXColor.gray)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .padding(.horizontal, 20)

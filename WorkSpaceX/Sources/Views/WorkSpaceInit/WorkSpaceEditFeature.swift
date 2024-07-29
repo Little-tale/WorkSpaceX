@@ -23,7 +23,7 @@ struct WorkSpaceEditFeature {
         var image: Data? = nil
        
         var successMessage: String? = nil
-        var showPrograssView = false
+        var showProgressView = false
         
         var workSpaceID = ""
         

@@ -40,7 +40,7 @@ struct AddMemberView: View {
                     
                     Text("초대 하기")
                         .font(WSXFont.title2)
-                        .modifier(CommonButtonModifer())
+                        .modifier(CommonButtonModifier())
                         .background(store.regButtonState ? WSXColor.green : WSXColor.gray)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.horizontal, 20)

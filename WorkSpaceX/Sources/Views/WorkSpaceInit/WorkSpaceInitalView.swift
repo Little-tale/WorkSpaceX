@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct WorkSpaceInitalView: View {
     
-    @Perception.Bindable var store: StoreOf<WorkSpaceInitalFeature>
+    @Perception.Bindable var store: StoreOf<WorkSpaceInitialFeature>
     
     
     var body: some View {
@@ -60,7 +60,7 @@ struct WorkSpaceInitalView: View {
                         Text(message)
                     }
                     
-                    if store.showPrograssView {
+                    if store.showProgressView {
                         ProgressView()
                             .centerOverlay(size: CGSize(width: 120, height: 120))
                     }

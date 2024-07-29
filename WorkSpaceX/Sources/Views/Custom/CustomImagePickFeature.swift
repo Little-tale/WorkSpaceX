@@ -1,5 +1,5 @@
 //
-//  CustomImagePickPeature.swift
+//  CustomImagePickFeature.swift
 //  WorkSpaceX
 //
 //  Created by Jae hyung Kim on 6/10/24.

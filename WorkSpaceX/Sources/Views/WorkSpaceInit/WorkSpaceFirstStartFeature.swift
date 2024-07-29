@@ -17,14 +17,14 @@ struct WorkSpaceFirstStartFeature {
         var readyText = "출시 준비 완료!"
         var navigationTitle = "시작하기"
         var workSpaceMakeText = "워크 스페이스 생성"
-        @Presents var workSpaceIniter: WorkSpaceInitalFeature.State?
+        @Presents var workSpaceInitial: WorkSpaceInitialFeature.State?
     }
     
     enum Action {
         case onAppear
         case startButtonTapped
         case cancelButtonTapped
-        case sendWorkSpaceInit(PresentationAction<WorkSpaceInitalFeature.Action>)
+        case sendWorkSpaceInit(PresentationAction<WorkSpaceInitialFeature.Action>)
     }
     
     
@@ -40,7 +40,7 @@ struct WorkSpaceFirstStartFeature {
                 UserDefaultsManager.isFirstUser = false
                 return .none
             case .startButtonTapped:
-                state.workSpaceIniter = WorkSpaceInitalFeature.State()
+                state.workSpaceInitial = WorkSpaceInitialFeature.State()
                 
                 return .none
             case .cancelButtonTapped:
@@ -52,8 +52,8 @@ struct WorkSpaceFirstStartFeature {
                 
             }
         }
-        .ifLet(\.$workSpaceIniter, action: \.sendWorkSpaceInit) {
-            WorkSpaceInitalFeature()
+        .ifLet(\.$workSpaceInitial, action: \.sendWorkSpaceInit) {
+            WorkSpaceInitialFeature()
         }
     }
 }

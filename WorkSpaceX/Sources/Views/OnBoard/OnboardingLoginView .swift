@@ -50,19 +50,19 @@ extension OnboardingLoginView {
         VStack (alignment: .center, spacing: 13) {
             
             WSXImage.appleLogin
-                .modifier(CommonButtonModifer())
+                .modifier(CommonButtonModifier())
                 .asButton {
                     store.send(.appleLoginButtonTapped)
                 }
             
             WSXImage.kakaoLogin
-                .modifier(CommonButtonModifer())
+                .modifier(CommonButtonModifier())
                 .asButton {
                     store.send(.kakaoLoginButtonTapped)
                 }
             
             WSXImage.emailLoginButton
-                .modifier(CommonButtonModifer())
+                .modifier(CommonButtonModifier())
                 .asButton {
                     store.send(.emailLoginButtonTapped)
                 }

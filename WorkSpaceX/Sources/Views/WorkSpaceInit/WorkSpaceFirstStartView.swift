@@ -32,7 +32,7 @@ struct WorkSpaceFirstStartView: View {
                 .onAppear {
                     store.send(.onAppear)
                 }
-                .sheet(item: $store.scope(state: \.workSpaceIniter, action: \.sendWorkSpaceInit)) { store in
+                .sheet(item: $store.scope(state: \.workSpaceInitial, action: \.sendWorkSpaceInit)) { store in
                     WorkSpaceInitalView(store: store)
                 }
                 
@@ -66,7 +66,7 @@ extension WorkSpaceFirstStartView {
     private func workSpaceMakeButton() -> some View {
         Text(store.workSpaceMakeText)
             .font(WSXFont.title2)
-            .modifier(CommonButtonModifer())
+            .modifier(CommonButtonModifier())
             .background(WSXColor.green)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.bottom, 20)

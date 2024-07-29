@@ -21,7 +21,7 @@ struct WorkSpaceEditView: View {
                         WSXColor.lightGray
                         contentView()
                         .padding(.horizontal, 20)
-                        compliteButton()
+                        completeButton()
                         
                     } // ZStack
                     .fullScreenCover(isPresented: $store.showImagePicker) {
@@ -60,7 +60,7 @@ struct WorkSpaceEditView: View {
                         Text(alertCase.message)
                     }
 
-                    if store.showPrograssView {
+                    if store.showProgressView {
                         ProgressView()
                             .centerOverlay(size: CGSize(width: 120, height: 120))
                     }
@@ -119,7 +119,7 @@ extension WorkSpaceEditView {
         }
     }
     
-    private func compliteButton() -> some View {
+    private func completeButton() -> some View {
         SuccessButtonView(action: {
             store.send(.regButtonTapped)
         }, regButtonState: store.regButtonState)

@@ -90,7 +90,7 @@
 		7B592EBC2C0EC5C900E47797 /* WSXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBB2C0EC5C900E47797 /* WSXColor.swift */; };
 		7B592EBF2C0EC98C00E47797 /* StartButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */; };
 		7B592EC12C0ECA8900E47797 /* OnboardingLoginView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */; };
-		7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */; };
+		7B592EC32C0ECDDC00E47797 /* CommonButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC22C0ECDDC00E47797 /* CommonButtonModifier.swift */; };
 		7B592EC52C0ECFB700E47797 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */; };
 		7B592EC72C0ED14000E47797 /* OnboardingLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */; };
 		7B592ECA2C0EE13200E47797 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B592EC92C0EE13200E47797 /* SignUpView.swift */; };
@@ -239,7 +239,7 @@
 		7BEC45CA2C16A67100576ECA /* WorkSpaceInitalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */; };
 		7BEC45CD2C16A7D400576ECA /* CustomImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */; };
 		7BEC45D12C16AACE00576ECA /* CustomImagePickFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D02C16AACE00576ECA /* CustomImagePickFeature.swift */; };
-		7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */; };
+		7BEC45D32C16C3AE00576ECA /* WorkSpaceInitialFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D22C16C3AE00576ECA /* WorkSpaceInitialFeature.swift */; };
 		7BEC45D52C16C7DE00576ECA /* CustomImagePickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D42C16C7DE00576ECA /* CustomImagePickView.swift */; };
 		7BEC45D82C16C9E400576ECA /* RoundProfileImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45D72C16C9E400576ECA /* RoundProfileImageModifier.swift */; };
 		7BEC45DB2C16E1F700576ECA /* WorkSpaceListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */; };
@@ -368,7 +368,7 @@
 		7B592EBB2C0EC5C900E47797 /* WSXColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSXColor.swift; sourceTree = "<group>"; };
 		7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonModifier.swift; sourceTree = "<group>"; };
 		7B592EC02C0ECA8900E47797 /* OnboardingLoginView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingLoginView .swift"; sourceTree = "<group>"; };
-		7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButtonModifer.swift; sourceTree = "<group>"; };
+		7B592EC22C0ECDDC00E47797 /* CommonButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButtonModifier.swift; sourceTree = "<group>"; };
 		7B592EC42C0ECFB700E47797 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		7B592EC62C0ED14000E47797 /* OnboardingLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLoginFeature.swift; sourceTree = "<group>"; };
 		7B592EC92C0EE13200E47797 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -509,7 +509,7 @@
 		7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitalView.swift; sourceTree = "<group>"; };
 		7BEC45CC2C16A7D400576ECA /* CustomImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePicker.swift; sourceTree = "<group>"; };
 		7BEC45D02C16AACE00576ECA /* CustomImagePickFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickFeature.swift; sourceTree = "<group>"; };
-		7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitalFeature.swift; sourceTree = "<group>"; };
+		7BEC45D22C16C3AE00576ECA /* WorkSpaceInitialFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceInitialFeature.swift; sourceTree = "<group>"; };
 		7BEC45D42C16C7DE00576ECA /* CustomImagePickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickView.swift; sourceTree = "<group>"; };
 		7BEC45D72C16C9E400576ECA /* RoundProfileImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProfileImageModifier.swift; sourceTree = "<group>"; };
 		7BEC45DA2C16E1F700576ECA /* WorkSpaceListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceListDTO.swift; sourceTree = "<group>"; };
@@ -926,7 +926,7 @@
 			children = (
 				7BEC45D72C16C9E400576ECA /* RoundProfileImageModifier.swift */,
 				7B592EBE2C0EC98C00E47797 /* StartButtonModifier.swift */,
-				7B592EC22C0ECDDC00E47797 /* CommonButtonModifer.swift */,
+				7B592EC22C0ECDDC00E47797 /* CommonButtonModifier.swift */,
 				7B592ECF2C0F089700E47797 /* DefaultTextFieldViewModifier.swift */,
 			);
 			path = Modifer;
@@ -1242,7 +1242,7 @@
 			isa = PBXGroup;
 			children = (
 				7BEC45C92C16A67100576ECA /* WorkSpaceInitalView.swift */,
-				7BEC45D22C16C3AE00576ECA /* WorkSpaceInitalFeature.swift */,
+				7BEC45D22C16C3AE00576ECA /* WorkSpaceInitialFeature.swift */,
 				7BEC45EA2C1703C100576ECA /* WorkSpaceFirstStartView.swift */,
 				7BEC45EC2C170AD600576ECA /* WorkSpaceFirstStartFeature.swift */,
 				7B26D1F72C2120C500BC9912 /* WorkSpaceEditView.swift */,
@@ -1593,7 +1593,7 @@
 				7B8FD6212C1A918100948E7C /* MapperProtocol.swift in Sources */,
 				7BF9D7332C26883E0021D043 /* ChatRealmModel.swift in Sources */,
 				7B26D1962C1C51B800BC9912 /* WorkSpaceListScreens.swift in Sources */,
-				7B592EC32C0ECDDC00E47797 /* CommonButtonModifer.swift in Sources */,
+				7B592EC32C0ECDDC00E47797 /* CommonButtonModifier.swift in Sources */,
 				7B7EB86B2C36562C00D22362 /* PopupViewSmallToColor.swift in Sources */,
 				7B592E9F2C0E27E800E47797 /* ButtonWrapper.swift in Sources */,
 				7B8FD6232C1AA2CA00948E7C /* ExText.swift in Sources */,
@@ -1724,7 +1724,7 @@
 				7BEC45F92C1813FE00576ECA /* ImageMapper.swift in Sources */,
 				7BB030302C465C8E00399D83 /* SuccessButtonView .swift in Sources */,
 				7BEC45FF2C18363900576ECA /* ExString.swift in Sources */,
-				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitalFeature.swift in Sources */,
+				7BEC45D32C16C3AE00576ECA /* WorkSpaceInitialFeature.swift in Sources */,
 				7BEC45E32C16ED2900576ECA /* MakeWorkSpaceDTORequest.swift in Sources */,
 				7BC09C3D2C37DD9000F0ABDC /* SearchChannelDTO.swift in Sources */,
 				7BC09C4C2C383D1500F0ABDC /* StoreItemListDTO.swift in Sources */,

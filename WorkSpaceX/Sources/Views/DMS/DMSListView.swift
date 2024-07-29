@@ -210,7 +210,7 @@ extension DMSListView {
                 .padding(.bottom, 8)
             
             Text("팀원 초대하기")
-                .modifier(CommonButtonModifer())
+                .modifier(CommonButtonModifier())
                 .background(WSXColor.green)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .foregroundStyle(WSXColor.white)
