@@ -281,10 +281,10 @@ struct WorkSpaceListFeature {
                                         lastChatDateString = DateManager.shared.toDateISO(lastChatDate)
                                     }
                                     
-                                    let chatList = try await dmsRepository.dmsChatListRquest(
+                                    let chatList = try await dmsRepository.dmsChatListRequest(
                                         model.roomId,
                                         workSpaceId: workSpaceID,
-                                        cursurDate: lastChatDateString
+                                        cursorDate: lastChatDateString
                                     )
                                     
                                     try await realmRepo.upsertToDMSChats(models: chatList, roomID: model.roomId)

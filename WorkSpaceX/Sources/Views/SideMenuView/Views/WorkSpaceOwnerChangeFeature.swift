@@ -26,7 +26,7 @@ struct WorkSpaceOwnerChangeFeature {
     
     @Dependency(\.workspaceDomainRepository) var workRepo
     @Dependency(\.realmRepository) var realmRepo
-    @Dependency(\.dismiss) var dismiss
+//    @Dependency(\.dismiss) var dismiss
     
     enum Action {
         
@@ -108,7 +108,7 @@ struct WorkSpaceOwnerChangeFeature {
             case .success:
                 return .run { send in
                     await send(.delegate(.successForChanged))
-                    await self.dismiss()
+//                    await self.dismiss()
                 }
                 
             default:

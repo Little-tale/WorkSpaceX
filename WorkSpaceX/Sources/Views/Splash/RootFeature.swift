@@ -20,7 +20,7 @@ struct RootFeature {
     @ObservableState
     struct State {
         var currentLoginState: loginState = .logout
-        var workWpaceFirstViewState: WorkSpaceFirstStartFeature.State?
+        var workSpaceFirstViewState: WorkSpaceFirstStartFeature.State?
         var OnboardingViewState: OnboardingFeature.State?
         var workSpaceTabViewState: WorkSpaceTabCoordinator.State?
         @Presents var alert: AlertState<Action.Alert>?
@@ -41,7 +41,7 @@ struct RootFeature {
         
         @CasePathable
         enum Alert {
-            case refreshTokkenDead
+            case refreshTokenDead
         }
         case alert(PresentationAction<Alert>)
         
@@ -54,10 +54,9 @@ struct RootFeature {
         Reduce {state, action in
             switch action {
             case .onAppear :
-                
                 if let _ = UserDefaultsManager.accessToken {
                     if UserDefaultsManager.isFirstUser {
-                        state.workWpaceFirstViewState = WorkSpaceFirstStartFeature.State()
+                        state.workSpaceFirstViewState = WorkSpaceFirstStartFeature.State()
                         state.currentLoginState = .firstLogin
                     } else {
                         // 여기에 알지?
@@ -69,7 +68,6 @@ struct RootFeature {
                     state.currentLoginState = .logout
                 }
                 
-                return .none
             case .sendToWorkSpaceStart(.sendWorkSpaceInit(.presented(.goRootCheck))):
                 
                 return .run { send in await send(.onAppear) }
@@ -83,39 +81,30 @@ struct RootFeature {
                 return .run { send in await send(.onAppear) }
                 
             case .sendToWorkSpaceTab(.noWorkSpaceTrigger) :
-                
+
                 return .run { send in await send(.onAppear) }
                 
             case .sendToWorkSpaceTab(.delegate(.moveToOnBoardingView)):
                 state.currentLoginState = .logout
-                return .none
                 
             case .sendToWorkSpaceTab(.refreshChecked):
                 state.OnboardingViewState = OnboardingFeature.State()
                 state.currentLoginState = .logout
                 
-                return .none
-            case .sendToWorkSpaceTab:
-                return .none
-                
-            case .alert(.dismiss):
-                return .none
-                
             case .showRefreshAlert:
                 state.alert = AlertState.refreshDeadAlert
-                return .none
     
-            case .alert(.presented(.refreshTokkenDead)):
+            case .alert(.presented(.refreshTokenDead)):
                 state.OnboardingViewState = OnboardingFeature.State()
                 state.currentLoginState = .logout
-
-                return .none
                 
             default:
-                return .none
+                break
             }
+            
+            return .none
         }
-        .ifLet(\.workWpaceFirstViewState, action: \.sendToWorkSpaceStart) {
+        .ifLet(\.workSpaceFirstViewState, action: \.sendToWorkSpaceStart) {
             WorkSpaceFirstStartFeature()
         }
         .ifLet(\.OnboardingViewState, action: \.sendToOnboardingView) {

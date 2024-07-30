@@ -87,7 +87,7 @@ struct WorkSpaceEditFeature {
         case alertSuccessTapped
     }
     
-    @Dependency(\.dismiss) var dismiss
+//    @Dependency(\.dismiss) var dismiss
     @Dependency(\.workspaceDomainRepository) var repository
     @Dependency(\.realmRepository) var realmRepo
     
@@ -116,13 +116,6 @@ struct WorkSpaceEditFeature {
                 
                 return .run { send in
                     await send(.imagePickFeature(.ifURLString(imageUrl)))
-                }
-                
-                
-            case .dismissButtonTapped:
-                
-                return .run { send in
-                    await self.dismiss()
                 }
                 
             case .showImagePicker:
@@ -195,7 +188,6 @@ struct WorkSpaceEditFeature {
                 
             case .alertSuccessTapped:
                 return .run { send in
-                    await self.dismiss()
                     await send(.ifNeedSuccessTrigger)
                 }
                 

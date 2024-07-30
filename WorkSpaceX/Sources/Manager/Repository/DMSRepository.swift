@@ -48,14 +48,14 @@ struct DMSRepository {
         return dmsMapper.toEntity(result)
     }
     
-    func dmsChatListRquest(_ roomID: String, workSpaceId: String, cursurDate: String?) async throws -> [DMSChatEntity]  {
+    func dmsChatListRequest(_ roomID: String, workSpaceId: String, cursorDate: String?) async throws -> [DMSChatEntity]  {
        
         let result = try await NetworkManager.shared.requestDto(
             DMSChatListDTO.self,
             router: DMSRouter.dmRoomChatsRequest(
             workSpaceId,
             roomID: roomID,
-            date: cursurDate
+            date: cursorDate
             ), errorType: DMSListAPIError.self)
         
         let mapping = dmsMapper.toEntity(result)

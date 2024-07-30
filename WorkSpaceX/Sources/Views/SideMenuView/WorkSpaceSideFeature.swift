@@ -317,6 +317,7 @@ struct WorkSpaceSideFeature {
                 
             case  .workSpaceOwnerChange(.presented(.delegate(.successForChanged))):
                 return .run { send in
+                    await send(.workSpaceOwnerChange(.dismiss))
                     await send(.onAppear)
                 }
                 

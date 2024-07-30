@@ -17,7 +17,7 @@ struct RootView: View {
             ZStack {
                 switch store.currentLoginState {
                 case .firstLogin:
-                    IfLetStore(store.scope(state: \.workWpaceFirstViewState, action: \.sendToWorkSpaceStart)) { store in
+                    IfLetStore(store.scope(state: \.workSpaceFirstViewState, action: \.sendToWorkSpaceStart)) { store in
                         WorkSpaceFirstStartView(store: store)
                     }
                 case .login:

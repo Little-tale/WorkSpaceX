@@ -426,7 +426,7 @@ extension AlertState where Action == RootFeature.Action.Alert {
     static let refreshDeadAlert = Self {
         TextState("재 로그인 필요")
     } actions: {
-        ButtonState(role: .destructive, action: .refreshTokkenDead) {
+        ButtonState(role: .destructive, action: .refreshTokenDead) {
             TextState("확인")
         }
     } message: {

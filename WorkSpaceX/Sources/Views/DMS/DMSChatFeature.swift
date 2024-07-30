@@ -205,18 +205,18 @@ struct DMSChatFeature {
                     if let date {
                         await send(.firstInit)
                         let date = DateManager.shared.toDateISO(date)
-                        let result = try await dmsRepo.dmsChatListRquest(
+                        let result = try await dmsRepo.dmsChatListRequest(
                             model.roomId,
                             workSpaceId: id,
-                            cursurDate: date
+                            cursorDate: date
                         )
                         await send(.networkResult(result))
                         await send(.socketConnected)
                     } else {
-                        let result = try await dmsRepo.dmsChatListRquest(
+                        let result = try await dmsRepo.dmsChatListRequest(
                             model.roomId,
                             workSpaceId: id,
-                            cursurDate: nil
+                            cursorDate: nil
                         )
                         await send(.networkResult(result))
                         await send(.firstInit)

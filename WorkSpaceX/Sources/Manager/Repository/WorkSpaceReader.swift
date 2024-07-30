@@ -23,7 +23,7 @@ class WorkSpaceReader {
         sorted keyPath: String? = nil,
         ascending: Bool = true
     ) -> AsyncStream<[M]> {
-        
+        // 구조화된 작업
         return AsyncStream { continuation in
             Task {
                 do {
