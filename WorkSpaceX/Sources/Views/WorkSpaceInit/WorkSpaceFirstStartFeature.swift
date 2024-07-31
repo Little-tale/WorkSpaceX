@@ -42,15 +42,10 @@ struct WorkSpaceFirstStartFeature {
             case .startButtonTapped:
                 state.workSpaceInitial = WorkSpaceInitialFeature.State()
                 
-                return .none
-            case .cancelButtonTapped:
-                
-                return .none
-            case .sendWorkSpaceInit:
-                
-                return .none
-                
+            default:
+                break
             }
+            return .none
         }
         .ifLet(\.$workSpaceInitial, action: \.sendWorkSpaceInit) {
             WorkSpaceInitialFeature()
