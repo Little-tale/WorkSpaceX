@@ -70,8 +70,6 @@ struct WorkSpaceInitialFeature {
     @Dependency(\.workspaceDomainRepository) var repository
     @Dependency(\.realmRepository) var realmRepo
     
-//    let realmRepo = RealmRepository()
-    
     var body: some ReducerOf<Self> {
         BindingReducer()
         
@@ -82,12 +80,8 @@ struct WorkSpaceInitialFeature {
         Reduce { state, action in
             switch action {
             case .binding:
-                let text = state.workSpaceName
-                state.regButtonState = !text.isEmpty
-                return .none
                 
-            case .imagePickFeature:
-                return .none
+                workSpaceNameValid(state: &state)
                 
             case .showImagePicker:
                 state.imagePick.imageState = .loading
@@ -95,49 +89,21 @@ struct WorkSpaceInitialFeature {
                 return .none
                 
             case .imagePickerData(let ifData):
-                if let ifData {
-                    state.imagePick.imageState = .success(ifData)
-                    state.image = ifData
-                } else {
-                    state.imagePick.imageState = .empty
-                }
-                
-                return .none
+        
+                pickDataTester(state: &state, imageData: ifData)
                 
             case .regButtonTapped:
                 state.showProgressView = true
 
-                var description: String?
+                var description = makeDescription(state: &state)
                 
-                var request: NewWorkSpaceRequest
-                
-                if state.workSpaceIntroduce != "" {
-                    description = state.workSpaceIntroduce
-                }
-                
-                if let image = state.image {
-                    request = NewWorkSpaceRequest(
-                        name: state.workSpaceName,
-                        description: description,
-                        image: image
-                    )
-                } else {
-                    guard let data = WSXImage.logoUIImage.imageZipLimit(
-                        zipRate: 1
-                    ) else {
-                        return .run { send in
-                            await send(.error("이미지 작업중 문제가 발생했습니다."))
-                        }
+                guard let workSpaceRequest = makeImageRequest(state: &state, description: description) else {
+                    return .run { send in
+                        await send(.error("이미지 작업중 문제가 발생했습니다."))
                     }
-                    request = NewWorkSpaceRequest(
-                        name: state.workSpaceName,
-                        description: description,
-                        image: data
-                    )
                 }
-       
 
-                return .run { [request = request] send in
+                return .run { [request = workSpaceRequest ] send in
                     print(request)
                     let result = try await repository.regWorkSpaceRequest(request)
                     UserDefaultsManager.workSpaceSelectedID = result.workSpaceID
@@ -224,35 +190,55 @@ struct WorkSpaceInitialFeature {
     }
 }
 
-/*
- //
- //            case .realmRegSuccess:
- //                print("success 이여야!")
- //                state.showPrograssView = false
- //                state.successMessage = "등록 완료 되었습니다."
- //                return .none
-                 
-             
- switch error {
-     
- case let .commonError(error):
-     if case .refreshDead = error {
-         return .run { send in
-             await send(.showLogoutAlert)
-         }
-     }
-     return .run{ send in
-         await send(.error(error.message))
-     }
- case .makeWoekSpaceError:
-     if !error.ifDevelopError {
-         return .run{ send in
-             await send(.error(error.message))
-         }
-     } else {
-         print(error)
-     }
- default :
-     break
- }
- */
+extension WorkSpaceInitialFeature {
+    
+    private func workSpaceNameValid(state: inout State) {
+        let text = state.workSpaceName
+        state.regButtonState = !text.isEmpty
+    }
+    
+    private func pickDataTester(state: inout State, imageData: Data?) {
+        if let imageData {
+            state.imagePick.imageState = .success(imageData)
+            state.image = imageData
+        } else {
+            state.imagePick.imageState = .empty
+        }
+    }
+    
+    private func makeDescription(state: inout State) -> String? {
+        var description: String?
+        
+        if state.workSpaceIntroduce != "" {
+            description = state.workSpaceIntroduce
+        }
+        
+        return description
+    }
+    
+    private func makeImageRequest(state: inout State, description: String? ) -> NewWorkSpaceRequest? {
+        var request: NewWorkSpaceRequest
+        
+        if let image = state.image {
+            request = NewWorkSpaceRequest(
+                name: state.workSpaceName,
+                description: description,
+                image: image
+            )
+        } else {
+            guard let data = WSXImage.logoUIImage.imageZipLimit(
+                zipRate: 1
+            ) else {
+                return nil
+            }
+            request = NewWorkSpaceRequest(
+                name: state.workSpaceName,
+                description: description,
+                image: data
+            )
+        }
+        
+        return request
+    }
+    
+}

@@ -103,7 +103,6 @@ struct WorkSpaceEditFeature {
             
             switch action {
             case let .getModel(model):
-                
                 print("받아옴, \(model)")
                 state.workSpaceName = model.workSpaceName
                 state.workSpaceIntroduce = model.introduce ?? ""
