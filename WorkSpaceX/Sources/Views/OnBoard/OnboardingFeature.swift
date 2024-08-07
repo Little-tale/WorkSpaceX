@@ -40,7 +40,7 @@ struct OnboardingFeature {
 //                    await send(.testSuccess)
 //                }
                 return .none
-            case .onboardingLoginFeature(.presented(.appleLoginFinish(let model))): // 애플 로그인시
+            case .onboardingLoginFeature(.presented(.delegate(.appleLoginFinish(let model)))): // 애플 로그인시
                 
                 return .run { send in
                     try await realmeRepo.upsertUserModel(response: model)
@@ -48,7 +48,7 @@ struct OnboardingFeature {
                 } catch: { error , send in
                    print(error)
                 }
-            case .onboardingLoginFeature(.presented(.kakaoLoginFinish(let model))): // 카카오 로그인 시
+            case .onboardingLoginFeature(.presented(.delegate(.kakaoLoginFinish(let model)))): // 카카오 로그인 시
                 return .run { send in
                     try await realmeRepo.upsertUserModel(response: model)
                     await send(.testSuccess)

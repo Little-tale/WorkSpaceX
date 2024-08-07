@@ -42,8 +42,12 @@ struct OnboardingLoginFeature {
         case kakaoLoginSuccess(Result<String,KakaoLoginErrorCase>)
         case errorMessage(message: String?)
         
-        case appleLoginFinish(UserEntity)
-        case kakaoLoginFinish(UserEntity)
+        case delegate(Delegate)
+        
+        enum Delegate {
+            case appleLoginFinish(UserEntity)
+            case kakaoLoginFinish(UserEntity)
+        }
     }
     
     
@@ -53,100 +57,114 @@ struct OnboardingLoginFeature {
     }
     
     var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .appleLoginButtonTapped:
-
-                return .run { send in
-                    let success = try await repository.appleLoginRequest()
-                    await send(.appleLoginFinish(success))
-                } catch: { error, send in
-                    if let error = error as? AppleLoginAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(message: error.message))
-                        }
-                    } else {
-                        await send(.errorMessage(message: APIError.Unknown))
-                        print(error)
-                    }
-            
-                }
-            case .kakaoLoginButtonTapped:
-                return .run { send in
-
-                    let result = await kakaoLogin.requestKakao()
-                    await send(.kakaoLoginSuccess(result))
-                }
-            case .kakaoLoginSuccess(let result):
-               
-                switch result {
-                    
-                case .success(let success):
-            
-                    return .run { send in
-                        let result = try await  repository.requestKakaoUser((success, ""))
-                        
-                        await send(.kakaoLoginFinish(result))
-                    } catch: { error, send in
-                        if let error = error as? KakaoLoginAPIError {
-                            if !error.ifDevelopError {
-                                await send(.errorMessage(message: error.message))
-                            }
-                        } else {
-                            await send(.errorMessage(message: APIError.Unknown))
-                        }
-                    }
-                case .failure(let error):
-                    switch error {
-                    case .cancel:
-                        return .none
-                    case .error:
-                        return .send(.errorMessage(message: error.message))
-                    }
-                }
-                
-                
-            case .emailLoginButtonTapped:
-                state.emailLogin = EmailLoginFeature.State()
-                return .none
-                
-            case let .emailLoginFeature(loginFeature):
-                if case .dismiss = loginFeature {
-                    return .run { send in
-                        await self.dismiss()
-                    }
-                }
-                return .none
-                
-            case .newSignUpTapped:
-                state.signUp = SignUpFeature.State()
-                
-                return .none
-                
-            case let .signUpFeature(childReducer):
-                
-                if case .dismiss = childReducer {
-                    return .run { send in
-                        await self.dismiss()
-                    }
-                }
-                return .none
-                
-            case .errorMessage(message: let messgage):
-                state.errorPresentation = messgage
-                return .none
-          
-            case .appleLoginFinish: // 부모에서
-                return .none
-            case .kakaoLoginFinish: // 부모에서
-                return .none
-            }
-        }
+        core()
         .ifLet(\.$signUp, action: \.signUpFeature) {
             SignUpFeature()
         }
         .ifLet(\.$emailLogin, action: \.emailLoginFeature) {
             EmailLoginFeature()
+        }
+    }
+}
+
+extension OnboardingLoginFeature {
+    
+    private func core() -> some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .appleLoginButtonTapped:
+                
+                return appleLoginSideEffect(state: &state)
+            case .kakaoLoginButtonTapped:
+                
+                return kakaoLoginSideEffect(state: &state)
+            case .kakaoLoginSuccess(let result):
+               
+                return kakaoLoginResultSideEffect(state: &state, result: result)
+            case .emailLoginButtonTapped:
+                state.emailLogin = EmailLoginFeature.State()
+                
+            case let .emailLoginFeature(loginFeature):
+                if case .dismiss = loginFeature {
+                    
+                    return dismissEffect()
+                }
+                
+            case .newSignUpTapped:
+                state.signUp = SignUpFeature.State()
+                
+            case let .signUpFeature(childReducer):
+                if case .dismiss = childReducer {
+                    return dismissEffect()
+                }
+                
+            case .errorMessage(message: let messgage):
+                state.errorPresentation = messgage
+                
+            default:
+                break
+            }
+            return .none
+        }
+    }
+}
+//MARK: SideEffect
+extension OnboardingLoginFeature {
+    
+    private func appleLoginSideEffect(state: inout State) -> Effect<Action> {
+        return .run { send in
+            let success = try await repository.appleLoginRequest()
+            await send(.delegate(.appleLoginFinish(success)))
+        } catch: { error, send in
+            if let error = error as? AppleLoginAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(message: error.message))
+                }
+            } else {
+                await send(.errorMessage(message: APIError.Unknown))
+                print(error)
+            }
+        }
+    }
+    
+    private func kakaoLoginSideEffect(state: inout State) -> Effect<Action> {
+        return .run { send in
+            let result = await kakaoLogin.requestKakao()
+            await send(.kakaoLoginSuccess(result))
+        }
+    }
+    
+    private func kakaoLoginResultSideEffect(state: inout State, result: Result<String, KakaoLoginErrorCase>) -> Effect<Action> {
+        switch result {
+        case .success(let success):
+            return .run { send in
+                let result = try await  repository.requestKakaoUser((success, ""))
+                
+                await send(.delegate(.kakaoLoginFinish(result)))
+            } catch: { error, send in
+                if let error = error as? KakaoLoginAPIError {
+                    if !error.ifDevelopError {
+                        await send(.errorMessage(message: error.message))
+                    }
+                } else {
+                    await send(.errorMessage(message: APIError.Unknown))
+                }
+            }
+        case .failure(let error):
+            switch error {
+            case .cancel:
+                return .none
+            case .error:
+                return .send(.errorMessage(message: error.message))
+            }
+        }
+    }
+}
+
+extension OnboardingLoginFeature {
+    private func dismissEffect() -> Effect<Action> {
+        return .run { send in
+            await self.dismiss()
         }
     }
 }
