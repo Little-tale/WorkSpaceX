@@ -15,14 +15,19 @@ struct WorkSpaceChannelListFeature {
     struct State: Equatable {
         var id: UUID
         var workSpaceID: String
+        
+        var viewState = ViewState()
+        
+        var selectedModel: ChanelEntity?
+    }
+    
+    struct ViewState: Equatable {
         var errorMessage: String?
         var channelList = [ChanelEntity] ()
         var myChannelList = [ChanelEntity] ()
-        
         var ifNeedChannelAlert: Bool = false
-        var onApperTrigger: Bool = false
-        var chaannelAlertMessage = ""
-        var selectedModel: ChanelEntity?
+        var onAppearTrigger: Bool = false
+        var channelAlertMessage = ""
     }
     
     enum Action {
@@ -35,7 +40,7 @@ struct WorkSpaceChannelListFeature {
         
         case selectedModel(ChanelEntity)
         case channelAlertCancel
-        case channelALertConfirm
+        case channelAlertConfirm
         case channelAlertBool(Bool)
         
         // 코디네이터 관찰 내역
@@ -49,45 +54,26 @@ struct WorkSpaceChannelListFeature {
     @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
+        core()
+    }
+    
+}
+
+extension WorkSpaceChannelListFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {
             case .onAppear :
-                let id = state.workSpaceID
                 
-                return .run { send in
-                    let result = try await workSpaceRepo.workSpaceSearchingToChannel(id)
-                    
-                    let myResult = try await workSpaceRepo.findWorkSpaceChannel(id)
-                    
-                    await send(.catchModels(result))
-                    await send(.catchMyChannels(myResult))
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceChannelListAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else { print(error) }
-                    } else { print(error) }
-                }
+                return onAppearSideEffect(state: &state)
                 
             case let .selectedModel(model):
+    
+                return selectedModelSideEffect(state: &state, model: model)
                 
-                state.selectedModel = model
-                
-                if state.myChannelList.contains(
-                    where: { $0.channelId == model.channelId }
-                ) {
-                    return .run { send in
-                        await send(.delegate(.alreadyToConfirm(model)))
-                    }
-                } else {
-                    state.chaannelAlertMessage = "[\(model.name)] 채널에 참여 하시겠습니까?"
-                    return .run { send in
-                        await send(.channelAlertBool(true))
-                    }
-                }
-                
-            case .channelALertConfirm:
+            case .channelAlertConfirm:
                 if let model = state.selectedModel {
                     return .run { send in
                         try await Task.sleep(for: .seconds(0.5))
@@ -98,25 +84,63 @@ struct WorkSpaceChannelListFeature {
                 }
                 
             case let .channelAlertBool(bool):
-                state.ifNeedChannelAlert = bool
+                state.viewState.ifNeedChannelAlert = bool
                 
             case let .catchModels(models):
-                if !state.onApperTrigger {
-                    state.channelList = []
-                    state.channelList = models
-                    state.onApperTrigger = true
+                if !state.viewState.onAppearTrigger {
+                    state.viewState.channelList = []
+                    state.viewState.channelList = models
+                    state.viewState.onAppearTrigger = true
                 }
                 
             case let .errorMessage(message):
-                state.errorMessage = message
+                state.viewState.errorMessage = message
                 
             case let .catchMyChannels(models):
-                state.myChannelList = models
+                state.viewState.myChannelList = models
             default :
                 break
             }
-            
             return .none
+        }
+    }
+}
+
+extension WorkSpaceChannelListFeature {
+    
+    private func onAppearSideEffect(state: inout State) -> Effect<Action> {
+        let id = state.workSpaceID
+
+        return .run { send in
+            let result = try await workSpaceRepo.workSpaceSearchingToChannel(id)
+            
+            let myResult = try await workSpaceRepo.findWorkSpaceChannel(id)
+            
+            await send(.catchModels(result))
+            await send(.catchMyChannels(myResult))
+        } catch: { error, send in
+            if let error = error as? WorkSpaceChannelListAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else { print(error) }
+            } else { print(error) }
+        }
+    }
+    
+    private func selectedModelSideEffect(state: inout State, model: ChanelEntity) -> Effect<Action> {
+        state.selectedModel = model
+        
+        if state.viewState.myChannelList.contains(
+            where: { $0.channelId == model.channelId }
+        ) {
+            return .run { send in
+                await send(.delegate(.alreadyToConfirm(model)))
+            }
+        } else {
+            state.viewState.channelAlertMessage = "[\(model.name)] 채널에 참여 하시겠습니까?"
+            return .run { send in
+                await send(.channelAlertBool(true))
+            }
         }
     }
 }

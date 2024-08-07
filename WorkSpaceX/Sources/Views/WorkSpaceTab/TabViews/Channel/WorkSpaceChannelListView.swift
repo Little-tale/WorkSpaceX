@@ -18,7 +18,7 @@ struct WorkSpaceChannelListView: View {
             ZStack {
                 VStack {
                     List {
-                        ForEach(store.channelList, id: \.channelId) { model in
+                        ForEach(store.viewState.channelList, id: \.channelId) { model in
                             channelView(model: model)
                                 .onTapGesture {
                                     store.send(.selectedModel(model))
@@ -45,15 +45,15 @@ struct WorkSpaceChannelListView: View {
                 .toolbar(.hidden, for: .tabBar)
                 CustomAlertView(
                     alertMode: .cancelWith,
-                    isShowing: $store.ifNeedChannelAlert.sending(\.channelAlertBool),
+                    isShowing: $store.viewState.ifNeedChannelAlert.sending(\.channelAlertBool),
                     title: "채널 참여",
-                    message: store.chaannelAlertMessage,
+                    message: store.viewState.channelAlertMessage,
                     ifMessageCenter: true,
                     onCancel: {
                         store.send(.channelAlertCancel)
                     },
                     onAction: {
-                        store.send(.channelALertConfirm)
+                        store.send(.channelAlertConfirm)
                     },
                     actionTitle: "확인"
                 )
