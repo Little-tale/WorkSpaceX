@@ -13,7 +13,7 @@ struct OnboardingFeature {
     @ObservableState
     struct State: Equatable {
         @Presents var onboard: OnboardingLoginFeature.State?
-        var loginFalid: String?
+        var loginFail: String?
     }
     
     enum Action: BindableAction {
@@ -65,7 +65,7 @@ extension OnboardingFeature {
                     return .send(.checkedLogin)
                     
                 } else {
-                    state.loginFalid = "로그인중 문제가 발생했습니다 재시도 바랍니다."
+                    state.loginFail = "로그인중 문제가 발생했습니다 재시도 바랍니다."
                 }
     
             default :

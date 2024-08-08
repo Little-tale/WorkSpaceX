@@ -25,14 +25,14 @@ struct EmailLoginView: View {
                     .padding(.top, 20)
                     .font(WSXFont.title2)
                     
-                    loginButtonView(buttonState: store.buttonState)
+                    loginButtonView(buttonState: store.viewState.buttonState)
                         .asButton {
                             store.send(.loginButtonTapped)
                         }
-                        .disabled(!store.buttonState)
+                        .disabled(!store.viewState.buttonState)
                 }
                 .navigationTitle(
-                    Text(store.emailNavTitle)
+                    Text(store.viewState.emailNavTitle)
                 )
                 .presentationDragIndicator(.visible)
                 .navigationBarTitleDisplayMode(.inline)
@@ -75,7 +75,7 @@ extension EmailLoginView {
                 headerTitle: "이메일",
                 placeHolder: "이메일을 입력하세요",
                 isSecure: false,
-                binding: $store.email,
+                binding: $store.viewState.email,
                 scopeColor: false
             )
             .focused($focus, equals: .email)
@@ -83,7 +83,7 @@ extension EmailLoginView {
                 headerTitle: "비밀번호",
                 placeHolder: "비밀번호를 입력하세요",
                 isSecure: true,
-                binding: $store.password,
+                binding: $store.viewState.password,
                 scopeColor: false
             )
             .focused($focus, equals: .password)

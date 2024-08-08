@@ -13,18 +13,22 @@ struct EmailLoginFeature {
     
     @ObservableState
     struct State: Equatable {
+        var viewState = ViewState()
+        
+        var confirm: Bool = false
+        var loginBottomMessage: String? = nil
+        var logining: Bool = false
+    }
+    
+    struct ViewState: Equatable {
         var email: String = ""
         var password: String = ""
-        var confirm: Bool = false
-        var alertMessage: String? = nil
-        var loginBottomMessage: String? = nil
         var buttonState: Bool = false
-        var focusField: Field? = nil
-        
-        var logining: Bool = false
-        
+        var alertMessage: String? = nil
         let emailNavTitle = "이메일 로그인"
+        var focusField: Field? = nil
     }
+    
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
@@ -46,25 +50,25 @@ struct EmailLoginFeature {
     
     var body: some ReducerOf<Self> {
         BindingReducer()
+        core()
+    }
+}
+extension EmailLoginFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         
-        Reduce {state, action in
+        Reduce { state, action in
             switch action {
             case .dismiss:
                 return .run { send in
                     await self.dismiss()
                 }
-            case .binding(\.email):
-                let email = state.email
-                let password = state.password
-                let result = checkButtonState(email: email, password: password)
-                state.buttonState = result
-                return .none
-            case .binding(\.password):
-                let email = state.email
-                let password = state.password
-                let result = checkButtonState(email: email, password: password)
-                state.buttonState = result
-                return .none
+            case .binding(\.viewState.email):
+                updateButton(state: &state)
+    
+            case .binding(\.viewState.password):
+                updateButton(state: &state)
+                
             case .timerStart(let message):
                 state.loginBottomMessage = message
                 return .run { send in
@@ -73,48 +77,63 @@ struct EmailLoginFeature {
                 }
             case .timerStop:
                 state.loginBottomMessage = nil
-                return .none
+                
             case .loginButtonTapped:
-                let email = state.email
-                let password = state.password
-                state.logining = true
-                return .run { send in
-                   let result = try await repository.requestEmailLogin((email,password))
-                    print("이메일 로그인 성공시 출력")
-                    UserDefaultsManager.accessToken = result.token?.accessToken
-                    UserDefaultsManager.refreshToken = result.token?.refreshToken
-                    print("이메일 \(result)")
-                    await send(.loginSuccess(result))
-                } catch: { error, send in
-                    if let error = error as? EmailLoginAPIError {
-                        await send(.errorHandler(error))
-                    } else {
-                        print("이메일 로그인 에러",error)
-                        await send(.timerStart("로그인중 문제가 발생헀습니다."))
-                    }
-                }
-                    .throttle(id: Field.email ,for: 1, scheduler: RunLoop.main, latest: false)
                 
-            case .binding:
-                return .none
-                
+                return loginValid(state: &state)
             case .errorHandler(let error):
                 state.logining = false
                 if !error.ifDevelopError {
-                    state.alertMessage = error.message
+                    state.viewState.alertMessage = error.message
                     return .run { send in
                         await send(.timerStart(error.message))
                     }
                 } else {
                     print(error)
                 }
-                return .none
-            case .loginSuccess:
-                return .none
+                
+            default:
+                break
             }
+            return .none
         }
+        
     }
 }
+
+extension EmailLoginFeature {
+    
+    private func updateButton(state: inout State) {
+        let email = state.viewState.email
+        let password = state.viewState.password
+        let result = checkButtonState(email: email, password: password)
+        state.viewState.buttonState = result
+    }
+    
+    private func loginValid(state: inout State) -> Effect<Action> {
+        let email = state.viewState.email
+        let password = state.viewState.password
+        state.logining = true
+        return .run { send in
+           let result = try await repository.requestEmailLogin((email,password))
+            print("이메일 로그인 성공시 출력")
+            UserDefaultsManager.accessToken = result.token?.accessToken
+            UserDefaultsManager.refreshToken = result.token?.refreshToken
+            print("이메일 \(result)")
+            await send(.loginSuccess(result))
+        } catch: { error, send in
+            if let error = error as? EmailLoginAPIError {
+                await send(.errorHandler(error))
+            } else {
+                print("이메일 로그인 에러",error)
+                await send(.timerStart("로그인중 문제가 발생헀습니다."))
+            }
+        }
+            .throttle(id: Field.email ,for: 1, scheduler: RunLoop.main, latest: false)
+    }
+}
+
+
 extension EmailLoginFeature {
     
     private func checkButtonState(email: String, password: String) -> Bool{
