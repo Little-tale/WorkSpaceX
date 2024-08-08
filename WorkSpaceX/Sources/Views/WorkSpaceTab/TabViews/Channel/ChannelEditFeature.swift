@@ -68,6 +68,12 @@ struct ChannelEditFeature {
             CustomImagePickFeature()
         }
         
+        core()
+    }
+}
+
+extension ChannelEditFeature {
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {
@@ -88,69 +94,17 @@ struct ChannelEditFeature {
                
             case let .imagePickerData(data):
                 
-                if let data {
-                    state.image = data
-                    return .run { send in
-                        await send(.imagePickFeature(.success(data)))
-                    }
-                } else {
-                    return .run { send in
-                        await send(.imagePickFeature(.empty))
-                    }
-                }
-                
+                return imageSideEffect(state: &state, data: data)
             case .binding:
                 let bool = state.channelName != state.channelEntity.name
                 state.regButtonState = state.channelName != "" && bool
                 
             case .regButtonTapped:
-                let workSpaceId = state.workSpaceId
-                let channelID = state.channelEntity.channelId
                 
-                let reqeust = ModifyWorkSpaceDTORequest(
-                    name: state.channelName,
-                    description: state.channelIntro,
-                    image: state.image
-                )
-                
-                return .run { send in
-                    
-                    let result = try await workSpaceRepo.editToChannel(
-                        workSpaceId,
-                        channelID,
-                        reqeust
-                    )
-                    
-                    await send(.realmRegStart(result))
-                } catch: { error, send in
-                    if let error = error as? ChannelEditAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else {
-                            print(error)
-                        }
-                    } else {
-                        print(error)
-                    }
-                }
-                
+                return regButtonSideEffect(state: &state)
             case let .realmRegStart(model):
-                state.channelEntity = model
-                return .run { @MainActor send in
-                    let result = try await realmRepo.upserWorkSpaceChannel(
-                        channel: model,
-                        ifRealm: nil
-                    )
-                    if result == nil {
-                        send(.errorMessage("등록중 문제가 발생했습니다."))
-                    } else {
-                        send(.successMessage("등록이 완료 되었습니다."))
-                        
-                    }
-                } catch: { error, send in
-                    print(error)
-                }
                 
+                return channelUpdateSideEffect(state: &state, model: model)
             case let .errorMessage(message):
                 state.errorMessage = message
                 
@@ -169,6 +123,71 @@ struct ChannelEditFeature {
             
             return .none
         }
+    }
+}
+
+extension ChannelEditFeature {
+    private func channelUpdateSideEffect(state: inout State, model: ChanelEntity) -> Effect<Action> {
+        state.channelEntity = model
+        return .run { @MainActor send in
+            let result = try await realmRepo.upserWorkSpaceChannel(
+                channel: model,
+                ifRealm: nil
+            )
+            if result == nil {
+                send(.errorMessage("등록중 문제가 발생했습니다."))
+            } else {
+                send(.successMessage("등록이 완료 되었습니다."))
+                
+            }
+        } catch: { error, send in
+            print(error)
+        }
+    }
+    
+    private func regButtonSideEffect(state: inout State) -> Effect<Action> {
+        let workSpaceId = state.workSpaceId
+        let channelID = state.channelEntity.channelId
         
+        let reqeust = ModifyWorkSpaceDTORequest(
+            name: state.channelName,
+            description: state.channelIntro,
+            image: state.image
+        )
+        
+        return .run { send in
+            
+            let result = try await workSpaceRepo.editToChannel(
+                workSpaceId,
+                channelID,
+                reqeust
+            )
+            
+            await send(.realmRegStart(result))
+        } catch: { error, send in
+            if let error = error as? ChannelEditAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else {
+                    print(error)
+                }
+            } else {
+                print(error)
+            }
+        }
+    }
+    
+    
+    private func imageSideEffect(state: inout State, data: Data?) -> Effect<Action> {
+        if let data {
+            state.image = data
+            return .run { send in
+                await send(.imagePickFeature(.success(data)))
+            }
+        } else {
+            return .run { send in
+                await send(.imagePickFeature(.empty))
+            }
+        }
     }
 }
