@@ -13,21 +13,18 @@ struct EmailLoginFeature {
     
     @ObservableState
     struct State: Equatable {
-        var viewState = ViewState()
-        
-        var confirm: Bool = false
-        var loginBottomMessage: String? = nil
-        var logining: Bool = false
-    }
-    
-    struct ViewState: Equatable {
         var email: String = ""
         var password: String = ""
         var buttonState: Bool = false
         var alertMessage: String? = nil
         let emailNavTitle = "이메일 로그인"
         var focusField: Field? = nil
+        
+        var confirm: Bool = false
+        var loginBottomMessage: String? = nil
+        var logining: Bool = false
     }
+    
     
     
     enum Action: BindableAction {
@@ -63,10 +60,10 @@ extension EmailLoginFeature {
                 return .run { send in
                     await self.dismiss()
                 }
-            case .binding(\.viewState.email):
+            case .binding(\.email):
                 updateButton(state: &state)
     
-            case .binding(\.viewState.password):
+            case .binding(\.password):
                 updateButton(state: &state)
                 
             case .timerStart(let message):
@@ -84,7 +81,7 @@ extension EmailLoginFeature {
             case .errorHandler(let error):
                 state.logining = false
                 if !error.ifDevelopError {
-                    state.viewState.alertMessage = error.message
+                    state.alertMessage = error.message
                     return .run { send in
                         await send(.timerStart(error.message))
                     }
@@ -104,15 +101,15 @@ extension EmailLoginFeature {
 extension EmailLoginFeature {
     
     private func updateButton(state: inout State) {
-        let email = state.viewState.email
-        let password = state.viewState.password
+        let email = state.email
+        let password = state.password
         let result = checkButtonState(email: email, password: password)
-        state.viewState.buttonState = result
+        state.buttonState = result
     }
     
     private func loginValid(state: inout State) -> Effect<Action> {
-        let email = state.viewState.email
-        let password = state.viewState.password
+        let email = state.email
+        let password = state.password
         state.logining = true
         return .run { send in
            let result = try await repository.requestEmailLogin((email,password))
