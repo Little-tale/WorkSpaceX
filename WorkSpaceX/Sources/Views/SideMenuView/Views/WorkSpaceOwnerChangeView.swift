@@ -18,7 +18,7 @@ struct WorkSpaceOwnerChangeView: View {
             NavigationView {
                 VStack {
                     Group {
-                        if store.currentWorkSpaceMemeber.isEmpty {
+                        if store.currentWorkSpaceMember.isEmpty {
                             memberEmptyView()
                         } else {
                             contentView()
@@ -53,7 +53,7 @@ extension WorkSpaceOwnerChangeView {
         VStack {
             List {
                 LazyVStack(alignment: .center, spacing: 5) {
-                    ForEach(store.currentWorkSpaceMemeber, id: \.userID) { model in
+                    ForEach(store.currentWorkSpaceMember, id: \.userID) { model in
                         memberView(model)
                             .listRowSeparator(.hidden)
                     }

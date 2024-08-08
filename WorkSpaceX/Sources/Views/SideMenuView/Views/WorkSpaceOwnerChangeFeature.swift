@@ -15,7 +15,7 @@ struct WorkSpaceOwnerChangeFeature {
     struct State: Equatable {
         let workSpaceID: String
         
-        var currentWorkSpaceMemeber: [WorkSpaceMembersEntity] = []
+        var currentWorkSpaceMember: [WorkSpaceMembersEntity] = []
         
         var selectedModel: WorkSpaceMembersEntity? = nil
         
@@ -54,10 +54,15 @@ struct WorkSpaceOwnerChangeFeature {
         }
     }
     
-    
-    
     var body: some ReducerOf<Self> {
-        
+        core()
+    }
+    
+}
+
+extension WorkSpaceOwnerChangeFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce{ state, action in
             switch action {
             case .onAppear:
@@ -72,7 +77,7 @@ struct WorkSpaceOwnerChangeFeature {
                 if let userID = UserDefaultsManager.userID {
                     models = models.filter { $0.userID != userID }
                 }
-                state.currentWorkSpaceMemeber = models
+                state.currentWorkSpaceMember = models
                 
             case let .selectedMember(model):
                 return .run { send in
@@ -83,34 +88,15 @@ struct WorkSpaceOwnerChangeFeature {
                 state.selectedModel = model
                 
             case let .confirmMember(model):
-                let workSpace = state.workSpaceID
-                let ownerID = model.userID
-                return .run { send in
-                    await send(.changing(true))
-                    let result = try await workRepo.workSpaceOwnerChange(
-                        workSpaceID: workSpace,
-                        ownerID: ownerID
-                    )
-                    try await realmRepo.upsertWorkSpace(response: result)
-                    await send(.selectedModel(nil))
-                    await send(.success)
-                } catch: { error, send in
-                    if let error = error as? ChannelOwnerChangedAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else { print(error)}
-                    } else { print(error) }
-                }
                 
+                return ownerChangeSideEffect(state: &state, model: model)
             case let .changing(bool):
                 state.changing = bool
                 
             case .success:
                 return .run { send in
                     await send(.delegate(.successForChanged))
-//                    await self.dismiss()
                 }
-                
             default:
                 break
             }
@@ -118,4 +104,30 @@ struct WorkSpaceOwnerChangeFeature {
             return .none
         }
     }
+    
+}
+
+extension WorkSpaceOwnerChangeFeature {
+    
+    private func ownerChangeSideEffect(state: inout State, model: WorkSpaceMembersEntity) -> Effect<Action> {
+        let workSpace = state.workSpaceID
+        let ownerID = model.userID
+        return .run { send in
+            await send(.changing(true))
+            let result = try await workRepo.workSpaceOwnerChange(
+                workSpaceID: workSpace,
+                ownerID: ownerID
+            )
+            try await realmRepo.upsertWorkSpace(response: result)
+            await send(.selectedModel(nil))
+            await send(.success)
+        } catch: { error, send in
+            if let error = error as? ChannelOwnerChangedAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else { print(error)}
+            } else { print(error) }
+        }
+    }
+    
 }
