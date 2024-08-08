@@ -95,6 +95,14 @@ struct SearchFeature {
     @Dependency(\.workspaceDomainRepository) var workSpaceRepo
     
     var body: some ReducerOf<Self> {
+        core()
+    }
+    
+}
+
+extension SearchFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
              
@@ -108,58 +116,15 @@ struct SearchFeature {
                 state.currentWorkSpaceID = workSpaceID
                 
             case let .searchText(text):
-                state.searchText = text
-                if text != "" {
-                    return .run { send in
-                        await send(.catchToText(text))
-                    }
-                    .debounce(id: ID.debounce,
-                              for: 0.5,
-                              scheduler: RunLoop.main
-                    )
-                } else {
-                    state.viewCase = .empty
-                }
+                
+                return searchTextSideEffect(state: &state, text: text)
             case let .catchToText(text):
-                guard let workSpaceId = state.currentWorkSpaceID else {
-                    break
-                }
-                guard state.searchText != "" else { break }
-                print("쓰로틀 ",text)
-                state.currentTextFilterText = text
-                return .run { send in
-                    let result = try await workSpaceRepo.workSpaceKeywordSearching(
-                        workSpaceId,
-                        text
-                    )
-                    await send(.catchResults(Channel: result.Channel, Member: result.Member))
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceSearchToListAPIError {
-                        if !error.ifDevelopError {
-                            await send(.alertCase(.error(error.message)))
-                        } else { print(error) }
-                    } else {
-                        print(error)
-                    }
-                }
                 
+                return catchTextSideEffect(state: &state, text: text)
             case let .catchResults(channel,member):
-                state.channels = channel
-                if let userID = UserDefaultsManager.userID{
-                    state.members = member.filter { $0.userID != userID }
-                } else {
-                    state.members = member
-                }
                 
-                if channel.isEmpty && member.isEmpty {
-                    state.viewCase = .searchResultEmpty
-                } else {
-                    state.viewCase = .show
-                }
-                
-            case .searchTextOnSubmit:
-                print("이게 됨 ??? ",state.searchText)
-                
+                resultSideEffect(state: &state, channel: channel, member: member)
+    
             case let .selectedMember(model):
                 return .run { send in
                     await send(.delegate(.moveToOtherUserProfileView(model)))
@@ -174,6 +139,66 @@ struct SearchFeature {
                 break
             }
             return .none
+        }
+    }
+}
+
+extension SearchFeature {
+    
+    private func searchTextSideEffect(state: inout State, text: String) -> Effect<Action> {
+        state.searchText = text
+        if text != "" {
+            return .run { send in
+                await send(.catchToText(text))
+            }
+            .debounce(id: ID.debounce,
+                      for: 0.5,
+                      scheduler: RunLoop.main
+            )
+        } else {
+            state.viewCase = .empty
+            
+            return .none
+        }
+    }
+    
+    private func catchTextSideEffect(state: inout State, text: String) -> Effect<Action> {
+        guard let workSpaceId = state.currentWorkSpaceID, state.searchText != "" else {
+            return .none
+        }
+        
+        print("쓰로틀 ",text)
+        state.currentTextFilterText = text
+        return .run { send in
+            let result = try await workSpaceRepo.workSpaceKeywordSearching(
+                workSpaceId,
+                text
+            )
+            await send(.catchResults(Channel: result.Channel, Member: result.Member))
+        } catch: { error, send in
+            if let error = error as? WorkSpaceSearchToListAPIError {
+                if !error.ifDevelopError {
+                    await send(.alertCase(.error(error.message)))
+                } else { print(error) }
+            } else {
+                print(error)
+            }
+        }
+    }
+    
+    
+    private func resultSideEffect(state: inout State, channel: [WorkSpaceChannelEntity], member: [WorkSpaceMembersEntity]) {
+        state.channels = channel
+        if let userID = UserDefaultsManager.userID{
+            state.members = member.filter { $0.userID != userID }
+        } else {
+            state.members = member
+        }
+        
+        if channel.isEmpty && member.isEmpty {
+            state.viewCase = .searchResultEmpty
+        } else {
+            state.viewCase = .show
         }
     }
     
