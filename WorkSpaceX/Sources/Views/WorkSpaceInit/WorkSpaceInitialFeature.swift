@@ -95,7 +95,7 @@ struct WorkSpaceInitialFeature {
             case .regButtonTapped:
                 state.showProgressView = true
 
-                var description = makeDescription(state: &state)
+                let description = makeDescription(state: &state)
                 
                 guard let workSpaceRequest = makeImageRequest(state: &state, description: description) else {
                     return .run { send in

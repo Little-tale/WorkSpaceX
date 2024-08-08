@@ -51,13 +51,18 @@ struct WorkSpaceChannelAddFeature {
     @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
-        
         BindingReducer()
         
         Scope(state: \.imagePick, action: \.imagePickFeature) {
             CustomImagePickFeature()
         }
         
+        core()
+    }
+}
+
+extension WorkSpaceChannelAddFeature {
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {
@@ -67,52 +72,13 @@ struct WorkSpaceChannelAddFeature {
                 
             case let .imagePickerData(data):
                 
-                if let data {
-                    state.image = data
-                    return .run { send in
-                        await send(.imagePickFeature(.success(data)))
-                    }
-                } else {
-                    return .run { send in
-                        await send(.imagePickFeature(.empty))
-                    }
-                }
-                
+                return pickImageSideEffect(state: &state, data: data)
             case .binding:
                 state.regButtonState = state.channelName != ""
                 
             case .regButtonTapped:
-                let id = state.workSpaceId
-                print("채널 등록시 아이디:",id)
-                let title = state.channelName
-                let intro = state.channelIntro
-                let data = state.image
                 
-                let newChannel = NewWorkSpaceRequest(
-                    name: title,
-                    description: intro,
-                    image: data
-                )
-                
-                return .run { send in
-                    let result = try await repository.regWorkSpaceChannel(
-                        newChannel,
-                        id
-                    )
-                    try await realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: id, channel: result)
-                    
-                    await send(.realmRegSuccess)
-                    
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceMakeChannelAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else { print(error) }
-                    } else {
-                        print(error)
-                    }
-                }
-                
+                return regButtonSideEffect(state: &state)
             case .realmRegSuccess:
                 return .run { send in
                     await send(.successMessage("저장 되었습니다."))
@@ -136,6 +102,55 @@ struct WorkSpaceChannelAddFeature {
             
             return .none
         }
+    }
+}
+
+
+extension WorkSpaceChannelAddFeature {
+    
+    private func pickImageSideEffect(state: inout State, data : Data?) -> Effect<Action> {
+        if let data {
+            state.image = data
+            return .run { send in
+                await send(.imagePickFeature(.success(data)))
+            }
+        } else {
+            return .run { send in
+                await send(.imagePickFeature(.empty))
+            }
+        }
+    }
+    
+    private func regButtonSideEffect(state: inout State) -> Effect<Action> {
+        let id = state.workSpaceId
+        print("채널 등록시 아이디:",id)
+        let title = state.channelName
+        let intro = state.channelIntro
+        let data = state.image
         
+        let newChannel = NewWorkSpaceRequest(
+            name: title,
+            description: intro,
+            image: data
+        )
+        
+        return .run { send in
+            let result = try await repository.regWorkSpaceChannel(
+                newChannel,
+                id
+            )
+            try await realmRepo.upsertToWorkSpaceChannelAppend(workSpaceID: id, channel: result)
+            
+            await send(.realmRegSuccess)
+            
+        } catch: { error, send in
+            if let error = error as? WorkSpaceMakeChannelAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else { print(error) }
+            } else {
+                print(error)
+            }
+        }
     }
 }
