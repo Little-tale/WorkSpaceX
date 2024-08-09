@@ -15,7 +15,7 @@ protocol NetworkManagerType {
     
 }
 
-struct NetworkManager: NetworkManagerType {
+final class NetworkManager: NetworkManagerType {
     static let shared = NetworkManager()
 }
 

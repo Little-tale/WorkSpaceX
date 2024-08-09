@@ -143,57 +143,21 @@ struct ChatChannelSettingFeature {
     @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
-        
+        core()
+    }
+}
+
+extension ChatChannelSettingFeature {
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
                 
             case .onAppear:
-                state.channelName = "# " + state.channelEntity.name
-                
-                state.channelIntro = state.channelEntity.description
-                
-                state.users = state.channelEntity.users
-                let count = state.channelEntity.users.count
-                state.usersCount = "(\(count))"
-                
-                let workSpaceID = state.workSpaceID
-                let cheenlID = state.channelEntity.channelId
-                
-                
-                
-                return .run { send in
-                    let result = try await workSpaceRepo.channelInfoRequest(
-                        workSpaceID,
-                        cheenlID
-                    )
-                    await send(.netWorkResult(result))
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceChannelListAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else {
-                            print(error)
-                        }
-                    } else {
-                        print(error)
-                    }
-                }
-                
+                return onAppearSideEffect(state: &state)
+    
             case let .netWorkResult(model):
-                
-                state.channelName = "# " + model.name
-                
-                state.channelIntro = model.description
-                
-                state.users = model.users
-                
-                let count = state.channelEntity.users.count
-                
-                state.usersCount = "(\(count))"
-                if let userID = UserDefaultsManager.userID {
-                    state.isOwner = model.owner_id == userID
-                }
-                
+                networkResultSideEffect(state: &state, model: model)
+            
             case .channelExitTry:
                 print("채널 나가기 시도")
                 let isOwner = state.isOwner
@@ -222,32 +186,9 @@ struct ChatChannelSettingFeature {
                 }
                 
             case .exitChannel:
-                let workSpaceId = state.workSpaceID
-                let channelID = state.channelEntity.channelId
-                return .run { send in
-                    let results = try await workSpaceRepo.exitChannel(
-                        workSpaceId,
-                        channelID
-                    )
-                    WSXSocketManager.shared.stopAndRemoveSocket()
-//                    await send(.delegate(.exitConfirm))
-                    await send(.realmChannelsUpdate(results))
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceExitChannelAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else {
-                            print(error)
-                        }
-                    } else {
-                        print("에러 ->",error)
-                    }
-                }
+                return exitChannelSideEffect(state: &state)
                 
             case let .realmChannelsUpdate(models):
-//                return .run { send in
-//                    await send(.delegate(.exitConfirm))
-//                }
                 return .run { send in
                     try await realmRepo.upserWorkSpaceChannels(
                         channels: models
@@ -280,28 +221,10 @@ struct ChatChannelSettingFeature {
                 }
                 
             case .channelDeleteStart:
-                let workSpaceID = state.workSpaceID
-                let channelID = state.channelEntity.channelId
-                return .run { send in
-                    
-                    try await workSpaceRepo.channelDeleteRequest(workSpaceID, channelID)
-                    await WorkSpaceReader.shared.observeChannelStop(channelID)
-                    
-                    try await realmRepo.removeChannel(channelID)
-                    
-                    await send(.delegate(.channelDeleteConfirm))
-                    
-                } catch: { error, send in
-                    if let error = error as? ChannelDeleteAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else {
-                            print(error)
-                        }
-                    } else { print(error) }
-                }
+                return channelDeleteSideEffect(state: &state)
+                
             case .parentsAction(.successOwnerChange):
-//                return .send(.channelOwnerChanged(true))
+
                 return .run { send in
                     await send(.channelOwnerChanged(true))
                 }
@@ -315,5 +238,107 @@ struct ChatChannelSettingFeature {
             return .none
         }
     }
+}
+
+
+
+extension ChatChannelSettingFeature {
     
+    private func onAppearSideEffect(state: inout State) -> Effect<Action> {
+        setFirstSetting(state: &state)
+
+        let workSpaceID = state.workSpaceID
+        let cheenlID = state.channelEntity.channelId
+        
+        return .run { send in
+            let result = try await workSpaceRepo.channelInfoRequest(
+                workSpaceID,
+                cheenlID
+            )
+            await send(.netWorkResult(result))
+        } catch: { error, send in
+            if let error = error as? WorkSpaceChannelListAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else {
+                    print(error)
+                }
+            } else {
+                print(error)
+            }
+        }
+    }
+    
+    
+    private func setFirstSetting(state: inout State)  {
+        state.channelName = "# " + state.channelEntity.name
+        state.channelIntro = state.channelEntity.description
+        state.users = state.channelEntity.users
+        
+        let count = state.channelEntity.users.count
+        state.usersCount = "(\(count))"
+    }
+    
+    private func networkResultSideEffect(state: inout State, model: ChanelEntity) {
+        state.channelName = "# " + model.name
+        
+        state.channelIntro = model.description
+        
+        state.users = model.users
+        
+        let count = state.channelEntity.users.count
+        
+        state.usersCount = "(\(count))"
+        if let userID = UserDefaultsManager.userID {
+            state.isOwner = model.owner_id == userID
+        }
+    }
+    
+    private func channelDeleteSideEffect(state: inout State) -> Effect<Action> {
+        let workSpaceID = state.workSpaceID
+        let channelID = state.channelEntity.channelId
+        return .run { send in
+            
+            try await workSpaceRepo.channelDeleteRequest(workSpaceID, channelID)
+            await WorkSpaceReader.shared.observeChannelStop(channelID)
+            
+            try await realmRepo.removeChannel(channelID)
+            
+            await send(.delegate(.channelDeleteConfirm))
+            
+        } catch: { error, send in
+            if let error = error as? ChannelDeleteAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    
+    private func exitChannelSideEffect(state: inout State) -> Effect<Action> {
+        let workSpaceId = state.workSpaceID
+        let channelID = state.channelEntity.channelId
+        return .run { send in
+            let results = try await workSpaceRepo.exitChannel(
+                workSpaceId,
+                channelID
+            )
+            WSXSocketManager.shared.stopAndRemoveSocket()
+
+            await send(.realmChannelsUpdate(results))
+        } catch: { error, send in
+            if let error = error as? WorkSpaceExitChannelAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else {
+                    print(error)
+                }
+            } else {
+                print("에러 ->",error)
+            }
+        }
+    }
 }
