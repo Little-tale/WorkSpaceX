@@ -51,6 +51,25 @@ struct RootFeature {
     var body: some ReducerOf<Self> {
         
         BindingReducer()
+        
+        core()
+        .ifLet(\.workSpaceFirstViewState, action: \.sendToWorkSpaceStart) {
+            WorkSpaceFirstStartFeature()
+        }
+        .ifLet(\.OnboardingViewState, action: \.sendToOnboardingView) {
+            OnboardingFeature()
+        }
+        .ifLet(\.workSpaceTabViewState, action: \.sendToWorkSpaceTab) {
+            WorkSpaceTabCoordinator()
+        }
+        .ifLet(\.$alert, action: \.alert)
+    }
+    
+}
+
+extension RootFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce {state, action in
             switch action {
             case .onAppear :
@@ -99,18 +118,7 @@ struct RootFeature {
             
             return .none
         }
-        .ifLet(\.workSpaceFirstViewState, action: \.sendToWorkSpaceStart) {
-            WorkSpaceFirstStartFeature()
-        }
-        .ifLet(\.OnboardingViewState, action: \.sendToOnboardingView) {
-            OnboardingFeature()
-        }
-        .ifLet(\.workSpaceTabViewState, action: \.sendToWorkSpaceTab) {
-            WorkSpaceTabCoordinator()
-        }
-        .ifLet(\.$alert, action: \.alert)
     }
-    
 }
 
 extension RootFeature {
