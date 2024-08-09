@@ -123,7 +123,7 @@ extension WorkSpaceChannelChattingView {
                                 ChatModeView(
                                     setModel: send,
                                     profileClicked: { reModel in
-                                        store.send(.profileImageClikced(reModel))
+                                        store.send(.profileImageClicked(reModel))
                                     },
                                     fileClicked: { urlString in
                                         store.send(.fileClicked(urlString: urlString))

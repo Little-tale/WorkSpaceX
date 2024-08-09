@@ -102,7 +102,7 @@ struct WorkSpaceChannelChattingFeature {
         case socketConnected
         case listButtonTapped
         
-        case profileImageClikced(ChatModeEntity)
+        case profileImageClicked(ChatModeEntity)
         case fileClicked(urlString: String)
         case progressView(Bool)
         case presentDoc(URL?)
@@ -141,51 +141,9 @@ struct WorkSpaceChannelChattingFeature {
                     let date = try await realmRepo.findChatsForChannel(channelId: channelID)
                     await send(.chatDate(date))
                 }
-            case let .chatDate(date) :
-                let channelId = state.channelID
-                let workSpaceId = state.workSpaceID
+            case let .chatDate(date):
+                return ifDateSideEffect(state: &state, date: date)
                 
-                if let date {
-                    state.lastFetchDate = date
-                    return .run { send in
-                    
-                        try await Task.sleep(for: .seconds(0.1))
-                        await send(.firstInit)
-                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
-                        
-                        await send(.networkResult(result))
-                        await send(.socketConnected)
-                    } catch: { error, send in
-                        if let error = error as? WorkSpaceChannelListAPIError {
-                            if !error.ifDevelopError {
-                                await send(.errorMessage(error.message))
-                            }
-                        } else {
-                            print(error)
-                        }
-                    }
-                } else {
-                    return .run { send in
-                        
-                        let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
-                        print("받기 \(result)")
-                        await send(.networkResult(result))
-                        
-                        // 처음 렘
-                        await send(.firstInit)
-
-                        try await Task.sleep(for: .seconds(0.5))
-                        await send(.socketConnected)
-                    } catch: { error, send in
-                        if let error = error as? WorkSpaceChannelListAPIError {
-                            if !error.ifDevelopError {
-                                await send(.errorMessage(error.message))
-                            }
-                        } else {
-                            print(error)
-                        }
-                    }
-                }
             case let .networkResult(results):
                 print("네트워크",results)
                 //let channelID = state.channelID
@@ -249,40 +207,8 @@ struct WorkSpaceChannelChattingFeature {
                     }
                 }
             case .sendTapped:
-                let workSpaceID = state.workSpaceID
-                let channelID = state.channelID
-                let content = state.userFeildText
-                let files = state.currentDatas
                 
-                if content == "" && files.isEmpty {
-                    break
-                }
-                let multi = ChatMultipart(content: content, files: files)
-                state.userFeildText = ""
-                state.currentDatas = []
-                // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
-                
-                return .run { send in
-                    // 소켓을 연결할것으로 예상됨으로. 패스.
-                    await send(.dataCountChaeck)
-                    let result = try await workSpaceRepo.sendChatting(
-                        workSpaceID,
-                        channelID,
-                        multi
-                    )
-                    print("전송은 성공 : ",result)
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceChatSendAPIError {
-                        if !error.ifDevelopError {
-                            await send(.errorMessage(error.message))
-                        } else {
-                            print(error)
-                        }
-                    } else {
-                        print(error)
-                    }
-                }
-                
+                return sendMessageSideEffect(state: &state)
             case let .appendChat(models):
                 for model in models {
                     state.currentModels.append(model)
@@ -334,37 +260,8 @@ struct WorkSpaceChannelChattingFeature {
                 state.filePickerTrigger = bool
                 
             case let .filePickerResults(urls):
-                var datas: [ChatMultipart.File] = []
-                var ifOberData: Bool = false
-                for url in urls {
-                    guard let data = try? Data(contentsOf: url) else { continue }
-                    let dataSize = Double(data.count)
-                    if dataSize > (4.99 * 1024 * 1024) {
-                        ifOberData = true
-                        continue
-                    }
-                    let fileName: String = url.lastPathComponent
-                    let filType = fileType(from: url)
-                    let result = ChatMultipart.File(
-                        data: data,
-                        fileName: fileName,
-                        fileType: filType
-                    )
-                    datas.append(result)
-                }
                 
-                state.currentDatas.append(contentsOf: datas)
-                
-                if ifOberData {
-                    return .run { send in
-                        await send(.dataCountChaeck)
-                        await send(.errorMessage("5mb 초과 데이터는 추가하실 수 없습니다!"))
-                    }
-                } else {
-                    return .run { send in
-                        await send(.dataCountChaeck)
-                    }
-                }
+                return filePickerSideEffect(state: &state, urls: urls)
             case .filePickOver:
                 state.errorMessage = "총 5개 제한 이에요 ㅠㅠ"
 
@@ -427,7 +324,7 @@ struct WorkSpaceChannelChattingFeature {
                     print(error)
                 }
                 
-            case let .profileImageClikced(model):
+            case let .profileImageClicked(model):
                 
                 guard case let .other(member) = model.isMe else {
                     break
@@ -439,27 +336,7 @@ struct WorkSpaceChannelChattingFeature {
                 
             case let .fileClicked(string):
                 
-                return .run { send in
-                    await send(.progressView(true))
-                    do {
-                        guard let fileData = try await workSpaceRepo.fileDownload(urlString: string) else {
-                            await send(.progressView(false))
-                            return
-                        }
-                        guard let url = fileManager.fileSave(
-                            fileData,
-                            urlString: string
-                        ) else {
-                            await send(.progressView(false))
-                            return
-                        }
-                        await send(.progressView(false))
-                        await send(.presentDoc(url))
-                    } catch {
-                        await send(.progressView(false))
-                        print(error)
-                    }
-                }
+                return fileDownloadSideEffect(string: string)
                 
             case let .progressView(bool):
                 state.progressView = bool
@@ -468,21 +345,8 @@ struct WorkSpaceChannelChattingFeature {
                 state.presentDoc = url
                 
             case let .toChat(model):
-                let modelDate = model.createdAt.toDate ?? Date()
-                let beforeDate = state.thisLastChatDate
-                let trigger = isSameDay(modelDate, beforeDate)
-                let userID = state.userID
                 
-                
-                let mapping = workSpaceRepo.toChat(
-                    model: model,
-                    userID: userID,
-                    isFirstDate: !trigger
-                )
-                return .run { send in
-                    await send(.appendChat([mapping]))
-                }
-                
+                return chatSideEffect(state: &state, model: model)
             default:
                 break
             }
@@ -492,6 +356,172 @@ struct WorkSpaceChannelChattingFeature {
     }
     
 }
+
+extension WorkSpaceChannelChattingFeature {
+    
+    private func fileDownloadSideEffect(string: String) -> Effect<Action> {
+        return .run { send in
+            await send(.progressView(true))
+            do {
+                guard let fileData = try await workSpaceRepo.fileDownload(urlString: string) else {
+                    await send(.progressView(false))
+                    return
+                }
+                guard let url = fileManager.fileSave(
+                    fileData,
+                    urlString: string
+                ) else {
+                    await send(.progressView(false))
+                    return
+                }
+                await send(.progressView(false))
+                await send(.presentDoc(url))
+            } catch {
+                await send(.progressView(false))
+                print(error)
+            }
+        }
+    }
+    
+    private func chatSideEffect(state: inout State, model: WorkSpaceChatEntity) -> Effect<Action> {
+        let modelDate = model.createdAt.toDate ?? Date()
+        let beforeDate = state.thisLastChatDate
+        let trigger = isSameDay(modelDate, beforeDate)
+        let userID = state.userID
+        
+        
+        let mapping = workSpaceRepo.toChat(
+            model: model,
+            userID: userID,
+            isFirstDate: !trigger
+        )
+        return .run { send in
+            await send(.appendChat([mapping]))
+        }
+    }
+    
+    
+    private func filePickerSideEffect(state: inout State, urls: [URL]) -> Effect<Action> {
+        var datas: [ChatMultipart.File] = []
+        
+        var ifOberData: Bool = false
+        
+        for url in urls {
+            guard let data = try? Data(contentsOf: url) else { continue }
+            let dataSize = Double(data.count)
+            if dataSize > (4.99 * 1024 * 1024) {
+                ifOberData = true
+                continue
+            }
+            let fileName: String = url.lastPathComponent
+            let filType = fileType(from: url)
+            let result = ChatMultipart.File(
+                data: data,
+                fileName: fileName,
+                fileType: filType
+            )
+            datas.append(result)
+        }
+        
+        state.currentDatas.append(contentsOf: datas)
+        
+        if ifOberData {
+            return .run { send in
+                await send(.dataCountChaeck)
+                await send(.errorMessage("5mb 초과 데이터는 추가하실 수 없습니다!"))
+            }
+        } else {
+            return .run { send in
+                await send(.dataCountChaeck)
+            }
+        }
+    }
+    
+    private func sendMessageSideEffect(state: inout State) -> Effect<Action> {
+        let workSpaceID = state.workSpaceID
+        let channelID = state.channelID
+        let content = state.userFeildText
+        let files = state.currentDatas
+        
+        if content == "" && files.isEmpty {
+            return .none
+        }
+        let multi = ChatMultipart(content: content, files: files)
+        state.userFeildText = ""
+        state.currentDatas = []
+        // 파일이나 텍스트가 없을땐 보내지 않도록 하게 해야함...
+        
+        return .run { send in
+            // 소켓을 연결할것으로 예상됨으로. 패스.
+            await send(.dataCountChaeck)
+            let result = try await workSpaceRepo.sendChatting(
+                workSpaceID,
+                channelID,
+                multi
+            )
+            print("전송은 성공 : ",result)
+        } catch: { error, send in
+            if let error = error as? WorkSpaceChatSendAPIError {
+                if !error.ifDevelopError {
+                    await send(.errorMessage(error.message))
+                } else {
+                    print(error)
+                }
+            } else {
+                print(error)
+            }
+        }
+    }
+    
+    private func ifDateSideEffect(state: inout State, date: Date?) -> Effect<Action> {
+        let channelId = state.channelID
+        let workSpaceId = state.workSpaceID
+        
+        if let date {
+            state.lastFetchDate = date
+            return .run { send in
+            
+                try await Task.sleep(for: .seconds(0.1))
+                await send(.firstInit)
+                let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, date)
+                
+                await send(.networkResult(result))
+                await send(.socketConnected)
+            } catch: { error, send in
+                if let error = error as? WorkSpaceChannelListAPIError {
+                    if !error.ifDevelopError {
+                        await send(.errorMessage(error.message))
+                    }
+                } else {
+                    print(error)
+                }
+            }
+        } else {
+            return .run { send in
+                
+                let result = try await workSpaceRepo.workSpaceChattingList(workSpaceId, channelId, nil)
+                print("받기 \(result)")
+                await send(.networkResult(result))
+                
+                // 처음 렘
+                await send(.firstInit)
+
+                try await Task.sleep(for: .seconds(0.5))
+                await send(.socketConnected)
+            } catch: { error, send in
+                if let error = error as? WorkSpaceChannelListAPIError {
+                    if !error.ifDevelopError {
+                        await send(.errorMessage(error.message))
+                    }
+                } else {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+}
+
 
 extension WorkSpaceChannelChattingFeature {
     
