@@ -282,16 +282,13 @@ struct ProfileInfoFeature {
                 } catch: { error, _ in
                     print(error)
                 }
-                
+                // 로그아웃
             case .logOutConfirm :
                 state.logOutViewState = nil
                 state.progress = true
                 return .run { send in
-                    
-                    try await Task.sleep(for: .seconds(1))
-                    
                     try await realmRepo.logout()
-                    
+                    try await Task.sleep(for: .seconds(1))
                     await send(.delegate(.moveToOnBoardingView))
                 } catch: {error, _ in
                     print(error)

@@ -70,34 +70,29 @@ struct RootFeature {
                 
             case .sendToWorkSpaceStart(.sendWorkSpaceInit(.presented(.goRootCheck))):
                 
-                return .run { send in await send(.onAppear) }
-                
+                return reOnAppear()
             case .sendToWorkSpaceStart(.cancelButtonTapped):
                 
-                return .run { send in await send(.onAppear) }
-                
+                return reOnAppear()
             case .sendToOnboardingView(.checkedLogin):
              
-                return .run { send in await send(.onAppear) }
-                
+                return reOnAppear()
             case .sendToWorkSpaceTab(.noWorkSpaceTrigger) :
 
-                return .run { send in await send(.onAppear) }
-                
+                return reOnAppear()
             case .sendToWorkSpaceTab(.delegate(.moveToOnBoardingView)):
-                state.currentLoginState = .logout
                 
+                logoutSideEffect(state: &state)
             case .sendToWorkSpaceTab(.refreshChecked):
-                state.OnboardingViewState = OnboardingFeature.State()
-                state.currentLoginState = .logout
                 
-            case .showRefreshAlert:
-                state.alert = AlertState.refreshDeadAlert
-    
+                logoutSideEffect(state: &state)
+                
             case .alert(.presented(.refreshTokenDead)):
-                state.OnboardingViewState = OnboardingFeature.State()
-                state.currentLoginState = .logout
                 
+                logoutSideEffect(state: &state)
+            case .showRefreshAlert:
+                
+                state.alert = AlertState.refreshDeadAlert
             default:
                 break
             }
@@ -116,4 +111,16 @@ struct RootFeature {
         .ifLet(\.$alert, action: \.alert)
     }
     
+}
+
+extension RootFeature {
+    
+    private func logoutSideEffect(state: inout State) {
+        state.OnboardingViewState = OnboardingFeature.State()
+        state.currentLoginState = .logout
+    }
+    
+    private func reOnAppear() -> Effect<Action> {
+        return .run { send in await send(.onAppear) }
+    }
 }
