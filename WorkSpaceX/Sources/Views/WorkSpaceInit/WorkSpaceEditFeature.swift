@@ -78,7 +78,6 @@ struct WorkSpaceEditFeature {
         case dismissButtonTapped
         
         case alertCase(AlertCase?)
-//        case successMessage(String)
         
         case regSuccess(WorkSpaceEntity)
         case realmRegSuccess
@@ -87,36 +86,29 @@ struct WorkSpaceEditFeature {
         case alertSuccessTapped
     }
     
-//    @Dependency(\.dismiss) var dismiss
     @Dependency(\.workspaceDomainRepository) var repository
     @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
         
         BindingReducer()
-        
         Scope(state: \.imagePick, action: \.imagePickFeature) {
             CustomImagePickFeature()
         }
-        
+        core()
+    }
+}
+
+
+extension WorkSpaceEditFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {
             case let .getModel(model):
-                print("받아옴, \(model)")
-                state.workSpaceName = model.workSpaceName
-                state.workSpaceIntroduce = model.introduce ?? ""
                 
-                state.workSpaceID = model.workSpaceID
-                
-                state.regButtonState = state.workSpaceName != ""
-                
-                let imageUrl = model.coverImage
-                
-                return .run { send in
-                    await send(.imagePickFeature(.ifURLString(imageUrl)))
-                }
-                
+                return getModelSideEffect(state: &state, model: model)
             case .showImagePicker:
                 state.showImagePicker = true
                 
@@ -137,29 +129,8 @@ struct WorkSpaceEditFeature {
                 state.regButtonState = state.workSpaceName != ""
                 
             case .regButtonTapped:
-                let id = state.workSpaceID
                 
-                let request = EditWorkSpaceRequest(
-                    name: state.workSpaceName,
-                    description: state.workSpaceIntroduce,
-                    image: state.image
-                )
-                
-                return .run { send in
-                    let result = try await repository.modifySpaceRequest(request, id)
-                    await send(.regSuccess(result))
-                    
-                } catch: { error, send in
-                    if let error = error as? WorkSpaceEditAPIError {
-                        if !error.ifDevelopError {
-                            await send(.alertCase(.error(error.message)))
-                        } else { print(error) }
-                    
-                    } else {
-                        print(error)
-                    }
-                }
-                
+                return regButtonSideEffect(state: &state)
             case let .regSuccess(model):
                 
                 return .run { send in
@@ -176,12 +147,6 @@ struct WorkSpaceEditFeature {
                 return .run { send in
                     await send(.alertCase(.success("저장 되었습니다.")))
                 }
-                
-//            case let .errorMessage(message):
-//                state.errorMessage = message
-//                
-//            case let .successMessage(message):
-//                state.successMessage = message
             case let .alertCase(alert):
                 state.alertCase = alert
                 
@@ -196,6 +161,49 @@ struct WorkSpaceEditFeature {
             
             return .none
         }
+    }
+}
+
+extension WorkSpaceEditFeature {
+    
+    private func getModelSideEffect(state: inout State, model: WorkSpaceRealmModel) -> Effect<Action> {
+        print("받아옴, \(model)")
+        state.workSpaceName = model.workSpaceName
+        state.workSpaceIntroduce = model.introduce ?? ""
         
+        state.workSpaceID = model.workSpaceID
+        
+        state.regButtonState = state.workSpaceName != ""
+        
+        let imageUrl = model.coverImage
+        
+        return .run { send in
+            await send(.imagePickFeature(.ifURLString(imageUrl)))
+        }
+    }
+    
+    private func regButtonSideEffect(state: inout State) -> Effect<Action> {
+        let id = state.workSpaceID
+        
+        let request = EditWorkSpaceRequest(
+            name: state.workSpaceName,
+            description: state.workSpaceIntroduce,
+            image: state.image
+        )
+        
+        return .run { send in
+            let result = try await repository.modifySpaceRequest(request, id)
+            await send(.regSuccess(result))
+            
+        } catch: { error, send in
+            if let error = error as? WorkSpaceEditAPIError {
+                if !error.ifDevelopError {
+                    await send(.alertCase(.error(error.message)))
+                } else { print(error) }
+            
+            } else {
+                print(error)
+            }
+        }
     }
 }

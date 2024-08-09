@@ -82,21 +82,17 @@ struct WorkSpaceInitialFeature {
             case .binding:
                 
                 workSpaceNameValid(state: &state)
-                
             case .showImagePicker:
                 state.imagePick.imageState = .loading
                 state.showImagePicker = true
-                return .none
                 
             case .imagePickerData(let ifData):
         
                 pickDataTester(state: &state, imageData: ifData)
-                
             case .regButtonTapped:
                 state.showProgressView = true
 
                 let description = makeDescription(state: &state)
-                
                 guard let workSpaceRequest = makeImageRequest(state: &state, description: description) else {
                     return .run { send in
                         await send(.error("이미지 작업중 문제가 발생했습니다."))
@@ -122,12 +118,9 @@ struct WorkSpaceInitialFeature {
                 return .run { send in
                     await self.dismiss()
                 }
-            case .goRootCheck: // 상위뷰 관찰
-                return .none
-                
             case .error(let errorMessage):
                 state.errorMessage = errorMessage
-                return .none
+           
                 
             case .regSuccess(let model):
                 
@@ -149,7 +142,6 @@ struct WorkSpaceInitialFeature {
                 } message: {
                     TextState("다시 로그인 하시고 이용하여 주세요!")
                 }
-                return .none
                 
             case .alert(.presented(.confirmButtonTapped)):
                 
@@ -173,8 +165,6 @@ struct WorkSpaceInitialFeature {
                         }
                     }
                 }
-               
-                return .none
                 
             case .alert(.dismiss):
                 return .run{ send in
