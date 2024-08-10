@@ -97,19 +97,17 @@ struct StoreListFeature {
     }
     
     var body: some ReducerOf<Self> {
-        
+        core()
+    }
+}
+
+extension StoreListFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { send in
-                    let result = try await storeRepo.storeList()
-                    await send(.catchToCoinItems(result))
-                } catch: { error, send in
-                    if let error = error as? StoreListApiError {
-                        print(error)
-                    }
-                    print(error) // 해당 에선 에러 코드가 없음
-                }
+                return onAppearSideEffect()
                 
             case .explainShow(let bool):
                 return .run { send in
@@ -124,16 +122,7 @@ struct StoreListFeature {
                 state.storeViewState = .show
                 
             case let .selectedItem(item):
-                let model = storeRepo.storeMapper.makeIamport(
-                    item
-                )
-                return .run { send in
-                    // 리프레시 토큰 죽을 가능성을 위해 한번 조회를 통해 무회
-                    let _ = try await userRepo.myProfile()
-                    await send(.paymentModel(model))
-                } catch: { error, send in
-                    print(error)
-                }
+                return selectedItemSideEffect(item: item)
                 
             case let .exPlainBind(bind):
                 state.explainState = bind
@@ -152,31 +141,8 @@ struct StoreListFeature {
                 }
                 
             case let .paymentResponse(model):
-                if let model{
-                    guard let impID = model.imp_uid,
-                          let merID = model.merchant_uid else {
-                        return .run { send in
-                            await send(.alertCase(.error("결제 실패: 결제 되었을시 담당자에게 연락 바랍니다.")))
-                        }
-                    }
-                    print(impID, merID)
-                    return .run { send in
-                        let result = try await storeRepo.requestValid(
-                            impUid: impID,
-                            merChantUID: merID
-                        )
-                        await send(.catchToStoreValidEntity(result))
-                    }
-                    catch: { error, send in
-                        if let error = error as? StoreValidApiError {
-                            if !error.ifDevelopError {
-                                await send(.alertCase(.error(error.message)))
-                            }
-                        } else {
-                            print(error)
-                        }
-                    }
-                }
+                return paymentSideEffect(model: model)
+                
             case let .catchToStoreValidEntity(model):
                 state.currentCoinCount += model.sesacCoin
                 return .run { send in
@@ -189,6 +155,63 @@ struct StoreListFeature {
             }
             
             return .none
+        }
+    }
+}
+
+extension StoreListFeature {
+    
+    private func onAppearSideEffect() -> Effect<Action> {
+        return .run { send in
+            let result = try await storeRepo.storeList()
+            await send(.catchToCoinItems(result))
+        } catch: { error, send in
+            if let error = error as? StoreListApiError {
+                print(error)
+            }
+            print(error) // 해당 에선 에러 코드가 없음
+        }
+    }
+    
+    private func paymentSideEffect(model: IamportResponse?) -> Effect<Action> {
+        if let model{
+            guard let impID = model.imp_uid,
+                  let merID = model.merchant_uid else {
+                return .run { send in
+                    await send(.alertCase(.error("결제 실패: 결제 되었을시 담당자에게 연락 바랍니다.")))
+                }
+            }
+            print(impID, merID)
+            return .run { send in
+                let result = try await storeRepo.requestValid(
+                    impUid: impID,
+                    merChantUID: merID
+                )
+                await send(.catchToStoreValidEntity(result))
+            }
+            catch: { error, send in
+                if let error = error as? StoreValidApiError {
+                    if !error.ifDevelopError {
+                        await send(.alertCase(.error(error.message)))
+                    }
+                } else {
+                    print(error)
+                }
+            }
+        }
+        return .none
+    }
+    
+    private func selectedItemSideEffect(item: StoreItemEntity) -> Effect<Action> {
+        let model = storeRepo.storeMapper.makeIamport(
+            item
+        )
+        return .run { send in
+            // 리프레시 토큰 죽을 가능성을 위해 한번 조회를 통해 무회
+            let _ = try await userRepo.myProfile()
+            await send(.paymentModel(model))
+        } catch: { error, send in
+            print(error)
         }
     }
 }
