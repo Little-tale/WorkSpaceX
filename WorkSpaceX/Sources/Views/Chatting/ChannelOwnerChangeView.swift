@@ -73,7 +73,7 @@ struct ChannelOwnerChangeView: View {
                         onCancel: {
                             store.send(.alertAction(nil))
                         }, onAction: {
-                            store.send(.alertActted(newValue))
+                            store.send(.alertAct(newValue))
                             store.send(.alertAction(nil))
                         }, actionTitle: newValue.actionTitle)
                 }

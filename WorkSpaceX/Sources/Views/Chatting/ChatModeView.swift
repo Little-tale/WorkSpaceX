@@ -231,9 +231,6 @@ extension ChatModeView {
     
     @ViewBuilder
     private func fileCountCaseView(with caseOF: FileCountCase) -> some View {
-//        WithPerceptionTracking {
-//
-//        }
         switch caseOF {
         case .none:
             EmptyView()

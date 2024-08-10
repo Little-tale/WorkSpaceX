@@ -36,7 +36,7 @@ struct ChannelOwnerChangeFeature {
         
         case alertAction(AlertAction?)
         
-        case alertActted(AlertAction)
+        case alertAct(AlertAction)
         
         case realmUpsert(ChanelEntity)
         
@@ -93,20 +93,18 @@ struct ChannelOwnerChangeFeature {
     @Dependency(\.realmRepository) var realmRepo
     
     var body: some ReducerOf<Self> {
-        
+        core()
+    }
+}
+
+extension ChannelOwnerChangeFeature {
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {
                 
             case .onAppear:
-                var models: [WorkSpaceMembersEntity] = []
-                
-                if let userID = UserDefaultsManager.userID {
-                    state.userID = userID
-                    models = filterMe(state.channel, userID: userID)
-                }
-                
-                state.users = models
+                onAppearSetting(state: &state)
                 
             case .backButtonTapped:
                 return .run { send in await send(.delegate(.backButtonTapped))}
@@ -119,32 +117,8 @@ struct ChannelOwnerChangeFeature {
                 if action == nil { state.currentUserSelected = nil }
                 state.alertState = action
                 
-            case let .alertActted(action):
-                switch action {
-                case .reallyChangeOwner(_, let id):
-                    let workSpaceID = state.workSpaceID
-                    let channelID = state.channel.channelId
-                    return .run { send in
-                        let result = try await workSpaceRepo.channelOwnerChanged(
-                            workSpaceID,
-                            channelID,
-                            id
-                        )
-                        await send(.realmUpsert(result))
-                    } catch: { error, send in
-                        if let error = error as? ChannelOwnerChangedAPIError {
-                            if !error.ifDevelopError {
-                                await send(.alertAction(.error(message: error.message)))
-                            } else {
-                                print(error)
-                            }
-                        } else {
-                            print(error)
-                        }
-                    }
-                default:
-                    break
-                }
+            case let .alertAct(action):
+                return alertActionSideEffect(state: &state, action: action)
                 
             case let .realmUpsert(model):
                 
@@ -154,18 +128,56 @@ struct ChannelOwnerChangeFeature {
                 } catch: { error, send in
                     print(error)
                 }
-                
-            
-                
             default:
                 break
             }
             return .none
         }
-        
+    }
+}
+
+extension ChannelOwnerChangeFeature {
+    private func alertActionSideEffect(state: inout State, action: AlertAction) -> Effect<Action> {
+        switch action {
+        case .reallyChangeOwner(_, let id):
+            let workSpaceID = state.workSpaceID
+            let channelID = state.channel.channelId
+            return .run { send in
+                let result = try await workSpaceRepo.channelOwnerChanged(
+                    workSpaceID,
+                    channelID,
+                    id
+                )
+                await send(.realmUpsert(result))
+            } catch: { error, send in
+                if let error = error as? ChannelOwnerChangedAPIError {
+                    if !error.ifDevelopError {
+                        await send(.alertAction(.error(message: error.message)))
+                    } else {
+                        print(error)
+                    }
+                } else {
+                    print(error)
+                }
+            }
+        default:
+            break
+        }
+        return .none
     }
     
+    private func onAppearSetting(state: inout State) {
+        var models: [WorkSpaceMembersEntity] = []
+        
+        if let userID = UserDefaultsManager.userID {
+            state.userID = userID
+            models = filterMe(state.channel, userID: userID)
+        }
+        
+        state.users = models
+    }
 }
+
 extension ChannelOwnerChangeFeature {
     
     private func filterMe(_ model: ChanelEntity, userID: String) -> [WorkSpaceMembersEntity] {
