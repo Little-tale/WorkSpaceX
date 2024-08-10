@@ -104,19 +104,25 @@ struct WorkSpaceSideFeature {
     
     var body: some ReducerOf<Self> {
         
+        core()
+        .ifLet(\.$alertSheet, action: \.alertSheetAction)
+        .ifLet(\.$workSpaceEdit, action: \.workSpaceEditAction) {
+            WorkSpaceEditFeature()
+        }
+        .ifLet(\.$workSpaceOwnerChange, action: \.workSpaceOwnerChange) {
+            WorkSpaceOwnerChangeFeature()
+        }
+    }
+}
+
+extension WorkSpaceSideFeature {
+    
+    private func core() -> some ReducerOf<Self> {
         Reduce { state, action in
             
             switch action {
             case .onAppear:
-                state.currentWorkSpaceID =    UserDefaultsManager.workSpaceSelectedID
-                
-                return .run { send in
-                    let result = try await workSpaceRepo.findMyWordSpace()
-                    try await realmRepo.upsertWorkSpaces(responses: result)
-                    await send(.subscribe)
-                } catch: { error, send in
-                   print(error)
-                }
+                return onAppearSideEffect(state: &state)
                 
             case .subscribe:
                 return .run { send in
@@ -148,44 +154,8 @@ struct WorkSpaceSideFeature {
                 }
                 
             case let .openAlertSheet(model):
+                openAlertSheetSetting(state: &state, model: model)
                 
-                state.currentWorkSpaceID = model.workSpaceID
-                
-                state.currentSheetSelectModel = model
-                
-                state.alertSheet = ConfirmationDialogState {
-                    TextState("워크 스페이스 설정")
-                } actions: {
-                    ButtonState(role: .cancel) {
-                        TextState("취소")
-                    }
-                    
-                    if let userId = UserDefaultsManager.userID,
-                       model.ownerID == userId {
-                        ButtonState(role: .none, action: .workSpaceEdit) {
-                            TextState("워크스페이스 편집")
-                        }
-                        
-                        ButtonState(action: .workSpaceOut) {
-                            TextState("워크스페이스 나가기")
-                        }
-                        
-                        ButtonState(action: .workSpaceOwnerChange) {
-                            TextState("워크스페이스 관리자 변경")
-                        }
-                        ButtonState(
-                            role:.destructive,
-                            action: .workSpaceRemove
-                        ) {
-                            TextState("워크스페이스 삭제")
-                        }
-                        
-                    } else {
-                        ButtonState(action: .workSpaceOut) {
-                            TextState("워크 스페이스 나가기")
-                        }
-                    }
-                }
             case .alertSheetAction(.presented(.workSpaceRemove)):
                 return .run { send in
                     await send(.removeAlertBoolCatch(true))
@@ -195,26 +165,7 @@ struct WorkSpaceSideFeature {
                 state.removeAlertBool = bool
                 
             case .requestRemoveModel:
-                if let model = state.currentSheetSelectModel {
-                    
-                    let id = model.workSpaceID
-                    
-                    return .run { send in
-                        print( "지우기 시작" )
-                        try await workSpaceRepo.workSpaceRemove(id)
-                        
-                        await send(.confirmRemoveModelID(id))
-                           
-                    } catch: { error, send in
-                        if let error = error as? WorkSpaceRemoveAPIError {
-                            if !error.ifDevelopError {
-                                await send(.errorMessage(error.message))
-                            } else {
-                                print(error)
-                            }
-                        } else { print(error) }
-                    }
-                }
+                return removeModelSideEffect(state: &state)
                 
             case .alertSheetAction(.presented(.workSpaceEdit)):
                 if let model = state.currentSheetSelectModel {
@@ -293,27 +244,12 @@ struct WorkSpaceSideFeature {
                 
             case let .errorMessage(message):
                 state.errorMessage = message
-//                state.errorAlertBoll = true
                 
             case let .errorAlertBool(bool):
                 state.errorAlertBoll = bool
                 
             case .removeSuccessAlertTapped:
-                
-                if let model = state.currentModels.first {
-                    let id = model.workSpaceID
-                    
-                    UserDefaultsManager.workSpaceSelectedID = id
-                    state.currentWorkSpaceID = id
-                    return .run { send in
-                        await send(.delegate(.changedWorkSpaceID(id)))
-                    }
-                } else {
-                    UserDefaultsManager.workSpaceSelectedID = ""
-                    return .run { send in
-                        await send(.delegate(.changedWorkSpaceID(nil)))
-                    }
-                }
+                return removeAlertTappedSideEffect(state: &state)
                 
             case  .workSpaceOwnerChange(.presented(.delegate(.successForChanged))):
                 return .run { send in
@@ -326,34 +262,102 @@ struct WorkSpaceSideFeature {
             }
             return .none
         }
-        .ifLet(\.$alertSheet, action: \.alertSheetAction)
-        .ifLet(\.$workSpaceEdit, action: \.workSpaceEditAction) {
-            WorkSpaceEditFeature()
+    }
+    
+}
+
+extension WorkSpaceSideFeature {
+    
+    private func openAlertSheetSetting(state: inout State, model: WorkSpaceRealmModel) {
+        state.currentWorkSpaceID = model.workSpaceID
+        
+        state.currentSheetSelectModel = model
+        
+        state.alertSheet = ConfirmationDialogState {
+            TextState("워크 스페이스 설정")
+        } actions: {
+            ButtonState(role: .cancel) {
+                TextState("취소")
+            }
+            
+            if let userId = UserDefaultsManager.userID,
+               model.ownerID == userId {
+                ButtonState(role: .none, action: .workSpaceEdit) {
+                    TextState("워크스페이스 편집")
+                }
+                
+                ButtonState(action: .workSpaceOut) {
+                    TextState("워크스페이스 나가기")
+                }
+                
+                ButtonState(action: .workSpaceOwnerChange) {
+                    TextState("워크스페이스 관리자 변경")
+                }
+                ButtonState(
+                    role:.destructive,
+                    action: .workSpaceRemove
+                ) {
+                    TextState("워크스페이스 삭제")
+                }
+                
+            } else {
+                ButtonState(action: .workSpaceOut) {
+                    TextState("워크 스페이스 나가기")
+                }
+            }
         }
-        .ifLet(\.$workSpaceOwnerChange, action: \.workSpaceOwnerChange) {
-            WorkSpaceOwnerChangeFeature()
+    }
+    
+    private func onAppearSideEffect(state: inout State) -> Effect<Action> {
+        state.currentWorkSpaceID = UserDefaultsManager.workSpaceSelectedID
+        
+        return .run { send in
+            let result = try await workSpaceRepo.findMyWordSpace()
+            try await realmRepo.upsertWorkSpaces(responses: result)
+            await send(.subscribe)
+        } catch: { error, send in
+           print(error)
+        }
+    }
+    
+    private func removeModelSideEffect(state: inout State) -> Effect<Action> {
+        if let model = state.currentSheetSelectModel {
+            
+            let id = model.workSpaceID
+            
+            return .run { send in
+                print( "지우기 시작" )
+                try await workSpaceRepo.workSpaceRemove(id)
+                
+                await send(.confirmRemoveModelID(id))
+                
+            } catch: { error, send in
+                if let error = error as? WorkSpaceRemoveAPIError {
+                    if !error.ifDevelopError {
+                        await send(.errorMessage(error.message))
+                    } else {
+                        print(error)
+                    }
+                } else { print(error) }
+            }
+        }
+        return .none
+    }
+    
+    private func removeAlertTappedSideEffect(state: inout State) -> Effect<Action> {
+        if let model = state.currentModels.first {
+            let id = model.workSpaceID
+            
+            UserDefaultsManager.workSpaceSelectedID = id
+            state.currentWorkSpaceID = id
+            return .run { send in
+                await send(.delegate(.changedWorkSpaceID(id)))
+            }
+        } else {
+            UserDefaultsManager.workSpaceSelectedID = ""
+            return .run { send in
+                await send(.delegate(.changedWorkSpaceID(nil)))
+            }
         }
     }
 }
-/*
- case let .workSpaceModelsChanged(models):
- print("사이드 매뉴 입장")
- state.currentModels = Array(models)
- if state.currentCount != models.count {
- state.currentCount = models.count
- return .run { send in
- try await Task.sleep(for: .seconds(0.44))
- await send(.checkCount)
- }
- }
- */
-/*
- switch result {
- case .success():
-     state.alertMessage = "삭제 완료 되었습니다."
-     state.successAlertBool = true
- case .failure:
-     state.alertMessage = "삭제중 에러가 발생 했습니다."
-     state.errorAlertBoll = true
- }
- */
