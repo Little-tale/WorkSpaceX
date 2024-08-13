@@ -52,4 +52,22 @@ enum Const {
         
         static let changedOwnerMessage = "채널 관리자가 변경되었습니다."
     }
+    
+    enum EditChannel {
+        static let navigationTitle = "채널 편집"
+        
+        static let channelName = "채널 이름"
+        static let channelPlaceHolder = "채널 이름을 입력하세요 (필수)"
+        
+        static let explainChannel = "채널 설명"
+        static let explainChannelPlaceHolder = "채널을 설명하세요. (옵션)"
+    }
+    
+    enum AlertCase {
+        static let errorTitle1 = "에러 발생"
+
+        static let check = "확인"
+
+        static let successDefault = "성공"
+    }
 }

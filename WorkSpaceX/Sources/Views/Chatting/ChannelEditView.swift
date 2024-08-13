@@ -27,7 +27,7 @@ struct ChannelEditView: View {
                         })
                     
                 }
-                .navigationTitle("채널 편집")
+                .navigationTitle(Const.EditChannel.navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -39,9 +39,9 @@ struct ChannelEditView: View {
                     }
                 }
                 .alert(item: $store.errorMessage) { _ in
-                    Text("에러 발생")
+                    Text(Const.AlertCase.errorTitle1)
                 } actions: { _ in
-                    Text("확인")
+                    Text(Const.AlertCase.check)
                         .asButton {
                             store.send(.errorMessage(nil))
                         }
@@ -49,9 +49,9 @@ struct ChannelEditView: View {
                     Text(message)
                 }
                 .alert(item: $store.successMessage) { _ in
-                    Text("성공")
+                    Text(Const.AlertCase.successDefault)
                 } actions: { _ in
-                    Text("확인")
+                    Text(Const.AlertCase.check)
                         .asButton {
                             store.send(.successMessage(nil))
                             store.send(.alertSuccessTapped)
@@ -82,8 +82,8 @@ extension ChannelEditView {
                 .padding(.top, 25)
                 
                 HeaderTextField(
-                    headerTitle: "채널 이름",
-                    placeHolder: "채널 이름을 입력하세요 (필수)",
+                    headerTitle: Const.EditChannel.channelName,
+                    placeHolder: Const.EditChannel.channelPlaceHolder,
                     isSecure: false,
                     binding: $store.channelName,
                     scopeColor: false
@@ -92,8 +92,8 @@ extension ChannelEditView {
                 .font(WSXFont.title2)
                 
                 HeaderTextField(
-                    headerTitle: "채널 설명",
-                    placeHolder: "채널을 설명하세요. (옵션)",
+                    headerTitle: Const.EditChannel.explainChannel,
+                    placeHolder: Const.EditChannel.explainChannelPlaceHolder,
                     isSecure: false,
                     binding: $store.channelIntro,
                     scopeColor: false
