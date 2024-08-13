@@ -68,7 +68,7 @@ extension SearchView {
     
     @ViewBuilder
     private func channelsView() -> some View {
-        Text("채널")
+        Text(Const.Search.channelSection)
             .font(WSXFont.title15)
             .padding(.bottom, 2)
 
@@ -86,7 +86,7 @@ extension SearchView {
     
     @ViewBuilder
     private func membersView() -> some View {
-        Text("멤버 🧨")
+        Text(Const.Search.memberSection)
             .font(WSXFont.title15)
             .padding(.bottom, 2)
         
@@ -190,7 +190,7 @@ extension SearchView {
         VStack {
             Spacer()
             
-            Text("채널과 멤버를\n검색해 보세요!")
+            Text(Const.Search.searchChannelORMember)
                 .font(WSXFont.title0)
                 .foregroundStyle(WSXColor.black)
                 .padding(.bottom, 15)
@@ -209,7 +209,7 @@ extension SearchView {
         VStack {
             Spacer()
             
-            Text("검색 결과가 없어요")
+            Text(Const.Search.noSearchResults)
                 .font(WSXFont.title0)
                 .foregroundStyle(WSXColor.black)
                 .padding(.bottom, 15)

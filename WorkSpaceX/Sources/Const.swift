@@ -63,6 +63,13 @@ enum Const {
         static let explainChannelPlaceHolder = "채널을 설명하세요. (옵션)"
     }
     
+    enum Search {
+        static let channelSection = "채널"
+        static let memberSection = "멤버 🧨"
+        static let searchChannelORMember =  "채널과 멤버를\n검색해 보세요!"
+        static let noSearchResults = "검색 결과가 없어요"
+    }
+    
     enum AlertCase {
         static let errorTitle1 = "에러 발생"
 
