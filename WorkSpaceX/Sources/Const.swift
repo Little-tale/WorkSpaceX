@@ -70,11 +70,28 @@ enum Const {
         static let noSearchResults = "검색 결과가 없어요"
     }
     
+    enum ProfileInfo {
+        static let charge = "충전하기"
+        static let navigationTitle = "설정"
+        static let myInfoModify = "내 정보 수정"
+        
+    }
+    
     enum AlertCase {
         static let errorTitle1 = "에러 발생"
 
         static let check = "확인"
-
+        static let cancel = "Cancel"
+        
         static let successDefault = "성공"
+        
+        static let alarmSetting = "알림 설정"
+        static let move = "이동"
+        
+        static let logOutTitle = "로그아웃"
+        static let logOutMessage = "로그아웃시 메시지 기록은 삭제됩니다."
+        static let logOutAction = "로그아웃"
+        
+        static let imageModifyMessage = "이미지가 변경 되었어요!"
     }
 }

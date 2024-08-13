@@ -27,10 +27,10 @@ struct ProfileInfoView: View {
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .alert(item: $store.notiMessage.sending(\.notiMessage), title: { _ in
-                    Text("알림 설정")
+                    Text(Const.AlertCase.alarmSetting)
                 }, actions: { _ in
-                    Text("Cancel")
-                    Text("이동")
+                    Text(Const.AlertCase.cancel)
+                    Text(Const.AlertCase.move)
                         .asButton {
                             store.send(.notifiGoSetting)
                         }
@@ -173,7 +173,7 @@ extension ProfileInfoView {
                         .foregroundStyle(WSXColor.green)
                         .font(WSXFont.title2)
                     Spacer()
-                    Text("충전하기")
+                    Text(Const.ProfileInfo.charge)
                         .foregroundStyle(WSXColor.black.opacity(0.8))
                         .font(WSXFont.regu1)
                 } else {

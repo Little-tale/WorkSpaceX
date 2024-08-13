@@ -48,10 +48,10 @@ struct ProfileInfoFeature {
     }
     
     struct logOutState: Equatable {
-        let title = "로그아웃"
-        let message = "로그아웃시 메시지 기록은 삭제됩니다."
-        let cancel = "취소"
-        let action = "로그아웃"
+        let title = Const.AlertCase.logOutTitle
+        let message = Const.AlertCase.logOutMessage
+        let cancel = Const.AlertCase.cancel
+        let action = Const.AlertCase.logOutAction
     }
     
     enum Action {
@@ -124,9 +124,9 @@ struct ProfileInfoFeature {
             switch action {
             case .onAppear:
                 if !state.tabBarHidden {
-                    state.navigationTitle = "설정"
+                    state.navigationTitle = Const.ProfileInfo.navigationTitle
                 } else {
-                    state.navigationTitle = "내 정보 수정"
+                    state.navigationTitle = Const.ProfileInfo.myInfoModify
                 }
                 
                 let ifNeed = state.ifNeedOnAppear
@@ -278,7 +278,7 @@ struct ProfileInfoFeature {
                         await send(.imagePickFeature(.ifURLString(image)))
                     }
                     try await realmRepo.upsertUserModel(response: model)
-                    await send(.popUpViewState("이미지가 변경 되었어요!"))
+                    await send(.popUpViewState(Const.AlertCase.imageModifyMessage))
                 } catch: { error, _ in
                     print(error)
                 }
