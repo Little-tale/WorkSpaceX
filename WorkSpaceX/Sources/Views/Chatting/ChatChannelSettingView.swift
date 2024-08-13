@@ -46,11 +46,11 @@ struct ChatChannelSettingView: View {
                     }
                     
                     if showTemporaryPopup {
-                        PopUpViewSmall(text: "채널 관리자가 변경되었습니다.")
+                        PopUpViewSmall(text: Const.ChannelSetting.changedOwnerMessage)
                             .zIndex(1)
                     }
                 }
-                .navigationTitle("채널 설정")
+                .navigationTitle(Const.ChannelSetting.navigationTitle)
                 .toolbar(.hidden, for: .tabBar)
                 .onAppear {
                     store.send(.onAppear)
@@ -162,7 +162,7 @@ extension ChatChannelSettingView {
     
     private func memberHeaderView() -> some View {
         HStack {
-            Text("멤버")
+            Text(Const.ChannelSetting.memberSection)
             Text(store.usersCount)
             Spacer()
             Image(systemName: memberToggle ? "chevron.down" : "chevron.right")
@@ -224,7 +224,7 @@ extension ChatChannelSettingView {
     
     private func outOfChannelButtonView() -> some View {
         VStack {
-            Text("채널에서 나가기")
+            Text(Const.ChannelSetting.exitChannel)
                 .modifier(NormalButtonViewModifier(colorSetting: .red) {
                     store.send(.channelExitTry)
                 })
@@ -234,7 +234,7 @@ extension ChatChannelSettingView {
     private func deleteChannelButtonView() -> some View {
         
         VStack {
-            Text("채널 삭제")
+            Text(Const.ChannelSetting.deleteChannel)
                 .modifier(NormalButtonViewModifier(colorSetting: .red) {
                     store.send(.channelDeleteClicked)
                 })
@@ -244,7 +244,7 @@ extension ChatChannelSettingView {
     
     private func changeOwnerButton() -> some View {
         VStack {
-            Text("채널 관리자 변경")
+            Text(Const.ChannelSetting.ownerChangeChannel)
                 .modifier(NormalButtonViewModifier(colorSetting: .def) {
                     store.send(.channelOwnerChangeRequest)
                 })
@@ -253,7 +253,7 @@ extension ChatChannelSettingView {
     
     private func channelEditButton() -> some View {
         VStack {
-            Text("채널 편집")
+            Text(Const.ChannelSetting.editChannel)
                 .modifier(NormalButtonViewModifier(colorSetting: .custom(WSXColor.lightGreen)) {
                     store.send(.channelEditClicked)
                 })

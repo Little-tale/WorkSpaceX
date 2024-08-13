@@ -40,4 +40,16 @@ enum Const {
              }
         }
     }
+    
+    enum ChannelSetting {
+        static let exitChannel = "채널에서 나가기"
+        static let deleteChannel = "채널 삭제"
+        static let ownerChangeChannel = "채널 관리자 변경"
+        static let editChannel = "채널 편집"
+        
+        static let memberSection = "멤버"
+        static let navigationTitle = "채널 설정"
+        
+        static let changedOwnerMessage = "채널 관리자가 변경되었습니다."
+    }
 }

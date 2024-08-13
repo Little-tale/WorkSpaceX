@@ -447,6 +447,7 @@ struct DMSChatFeature {
                 
             case let .socketTORealm(model, roomID):
                 return .run { send in
+                    print("DM Data",model)
                     try await realmRepo.upsertToDMSChats(
                         models: [model],
                         roomID: roomID
