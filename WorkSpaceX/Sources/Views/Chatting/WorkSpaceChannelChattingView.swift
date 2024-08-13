@@ -9,15 +9,10 @@ import SwiftUI
 import ComposableArchitecture
 import QuickLook
 
-/*
- proxy 이슈가 있음. 여전히 원인은 알수가 없음
- */
-
 struct WorkSpaceChannelChattingView: View {
     
     @Perception.Bindable var store: StoreOf<WorkSpaceChannelChattingFeature>
     
-//    @State var scrollTo: String = ""
     @State var keyboardTool: Bool = false
     
     var body: some View {
@@ -74,9 +69,9 @@ struct WorkSpaceChannelChattingView: View {
             .navigationBarBackButtonHidden()
             .toolbar(.hidden, for: .tabBar)
             .alert(item: $store.errorMessage.sending(\.errorMessage), title: { _ in
-                Text("경고")
+                Text(Const.AlertCase.warning)
             }, actions: { _ in
-                Text("확인")
+                Text(Const.AlertCase.check)
                     .font(WSXFont.title15)
                     .asButton {
                         store.send(.errorMessage(nil))
@@ -170,7 +165,7 @@ extension WorkSpaceChannelChattingView {
                             keyboardTool.toggle()
                         }
                     VStack {
-                        TextField("메시지를 입력하세요", text: $store.userFeildText.sending(\.userFeildText), axis: .vertical)
+                        TextField(Const.Chatting.insertMessage, text: $store.userFeildText.sending(\.userFeildText), axis: .vertical)
                             .lineLimit(4)
                             .padding(.vertical, 2)
                     }
@@ -288,7 +283,7 @@ extension WorkSpaceChannelChattingView {
                         VStack(alignment: .center) {
                             WSXImage.gallary
                                 .sideImage()
-                            Text("이미지")
+                            Text(Const.Chatting.imageText)
                                 .font(WSXFont.regu1)
                         }
                         .padding(.leading, 10)
@@ -300,7 +295,7 @@ extension WorkSpaceChannelChattingView {
                         VStack(alignment: .center) {
                             WSXImage.folder
                                 .sideImage()
-                            Text("파일")
+                            Text(Const.Chatting.fileText)
                                 .font(WSXFont.regu1)
                         }
                         .padding(.leading, 10)
@@ -321,20 +316,4 @@ extension WorkSpaceChannelChattingView {
         
     }
 }
-//                            ForEachStore(store.scope(state: \.chatStates, action: \.chats)) { store in
-//                                ChatModeView(store: store)
-////                                    .id(store.model.chatID)
-//                            }
-//                            ForEach(store.currentModels,  id: \.chatId ) { model in
-//                                EmptyView()
-//                            }
-// 확실히 이것이 문제가 맞음
-//                        .onChange(of: scrollTo) { new in
-//                            proxy.scrollTo(new)
-//
-//                        }
-//                        .onChange(of: store.scrollTo) { new in
-//                            proxy.scrollTo(new)
-//                        }
-// 해당 것도 추적이 안된다는 것으로 나옴...
-//                        .bind($store.scrollTo.sending(\.onChangeForScroll), to: $scrollTo)
+

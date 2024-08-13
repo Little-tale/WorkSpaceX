@@ -77,8 +77,17 @@ enum Const {
         
     }
     
+    enum Chatting {
+        static let insertMessage = "메시지를 입력하세요"
+        
+        static let imageText = "이미지"
+        static let fileText = "파일"
+    }
+    
     enum AlertCase {
         static let errorTitle1 = "에러 발생"
+        
+        static let warning = "경고"
 
         static let check = "확인"
         static let cancel = "Cancel"
